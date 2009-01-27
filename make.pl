@@ -268,7 +268,7 @@ sub include {
 sub exclude {
     my ($fn) = @_;
     return 1
-      if ($fn =~ m{(?:/|^)(?:\.svn|old|tmp)(?:/|$)});
+      if ($fn =~ m{(?:/|^)(?:\.svn|\.hg.*|old|tmp)(?:/|$)});
     return 1
       if ($fn =~ m{^(?:license|bugs|tests)/});
     return 0;
