@@ -1,0 +1,43 @@
+/*** api ***/
+
+.method { margin-top: 2em; margin-left: 2em; }
+.method h3 { border-top: 1px solid #aaa; }
+.method h3 .overrides { color: #777; font-size: 80%; font-weight: normal; padding-left: 2em; }
+.method h3 .overrides a, .method h3 .overrides a:link { color: #000; }
+.method h3 .overrides a:hover { color: #76a; }
+.method .doc { margin-left: 2em; clear: both; }
+
+.method .params { margin: 1em 0 1em 2em; border-left: 1px solid green; padding-left: 5px; }
+.method .params table { border-collapse: collapse; }
+.method .params td { vertical-align: top; padding: 2px 5px; border-top: 1px solid #dcf; }
+.method .params .return td { border-top: 1px solid #000; }
+.method .params .label { text-align: right; }
+.method .params .name { font-weight: bold; font-family: monospace; text-align: right; }
+.method .params .type { text-align: center; }
+.method .params .optional { font-style: italic; color: #888; }
+.method .params .doc { margin: 0; color: green; }
+.method .params .default { white-space: pre; font-family: monospace; }
+
+.method .optional { color: #888; }
+.method .varargs { color: #c22; }
+
+.method .params .head td { color: #000 !important; font-weight: bold; border-bottom: 2px solid #000; border-top: none; }
+
+.constructor h2 { border-left: 3px solid #000; padding-left: 5px; background-color: #ddf; }
+.events h2 { border-left: 3px solid #000; padding-left: 5px; background-color: #ddf; }
+.static-methods h2 { border-left: 3px solid #000; padding-left: 5px; background-color: #ddf; }
+.object-methods h2 { border-left: 3px solid #000; padding-left: 5px; background-color: #ddf; }
+.heading { font-weight: bold; }
+.warning { font-weight: bold; color: red; }
+
+.object-info { margin-left: auto; margin-right: 0; }
+.object-info .label { font-weight: bold; text-align: right; padding-right: 5px; }
+
+.file-info { margin: 2em; border: 1px solid #c97; padding: 0 1em 1em 1em; background-color: #ff9; }
+
+fixme { color: red; }
+fixme:before { content: "FIXME: "; }
+
+
+.big { font-size: 130%; font-weight: bold; }
+.monospace { font-family: monospace; }

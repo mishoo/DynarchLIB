@@ -1,0 +1,635 @@
+<sample>
+
+  <title>DlGrid</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlGrid</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlContainer〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">model</td>
+         <td class="doc"><span default="null" name="model"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">selType</td>
+         <td class="doc"><span default="&#34;row&#34;" name="selType"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">"row"</td>
+       </tr>
+       <tr>
+         <td class="name">headType</td>
+         <td class="doc"><span default="null" name="headType"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">rowType</td>
+         <td class="doc"><span default="null" name="rowType"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+      <param default="null" name="model"></param>
+      <param default="&#34;row&#34;" name="selType"></param>
+    <param default="null" name="headType"></param><param default="null" name="rowType"></param></span>
+
+     </div>
+   </div>
+    </div>
+
+
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="getActualColWidth:object_method">getActualColWidth (<span class='param'>i</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">i</td>
+         <td class="doc"><span name="i"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getBodyDiv:object_method">getBodyDiv ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getBodyTable:object_method">getBodyTable ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getGroup:object_method">getGroup ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getHandlesDiv:object_method">getHandlesDiv ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getHeaderDiv:object_method">getHeaderDiv ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getHeaderRow:object_method">getHeaderRow ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getNextRow:object_method">getNextRow (<span class='param'>row</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">row</td>
+         <td class="doc"><span name="row"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getPrevRow:object_method">getPrevRow (<span class='param'>row</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">row</td>
+         <td class="doc"><span name="row"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getRowById:object_method">getRowById (<span class='param'>id</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">id</td>
+         <td class="doc"><span name="id"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getRowByIndex:object_method">getRowByIndex (<span class='param'>index</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">index</td>
+         <td class="doc"><span name="index"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setColSize:object_method">setColSize (<span class='param'>col</span>, <span class='param'>w</span>, <span class='param'>noUpdate</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">col</td>
+         <td class="doc"><span name="col"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">w</td>
+         <td class="doc"><span name="w"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">noUpdate</td>
+         <td class="doc"><span name="noUpdate"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_appendWidgetElement:object_method">_appendWidgetElement (<span class='param'>w</span>, <span class='param'>pos</span>, <span class="varargs">…</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">w</td>
+         <td class="doc"><span name="w"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">pos</td>
+         <td class="doc"><span name="pos"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_createElement:object_method">_createElement ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_deleteRow:object_method">_deleteRow (<span class='param'>row</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">row</td>
+         <td class="doc"><span name="row"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_handle_focusKeys:object_method">_handle_focusKeys (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_initBody:object_method">_initBody ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_initColSizes:object_method">_initColSizes ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_initHeaders:object_method">_initHeaders ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_insertRow:object_method">_insertRow (<span class='param'>row</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">row</td>
+         <td class="doc"><span name="row"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_makeHeadLabel:object_method">_makeHeadLabel (<span class='param'>args</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">args</td>
+         <td class="doc"><span name="args"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_makeRow:object_method">_makeRow (<span class='param'>args</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">args</td>
+         <td class="doc"><span name="args"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_onHeadClick:object_method">_onHeadClick ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_resetSizeToRow:object_method">_resetSizeToRow (<span class='param'>tr2</span>, <span class='param'>tr1</span>, <span class='param'>del</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">tr2</td>
+         <td class="doc"><span name="tr2"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">tr1</td>
+         <td class="doc"><span name="tr1"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">del</td>
+         <td class="doc"><span name="del"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_sort:object_method">_sort (<span class='param'>col</span>, <span class='param'>prev</span>, <span class='param'>desc</span>, <span class='param'>a</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">col</td>
+         <td class="doc"><span name="col"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">prev</td>
+         <td class="doc"><span name="prev"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">desc</td>
+         <td class="doc"><span name="desc"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">a</td>
+         <td class="doc"><span name="a"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_updateFillCols:object_method">_updateFillCols (<span class='param'>diff</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">diff</td>
+         <td class="doc"><span name="diff"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_updateResizeHandles:object_method">_updateResizeHandles ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+
+
+</sample>
+
+
+
+

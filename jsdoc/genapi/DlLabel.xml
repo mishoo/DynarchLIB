@@ -1,0 +1,173 @@
+<sample>
+
+  <title>DlLabel</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlLabel</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlAbstractButton〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈label.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈abstractbutton.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">widget</td>
+         <td class="doc"><span default="null" name="widget" optional="1">Widget to activate when the label is clicked</span>
+</td>
+         <td class="type">[<b>〈DlWidget〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">null</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+        A label widget.  Although the functionality that a label
+        requires is usually very simple, we inherit this widget from
+        <a href='api://DlAbstractButton.xml'>DlAbstractButton</a> to easily provide additional goodies (such
+        as, if you wish, you can pass a hover or active class name,
+        etc.).  Therefore, a label has all the functionality of a
+        button, but a different look.
+      </span>
+
+     </div>
+   </div>
+    </div>
+
+
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="getWidget:object_method">getWidget ()
+        </h3>
+     <div class="doc"><span>
+          Returns the associated widget.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setWidget:object_method">setWidget (<span class='param'>widget</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">widget</td>
+         <td class="doc"><span name="widget">New widget for this label</span>
+</td>
+         <td class="type">[<b>〈DlWidget〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Sets an widget to be focused when the label is clicked or
+          activated by an access key.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_handle_accessKey:object_method">_handle_accessKey (<span class='param'>ev</span>)
+        <div class="overrides">
+             (overrides <a href="api://DlAbstractButton.xml:type=object_method:func=_handle_accessKey">_handle_accessKey in DlAbstractButton</a>)
+        </div>
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_onMouseDown:object_method">_onMouseDown (<span class='param'>ev</span>)
+        <div class="overrides">
+             (overrides <a href="api://DlAbstractButton.xml:type=object_method:func=_onMouseDown">_onMouseDown in DlAbstractButton</a>)
+        </div>
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+
+
+</sample>
+
+
+
+

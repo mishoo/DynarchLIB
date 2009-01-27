@@ -1,0 +1,8 @@
+[% PERL %]
+my $foo = Template->new;
+# my $code = `/home/mishoo/bin/modify-colors.pl -h 239:299 -m 200 -d -a < /home/mishoo/work/thelib/src/css/default.css`;
+my $code = `/home/mishoo/bin/modify-colors.pl -h 239:299 -m 210 -d -a < /home/mishoo/work/thelib/src/css/default.css`;
+my $out;
+$foo->process(\$code, undef, \$out);
+print $out;
+[% END %]

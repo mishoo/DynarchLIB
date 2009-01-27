@@ -1,0 +1,36 @@
+\documentclass[a4paper,twoside,11pt,openany]{book}
+
+\usepackage{dynaformat}
+
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{tabularx}
+\usepackage{ltxtable}
+\usepackage{hyperref}
+\usepackage{wrapfig}
+\usepackage{listings}
+
+\usepackage{listings-jsdef}
+\usepackage{listings-thelib}
+\usepackage{thelib-defines}
+
+\fancyhead[LO,RE]{%
+  \footnotesize{\sffamily\TheLibLongName\\Copyright © Dynarch.com, 2007}}
+
+\title{\textbf{\TheLibLongName}\\\normalsize\TheLibURL}
+
+\author{Mihai Bazon\\© Dynarch.com 2007\\All rights reserved.}
+
+\date{May 25, 2007}
+
+\begin{document}
+\frontmatter
+\maketitle
+\chapter{Preface}\input{dl-overview}
+\tableofcontents
+\mainmatter
+\chapter{\TheLibName{} overview}\input{dl-jslib}
+\appendix
+\chapter{Advanced JavaScript primer}
+\input{dl-jsbasics}
+\end{document}

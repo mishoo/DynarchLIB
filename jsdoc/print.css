@@ -1,0 +1,29 @@
+@import url("common.css");
+
+html, body { margin: 0; padding: 0; }
+
+#doc { margin: 3em; }
+.copyright { text-align: center; font-size: 80%; color: #555; border-top: 1px solid #888; padding-top: 10pt; margin-top: 10pt; font-family: monospace; }
+.copyright { margin-bottom: 10pt; }
+
+.CodeSample .Controls { display: none; }
+.CodeSample-padding pre { margin-left: 0; }
+.NavLinks { display: none; }
+
+.print-info {
+  margin-bottom: 1em;
+  padding: 1px 1em;
+  color: #c11;
+  border-bottom: 5px solid #800;
+  -moz-border-bottom-colors: #fee #c99 #a77 #855 #400;
+  font: 100% Verdana,Tahoma,sans-serif;
+  background-color: #fda;
+}
+
+.dimnote { margin: 1em; color: #888; }
+
+@media print {
+  .print-info { display: none; }
+  #doc { margin: 0; }
+  .copyright { margin-bottom: 0; }
+}

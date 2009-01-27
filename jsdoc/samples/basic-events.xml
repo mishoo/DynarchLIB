@@ -1,0 +1,148 @@
+<sample>
+
+  <title>The Event System</title>
+
+  <text>
+    <p>
+      Most of the DynarchLIB objects inherit from a class named
+      <b>DlEventProxy</b>.  An event proxy is an object that holds a
+      set of events and their associate listeners.  An event is simply
+      a string.  An event listener (we might also call it “hook”) is a
+      plain JavaScript function, in no way different from the standard
+      DOM event listeners.
+    </p>
+
+    <p>
+      Events and listeners are an important tecnhique in the world of
+      UI programming.  For example, a button can “emit” an event
+      called “onClick”.  Then, if you want something to happen when
+      that button is clicked, you would write something like this:
+    </p>
+
+    <pre name="dlhl" class="js">button.addEventListener("onClick", function() {
+    // make something happen
+});</pre>
+
+    <p>
+      If you want more things to happen upon that event, you can
+      either put them all in a function, or call addEventListener
+      multiple times and add multiple hooks.  They will be called in
+      the order they were registered.
+    </p>
+
+    <p>
+      Here's a first sample that you can actually run:
+    </p>
+
+    <div sample="sample1" />
+
+    <p>
+      That wasn't quite useful, but it shows how we can define an
+      event proxy and call event listeners.  The event listeners
+      execute in the context of the <b>DlEventProxy</b> object.  To
+      illustrate this, let's create an object that inherits
+      <b>DlEventProxy</b>:
+    </p>
+
+    <div sample="sample2" />
+
+    <p>
+      So we create a class ("MyObject") that inherits from
+      <b>DlEventProxy</b>, and two object instances (<em>a</em> and
+      <em>b</em>).  We assign the same event listener to both of them,
+      and the <b>this</b> in that function refers to each object
+      instance.
+    </p>
+
+    <h2>Danger: connecting events</h2>
+
+    <p>
+      DlEventProxy allows a somewhat weird feature: you can connect
+      events between two objects.  What this means is, you can have an
+      event in an object that, besides any listeners directly assigned
+      to it, can call any hooks registered on some event in some other
+      object.
+    </p>
+
+    <div sample="sample3" />
+
+    <p>
+      Note that with only one <em>callHooks</em>, we invoke two
+      different events in two different objects.  Any arguments passed
+      to <em>callHooks</em> will be forwarded to all connected events.
+    </p>
+
+    <p>
+      The downside with <em>connectEvents</em> is that once 2 events
+      have been connected, you can't disconnect them.  Don't use this
+      feature unless you're definitely sure that you need it.
+    </p>
+
+  </text>
+
+  <code id="sample1" type="js" canrun="true"><![CDATA[
+var events = new DlEventProxy(true);
+events.registerEvents([ "myEvent" ]);
+events.addEventListener("myEvent", function(arg1, arg2) {
+    print("myEvent called and got: " + arg1 + " and " + arg2);
+});
+
+events.addEventListener("myEvent", function(arg1, arg2) {
+    print("Second hook here, got: " + arg1 + " and " + arg2);
+});
+
+// later
+events.callHooks("myEvent", "foo", "bar");
+  ]]></code>
+
+  <code id="sample2" type="js" canrun="true"><![CDATA[
+(function(){
+
+    var BASE = MyObject.inherits(DlEventProxy);
+    function MyObject(name) {
+        BASE.constructor.call(this);
+        this.registerEvents([ "MyEvent" ]);
+        this.name = name;
+    };
+    eval(Dynarch.EXPORT("MyObject"));
+
+    P.getName = function() {
+        return this.name;
+    };
+
+})();
+
+var a = new MyObject("This is A");
+var b = new MyObject("This is Bee");
+
+function myHandler() {
+    print(this.getName());
+};
+
+a.addEventListener("MyEvent", myHandler);
+b.addEventListener("MyEvent", myHandler);
+
+a.callHooks("MyEvent");
+b.callHooks("MyEvent");
+  ]]></code>
+
+  <code id="sample3" type="js" canrun="true"><![CDATA[
+var e1 = new DlEventProxy({});
+e1.registerEvents([ "FooEvent" ]);
+var e2 = new DlEventProxy({});
+e2.registerEvents([ "BarEvent" ]);
+
+e1.addEventListener("FooEvent", function(arg) {
+    print("Foo called, got " + arg);
+});
+
+e2.addEventListener("BarEvent", function(arg) {
+    print("Bar called, got " + arg);
+});
+
+e1.connectEvents("FooEvent", e2, "BarEvent");
+
+e1.callHooks("FooEvent", "something");
+  ]]></code>
+
+</sample>

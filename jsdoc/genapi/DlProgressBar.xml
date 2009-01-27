@@ -1,0 +1,272 @@
+<sample>
+
+  <title>DlProgressBar</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlProgressBar</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlWidget〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈progressbar.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈widget.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">label</td>
+         <td class="doc"><span default="null" name="label"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">max</td>
+         <td class="doc"><span default="100" name="max"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">100</td>
+       </tr>
+       <tr>
+         <td class="name">min</td>
+         <td class="doc"><span default="0" name="min"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">0</td>
+       </tr>
+       <tr>
+         <td class="name">val</td>
+         <td class="doc"><span default="0" name="val"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">0</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+      <param default="null" name="label"></param>
+      <param default="100" name="max"></param>
+      <param default="0" name="min"></param>
+      <param default="0" name="val"></param>
+    </span>
+
+     </div>
+   </div>
+    </div>
+
+
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="getMaxVal:object_method">getMaxVal ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getMinVal:object_method">getMinVal ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getValue:object_method">getValue ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="reset:object_method">reset (<span class='param'>min</span>, <span class='param'>max</span>, <span class='param'>val</span>, <span class='param'>label</span>, <span class="varargs">…</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">min</td>
+         <td class="doc"><span name="min"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">max</td>
+         <td class="doc"><span name="max"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">val</td>
+         <td class="doc"><span name="val"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">label</td>
+         <td class="doc"><span name="label"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setLabel:object_method">setLabel (<span class='param'>label</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">label</td>
+         <td class="doc"><span name="label"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setValue:object_method">setValue (<span class='param'>val</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">val</td>
+         <td class="doc"><span name="val"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_createElement:object_method">_createElement ()
+        <div class="overrides">
+             (overrides <a href="api://DlWidget.xml:type=object_method:func=_createElement">_createElement in DlWidget</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_getFillElement:object_method">_getFillElement ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_getLabelElement:object_method">_getLabelElement ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_updateLabel:object_method">_updateLabel (<span class='param'>percent</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">percent</td>
+         <td class="doc"><span name="percent"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+
+
+</sample>
+
+
+
+

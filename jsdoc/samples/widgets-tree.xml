@@ -1,0 +1,375 @@
+<sample>
+
+  <title>Tree widget</title>
+
+  <text>
+
+    <p>
+      Again a common widget in user interface controls is the tree
+      widget.  You can see a tree widget in our documentation sidebar,
+      on the left.  A tree contains tree items.  A tree item can
+      contain anything you want, although, usually it will contain
+      another tree.
+    </p>
+
+    <p>
+      Contrary to popular belief, a tree should not care about which
+      item is selected, or wether more items can be selected at once.
+      This is left entirely to the implementation.  So in its
+      inception, a tree item is just an ordinary container.  It can
+      display a label, but it usually won't be very useful by itself.
+      Here's the first sample.
+    </p>
+
+    <div sample="tree1" />
+
+    <p>
+      It's pretty easy, if a bit verbose.  For most cases, we can make
+      it a bit shorter.  <b>DlTreeItem</b> will detect when we want to
+      add a new tree item inside it, and it will create a subtree
+      automatically—so we can write it shorter like this:
+    </p>
+
+    <div sample="tree2" />
+
+    <h2>Deferred instantiation</h2>
+
+    <p>
+      So as you see, we can get away by directly specifying an item as
+      a parent for a new item, and the framework takes care to create
+      the appropriate subtree.  So why do we need <b>DlTree</b>
+      anyway?  Well, for really big trees, you don't want to create
+      all items from the start, because it'll be slow and the browser
+      will shut down the script.
+    </p>
+
+    <p>
+      So it is very easy to delay initialization using setTree() and
+      passing <em>a function</em>, rather than a <b>DlTree</b> widget.
+      When that item is first expanded, your function will be called
+      and it should take care of creating the DlTree widget and call a
+      continuation function with it.
+    </p>
+
+    <div sample="tree3" />
+
+    <p>
+      The API is a bit more complicated, but we'll show why in a
+      second.  So the function that you supply receives 2 arguments
+      (one of which we ignored in our sample above):
+    </p>
+
+    <ol>
+      <li>
+        <b>a continuation</b> — it is a function that you must call
+        and pass to it the DlTree object that your function created.
+      </li>
+      <li>
+        <b>a tree item</b> — reference to the DlTreeItem that called
+        your function.
+      </li>
+    </ol>
+
+    <p>
+      We needed this API because your function might not be able to
+      create the tree items immediately.  This can happen when you
+      request data from server, and you need to create the items
+      <em>after</em> you receive this data.  But, in case of
+      asynchronous requests, your function will return immediately.
+      We'll have a sample about this later; for now, let's see how we
+      can make our code shorter:
+    </p>
+
+    <div sample="tree4" />
+
+    <p>
+      We now have a createItems() function which receives an array of
+      item labels and a continuation, and does the job.  Then, through
+      the magic of $C (see <a
+      href="sample://extensions-function.xml">Function extensions</a>)
+      we bind it to the array of labels for each tree and use that
+      closure as argument to setTree().
+    </p>
+
+    <h2>“Cache” expiration</h2>
+
+    <p>
+      As you can see, the function that we supply to setTree() is only
+      called once.  The returned tree is then cached and reused any
+      time the parent item is expanded.  <b>DlTreeItem</b> supports an
+      easy mechanism to expire this cache after a certain time, which
+      is useful when you retrieve the data from server and want to
+      refresh it periodically.  When you call the continuation
+      function, you just need to pass an additional argument
+      specifying the number of milliseconds to cache timeout.  Here is
+      the slightly modified version of the previous sample that
+      demonstrates this:
+    </p>
+
+    <div sample="tree5" />
+
+    <p>
+      If you expand i.e. the "Fruits" item, it will create our
+      function that instantiates the items.  For the next 5 seconds,
+      you can expand/collapse it and the function won't be called
+      again.  However, if you expand the item 5 seconds after the
+      subtree was first created, the function will be called again.
+    </p>
+
+    <h2>Selectable items</h2>
+
+    <p>
+      So, you're asking, can we create an useful tree now?  How do we
+      allow item selection?  Well, we just have to observe a pattern.
+      In an usual tree, only one item can be selected at a time.  This
+      reminds us of radio buttons, isn't it.  Let's try it:
+    </p>
+
+    <div sample="tree6" />
+
+    <p>
+      It doesn't look very good now does it.  But it illustrates our
+      point.  An item can contain anything you want.  So, using a bit
+      of CSS, we can customize radio buttons in tree items to look
+      good.  DynarchLIB took care of this so you only need to specify
+      a certain class name ("DlTreeItem-withRadio"):
+    </p>
+
+    <div sample="tree7" />
+
+    <p>
+      So now it looks like a real tree, but again, those labels are
+      really <b>DlRadioButton</b> widgets, which means that you can
+      work with them exactly as you do with ordinary radio buttons.
+      Here's how we add a handler that gets called when an item is
+      selected:
+    </p>
+
+    <div sample="tree8" />
+
+    <p>
+      This exact technique is used in this documentation tree.  By
+      <em>not</em> having code that handles selection, clicks, etc. in
+      the tree items, we can actually achieve more flexibility, and we
+      also use a familiar API to deal with all that (remember I told
+      you that <a
+      href="sample://widgets-radiobuttons.xml"><b>DlRadioGroup</b></a>
+      is really useful).  For example, we can easily create a tree
+      where more items can be selected:
+    </p>
+
+    <div sample="tree9" />
+
+    <p>
+      The root items are not selectable—their label is displayed by
+      the plain DlTreeItem.  Each has a subtree that displays items in
+      a different radio group, which means that we can have both an OS
+      and a brand selected simultaneously.  This sample also shows you
+      how to add icons—just specify an iconClass, like for most other
+      widgets.
+    </p>
+
+  </text>
+
+  <code id="tree1" type="js" canrun="true"><![CDATA[
+var tree = new DlTree({ parent: getDocCanvas() });
+
+// root items
+var fruits = new DlTreeItem({ parent: tree, label: "Fruits" });
+var vegetables = new DlTreeItem({ parent: tree, label: "Vegetables" });
+
+// create the fruits subtree
+var fruits_tree = new DlTree({});
+fruits.setTree(fruits_tree, true);
+
+// fruit items
+new DlTreeItem({ parent: fruits_tree, label: "Apples" });
+new DlTreeItem({ parent: fruits_tree, label: "Pears" });
+new DlTreeItem({ parent: fruits_tree, label: "Oranges" });
+
+// create the vegetables subtree
+var vege_tree = new DlTree({});
+vegetables.setTree(vege_tree, true);
+
+// vegetables
+new DlTreeItem({ parent: vege_tree, label: "Potatoes" });
+new DlTreeItem({ parent: vege_tree, label: "Tomatoes" });
+new DlTreeItem({ parent: vege_tree, label: "Carrots" });
+  ]]></code>
+
+  <code id="tree2" type="js" canrun="true"><![CDATA[
+var tree = new DlTree({ parent: getDocCanvas() });
+
+// root items
+var fruits = new DlTreeItem({ parent: tree, label: "Fruits" });
+var vegetables = new DlTreeItem({ parent: tree, label: "Vegetables" });
+
+// fruit items
+new DlTreeItem({ parent: fruits, label: "Apples" });
+new DlTreeItem({ parent: fruits, label: "Pears" });
+new DlTreeItem({ parent: fruits, label: "Oranges" });
+
+// vegetables
+new DlTreeItem({ parent: vegetables, label: "Potatoes" });
+new DlTreeItem({ parent: vegetables, label: "Tomatoes" });
+new DlTreeItem({ parent: vegetables, label: "Carrots" });
+  ]]></code>
+
+  <code id="tree3" type="js" canrun="true"><![CDATA[
+var tree = new DlTree({ parent: getDocCanvas() });
+var fruits = new DlTreeItem({ parent: tree, label: "Fruits" });
+var vegetables = new DlTreeItem({ parent: tree, label: "Vegetables" });
+
+fruits.setTree(function(cont) {
+    print("Creating fruits tree");
+    var tree = new DlTree({});
+    new DlTreeItem({ parent: tree, label: "Apples" });
+    new DlTreeItem({ parent: tree, label: "Pears" });
+    new DlTreeItem({ parent: tree, label: "Oranges" });
+    cont(tree);
+});
+
+vegetables.setTree(function(cont) {
+    print("Creating vegetables tree");
+    var tree = new DlTree({});
+    new DlTreeItem({ parent: tree, label: "Potatoes" });
+    new DlTreeItem({ parent: tree, label: "Tomatoes" });
+    new DlTreeItem({ parent: tree, label: "Carrots" });
+    cont(tree);
+});
+  ]]></code>
+
+  <code id="tree4" type="js" canrun="true"><![CDATA[
+var tree = new DlTree({ parent: getDocCanvas() });
+var fruits = new DlTreeItem({ parent: tree, label: "Fruits" });
+var vegetables = new DlTreeItem({ parent: tree, label: "Vegetables" });
+
+function createItems(array, cont) {
+    print("Creating: " + array.join(", "));
+    var tree = new DlTree({});
+    array.foreach(function(label) {
+        new DlTreeItem({ parent: tree, label: label });
+    });
+    cont(tree);
+};
+
+fruits.setTree(createItems.$C([ "Apples", "Pears", "Oranges" ]));
+vegetables.setTree(createItems.$C([ "Potatoes", "Tomatoes", "Carrots" ]));
+  ]]></code>
+
+  <code id="tree5" type="js" canrun="true"><![CDATA[
+var tree = new DlTree({ parent: getDocCanvas() });
+var fruits = new DlTreeItem({ parent: tree, label: "Fruits" });
+var vegetables = new DlTreeItem({ parent: tree, label: "Vegetables" });
+
+function createItems(array, cont) {
+    print("Creating: " + array.join(", "));
+    var tree = new DlTree({});
+    array.foreach(function(label) {
+        new DlTreeItem({ parent: tree, label: label });
+    });
+    cont(tree, 5000 /* expire in 5 seconds */);
+};
+
+fruits.setTree(createItems.$C([ "Apples", "Pears", "Oranges" ]));
+vegetables.setTree(createItems.$C([ "Potatoes", "Tomatoes", "Carrots" ]));
+  ]]></code>
+
+  <code id="tree6" type="js" canrun="true"><![CDATA[
+var group = DlRadioGroup.get();
+
+// just a helper function that creates the DlTreeItem
+// and the DlRadioButton within it.
+function createItem(parent, label) {
+    var item = new DlTreeItem({ parent: parent });
+    var button = new DlRadioButton({ parent : item, 
+                                     label  : label,
+                                     group  : group });
+    return item;
+};
+
+var tree = new DlTree({ parent: getDocCanvas() });
+
+var fruits = createItem(tree, "Fruits");
+[ "Apples", "Pears", "Oranges" ].foreach(createItem.$C(fruits));
+
+var vegetables = createItem(tree, "Vegetables");
+[ "Potatoes", "Tomatoes", "Carrots" ].foreach(createItem.$C(vegetables));
+  ]]></code>
+
+  <code id="tree7" type="js" canrun="true"><![CDATA[
+var group = DlRadioGroup.get();
+
+// just a helper function that creates the DlTreeItem
+// and the DlRadioButton within it.
+function createItem(parent, label) {
+    var item = new DlTreeItem({ parent        : parent,
+                                itemClassName : "DlTreeItem-withRadio" });
+    var button = new DlRadioButton({ parent : item, 
+                                     label  : label,
+                                     value  : label,
+                                     group  : group });
+    return item;
+};
+
+var tree = new DlTree({ parent: getDocCanvas() });
+
+var fruits = createItem(tree, "Fruits");
+[ "Apples", "Pears", "Oranges" ].foreach(createItem.$C(fruits));
+
+var vegetables = createItem(tree, "Vegetables");
+[ "Potatoes", "Tomatoes", "Carrots" ].foreach(createItem.$C(vegetables));
+  ]]></code>
+
+  <code id="tree8" type="js" canrun="true"><![CDATA[
+//@include tree7
+group.addEventListener("onChange", function() {
+    print("You selected: " + group.getValue()[0]);
+});
+  ]]></code>
+
+  <code id="tree9" type="js" canrun="true"><![CDATA[
+var tree = new DlTree({ parent: getDocCanvas() });
+function createItem(parent, label, group) {
+    var item = new DlTreeItem({ parent        : parent,
+                                itemClassName : "DlTreeItem-withRadio",
+                                iconClass     : "IconPage"
+                              });
+    var button = new DlRadioButton({ parent : item, 
+                                     label  : label,
+                                     value  : label,
+                                     group  : group });
+    return item;
+};
+
+var osGroup = DlRadioGroup.get();
+var brandGroup = DlRadioGroup.get();
+
+osGroup.addEventListener("onChange", function(){
+    print("Selected OS: " + osGroup.getValue()[0]);
+});
+
+brandGroup.addEventListener("onChange", function(){
+    print("Selected brand: " + brandGroup.getValue()[0]);
+});
+
+var os = new DlTreeItem({ parent    : tree, 
+                          label     : "<b>Operating system</b>",
+                          iconClass : "IconBooks"
+                        });
+var brand = new DlTreeItem({ parent    : tree, 
+                             label     : "<b>Brand</b>",
+                             iconClass : "IconBooks"
+                           });
+
+createItem(os, "Linux", osGroup);
+createItem(os, "Windows", osGroup);
+createItem(os, "Mac OS X", osGroup);
+
+createItem(brand, "IBM", brandGroup);
+createItem(brand, "Dell", brandGroup);
+createItem(brand, "Apple", brandGroup);
+createItem(brand, "HP", brandGroup);
+  ]]></code>
+
+</sample>

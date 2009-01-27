@@ -1,0 +1,186 @@
+<sample>
+
+  <title>Layout manager</title>
+
+  <text>
+
+    <p>
+      This is a rather complex container widget which allows you to
+      create a fluid (resizable) layout for its child widgets.  It's
+      useful in dialogs and as a top-level container for your whole
+      application.
+    </p>
+
+    <p>
+      Here is a very basic sample that shows how to create a fluid
+      layout having only 2 widgtes:
+    </p>
+
+    <div sample="layout1" />
+
+    <p>
+      The layout widget takes care to adjust its content when the
+      dialog is resized.  We could add some spacing by providing the
+      <b>outerSpace</b> argument in its constructor, and/or using the
+      <b>before</b> or <b>after</b> argument in packWidget:
+    </p>
+
+    <div sample="layout2" />
+
+    <p>
+      In packWidget, the <b>before</b> and <b>after</b> arguments
+      specify the space to add before or after the widget <em>in the
+      direction that the widget was added</em>.  This means, if you
+      pack a widget to the right, then “after” will actually specify
+      the spacing to its left.
+    </p>
+
+    <p>
+      The “pos” argument can also be "top" or "bottom".  Here's the
+      same example but using horizontal stacking:
+    </p>
+
+    <div sample="layout3" />
+
+    <h2>Mixing horizontal and vertical stacking</h2>
+
+    <p>
+      To some extent, we could have done all this with plain boxes
+      too.  It would have been a lot more complicated because they
+      don't resize the child widgets.  Here's however an example that
+      would be impossible with boxes.  We create a layout that has a
+      top pane, a left pane, a right pane and a bottom pane.
+    </p>
+
+    <div sample="layout4" />
+
+    <p>
+      Note that the order we pack the widgets is important.  If you
+      edit the sample above and move the line that packs
+      <em>bottom</em> below those that pack <em>left</em> and
+      <em>right</em>, and try to execute it, you won't see the bottom
+      panel.  That's because the packed widgets initially take the
+      whole width or height that is available.  By packing
+      <em>top</em> and <em>bottom</em> first, we effectively reserve
+      space for them.  Makes sense since they are of determined
+      height, while <em>left</em> and <em>right</em> take all the
+      available height.  I guess it seems a bit complicated, but
+      you'll get used to it after trying a few tests.
+    </p>
+
+    <p>
+      Also note that we needed to specify a fill size for the
+      <em>top</em> and <em>bottom</em> containers.  By specifying a
+      numeric value rather than a string, we force <b>DlLayout</b> to
+      reserve exactly that many pixels for those widgets.
+    </p>
+
+  </text>
+
+  <code id="layout1" type="js" canrun="true"><![CDATA[
+var dlg = new DlDialog({ title: "Layout sample", resizable: true, quitBtn: "destroy" });
+var layout = new DlLayout({ parent: dlg });
+
+var left = new DlContainer({});
+var right = new DlContainer({});
+
+// add some background so you can see them
+left.getElement().style.backgroundColor = "#fcc";
+right.getElement().style.backgroundColor = "#ccf";
+
+// the left pane will take 30% of the whole size,
+// by specifying fill: "30%"
+layout.packWidget(left, { pos: "left", fill: "30%" });
+
+// the right pane will occupy all the available space
+// by specifying fill: "*"
+layout.packWidget(right, { pos: "right", fill: "*" });
+
+// let's add a close button
+var btn = new DlButton({ parent: left, label: "Close" });
+btn.addEventListener("onClick", function() {
+    dlg.destroy();
+});
+
+// the DlLayout needs an initial size
+layout.setSize({ x: 400, y: 300 });
+dlg.centerOnParent();
+dlg.show();
+  ]]></code>
+
+  <code id="layout2" type="js" canrun="true"><![CDATA[
+var dlg = new DlDialog({ title: "Layout sample", resizable: true, quitBtn: "destroy" });
+var layout = new DlLayout({ parent: dlg, outerSpace: 10 });
+
+var left = new DlContainer({});
+var right = new DlContainer({});
+
+left.getElement().style.backgroundColor = "#fcc";
+right.getElement().style.backgroundColor = "#ccf";
+
+layout.packWidget(left, { pos: "left", fill: "30%", after: 10 });
+layout.packWidget(right, { pos: "right", fill: "*" });
+
+var btn = new DlButton({ parent: left, label: "Close" });
+btn.addEventListener("onClick", function() {
+    dlg.destroy();
+});
+
+layout.setSize({ x: 400, y: 300 });
+dlg.centerOnParent();
+dlg.show();
+  ]]></code>
+
+  <code id="layout3" type="js" canrun="true"><![CDATA[
+var dlg = new DlDialog({ title: "Layout sample", resizable: true, quitBtn: "destroy" });
+var layout = new DlLayout({ parent: dlg, outerSpace: 10 });
+
+var top = new DlContainer({});
+var bottom = new DlContainer({});
+
+top.getElement().style.backgroundColor = "#fcc";
+bottom.getElement().style.backgroundColor = "#ccf";
+
+layout.packWidget(top, { pos: "top", fill: "30%", after: 10 });
+layout.packWidget(bottom, { pos: "bottom", fill: "*" });
+
+var btn = new DlButton({ parent: top, label: "Close" });
+btn.addEventListener("onClick", function() {
+    dlg.destroy();
+});
+
+layout.setSize({ x: 400, y: 300 });
+dlg.centerOnParent();
+dlg.show();
+  ]]></code>
+
+  <code id="layout4" type="js" canrun="true"><![CDATA[
+var dlg = new DlDialog({ title: "Layout sample", resizable: true, quitBtn: "destroy" });
+var layout = new DlLayout({ parent: dlg, outerSpace: 10 });
+
+var top = new DlContainer({});
+var left = new DlContainer({});
+var right = new DlContainer({});
+var bottom = new DlContainer({});
+
+top.getElement().style.backgroundColor = "#ffc";
+left.getElement().style.backgroundColor = "#fcc";
+right.getElement().style.backgroundColor = "#ccf";
+bottom.getElement().style.backgroundColor = "#cfc";
+
+layout.packWidget(top, { pos: "top", fill: 30, after: 10 });
+layout.packWidget(bottom, { pos: "bottom", fill: 30, after: 10 });
+layout.packWidget(left, { pos: "left", fill: "30%", after: 10 });
+layout.packWidget(right, { pos: "right", fill: "*" });
+
+var btn = new DlButton({ parent: left, label: "Close" });
+btn.addEventListener("onClick", function() {
+    dlg.destroy();
+});
+
+layout.setSize({ x: 400, y: 300 });
+dlg.centerOnParent();
+dlg.show();
+  ]]></code>
+
+</sample>

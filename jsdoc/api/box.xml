@@ -1,0 +1,64 @@
+<api file="box.js" show="1">
+  <object base="DlContainer" name="DlBox">
+    <constructor>
+      <param default="null" name="align" type="String">Table align ("left", "center", "right")</param>
+      <param default="0" name="borderSpacing" type="Number">CSS border-spacing for the table</param>
+      <doc>
+        This is the base class for 〈DlVbox|vertical〉 and
+        〈DlHbox|horizontal〉 box widgets.  A box is represented by a
+        &lt;table&gt; element.  A horizontal box will have only one
+        row, and one cell will be added automatically for each new
+        widget.  A vertical box will have multiple rows, each having
+        exactly one cell where it'll hold one child widget.
+      </doc>
+    </constructor>
+    <static-methods></static-methods>
+
+    <object-methods>
+      <method hash="028a77c2b839262c028d85b67166444e" name="addSeparator">
+        <param name="cls" optional="1" type="String">Class name for the TD</param>
+        <param name="td" optional="1" type="HTMLTableCellElement">TD if already exists</param>
+        <doc>
+          Adds a separator cell.  It's a TD that gets the class
+          "OBJECT_TYPE-separator" (where OBJECT_TYPE is "DlHbox" for
+          horizontal boxes, or "DlVbox" for vertical boxes), plus any
+          additional class names that you might specify in <b>cls</b>.
+        </doc>
+      </method>
+      <method hash="8ff15d81e6d7bfcb2bba681ca733993e" name="addSpace">
+        <param name="cls" optional="1" type="String">Class name for the TD</param>
+        <param name="td" optional="1" type="HTMLTableCellElement">TD if already exists</param>
+        <doc>
+          Exactly the same as 〈addSeparator()〉, but it adds a space
+          cell instead.  The idea is the same, only the class name
+          differs (i.e. a horizontal box will get "DlHbox-spacer").
+        </doc>
+      </method>
+      <method forced="1" name="createCellElement">
+        <doc>
+          <em>Pure virtual</em> method.  This means, this method
+          doesn't exist, but code in box.js relies on it to create
+          cells for the child widgets.  This method <em>must</em> be
+          implemented by derived classes.
+        </doc>
+      </method>
+      <method hash="48e6a33fdd56e1ffc898d08aa79cedb9" name="destroyChildWidgets">
+        <doc></doc>
+      </method>
+      <method hash="77eda1ea501ebb187b3602668030022b" internal="1" name="__addSep" undoc="1">
+        <param name="sep_cls"></param>
+        <param name="cls"></param>
+        <param name="td"></param>
+        <doc></doc>
+      </method>
+      <method hash="838ada59f9c637051e299668f7cfaefb" internal="1" name="_appendWidgetElement">
+        <param name="widget"></param>
+        <param name="where"></param>
+        <doc></doc>
+      </method>
+      <method hash="957e68458d8e0182024f3a8254b93f89" internal="1" name="_createElement">
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

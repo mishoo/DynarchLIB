@@ -1,0 +1,387 @@
+<sample>
+
+  <title>DlValidator</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlValidator</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>— none —</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈validator.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈exception.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">callback</td>
+         <td class="doc"><span name="callback">Your validating function</span>
+</td>
+         <td class="type">[<b>〈Function〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+        A DlValidator object is used by <a href='api://DlEntry.xml'>DlEntry</a> to validate user
+        input.  It's actually a wrapper with a consistent API over a
+        <b>callback</b> function that you need to supply.  Your
+        function should handle validation and throw an appropriate
+        exception if the value is not valid.
+<p/>
+        Note that you can pass multiple arguments to the constructor.
+        Any additional arguments that you pass besides <b>callback</b>
+        will be passed untouched to your callback function at
+        run-time.
+<p/>
+        Here's a simple example.  Let's say that you want to create a
+        validator that will only accept a word from a given list.
+<p/>
+        <div sample="DlValidator3"></div>
+<p/>
+        Run this sample and press ENTER in the input field to
+        validate.
+      </span>
+
+     </div>
+   </div>
+    </div>
+
+
+    <div class="static-methods">
+      <h2>Static functions</h2>
+   <div class="method">
+        <h3 id="Date:static_method">DlValidator.Date (<span class='param'>data</span>, <span class='param optional'>format</span>, <span class='param optional'>monthFirst</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">data</td>
+         <td class="doc"><span name="data">Value to validate</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">format</td>
+         <td class="doc"><span default="%Y-%m-%d" name="format" optional="1">Canonical date format (see <a href='api://Date.xml:type=object_method:func=print'>Date::print()</a>)</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">%Y-%m-%d</td>
+       </tr>
+       <tr>
+         <td class="name">monthFirst</td>
+         <td class="doc"><span default="false" name="monthFirst" optional="1"></span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">false</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+        Date parser/validator.  This validator is actually useful to
+        enable the user to quickly enter a date.  It tries to make up
+        a date from any input, though sometimes this fails.
+<p/>
+        Here's an example:
+<p/>
+        <div sample="DlValidator2"></div>
+      </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="Email:static_method">DlValidator.Email (<span class='param'>data</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">data</td>
+         <td class="doc"><span name="data"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+        Simple email address validator.
+      </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="Number:static_method">DlValidator.Number (<span class='param'>data</span>, <span class='param'>minVal</span>, <span class='param'>maxVal</span>, <span class='param'>integer</span>, <span class='param'>decimals</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">data</td>
+         <td class="doc"><span name="data">Value to validate</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">minVal</td>
+         <td class="doc"><span name="minVal">Minimum value</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">maxVal</td>
+         <td class="doc"><span name="maxVal">Maximum value</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">integer</td>
+         <td class="doc"><span name="integer">Accept integers only?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">decimals</td>
+         <td class="doc"><span name="decimals">Nr. of decimal digits</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          This method is actually a validator function that accepts
+          numbers only.  To use it you need to create a DlValidator
+          object for it.  Example:
+<p/>
+          <div sample="DlValidator1"></div>
+<p/>
+          The above validator will validate numbers between 0 and 10.
+          If the value is valid, it will format it to have 2 decimal
+          places (rounding it if needed).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="URL:static_method">DlValidator.URL (<span class='param'>data</span>, <span class='param'>args</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">data</td>
+         <td class="doc"><span name="data">Value to validate</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">args</td>
+         <td class="doc"><span name="args">Not used currently</span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          An URL validating callback function.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="getError:object_method">getError ()
+        </h3>
+     <div class="doc"><span>
+          Returns the last exception thrown by this validator.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getLastData:object_method">getLastData ()
+        </h3>
+     <div class="doc"><span>
+          Returns the last data string that was validated through this
+          validator.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getLastVal:object_method">getLastVal ()
+        </h3>
+     <div class="doc"><span>
+          Returns the last value that was returned from a validator
+          callback.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="ok:object_method">ok (<span class='param'>data</span>, <span class="varargs">…</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">data</td>
+         <td class="doc"><span name="data">Data to validate</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Runs the validator callback for the given <b>data</b>,
+          passing any other arguments that we got in constructor.
+          Returns true if the validation was successful, false
+          otherwise.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+<code id="DlValidator1" type="js">
+            var numVal = new DlValidator(
+                DlValidator.Number, // callback
+                0, // min val.
+                10, // max val.
+                false, // accept floats
+                2 // 2 decimal places
+            );
+          </code>
+<code canrun="true" id="DlValidator2" type="js">
+          var v = new DlValidator("Date", "%A, %b %e %Y");
+          var entry = new DlEntry({ parent: getDocCanvas(), size: 20, validators: [ v ] });
+          var cal = new DlCalendar({ parent: getDocCanvas() });
+          entry.addEventListener("onValidation", function() {
+              if (v._date)
+                  cal.selectDate(v._date);
+          });
+        </code>
+<code canrun="true" id="DlValidator3" type="js">
+          // validate value only if it can be found in the list of words
+          function myListValidator(value, words) {
+              // let's make it case insensitive
+              value = value.toLowerCase();
+              var found = words.foreach(function(w) {
+                  if (w.toLowerCase() == value)
+                      $RETURN(w);
+              });
+              if (found == null)
+                  // value not found
+                  throw new DlValidatorException(value + " not in [" + words.join(", ") + "]");
+              return found; // return the correct-case word
+          };
+
+          // now we have our generic function
+          // let's create the validator object
+
+          var validateFruits = new DlValidator(
+              myListValidator,
+              [ "Apple", "Orange", "Grapefruit" ]
+          );
+
+          // let's test it
+          var entry = new DlEntry({ parent     : getDocCanvas(),
+                                    validators : [ validateFruits ]});
+
+          entry.addEventListener("onKey-ENTER", function() {
+              if (!this.validate()) {
+                  print(this.validationError);
+              } else {
+                  print("OK");
+              }
+          });
+        </code>
+
+
+</sample>
+
+
+
+

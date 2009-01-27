@@ -1,0 +1,375 @@
+<sample>
+
+  <title>Compound widgets</title>
+
+  <text>
+
+    <p>
+      You might have noticed that we keep a lot of widgets very very
+      simple.  For example, the color picker is pretty basic—it
+      doesn't show you the hex values, nor does it allow one to enter
+      a color directly in RGB.  Nothing fancy — it's just an HSV-based
+      color picker.
+    </p>
+
+    <p>
+      In this sample we will create a more powerful color picker that
+      allows an end user to type the color in HEX, RGB, and will have
+      a small history of recently picked colors.  Users can also
+      drag'n'drop colors to customize their history.
+    </p>
+
+    <h2>Test it</h2>
+
+    <p>
+      Here is, basically, how our widget looks like:
+    </p>
+
+    <div sample="compound2" />
+
+    <p>
+      A more interesting sample is to combine it with a
+      〈DlButtonColorPicker〉 widget.  This one expects a
+      〈DlColorPickerHSV〉 widget, but we will make our new widget
+      export the same interface and events and thus they are
+      interchangeable:
+    </p>
+
+    <div sample="compound3" />
+
+    <h2>Source</h2>
+
+    <p>
+      Here is the source code for the <b>NiceColorPicker</b> widget.
+      The interesting thing about it is that it doesn't deal with DOM
+      directly at all: it doesn't write any HTML (except for the
+      tooltip) nor does it directly create any DOM elements.  It's
+      completely built on top of other widgets, which is why we called
+      it a “compound” widget.
+    </p>
+
+    <p>
+      This widget will export an api similar to 〈DlColorPickerHSV〉 so
+      it can be used with a 〈DlButtonColorPicker〉.  It might seem
+      strange that we encapsulate a 〈DlColorPickerHSV〉, rather than
+      inherit from it, but it makes sense because the look and
+      functionality of the new widget is radically different.  Many
+      times it's best to avoid inheritance. ;-)
+    </p>
+
+    <div sample="compound1" />
+
+  </text>
+
+  <code id="compound1" type="js"><![CDATA[
+    (function(){
+
+            // We must declare these events as they will be hooked from DlButtonColorPicker.
+            // not all of them are actually implemented.
+            var DEFAULT_EVENTS = [ "onSelect", "onHover", "onHoverOut", "onHueChange" ];
+
+            NiceColorPicker.inherits(DlContainer);
+            function NiceColorPicker(args) {
+                    if (args) {
+                            args.className = "DlWidget-3D";
+                            DlContainer.call(this, args);
+                            this.registerEvents(DEFAULT_EVENTS);
+                            this._updateCP = updateCP.clearingTimeout(25, this);
+                            this._init();
+                    }
+            };
+
+            eval(Dynarch.EXPORT("NiceColorPicker"));
+
+            // validator function that accepts hexadecimal RGB values in the form:
+            // 123456 or 123 (the later will be automatically converted to 112233
+            // to match CSS).
+
+            function validateHexRgb(data) {
+                    if (data.length != 3 && data.length != 6) {
+                            throw new DlValidatorException("Must have 3 or 6 hex characters");
+                    }
+                    if (!/^[0-9a-f]*$/i.test(data)) {
+                            throw new DlValidatorException("Must be a hexadecimal RRGGBB value");
+                    }
+                    if (data.length == 3) {
+                            data = data.charAt(0).repeat(2) +
+                                    data.charAt(1).repeat(2) +
+                                    data.charAt(2).repeat(2);
+                    }
+                    return data.toUpperCase();
+            };
+
+            // helper function to create a spinner button for 0..255 numbers
+
+            function new_byteSpinner(key) {
+                    return new DlSpinner({ size      : 3,
+                                           value     : 255,
+                                           minVal    : 0,
+                                           maxVal    : 255,
+                                           accessKey : key });
+            };
+
+            // using a template for the tooltip displayed by the color buttons in the history bar
+
+            var TOOLTIP_TEMPLATE = String.template(
+                    "<table>",
+                    "<tr>",
+                    "<td rowspan='4' style='background:#${hex}; width: 3em'></td>",
+                    "<td style='text-align:right'>Red:</td><td>${bytes[0]}</td></tr>",
+                    "<tr><td style='text-align:right'>Green:</td><td>${bytes[1]}</td></tr>",
+                    "<tr><td style='text-align:right'>Blue:</td><td>${bytes[2]}</td></tr>",
+                    "<tr><td style='text-align:right'>Hex:</td><td>#${hex}</td></tr>",
+                    "</table>",
+                    "You can drag this color",
+                    "<br />into your history."
+            );
+
+            // this function will run the template
+
+            function tooltipCallback() {
+                    // retrieving the actual color button is done with
+                    // this.args.widget, since this function is actually called
+                    // by a DlPopup object
+                    var rgb = this.args.widget.userData;
+                    return TOOLTIP_TEMPLATE({ bytes : DlColor.RGB2bytes(rgb),
+                                              hex   : DlColor.RGB2hex(rgb) });
+            };
+
+            // helper function to create a "color history widget".
+
+            var DRAG;
+            function new_colorHistWidget(parent) {
+                    if (!DRAG)
+                            DRAG = new ColorDrag({});
+                    var w = new DlWidget({ parent: parent,
+                                           drag: DRAG,
+                                           tooltip: tooltipCallback,
+                                           data: [ 1, 1, 1 ] });
+                    w.setStyle({ border      : "1px solid",
+                                 borderColor : "#333 #ddd #ddd #333",
+                                 background  : "white"
+                               });
+                    return w;
+            };
+
+            // this function creates the NiceColorPicker content widgets and
+            // assigns event listeners.
+
+            P._init = function() {
+                    var top_box = new DlVbox({ parent: this, borderSpacing: 5 });
+                    var box1 = new DlHbox({ parent: top_box });
+                    this._selectedColor = new_colorHistWidget(top_box);
+                    this._selectedColor.setStyle({ padding   : "2px 0",
+                                                   height    : "18px",
+                                                   textAlign : "center" });
+                    this._selectedColor.setUnselectable();
+                    this._selectedColor.addEventListener("onClick", onSelectedColorClick.$(this));
+                    top_box.addSeparator();
+                    var history_box = new DlHbox({ parent: top_box, align: "center" });
+                    top_box.addSeparator();
+                    var btn_box = new DlHbox({ parent: top_box });
+                    this._cp = new DlColorPickerHSV({ parent: box1 });
+                    var grid = new DlFieldGrid({ parent: box1 });
+                    grid.setStyle({ marginLeft: "5px" });
+
+                    this._redEntry = new_byteSpinner("ALT 'r'");
+                    grid.addField({ label: "<u>R</u>ed:", widget: this._redEntry });
+
+                    this._greenEntry = new_byteSpinner("ALT 'g'");
+                    grid.addField({ label: "<u>G</u>reen:", widget: this._greenEntry });
+
+                    this._blueEntry = new_byteSpinner("ALT 'b'");
+                    grid.addField({ label: "<u>B</u>lue:", widget: this._blueEntry });
+
+                    grid.addSeparator();
+
+                    this._hexEntry = new DlEntry({ size: 6, value: "FFFFFF", data: "X",
+                                                   accessKey: "ALT 'x'",
+                                                   validators: [ new DlValidator(validateHexRgb) ]
+                                                 });
+                    grid.addField({ label: "HE<u>X</u>:", widget: this._hexEntry });
+
+                    var listener = onEntryChange.$(null, this);
+                    this._redEntry.addEventListener("onChange", listener);
+                    this._greenEntry.addEventListener("onChange", listener);
+                    this._blueEntry.addEventListener("onChange", listener);
+                    this._hexEntry.addEventListener("onChange", listener);
+
+                    var history = this._historyWidgets = [];
+
+                    (10).times(function(i){
+                            var b = new_colorHistWidget(history_box);
+                            b._acceptsColorDrop = true;
+                            b.setStyle({ width  : "18px",
+                                         height : "18px" });
+                            b.addEventListener("onClick", onHistClick.$(this, b));
+                            history.push(b);
+                            if (i > 0)
+                                    b.setStyle("marginLeft", "5px");
+                    }, this);
+
+                    this._color = [ 1, 1, 1 ];
+
+                    this._cp.addEventListener({ onSelect    : onCpSelect.$(this),
+                                                onHover     : onCpHover.$(this),
+                                                onHoverOut  : onCpHoverOut.$(this),
+                                                onHueChange : onCpHueChange.$(this)
+                                              });
+
+                    btn_box.addFiller();
+                    var ok = new DlButton({ parent    : btn_box,
+                                            label     : "OK".fixedWidth("5em"),
+                                            focusable : true });
+                    ok.addEventListener("onClick", okClicked.$(this));
+
+                    btn_box.addSpace();
+                    var cancel = new DlButton({ parent    : btn_box,
+                                                label     : "Cancel".fixedWidth("5em"),
+                                                focusable : true });
+                    cancel.addEventListener("onClick", cancelClicked.$(this));
+            };
+
+            P._updateEntries = function(rgb) {
+                    var bytes = DlColor.RGB2bytes(rgb);
+                    this._redEntry.setValue(bytes[0], true);
+                    this._greenEntry.setValue(bytes[1], true);
+                    this._blueEntry.setValue(bytes[2], true);
+                    this._hexEntry.setValue(DlColor.RGB2hex(rgb), true);
+                    this._selectedColor.setStyle({ background: DlColor.RGB2color(rgb) });
+                    this._selectedColor.userData = rgb;
+            };
+
+            P.setRGB = function(rgb, nohooks) {
+                    this._color = rgb;
+                    var color = DlColor.RGB2color(rgb);
+                    this._updateEntries(rgb);
+                    var hsv = DlColor.RGB2HSV(rgb);
+                    this._cp.setHSV(hsv);
+                    if (!nohooks)
+                            this.callHooks("onSelect", rgb, hsv, color);
+            };
+
+            P.setHSV = function(hsv) {
+                    var rgb = DlColor.HSV2RGB(hsv);
+                    return this.setRGB(rgb, true);
+            };
+
+            function onCpSelect(rgb, hsv, cssColor) {
+                    this.setRGB(rgb, true);
+                    this._selectedColor.flash();
+            };
+
+            function onCpHover(rgb, hsv, cssColor) {
+                    this._updateEntries(rgb);
+                    // this.callHooks("onHover", rgb, hsv, cssColor);
+            };
+
+            function onCpHoverOut() {
+                    this._updateEntries(this._color);
+                    // this.callHooks("onHoverOut");
+            };
+
+            function onCpHueChange(hue) {
+                    var hsv = DlColor.RGB2HSV(this._color);
+                    hsv[0] = hue;
+                    var rgb = DlColor.HSV2RGB(hsv);
+                    this._color = rgb;
+                    this._updateEntries(rgb, true);
+            };
+
+            // in the following function, "this" will be a reference to the entry,
+            // since it's an entry change event listener.  The first argument will
+            // actually be the reference to our NiceColorPicker object.
+
+            function onEntryChange(ncp) {
+                    var rgb;
+                    if (this.userData == "X") {
+                            // it's the hex entry
+                            rgb = DlColor.color2RGB("#" + this.getValue());
+                    } else {
+                            rgb = [ ncp._redEntry.getValue() / 255,
+                                    ncp._greenEntry.getValue() / 255,
+                                    ncp._blueEntry.getValue() / 255 ];
+                    }
+                    ncp._updateEntries(rgb);
+                    var hsv = DlColor.RGB2HSV(rgb);
+                    ncp._updateCP(hsv);
+            };
+
+            function onHistClick(b) {
+                    this.setRGB(b.userData);
+            };
+
+            function okClicked() {
+                    // reset the color and call onSelect hooks
+                    this.setRGB(this._selectedColor.userData);
+            };
+
+            function onSelectedColorClick() {
+                    // same as OK for now.
+                    this.setRGB(this._selectedColor.userData);
+            };
+
+            function cancelClicked() {
+                    DlPopup.clearAllPopups();
+            };
+
+            function updateCP(hsv) {
+                    this._cp.setHSV(hsv);
+            };
+
+            // Drag'n'Drop support for managing the history
+
+            // Note it's not necessary to export the ColorDrag object.
+            // Only one instance will be ever created and it's inside
+            // our private code.
+
+            ColorDrag.inherits(DlDrag);
+            function ColorDrag(args) {
+                    DlDrag.call(this, args);
+            };
+
+            ColorDrag.inject({
+
+                    dropOK : function(source, ev, target) {
+                            this.canDrop = false;
+                            if (target) {
+                                    this.canDrop = target._acceptsColorDrop;
+                                    if (this.canDrop) {
+                                            this.target = target;
+                                    }
+                            }
+                            return this.canDrop;
+                    },
+
+                    doDrop : function(source, ev) {
+                            this.target.setStyle("background", DlColor.RGB2color(source.userData));
+                            this.target.userData = source.userData;
+                    },
+
+                    makeElementCopy : function(widget, ev) {
+                            var el = DlDrag.prototype.makeElementCopy.call(this, widget, ev);
+                            el.innerHTML = "";
+                            el.style.width = "18px";
+                            el.style.height = "18px";
+                    }
+
+            });
+
+    })();
+  ]]></code>
+
+  <code id="compound2" type="js" canrun="true"><![CDATA[
+    //@include compound1
+    new NiceColorPicker({ parent: getDocCanvas() });
+  ]]></code>
+
+  <code id="compound3" type="js" canrun="true"><![CDATA[
+    //@include compound1
+    var btn = new DlButtonColorPicker({ label: "Select color", parent: getDocCanvas() });
+    var cp = new NiceColorPicker({});
+    btn.setColorPicker(cp);
+  ]]></code>
+
+</sample>

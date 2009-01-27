@@ -1,0 +1,46 @@
+<api file="htmlutils.js">
+  <object name="DlHtmlUtils">
+    <constructor></constructor>
+    <static-methods>
+      <method hash="b544eadeeb924e684f92b78cdd1c28cb" name="canDeleteContent">
+        <param name="tag"></param>
+        <doc></doc>
+      </method>
+      <method hash="24c1a5376d08bb02a0b7a0b8f9ac344e" name="canDeleteFullNode">
+        <param name="tag"></param>
+        <doc></doc>
+      </method>
+      <method hash="0b048590c0375f606d049e5ec5ecfd17" name="canStripNode">
+        <param name="tag"></param>
+        <doc></doc>
+      </method>
+      <method hash="e7c4b10d28438aa143d0335f6dbfe05b" name="getHTML">
+        <param name="root"></param>
+        <param name="outputRoot"></param>
+        <param name="withMeta"></param>
+        <doc></doc>
+      </method>
+      <method hash="b61e47d2f44652b427e43e73e006c3ff" name="getInnerText">
+        <param name="el"></param>
+        <doc></doc>
+      </method>
+      <method hash="851e818e8ed44278e3e2c712f86cad91" name="getText">
+        <param name="node"></param>
+        <doc></doc>
+      </method>
+      <method hash="df732728633a787c930ff50787556aa7" name="htmlEncode">
+        <param name="s"></param>
+        <doc></doc>
+      </method>
+      <method hash="a91bd600e778c363afa287682103b42c" name="isBlockElement">
+        <param name="el"></param>
+        <doc></doc>
+      </method>
+      <method hash="56fb6951b968b763f9fe0cbd897c4a7f" name="needsClosingTag">
+        <param name="el"></param>
+        <doc></doc>
+      </method>
+    </static-methods>
+    <object-methods></object-methods>
+  </object>
+</api>

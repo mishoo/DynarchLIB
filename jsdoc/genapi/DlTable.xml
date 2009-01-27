@@ -1,0 +1,244 @@
+<sample>
+
+  <title>DlTable</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlTable</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlContainer〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈table.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈container.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">align</td>
+         <td class="doc"><span default="null" name="align"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">cellPadding</td>
+         <td class="doc"><span default="null" name="cellPadding"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">cellSpacing</td>
+         <td class="doc"><span default="null" name="cellSpacing"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+      <param default="null" name="align"></param>
+      <param default="null" name="cellPadding"></param>
+      <param default="null" name="cellSpacing"></param>
+    </span>
+
+     </div>
+   </div>
+    </div>
+
+
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="addCell:object_method">addCell (<span class='param'>row</span>, <span class='param'>align</span>, <span class='param'>valign</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">row</td>
+         <td class="doc"><span name="row"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">align</td>
+         <td class="doc"><span name="align"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">valign</td>
+         <td class="doc"><span name="valign"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="addRow:object_method">addRow ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="addSeparator:object_method">addSeparator (<span class='param'>span</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">span</td>
+         <td class="doc"><span name="span"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getColSpan:object_method">getColSpan ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getContentElement:object_method">getContentElement ()
+        <div class="overrides">
+             (overrides <a href="api://DlWidget.xml:type=object_method:func=getContentElement">getContentElement in DlWidget</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getRow:object_method">getRow (<span class='param'>index</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">index</td>
+         <td class="doc"><span name="index"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setColSpan:object_method">setColSpan (<span class='param'>colSpan</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">colSpan</td>
+         <td class="doc"><span name="colSpan"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_createElement:object_method">_createElement ()
+        <div class="overrides">
+             (overrides <a href="api://DlContainer.xml:type=object_method:func=_createElement">_createElement in DlContainer</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+
+
+</sample>
+
+
+
+

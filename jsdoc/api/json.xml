@@ -1,0 +1,21 @@
+<api file="json.js">
+  <object name="DlJSON">
+    <constructor></constructor>
+    <static-methods>
+      <method hash="6fa3ba26fd00b5311bd3d7f0972e8b7b" name="decode">
+        <param name="str"></param>
+        <param name="safe"></param>
+        <doc></doc>
+      </method>
+      <method hash="0acac489d8e562ea41a86ee11ba4147d" name="domToObject">
+        <param name="el"></param>
+        <doc></doc>
+      </method>
+      <method hash="97ca9ede2076a6bce2eee1282c02d8f1" name="encode">
+        <param name="obj"></param>
+        <doc></doc>
+      </method>
+    </static-methods>
+    <object-methods></object-methods>
+  </object>
+</api>

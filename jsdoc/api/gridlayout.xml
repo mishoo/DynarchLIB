@@ -1,0 +1,41 @@
+<api file="gridlayout.js">
+  <object base="DlLayout" name="DlGridLayout">
+    <constructor>
+      <param default="1" name="cellPadding"></param>
+      <param default="0" name="cellSpacing"></param>
+      <param default="null" name="layout"></param>
+      <param default="null" name="layoutHTML"></param>
+    </constructor>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="50d808de99ff2db3ac8522a2fe9ed4f1" name="doLayout">
+        <doc></doc>
+      </method>
+      <method hash="c9631790205680fe913456249ab30a97" name="getCellElement">
+        <param name="row"></param>
+        <param name="col"></param>
+        <doc></doc>
+      </method>
+      <method hash="77ebdfd474c1c5ba18308f56fe741bb6" name="getTableElement">
+        <doc></doc>
+      </method>
+      <method hash="11bb4b7926501c1e8eb57455b8d5eebb" name="showWidgets" varargs="1">
+        <!--XXX: uses *arguments*, check for missing params-->
+        <param name="show"></param>
+        <doc></doc>
+      </method>
+      <method hash="68035f71b3bcf3bc5a5cca0a48d9c8f3" internal="1" name="_appendWidgetElement">
+        <param name="w"></param>
+        <param name="pos"></param>
+        <doc></doc>
+      </method>
+      <method hash="5d5846b6650d79dc9181417367c0a65f" internal="1" name="_createElement">
+        <doc></doc>
+      </method>
+      <method hash="38ec22a21bacbefbbcf3621bf6132a9d" internal="1" name="_removeWidgetElement">
+        <param name="w"></param>
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

@@ -1,0 +1,135 @@
+<sample>
+
+  <title>The Widget System</title>
+
+  <text>
+    <p>
+      DynarchLIB comes with a rich set of widgets (user interface
+      controls), including:
+    </p>
+
+    <ul>
+
+      <li>
+        Buttons of all kinds — push buttons, checkboxes, radio
+        buttons, drop-down buttons
+      </li>
+
+      <li>
+        Various kinds of menus.
+      </li>
+
+      <li>
+        A simple date picker.
+      </li>
+
+      <li>
+        Text entry widget — can be a standard INPUT or TEXTAREA
+        element, with support for validator functions.
+      </li>
+
+      <li>
+        Spinner widget — a numerical text entry widget with + and -
+        buttons.
+      </li>
+
+      <li>
+        HSV-based color picker.
+      </li>
+
+      <li>
+        A tree widget.
+      </li>
+
+      <li>
+        A layout manager.
+      </li>
+
+      <li>
+        A simple dialog system.
+      </li>
+
+    </ul>
+
+    <p>
+      All widgets inherit from the DlWidget object, which in turn
+      inherits from DlEventProxy.  This makes all widgets be able to
+      emit events.  A global DOM event handler that DynarchLIB
+      registers will route appropriate events to widgets.  Here is an
+      example that uses a basic widget to simulate a button:
+    </p>
+
+    <div sample="sample1" />
+
+    <p>
+      If that seems verbose, here's a more concise sample that does
+      exactly the same thing.  The difference is that it assigns the
+      same handler for all events, and inside it checks for the event
+      type.
+    </p>
+
+    <div sample="sample2" />
+
+    <p>
+      Of course, the <b>DlButton</b> widget does all this (and a lot
+      more) so you should never need to implement your own Button
+      class; just wanted to point out how it can be done.
+    </p>
+
+  </text>
+
+  <code id="sample1" type="js" canrun="true" canvas="true"><![CDATA[
+    var foo = new DlWidget({ parent: getDocCanvas() });
+    foo.setSize({ x: 50 });
+    foo.setStyle({ border  : "2px solid red",
+                   padding : "10px" });
+    foo.setContent("Try me!");
+
+    // add a "mouse enter" listener that sets an yellow background
+    foo.addEventListener("onMouseEnter", function() {
+            this.getElement().style.backgroundColor = "yellow";
+    });
+
+    // add a "mouse leave" listener that clears the background color
+    foo.addEventListener("onMouseLeave", function() {
+            this.getElement().style.backgroundColor = "";
+    });
+
+    foo.addEventListener("onMouseDown", function() {
+            this.getElement().style.backgroundColor = "blue";
+    });
+
+    foo.addEventListener("onMouseUp", function() {
+            this.getElement().style.backgroundColor = "yellow";
+    });
+
+    foo.addEventListener("onClick", function() {
+            print("You clicked me!");
+    });
+  ]]></code>
+
+  <code id="sample2" type="js" canrun="true" canvas="true"><![CDATA[
+    var foo = new DlWidget({ parent: getDocCanvas() });
+    foo.setSize({ x: 50 });
+    foo.setStyle({ border  : "2px solid red",
+                   padding : "10px" });
+    foo.setContent("Try me!");
+
+    foo.addEventListener(
+            [ "onMouseEnter", "onMouseLeave", "onMouseDown", "onMouseUp", "onClick" ],
+            function(ev) {
+                    var color = null;
+                    switch (ev.dl_type) {
+                        case "onMouseEnter" : color = "yellow"; break;
+                        case "onMouseLeave" : color = ""; break;
+                        case "onMouseDown"  : color = "blue"; break;
+                        case "onMouseUp"    : color = "yellow"; break;
+                        case "onClick"      : print("You clicked me!");
+                    }
+                    if (color != null) {
+                            this.getElement().style.backgroundColor = color;
+                    }
+            });
+  ]]></code>
+
+</sample>

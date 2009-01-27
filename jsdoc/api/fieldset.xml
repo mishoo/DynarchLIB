@@ -1,0 +1,23 @@
+<api file="fieldset.js">
+  <object base="DlContainer" name="DlFieldset">
+    <constructor>
+      <param default="&#34;DlFieldset&#34;" name="label"></param>
+    </constructor>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="e3048207a168cb6f401374b319dc1ed2" name="getContentElement">
+        <doc></doc>
+      </method>
+      <method hash="eb0ddd70287919dcc89fdaa81fb13c28" name="getLabelElement">
+        <doc></doc>
+      </method>
+      <method hash="1ae363ca94c2841a5119457f0ff6c28f" name="setSize">
+        <param name="sz"></param>
+        <doc></doc>
+      </method>
+      <method hash="2a788fa17de5a84837932f75fef31e14" internal="1" name="_createElement">
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

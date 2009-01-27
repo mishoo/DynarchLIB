@@ -1,0 +1,181 @@
+<sample>
+
+  <title>DlFlashUtils</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlFlashUtils</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlEventProxy〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈flashutils.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈singleton.js, eventproxy.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+     <div class="doc"><span>
+        This object is a <a href='api://DlSingleton.xml'>globalized singleton</a>, which
+        means you can't manually construct it.  You get a reference to
+        it anytime by calling the DlFlashUtils() global function.
+<p/>
+        You shouldn't need to use this object directly, except for
+        initializing.  To make use of any other Flash utilities, you
+        need to call the following <em>during page load</em>:
+<p/>
+        <div sample="DlFlashUtils2"></div>
+<p/>
+        See the <a href='api://DlFlashUtils.xml:type=object_method:func=init'>init()</a> method.
+      </span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="events">
+      <h2>Events</h2>
+   <div class="method">
+        <h3 id="onLoad:object_event">onLoad ()
+        </h3>
+     <div class="doc"><span>
+          Triggered when the Flash applet has been successfully
+          loaded.  After this event is triggered you can safely use
+          the DynarchLIB Flash utilities (i.e. <a href='api://DlFlashStore.xml'>DlFlashStore</a> or
+          <a href='api://DlSocket.xml'>DlSocket</a>).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onStorageStatus:object_event">onStorageStatus (<span class='param'>info</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">info</td>
+         <td class="doc"><span name="info">Status information</span>
+</td>
+         <td class="type">[<b>〈Hash〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Triggered when an user accepts or refuses to allow storage
+          space (see <a href='api://DlFlashStore.xml'>DlFlashStore</a>).
+<p/>
+          <b>info</b> is directly passed by Flash and contains two
+          properties:
+<p/>
+          <ul>
+            <li><b>level</b> — usually "error"</li>
+            <li><b>code</b> — "SharedObject.Flush.Success" on success,
+            or "SharedObject.Flush.Failed" on failure.</li>
+          </ul>
+<p/>
+          See more <a href="http://www.adobe.com/support/flash/action_scripts/actionscript_dictionary/actionscript_dictionary648.html" target="_blank">information on SharedObject</a> at
+          Adobe.com.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="getObject:object_method">getObject ()
+        </h3>
+     <div class="doc"><span>
+          Returns the Flash movie DOM element.  For IE this is an
+          &lt;object&gt; element, and for all other browsers it'll be
+          an &lt;embed&gt; element.  This method is internally used by
+          our Flash utilities, you shouldn't need to call it directly.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="init:object_method">init ()
+        </h3>
+     <div class="doc"><span>
+          If you intend to use our Flash utilities, you need to call
+          this method <em>during page load</em>.  For example,
+          immediately after including DynarchLIB:
+<p/>
+          <div sample="DlFlashUtils1"></div>
+<p/>
+          This is a requirement for Internet Explorer, which won't
+          allow Flash-to-JS communication unless the applet is loaded
+          before the page finished loading.
+<p/>
+          After successful initialization, this method will trigger
+          the <b>onLoad</b> event.  It's safe at that point to call
+          any of our Flash utilities.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="isSupported:object_method">isSupported ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: boolean) 
+           <b><span><b>true</b> if the required version of Flash is installed, <b>false</b> otherwise</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Call this method to check if the current browser supports
+          our Flash utilities.  It returns <b>true</b> if so,
+          <b>false</b> otherwise.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+<code id="DlFlashUtils1" type="html"><![CDATA[
+            <script src="/DynarchLIB/js/thelib.js"></script>
+            <script>DlFlashUtils().init()</script>
+          ]]></code>
+<code id="DlFlashUtils2" type="js">
+          DlFlashUtils().init();
+        </code>
+
+
+</sample>
+
+
+
+

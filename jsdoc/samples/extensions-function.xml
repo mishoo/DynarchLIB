@@ -1,0 +1,218 @@
+<sample>
+
+  <title>Function extensions</title>
+
+  <text>
+
+    <p>
+      This is a little more advanced, because in order to understand
+      it you have to understand both JavaScript functions and objects.
+      Turns out, learning these notions is somewhat recursive,
+      because, a function is an object, and an object is—in a way—a
+      function.
+    </p>
+
+    <p>
+      So, because functions are objects, turns out they have methods.
+      You can call a function in several ways in JavaScript.  Example:
+    </p>
+
+    <div sample="functions1" />
+
+    <p>
+      What we can conclude from the code above, is that the object
+      which <b>this</b> keyword refers to in a function is decided at
+      function call time, through the way of calling it.  So we can
+      make an ordinary function be called “in the context” of certain
+      object, by either assigning it to the object as a property and
+      use the dot notation to call it (obj.whoIsThis()), or by using
+      the function's <b>call</b> method (and the object is given as
+      the first argument).
+    </p>
+
+    <p>
+      So, in JavaScript programming, a classical problem is with the
+      DOM event handlers.  They expect a plain function, but as we all
+      know, we can't do this:
+    </p>
+
+    <pre name="dlhl" class="js">
+div.onclick = this.doSomething;
+    </pre>
+
+    <p>
+      because when doSomething() gets called as an effect of clicking
+      the div, <b>this</b> in that function won't refer to our object,
+      but to the DIV element instead.  So the classical solution
+      (which by the way creates grave memory leaks) is the following:
+    </p>
+
+    <pre name="dlhl" class="js">
+var self = this;
+div.onclick = function() {
+    self.doSomething();
+};
+    </pre>
+
+    <h2>The Function's $ (closure) method</h2>
+
+    <p>
+      So, if you did any kind of non-trivial JavaScript programming,
+      you know by now that one of the most frequent problems is making
+      sure an event handler gets called in the context of the right
+      object.  For this, DynarchLIB introduces the (spartan named) “$”
+      method.  You use it like this:
+    </p>
+
+    <pre name="dlhl" class="js">
+div.onclick = this.doSomething.$(this);
+    </pre>
+
+    <p class="dimnote">
+      I gave it a really short name because I tend to use it a lot.
+      And also because—when I invented it—I wasn't aware of the
+      “bind()” method in Prototype.  I agree that bind() might be a
+      better name.  However, we also have "closure" as an alias.
+    </p>
+
+    <p>
+      So what does it do?  It creates a new function that when called
+      will call the original function, in the context of the given
+      object, passing to it any other arguments.  Sounds confusing
+      enough?  Then, we need samples:
+    </p>
+
+    <div sample="closure" />
+
+    <p>
+      So ashow() is a plain function that binds the "show()" method in
+      <b>MyObject</b> with the <b>a</b> object instance and the "foo"
+      string as first argument.  Calling ashow() is now equivalent of
+      calling a.show("foo"), but note that we don't need to pass the
+      argument, nor do we need to specify the object instance.
+    </p>
+
+    <p>
+      In a way, we can say that ashow() is a function that stores
+      context.  At any given time we call it, it will access the
+      <b>a</b> object instance and the "foo" string, and we don't even
+      need to care wether we did or did not save a reference to these
+      values.
+    </p>
+
+    <p>
+      This is the most important addition that we bring to the
+      Function object and you really want to get it.  If it's still
+      confusing, go back and read this again...
+    </p>
+
+    <p>
+      Here is another sample which shows how this is useful.  Suppose
+      <b>closeBtn</b> is a <a
+      href="sample://widgets-buttons.xml">button widget</a> and
+      <b>dialog</b> is a <a href="sample://widgets-dialogs.xml">dialog
+      widget</a>, and we want to close (hide) the dialog when the
+      button is pressed.  We can do:
+    </p>
+
+    <pre name="dlhl" class="js">
+closeBtn.addEventListener("onClick", function() {
+    dialog.hide();
+});
+    </pre>
+
+    <p>
+      but it's shorter like this:
+    </p>
+
+    <pre name="dlhl" class="js">
+closeBtn.addEventListener("onClick", dialog.hide.$(dialog));
+    </pre>
+
+    <p>
+      We created an event listener that hides that specific dialog—no
+      need to write an explicit function.  And another, last sample.
+      Let's say that when the button is clicked, we want it to change
+      its label to "something else", we can do this:
+    </p>
+
+    <pre name="dlhl" class="js">
+button.addEventListener("onClick", function() {
+    button.label("something else");
+});
+    </pre>
+
+    <p>
+      but through the wonders of the $ method, we can also write it
+      like this:
+    </p>
+
+    <pre name="dlhl" class="js">
+button.addEventListener("onClick", button.label.$(button, "something else"));
+    </pre>
+
+    <p class="dimnote">
+      You'll want to be careful though if you define event handlers
+      like this, because at call time, additional arguments can be
+      passed.  For example, the onClick hooks get an additional
+      "event" argument, and if your handler receives an optional
+      argument you can get into some really hard to debug trouble.
+    </p>
+
+    <h2>Function's $C method</h2>
+
+    <p>
+      The <b>$C</b> method is very similar to <b>$</b>, but it doesn't
+      care about the object.  It's useful in those cases where you
+      don't care that your function gets called in the context of a
+      certain object—you just want to pass some arguments to it.  Any
+      arguments that you pass to <b>$C</b> will be passed untouched to
+      the closure when it runs.
+    </p>
+
+  </text>
+
+  <code id="functions1" type="js" canrun="true"><![CDATA[
+// note that we're using “this” in a non-method function
+// this is possible, because, methods are nothing else than
+// plain functions
+
+function whoIsThis(arg) {
+    alert(this + " got " + arg);
+}
+
+// this will say something like "[object Window] got foo"
+whoIsThis("foo");
+
+// this will say "foo got bar"
+whoIsThis.call("foo", "bar");
+
+var obj = new String("I");
+obj.whoIsThis = whoIsThis;
+obj.whoIsThis("apples"); // this will say "I got apples"
+  ]]></code>
+
+  <code id="closure" type="js" canrun="true"><![CDATA[
+function MyObject(id) {
+    this.id = id;
+};
+
+MyObject.prototype.show = function(arg1, arg2) {
+    alert(this.id + " got " + arg1 + " and " + arg2);
+};
+
+var a = new MyObject("A");
+var b = new MyObject("B");
+
+var ashow = a.show.$(a, "foo");
+var bshow = b.show.$(b, "bar");
+
+// could also write it like this:
+//     var ashow = a.show.closure(a, "foo")
+// because "closure" is an alias for "$"
+
+ashow("stuff"); // displays "A got foo and stuff"
+bshow("something"); // displays "B got bar and something"
+  ]]></code>
+
+</sample>

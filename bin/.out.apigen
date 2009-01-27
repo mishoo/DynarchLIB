@@ -1,0 +1,445 @@
+abstractbutton.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+animation.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+box.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+button.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+buttoncalendar.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+buttoncolorpicker.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+buttonmenu.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+calendar.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+checkbox.xml: XXX: +1, objects(+0 -0) args(+0 -1) methods(+0 -0) events(+0 -0) params(+0 -0)
+DEL: constructor / param : classes
+
+color.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+colorpickerhsv.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+completionentry.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+console.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+container.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+datagrid.xml: XXX: +0, objects(+7 -0) args(+29 -0) methods(+194 -0) events(+8 -0) params(+96 -0)
+NEW: api / object : DlRecord
+NEW: constructor / param : data
+NEW: constructor / param : recordSet
+NEW: events / event : onChange
+NEW: events / event : onInsert
+NEW: events / event : onDelete
+NEW: object-methods / method : compareTo
+NEW: method / param : rec
+NEW: method / param : col
+NEW: object-methods / method : get
+NEW: method / param : key
+NEW: object-methods / method : id
+NEW: object-methods / method : set
+NEW: method / param : key
+NEW: method / param : val
+NEW: method / param : nohooks
+NEW: api / object : DlRecordCache
+NEW: constructor / param : data
+NEW: object-methods / method : formatHTML
+NEW: method / param : rec
+NEW: method / param : col
+NEW: method / param : buf
+NEW: object-methods / method : get
+NEW: method / param : id
+NEW: object-methods / method : getCellClass
+NEW: method / param : rec
+NEW: method / param : col
+NEW: object-methods / method : getInsertPos
+NEW: method / param : rec
+NEW: object-methods / method : getRecClass
+NEW: method / param : rec
+NEW: object-methods / method : getRecords
+NEW: method / param : ids
+NEW: method / param : callback
+NEW: method / param : obj
+NEW: object-methods / method : insert
+NEW: method / param : rec
+NEW: method / param : where
+NEW: object-methods / method : remove
+NEW: method / param : id
+NEW: object-methods / method : sort
+NEW: method / param : ids
+NEW: method / param : col
+NEW: method / param : prev
+NEW: method / param : rev
+NEW: method / param : callback
+NEW: method / param : obj
+NEW: object-methods / method : _init
+NEW: api / object : DlDataGridHeadLabel
+NEW: constructor / param : classes
+NEW: constructor / param : col
+NEW: constructor / param : focusable
+NEW: constructor / param : noCapture
+NEW: events / event : onChange
+NEW: events / event : onVisibility
+NEW: static-methods / method : _on_headMouseLeave
+NEW: method / param : ev
+NEW: static-methods / method : _on_headMouseMove
+NEW: method / param : ev
+NEW: object-methods / method : label
+NEW: method / param : label
+NEW: object-methods / method : setWidth
+NEW: method / param : w
+NEW: object-methods / method : _getContextMenu
+NEW: object-methods / method : _onClick
+NEW: api / object : DlGridCol
+NEW: constructor / param : cssRule
+NEW: constructor / param : iconClass
+NEW: constructor / param : id
+NEW: constructor / param : label
+NEW: constructor / param : resizable
+NEW: constructor / param : sortable
+NEW: constructor / param : style
+NEW: constructor / param : tooltip
+NEW: constructor / param : visible
+NEW: constructor / param : width
+NEW: object-methods / method : getIconClass
+NEW: object-methods / method : getLabel
+NEW: object-methods / method : getStyle
+NEW: method / param : key
+NEW: method / param : def
+NEW: object-methods / method : getTooltip
+NEW: object-methods / method : getWidth
+NEW: object-methods / method : id
+NEW: object-methods / method : isResizable
+NEW: object-methods / method : isSortable
+NEW: object-methods / method : isVisible
+NEW: object-methods / method : setVisible
+NEW: method / param : v
+NEW: object-methods / method : sort
+NEW: api / object : DlGridDragCol
+NEW: constructor / param : args
+NEW: events / event : onChange
+NEW: events / event : onReset
+NEW: object-methods / method : doDrop
+NEW: method / param : widget
+NEW: method / param : ev
+NEW: object-methods / method : dropOK
+NEW: method / param : widget
+NEW: method / param : ev
+NEW: method / param : target
+NEW: method / param : inside
+NEW: object-methods / method : moving
+NEW: method / param : widget
+NEW: method / param : ev
+NEW: object-methods / method : reset
+NEW: object-methods / method : startOK
+NEW: method / param : widget
+NEW: method / param : ev
+NEW: api / object : DlSelectionModel
+NEW: constructor / param : multiple
+NEW: constructor / param : sel
+NEW: events / event : onBodyDblClick
+NEW: object-methods / method : clear
+NEW: object-methods / method : filter
+NEW: method / param : h
+NEW: object-methods / method : get
+NEW: object-methods / method : getArray
+NEW: object-methods / method : isSelected
+NEW: method / param : id
+NEW: object-methods / method : reset
+NEW: method / param : ids
+NEW: object-methods / method : select
+NEW: method / param : id
+NEW: object-methods / method : size
+NEW: object-methods / method : toggle
+NEW: method / param : id
+NEW: object-methods / method : unselect
+NEW: method / param : id
+NEW: api / object : DlDataGrid
+NEW: constructor / param : cols
+NEW: constructor / param : data
+NEW: constructor / param : focusable
+NEW: constructor / param : headType
+NEW: constructor / param : page
+NEW: constructor / param : records
+NEW: constructor / param : rpp
+NEW: constructor / param : selection
+NEW: constructor / param : virtualScrolling
+NEW: object-methods / method : displayPage
+NEW: method / param : page
+NEW: object-methods / method : getBodyDiv
+NEW: object-methods / method : getBoundRecords
+NEW: object-methods / method : getCol
+NEW: method / param : col
+NEW: object-methods / method : getColWidth
+NEW: method / param : col
+NEW: object-methods / method : getHeaderDiv
+NEW: object-methods / method : getHeaderRow
+NEW: object-methods / method : getHeaderTable
+NEW: object-methods / method : getNPages
+NEW: object-methods / method : getNRecords
+NEW: object-methods / method : getRec
+NEW: method / param : rec
+NEW: object-methods / method : getRowElement
+NEW: method / param : rec_id
+NEW: object-methods / method : getRowsContainer
+NEW: object-methods / method : initWidths
+NEW: object-methods / method : rec_isSelected
+NEW: method / param : rec
+NEW: object-methods / method : refreshDisplay
+NEW: object-methods / method : reorderColumn
+NEW: method / param : src
+NEW: method / param : dest
+NEW: method / param : after
+NEW: object-methods / method : resetIDS
+NEW: method / param : ids
+NEW: object-methods / method : scrollEnd
+NEW: object-methods / method : scrollHome
+NEW: object-methods / method : scrollPage
+NEW: method / param : page
+NEW: object-methods / method : scrollToRecord
+NEW: method / param : rec_id
+NEW: method / param : where
+NEW: object-methods / method : setColVisible
+NEW: method / param : col
+NEW: method / param : v
+NEW: object-methods / method : setColWidth
+NEW: method / param : col
+NEW: method / param : w
+NEW: object-methods / method : setSelectionModel
+NEW: method / param : sel
+NEW: object-methods / method : setSortColumn
+NEW: method / param : col
+NEW: method / param : rev
+NEW: object-methods / method : __doLayout
+NEW: object-methods / method : _body_onDblClick
+NEW: method / param : ev
+NEW: object-methods / method : _body_onMouseDown
+NEW: method / param : ev
+NEW: object-methods / method : _body_onMouseLeave
+NEW: method / param : ev
+NEW: object-methods / method : _body_onMouseOut
+NEW: method / param : ev
+NEW: object-methods / method : _body_onMouseOver
+NEW: method / param : ev
+NEW: object-methods / method : _computeColPos
+NEW: object-methods / method : _createElement
+NEW: object-methods / method : _data_onChange
+NEW: method / param : rec /*
+NEW: method / param : key
+NEW: method / param : val
+NEW: method / param : old */
+NEW: object-methods / method : _data_onDelete
+NEW: method / param : id
+NEW: object-methods / method : _data_onInsert
+NEW: method / param : rec
+NEW: method / param : where
+NEW: object-methods / method : _display_ids
+NEW: method / param : ids
+NEW: method / param : vscroll
+NEW: object-methods / method : _fetchRowContentHTML
+NEW: method / param : buf
+NEW: method / param : rec
+NEW: object-methods / method : _fetchRowHTML
+NEW: method / param : buf
+NEW: method / param : rec
+NEW: object-methods / method : _getDragObject
+NEW: object-methods / method : _getVSHeightDiv
+NEW: object-methods / method : _getVSScrollDiv
+NEW: object-methods / method : _handle_focusKeys
+NEW: method / param : ev
+NEW: object-methods / method : _initHeaders
+NEW: object-methods / method : _makeHeadLabel
+NEW: method / param : args
+NEW: object-methods / method : _onHeadClick
+NEW: method / param : col
+NEW: method / param : btn
+NEW: object-methods / method : _resetVSHeight
+NEW: object-methods / method : _sel_onChange
+NEW: method / param : id
+NEW: method / param : selected
+NEW: object-methods / method : _sel_onReset
+NEW: method / param : oldSel
+NEW: method / param : newSel
+NEW: object-methods / method : _setVScroll
+NEW: method / param : pos
+
+desktop.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+dialog.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+1 -0) params(+0 -0)
+NEW: events / event : onActivate
+
+drag.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+1 -0) params(+0 -0)
+NEW: events / event : onStartDrag
+
+elementcache.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+entry.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+event.xml: XXX: +1, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+eventproxy.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+exception.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+fieldgrid.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+fieldset.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+flashutils.xml: XXX: +1, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+NO EVENTS! -- should remove <events>?
+
+geometry.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+gridlayout.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+hbox.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+htmlutils.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+iconlistview.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+jslib.xml: XXX: +1, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+json.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+keyboard.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+label.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+layout.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+macbar.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+notebook.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+popup.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+popupmenu.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+progressbar.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+radiobutton.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+radiogroup.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+radioselect.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+regexp.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+resizebar.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+rpc.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+rteframe.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+singleton.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+socket.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+sound.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+spinner.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+stylesheet.xml: XXX: +0, objects(+1 -0) args(+0 -0) methods(+14 -0) events(+0 -0) params(+7 -0)
+NEW: api / object : DlStyleSheet
+NEW: object-methods / method : deleteRule
+NEW: method / param : rule
+NEW: object-methods / method : disabled
+NEW: method / param : dis
+NEW: object-methods / method : getRules
+NEW: object-methods / method : insertRule
+NEW: method / param : sel
+NEW: method / param : style
+NEW: method / param : index
+NEW: object-methods / method : modifyRule
+NEW: method / param : rule
+NEW: method / param : changes
+NEW: object-methods / method : refresh
+NEW: object-methods / method : _init
+
+system.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+table.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+tabs.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+texts.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+tooltip.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+tree.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+type.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+uploadentry.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+validator.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+vbox.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+widget.xml: XXX: +1, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+
+cryptaes.xml: XXX: +0, objects(+0 -0) args(+0 -0) methods(+0 -0) events(+0 -0) params(+0 -0)
+
+

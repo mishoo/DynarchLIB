@@ -1,0 +1,193 @@
+<sample>
+
+  <title>Math</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>Math</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>— none —</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈jslib.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈texts.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+     <div class="doc"><span>
+      This is a standard JavaScript object.  DynarchLIB adds a few
+      useful extensions.
+    </span>
+
+     </div>
+   </div>
+    </div>
+
+
+    <div class="static-methods">
+      <h2>Static functions</h2>
+   <div class="method">
+        <h3 id="limit:static_method">Math.limit (<span class='param'>n</span>, <span class='param'>min</span>, <span class='param'>max</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">n</td>
+         <td class="doc"><span name="n"></span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">min</td>
+         <td class="doc"><span name="min"></span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">max</td>
+         <td class="doc"><span name="max"></span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Number) 
+           <b><span></span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          See <a href='api://Number.xml:type=object_method:func=limit'>Number::limit()</a>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="nullLimit:static_method">Math.nullLimit (<span class='param'>n</span>, <span class='param'>min</span>, <span class='param'>max</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">n</td>
+         <td class="doc"><span name="n"></span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">min</td>
+         <td class="doc"><span name="min"></span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">max</td>
+         <td class="doc"><span name="max"></span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          See <a href='api://Number.xml:type=object_method:func=nullLimit'>Number::nullLimit()</a>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="rotateLimit:static_method">Math.rotateLimit (<span class='param'>n</span>, <span class='param'>min</span>, <span class='param'>max</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">n</td>
+         <td class="doc"><span name="n"></span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">min</td>
+         <td class="doc"><span name="min"></span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">max</td>
+         <td class="doc"><span name="max"></span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          See <a href='api://Number.xml:type=object_method:func=rotateLimit'>Number::rotateLimit()</a>.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+
+  </text>
+
+
+</sample>
+
+
+
+

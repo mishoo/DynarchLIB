@@ -1,0 +1,110 @@
+<sample>
+
+  <title>DlVbox</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlVbox</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlBox〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈vbox.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈box.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">args</td>
+         <td class="doc"><span name="args"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+        You use this object similar to a <a href='api://DlHbox.xml'>horizontal box</a>.  It
+        creates a vertical box.  All constructor arguments are
+        forwarded to <a href='api://DlBox.xml'>DlBox</a>.
+      </span>
+
+     </div>
+   </div>
+    </div>
+
+
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="createCellElement:object_method">createCellElement ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_removeWidgetElement:object_method">_removeWidgetElement (<span class='param'>w</span>)
+        <div class="overrides">
+             (overrides <a href="api://DlContainer.xml:type=object_method:func=_removeWidgetElement">_removeWidgetElement in DlContainer</a>)
+        </div>
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">w</td>
+         <td class="doc"><span name="w"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+
+
+</sample>
+
+
+
+

@@ -1,0 +1,232 @@
+<api file="buttonmenu.js" show="1">
+  <object base="DlHbox" name="DlButtonMenu">
+    <constructor>
+      <param default="false" name="connected" type="boolean">Connect arrow to button?</param>
+      <param default="null" name="iconClass"></param>
+      <param default="null" name="label"></param>
+      <param default="null" name="shiftMenu" undoc="1"></param>
+      <doc>
+        You can use this widget in order to create a button with a
+        drop-down menu.  Currently we have some specialized classes as
+        well (〈DlRadioSelect〉, 〈DlButtonColorPicker〉,
+        〈DlButtonCalendar〉).
+
+        This widget is actually a 〈DlHbox〉 that contains two
+        〈DlButton|push buttons〉.  One shows the label and icon itself,
+        and the other one is a small drop-down arrow.  When the arrow
+        is clicked, a drop-down menu pops up.  You assign the menu
+        using 〈setMenu()〉.
+
+        *** Event handlers
+
+        You can assign an action for the label button like this:
+
+        <js>
+          buttonMenu.addEventListener("onClick", function() {
+              // your handler here
+          });
+        </js>
+
+        That would get called when the label button has been pressed.
+        If you want to show the pop-up menu instead (that is, both for
+        the arrow button and for the label button) then you can pass
+        <b>connected: true</b> in constructor.  Here's a first sample
+        that does this:
+
+        <js canrun="true">
+          var buttonMenu = new DlButtonMenu({ parent    : getDocCanvas(), 
+                                              label     : "Options...", 
+                                              connected : true });
+          var menu = new DlVMenu({});
+          buttonMenu.setMenu(menu);
+          new DlMenuItem({ parent: menu, name: "opt_foo", label: "Foo label here" });
+          new DlMenuItem({ parent: menu, name: "opt_bar", label: "Bar label here" });
+          new DlMenuItem({ parent: menu, name: "opt_baz", label: "Baz label here" });
+          menu.addEventListener("onSelect", function(item_name) {
+              alert("You selected: " + item_name);
+          });
+        </js>
+
+        Note that you can click either the small arrow, or the
+        "Options..." label, and you'll get the popup menu.  In some
+        cases, you won't want that.  For example, you might want the
+        button that displays the label to do something right away,
+        while the popup to offer additional options.  Such an example
+        is the browser's Back button.  Here's how we'd model that:
+
+        <js canrun="true">
+          var buttonMenu = new DlButtonMenu({ parent    : getDocCanvas(), 
+                                              label     : "Back" });
+          var menu = new DlVMenu({});
+          buttonMenu.setMenu(menu);
+          new DlMenuItem({ parent: menu, name: "Yahoo", label: "www.yahoo.com" });
+          new DlMenuItem({ parent: menu, name: "Google", label: "www.google.com" });
+          new DlMenuItem({ parent: menu, name: "Dynarch", label: "www.dynarch.com" });
+          menu.addEventListener("onSelect", function(item_name) {
+              alert("You selected: " + item_name);
+          });
+          buttonMenu.addEventListener("onClick", function() {
+              alert("You selected Back");
+          });
+        </js>
+
+        *** (Almost) any widget you want for the menu
+
+        The menu of a button can actually be any kind of widget.  Most
+        of the times, though, you'll want to use a 〈DlVMenu|vertical
+        menu〉, but here's how we can use a plain box as well:
+
+        <js canrun="true">
+          var buttonMenu = new DlButtonMenu({ parent    : getDocCanvas(),
+                                              label     : "Options",
+                                              connected : true });
+          var menu = new DlVbox({});
+          var hbox1 = new DlHbox({ parent: menu });
+          var group = DlRadioGroup.get();
+          group.maxChecked(null);
+          new DlCheckbox({ label: "Foo", parent: hbox1, group: group });
+          new DlCheckbox({ label: "Bar", parent: hbox1, group: group });
+          new DlCheckbox({ label: "Baz", parent: hbox1, group: group });
+          var hbox2 = new DlHbox({ parent: menu });
+          new DlCheckbox({ label: "Check", parent: hbox2, group: group });
+          new DlCheckbox({ label: "This", parent: hbox2, group: group });
+          new DlCheckbox({ label: "Out", parent: hbox2, group: group });
+          buttonMenu.setMenu(menu);
+          buttonMenu.addEventListener("onHide", function() {
+              var selected = group.getSelected();
+              if (selected.length == 0)
+                  print("Nothing selected");
+              else {
+                  print("Selected: " + selected.map("label").join(", "));
+              }
+          });
+        </js>
+
+        *** Memory issues
+
+        What should happen with the menu when you destroy a
+        〈DlButtonMenu〉?  That's a tough question.  We figured out that
+        most of the times you'd like the menu widget to be disposed as
+        well, so you don't leak memory.  But sometimes you might want
+        it to remain.
+
+        When the menu, as passed to 〈setMenu()〉 is a DlWidget instance
+        (that is, any derived object as well), then the menu will be
+        〈DlWidget::ref()|reference counted〉 and
+        〈DlWidget::destroy()|destroyed〉 along with the button.  This
+        generally seems to do the right thing—if you assign the same
+        menu to more buttons, then each button will increase the
+        reference count for it.  When the menu is destroyed, the
+        reference count is 〈DlWidget::unref()|decreased〉 and it won't
+        actually go away until the reference count becomes zero.  This
+        means, if you destroy() all buttons that refer to a menu, the
+        menu will be destroyed as well.  If you want to prevent that,
+        you should 〈DlWidget::ref()|ref()〉 the menu yourself.
+
+        If, however, you pass a function to 〈setMenu()〉 then the
+        memory issue is completely left at your mercy.  Destroy() them
+        at will. :-)
+      </doc>
+    </constructor>
+    <events>
+      <event name="onSelect">
+        <doc>
+          Currently not used for the base object — please use the menu
+          events instead.  However, this event might be available in
+          derived classes, such as 〈DlButtonCalendar〉, so keep it in
+          mind.
+        </doc>
+      </event>
+      <event name="onPopup">
+        <doc>
+          Called when the drop-down menu pops up on this button
+        </doc>
+      </event>
+      <event name="onHide">
+        <doc>
+          Called when the drop-down is hidden.
+        </doc>
+      </event>
+      <event name="onClick">
+        <doc>
+          Called when the arrow button is clicked.
+        </doc>
+      </event>
+    </events>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="ea9c771c209447f4b5d2c81faeb14c36" name="activateSubmenu">
+        <param name="activate"></param>
+        <doc>
+          Internal function — please don't call it directly.
+
+          This is called by the framework whenever the mouse enters
+          the drop-down menu.  It's used to set a certain CSS class
+          for the button.
+        </doc>
+      </method>
+      <method hash="6ce95afe5d75261f6a1071be8e69b3af" name="getArrow">
+        <return type="DlButton"></return>
+        <doc>
+          Returns a reference to the “arrow button” (right).
+        </doc>
+      </method>
+      <method hash="3f72ea9c0fbf2d114c0c6496e4df6f0b" name="getButton">
+        <return type="DlButton"></return>
+        <doc>
+          Returns a reference to the “label button” (left).
+        </doc>
+      </method>
+      <method hash="02dff4f82296404257b4408926ec0cfc" name="getMenu">
+        <doc>
+          Returns the currently set menu.
+        </doc>
+      </method>
+      <method hash="32408dc63f78d056a93a5787d26cf42e" name="setMenu">
+        <param name="menu" type="DlWidget|Function">Menu for this button</param>
+        <doc>
+          Sets a drop-down menu for this button.  If <b>menu</b> is a
+          function, this function will be called whenever the menu
+          must popup.  Thus you can use this feature to delay
+          instantiation of your menu.  Be careful not to create the
+          menu more than once, if you don't really need it!
+
+          Here's how to use this feature:
+
+          <js canrun="true">
+            var bm = new DlButtonMenu({ label     : "Options", 
+                                        connected : true,
+                                        parent    : getDocCanvas() });
+            var menu = null;
+            function makeMenu() {
+                print("makeMenu() called!");
+                if (!menu) {
+                    print("Creating menu...");
+                    menu = new DlVMenu({});
+                    new DlMenuItem({ parent: menu, label: "Foo option" });
+                    new DlMenuItem({ parent: menu, label: "Bar option" });
+                    new DlMenuItem({ parent: menu, label: "Baz option" });
+                }
+                return menu;
+            };
+            bm.setMenu(makeMenu);
+          </js>
+
+          So as you can see, your function is called every time the
+          menu is requested; inside it you must check if the menu was
+          already created and avoid creating it twice.  But of course,
+          you can create a completely different menu if you wish,
+          or—depending on your particular needs—modify an existing
+          menu by i.e. disabling/hiding certain items, or creating new
+          ones, etc.
+        </doc>
+      </method>
+      <method hash="a4062e76bc02ec5bd9cb46a02d24dabc" name="initDOM">
+        <doc></doc>
+      </method>
+      <method hash="7d2e9fe3ebb2dbc9f298afb73019769d" internal="1" name="_createElement">
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

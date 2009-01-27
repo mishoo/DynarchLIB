@@ -1,0 +1,529 @@
+<sample>
+
+  <title>Dynarch</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>Dynarch</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>— none —</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈jslib.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈texts.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+
+    <div class="static-methods">
+      <h2>Static functions</h2>
+   <div class="method">
+        <h3 id="copy:static_method">Dynarch.copy (<span class='param'>dest</span>, <span class='param'>src</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">dest</td>
+         <td class="doc"><span name="dest"></span>
+</td>
+         <td class="type">[<b>〈Object〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">src</td>
+         <td class="doc"><span name="src"></span>
+</td>
+         <td class="type">[<b>〈Object〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Copies each key of <b>src</b> into <b>dest</b>.  Any
+          existing keys in <b>dest</b> will be removed.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="EXPORT:static_method">Dynarch.EXPORT (<span class='param'>name</span>, <span class='param optional'>imp</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">name</td>
+         <td class="doc"><span name="name">Name of object to export</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">imp</td>
+         <td class="doc"><span default="false" name="imp" optional="1">Import common vars?</span>
+</td>
+         <td class="type">—</td>
+         <td class="optional">optional</td>
+         <td class="default">false</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: String) 
+           <b><span>JavaScript code that you should eval</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          This method exports a class, object or variable
+          (<b>name</b>) defined in the current scope to the outside
+          world.  For example:
+<p/>
+          <div sample="Dynarch1"></div>
+<p/>
+          In the previous example, <em>foo</em> is a private variable,
+          since it only exists in the surrounding function.  If we
+          wanted to export it, we can say:
+<p/>
+          <div sample="Dynarch2"></div>
+<p/>
+          This isn't too useful in itself, we could have said easier
+          and more cleaner:
+<p/>
+          <div sample="Dynarch3"></div>
+<p/>
+          But we advise you to use <a href='api://Dynarch.xml:type=static_method:func=EXPORT'>Dynarch.EXPORT()</a> because it's an
+          abstraction layer—if you ever want to do more than just
+          assigning the variable to the window (global) object, you'll
+          only have to change it in one place.  Dynarch.EXPORT also
+          accepts an optional argument, <b>imp</b>, which if
+          <b>true</b> will import some common methods into the local
+          context.  For example, there are a few DOM utilities that
+          you'll use a lot, such as DynarchDomUtils.createElement.
+          That's a long name.  You don't wanna write it all the time.
+          You can import it into the local context by either eval-ing
+          <a href='api://DynarchDomUtils.xml:type=static_method:func=importCommonVars'>DynarchDomUtils.importCommonVars()</a>, or by calling
+          Dynarch.EXPORT like this: (since it's likely you also want
+          to export something...)
+<p/>
+          <div sample="Dynarch4"></div>
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getBaseURL:static_method">Dynarch.getBaseURL ()
+        </h3>
+     <div class="doc"><span>
+          Returns the URL of the DynarchLIB installation.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getFileURL:static_method">Dynarch.getFileURL (<span class='param'>file</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">file</td>
+         <td class="doc"><span name="file"></span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the URL of a <b>file</b> in the DynarchLIB installation.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="ID:static_method">Dynarch.ID (<span class='param optional'>namespace</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">namespace</td>
+         <td class="doc"><span name="namespace" optional="1"></span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns an auto-generated string ID which is guaranteed to
+          be unique per page.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="makeCopy:static_method">Dynarch.makeCopy (<span class='param'>src</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">src</td>
+         <td class="doc"><span name="src"></span>
+</td>
+         <td class="type">[<b>〈Object〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Object) 
+           <b><span>Copy of <b>src</b></span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Creates and returns a shallow copy of the <b>src</b> object.
+          Note that this is a “superficial” copy, so to say, that is:
+<p/>
+          <div sample="Dynarch5"></div>
+<p/>
+          Therefore, this function won't deep-copy arrays or other
+          nested objects that <b>src</b> might contain.  If you modify
+          an object or array that <b>src</b> refers to, the
+          modifications will be reflected in all copies, because it
+          simply copies an object reference, rather than the object
+          itself.  That's fast, but not always what you want.  See
+          <a href='api://Dynarch.xml:type=static_method:func=makeDeepCopy'>Dynarch.makeDeepCopy()</a> for an alternative.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="makeDeepCopy:static_method">Dynarch.makeDeepCopy (<span class='param'>src</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">src</td>
+         <td class="doc"><span name="src"></span>
+</td>
+         <td class="type">[<b>〈Object〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Object) 
+           <b><span>Deep copy of <b>src</b></span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Creates and returns a <em>deep</em> (<em>recursive</em>)
+          copy of the <b>src</b> object.  All objects or arrays
+          referenced from the <b>src</b> object will get copied as
+          well, such that if you modify one, the modification won't be
+          reflected in copies.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="merge:static_method">Dynarch.merge (<span class='param'>dest</span>, <span class='param'>src</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">dest</td>
+         <td class="doc"><span name="dest"></span>
+</td>
+         <td class="type">[<b>〈Object〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">src</td>
+         <td class="doc"><span name="src"></span>
+</td>
+         <td class="type">[<b>〈Object〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Merges the <b>src</b> object into the <b>dest</b> object.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="mergeUndefined:static_method">Dynarch.mergeUndefined (<span class='param'>dest</span>, <span class='param'>src</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">dest</td>
+         <td class="doc"><span name="dest"></span>
+</td>
+         <td class="type">[<b>〈Object〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">src</td>
+         <td class="doc"><span name="src"></span>
+</td>
+         <td class="type">[<b>〈Object〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Merges <b>src</b> into <b>dest</b> but only for those keys
+          that are not already defined in <b>dest</b>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getFunctionName:static_method">Dynarch.getFunctionName (<span class='param'>f</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">f</td>
+         <td class="doc"><span name="f"></span>
+</td>
+         <td class="type">[<b>〈Function〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: String) 
+           <b><span>The name of the given function</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Pass a function by reference and this method will return
+          that function's name.  Note it's not very well tested, but
+          it works great for the case that we're interested in:
+          retrieving the name of an object constructor.
+<p/>
+          This function is used in <a href='api://Function.xml:type=static_method:func=inherits'>Function.inherits()</a> in order to
+          automatically insert the _objectType property into the
+          derived objects.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setDefaults:static_method">Dynarch.setDefaults (<span class='param'>defaults</span>, <span class='param'>args</span>, <span class='param optional'>overwrite</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">defaults</td>
+         <td class="doc"><span name="defaults"></span>
+</td>
+         <td class="type">[<b>〈Object〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">args</td>
+         <td class="doc"><span name="args"></span>
+</td>
+         <td class="type">[<b>〈Object〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">overwrite</td>
+         <td class="doc"><span default="false" name="overwrite" optional="1"></span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">false</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          You have to call this function in the context of some
+          object.  <b>this</b> is important.
+<p/>
+          It will look into <b>defaults</b> and <b>args</b> and set
+          properties accordingly into <b>this</b> (whatever that
+          means).  If <b>overwrite</b> is false (default) then
+          existing properties into <b>this</b> will be left untouched.
+<p/>
+          See <a href='api://Function.xml:type=static_method:func=setDefaults'>Function.setDefaults()</a> for some more comprehensive
+          documentation.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+
+  </text>
+<code id="Dynarch1" type="js">
+            (function(){
+               var foo = true;
+            })();
+          </code>
+<code id="Dynarch2" type="js">
+            eval(Dynarch.EXPORT("foo"));
+          </code>
+<code id="Dynarch3" type="js">
+            window.foo = foo;
+          </code>
+<code id="Dynarch4" type="js">
+            (function(){
+
+              var BASE = MyObject.inherits(DlWidget);
+              function MyObject() {};
+
+              eval(Dynarch.EXPORT("MyObject", true));
+
+              // now window.MyObject will actually point to our constructor,
+              // CE is now an alias to DynarchDomUtils.createElement,
+              // and we also have 2 local variables, P and D, that access
+              // the prototype, respectively the constructor of the current object.
+
+              // so we can override a function like this:
+              P._createElement = function() {
+
+                // and here we call base class' function
+                BASE._createElement.call(this);
+                var el = this.getElement();
+                var div = CE("div", null, null, el);
+
+              };
+
+            })();
+          </code>
+<code id="Dynarch5" type="js">
+            var a = { foo: [ 1, 2, 3 ] };
+            var copy = Dynarch.makeCopy(a);
+
+            alert(a.foo[1]); // 2
+            alert(copy.foo[1]); // 2
+            // great so far
+
+            a.foo[1] = "Changed!";
+            alert(copy.foo[1]); // "Changed!";
+            // maybe not that great now...
+          </code>
+
+
+</sample>
+
+
+
+

@@ -1,0 +1,742 @@
+<sample>
+
+  <title>DlCalendar</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlCalendar</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlWidget〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈calendar.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈widget.js, elementcache.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">date</td>
+         <td class="doc"><span default="null" name="date">Default date</span>
+</td>
+         <td class="type">[<b>〈Date〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">firstDay</td>
+         <td class="doc"><span default=" Date.getFirstDayOfWeek()" name="firstDay">First day of week (0 for Sunday, 1 for Monday, etc.)</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default"> Date.getFirstDayOfWeek()</td>
+       </tr>
+       <tr>
+         <td class="name">fixedFirstDay</td>
+         <td class="doc"><span default="true" name="fixedFirstDay">If you pass false, the end-user will be able to change first day of week by a click on day name</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">true</td>
+       </tr>
+       <tr>
+         <td class="name">navDisabled</td>
+         <td class="doc"><span default="false" name="navDisabled">If you pass true, navigation bar will be disabled</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">false</td>
+       </tr>
+       <tr>
+         <td class="name">navigation</td>
+         <td class="doc"><span default="2" name="navigation">Navigation bar type (see below)</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">2</td>
+       </tr>
+       <tr>
+         <td class="name">noinit</td>
+         <td class="doc"><span default="false" name="noinit">Don't initialize calendar by default? (you will have to call <a href='api://DlCalendar.xml:type=object_method:func=init'>init()</a> manually)</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">false</td>
+       </tr>
+       <tr>
+         <td class="name">omDisabled</td>
+         <td class="doc"><span default="false" name="omDisabled">
+        Disable dates from adjacent months? (this coupled with
+        <b>navDisabled</b> makes the calendar effectively available
+        only for the current month)
+      </span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">false</td>
+       </tr>
+       <tr>
+         <td class="name">selected</td>
+         <td class="doc"><span default="true" name="selected">If you pass false here, the current date won't appear to be selected.</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">true</td>
+       </tr>
+       <tr>
+         <td class="name">weekNumbers</td>
+         <td class="doc"><span default="false" name="weekNumbers">Display week numbers?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">false</td>
+       </tr>
+       <tr>
+         <td class="name">withMenu</td>
+         <td class="doc"><span default="false" name="withMenu">Use context menu?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">false</td>
+       </tr>
+       <tr>
+         <td class="name">infoDates</td>
+         <td class="doc"><span default="null" name="infoDates">Highlight certain dates and display tooltips</span>
+</td>
+         <td class="type">[<b>〈Hash〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">tooltip</td>
+         <td class="doc"><span default=" getTooltip" name="tooltip">Using an internal function by default to support “infoDates” (see <a href='api://DlWidget.xml'>DlWidget</a>'s tooltip argument)</span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default"> getTooltip</td>
+       </tr>
+       <tr>
+         <td class="name">dayTooltip</td>
+         <td class="doc"><span default="null" name="dayTooltip">Function to display custom tooltips; receives the hovered day info from infoDates</span>
+</td>
+         <td class="type">[<b>〈Function〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+        Use this widget to display calendars and allow date selection.
+        Check our <a href="sample://widgets-calendar.xml">calendar
+        samples</a>.
+<p/>
+        The navigation bar can be of 3 types:
+<p/>
+        <ul>
+          <li>navigation = 0 — display only the month name</li>
+          <li>navigation = 1 — display next/prev year buttons too</li>
+          <li>navigation = 2 — display next/prev month buttons too</li>
+        </ul>
+<p/>
+        Note that when navigation is 0 it doesn't mean that the
+        calendar is fixed to the current month.  You can usually go to
+        next/prev month by clicking a date from the adjacent month.
+        You need to pass <b>omDisabled: true</b> to disallow that.
+<p/>
+        The calendar can highlight certain dates and display
+        date-specific tooltips.  You can use the “infoDates” argument
+        for this.  It must be an hash that looks like this:
+<p/>
+        <div sample="DlCalendar2"></div>
+<p/>
+        All dates in this hash will be highlighted (using the CSS
+        class “DlCalendar-infoDay”, if no other className was given)
+        and they will display the given tooltip.
+<p/>
+        You can (re)set infoDates at any time after construction using
+        <a href='api://DlCalendar.xml:type=object_method:func=setInfoDates'>setInfoDates()</a>.
+<p class='warning'> TODO: disabling dates!</p>
+      </span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="events">
+      <h2>Events</h2>
+   <div class="method">
+        <h3 id="onChange:object_event">onChange (<span class='param'>navType</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">navType</td>
+         <td class="doc"><span name="navType">Navigation button type</span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Triggered when the calendar has been changed through the
+          navigation bar.  The argument has the same signification as
+          the second argument (<b>navType</b>) in the "onSelect" event
+          above.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onRendered:object_event">onRendered (<span class='param'>calendar</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">calendar</td>
+         <td class="doc"><span name="calendar">Reference to the calendar object</span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          This event is triggered each time the calendar content was
+          rendered.  For example, the first time it's displayed, or
+          any time the user will change the month / year, the calendar
+          is redrawn and this event is called.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onSelect:object_event">onSelect (<span class='param'>cleared</span>, <span class='param'>otherMonth|navType</span>, <span class='param'>secondClick</span>, <span class='param'>date</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">cleared</td>
+         <td class="doc"><span name="cleared">Selection was cleared?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">otherMonth|navType</td>
+         <td class="doc"><span name="otherMonth|navType">
+          When <b>cleared</b> is true, this argument tells you what
+          navigation button was pressed.  When <b>cleared</b> is false
+          this argument is true if a date from an adjacent month was
+          clicked.
+        </span>
+</td>
+         <td class="type">[<b>〈boolean,Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">secondClick</td>
+         <td class="doc"><span name="secondClick">Was the date already selected? (i.e. dbl-click)</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">date</td>
+         <td class="doc"><span name="date">Current date in the calendar</span>
+</td>
+         <td class="type">[<b>〈Date〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Triggered when the selection is changed in any way.  This
+          can happen when the user clicks on a date or when the
+          calendar date is changed from the navigation bar
+          (i.e. next/prev month/year, or today).
+<p class='heading'> When “cleared” is true</p>
+<p/>
+          In this case the calendar was moved to another month by a
+          click in the navigation bar.  <b>navType</b> (second
+          argument) will be one of the following:
+<p/>
+          <ul>
+            <li>-2 : means prev. year</li>
+            <li>-1 : means prev. month</li>
+            <li>0 : means "today" (current month)</li>
+            <li>1 : means next month</li>
+            <li>2 : means next year</li>
+          </ul>
+<p/>
+          Third argument (<b>secondClick</b>) is always <b>null</b>.
+<p class='heading'> When “cleared” is false</p>
+<p/>
+          Some date in the calendar was clicked.  The second argument
+          (<b>otherMonth</b>) will be <b>true</b> if it's some date
+          from an adjacent month, false otherwise.
+<p/>
+          <b>secondClick</b> will be <b>true</b> if the clicked date
+          was already selected (you can use this to intercept
+          double-clicks on a date).
+<p/>
+          When <b>otherMonth</b> is <b>true</b>, <b>secondClick</b>
+          will always be false (since it's not possible to dbl.click a
+          date from an adjacent month as the calendar immediately
+          switches to that month).
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="getDateCell:object_method">getDateCell (<span class='param'>date</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">date</td>
+         <td class="doc"><span name="date">Date (note that's not a <a href='api://Date.xml'>date object</a>, but a date i.e. 1..31)</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: HTMLTableCellElement) 
+           <b><span>cell for the given date</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the table cell element for the given date in the
+          current calendar.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getDisplayedInterval:object_method">getDisplayedInterval ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Hash) 
+           <b><span>The interval of time currently displayed in the calendar</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          The returned value is an hash in this form:
+<p/>
+          <div sample="DlCalendar1"></div>
+<p/>
+          meaning that the first day visible is Oct. 29 2007 and the
+          last day visible is Dec. 9 2007 (months are numbered from
+          zero, which is how the JavaScript <a href='api://Date.xml'>Date</a> object behaves).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getNCols:object_method">getNCols ()
+        </h3>
+     <div class="doc"><span>
+          Internal utility -- returns the number of columns in the
+          table, which can vary depending on whether week numbers are
+          displayed or not.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getTableElement:object_method">getTableElement ()
+        </h3>
+     <div class="doc"><span>
+          Returns the table element.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="init:object_method">init ()
+        </h3>
+     <div class="doc"><span>
+          Initializes the calendar.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="initDOM:object_method">initDOM ()
+        <div class="overrides">
+             (overrides <a href="api://DlWidget.xml:type=object_method:func=initDOM">initDOM in DlWidget</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="selectDate:object_method">selectDate (<span class='param'>date</span>, <span class='param optional'>nohooks</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">date</td>
+         <td class="doc"><span name="date">Date to select</span>
+</td>
+         <td class="type">[<b>〈Date,Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">nohooks</td>
+         <td class="doc"><span default="false" name="nohooks" optional="1">Don't trigger events?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">false</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Selects the given date in the calendar.  Calls "onSelect"
+          unless <b>nohooks</b> is true.
+<p/>
+          The <b>date</b> can be a Date object but it can also be a
+          number (in which case it is assumed to be a day from the
+          current date).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setInfoDates:object_method">setInfoDates (<span class='param'>a</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">a</td>
+         <td class="doc"><span name="a">Info dates (see constructor)</span>
+</td>
+         <td class="type">[<b>〈Hash〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          (Re)Sets the “infoDates” hash.  The calendar will be
+          refreshed to highlight dates.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setMonth:object_method">setMonth (<span class='param'>m</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">m</td>
+         <td class="doc"><span name="m">Month (0 == January)</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Changes the displayed month.  Keeps the year, unless you
+          pass negative numbers (moves to previous years) or numbers
+          bigger than 11 (moves to next years).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setToday:object_method">setToday ()
+        </h3>
+     <div class="doc"><span>
+          Go to today.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setYear:object_method">setYear (<span class='param'>y</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">y</td>
+         <td class="doc"><span name="y">New year</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Changes the displayed year.  Keeps the month, clears the
+          date.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_createElement:object_method">_createElement ()
+        <div class="overrides">
+             (overrides <a href="api://DlWidget.xml:type=object_method:func=_createElement">_createElement in DlWidget</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_createQuickNavMenu:object_method">_createQuickNavMenu ()
+        </h3>
+     <div class="doc"><span>
+          Internal; creates the context menu for quick navigation.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_displayCalendar:object_method">_displayCalendar ()
+        </h3>
+     <div class="doc"><span>
+          Internal; Renders the calendar.  In fact, this function
+          expects the DOM elements to be in place and just "draws" the
+          calendar for the current date.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_displayDayNames:object_method">_displayDayNames ()
+        </h3>
+     <div class="doc"><span>
+          Internal; Displays the day names row.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_makeNavPart:object_method">_makeNavPart (<span class="varargs">…</span>)
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_navCellClicked:object_method">_navCellClicked (<span class='param'>cell</span>, <span class='param'>timeout</span>, <span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">cell</td>
+         <td class="doc"><span name="cell"></span>
+</td>
+         <td class="type">[<b>〈HTMLTableCellElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">timeout</td>
+         <td class="doc"><span name="timeout"></span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev"></span>
+</td>
+         <td class="type">[<b>〈DlEvent〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Internal; Handles a click on a navigation cell.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_selectCell:object_method">_selectCell (<span class='param'>cell</span>, <span class='param'>hooks</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">cell</td>
+         <td class="doc"><span name="cell"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">hooks</td>
+         <td class="doc"><span name="hooks"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_setListeners:object_method">_setListeners ()
+        <div class="overrides">
+             (overrides <a href="api://DlWidget.xml:type=object_method:func=_setListeners">_setListeners in DlWidget</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+<code id="DlCalendar1" type="js">
+            {
+              start : { y: 2007, m: 9, d: 29 },
+              end   : { y: 2007, m: 11, d: 9 }
+            }
+          </code>
+<code id="DlCalendar2" type="js">
+          {
+             "2007-12-31" : { tooltip: "This is Dec. 31, 2007" },
+             "1979-03-08" : { tooltip: "This is my birthday",
+                              className: "Anniversary" }
+             // etc.
+          }
+        </code>
+
+
+</sample>
+
+
+
+

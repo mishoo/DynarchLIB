@@ -1,0 +1,44 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>DynarchLIB documentation — www.dynarchlib.com</title>
+    <link id="css-syntax" type="text/css" rel="stylesheet" href="hl/style.css" />
+    <link type="text/css" rel="stylesheet" href="print.css" />
+    <script type="text/javascript">
+      function set_syntax(set) {
+        document.getElementById("css-syntax").disabled = !set;
+      }
+      function do_print(hl) {
+        window.print();
+        window.close();
+      }
+    </script>
+  </head>
+  <body onload="window.opener.App.printReady(window);">
+
+    <div class="print-info">
+      <p><i><b>Information</b></i></p>
+      <p>
+        This page is intended for printing only.  Do not bookmark this
+        URL and don't click any links in this page; they are probably
+        invalid.  After you finish printing, just close this page in
+        order to go back to our interactive documentation.
+      </p>
+      <p>
+        This note will <b>not</b> appear in the printed document.
+      </p>
+      <p style="color: #000">
+        <button onclick="do_print()">Print&hellip;</button>
+        <label><input checked="checked" type="checkbox" onclick="set_syntax(this.checked)" />Syntax highlighting</label>
+      </p>
+    </div>
+
+    <div id="doc"></div>
+
+    <div class="copyright">
+      — Copyright © Dynarch.com 2007 —<br />
+      — All rights reserved —<br />
+      — www.dynarchlib.com —
+    </div>
+
+  </body>
+</html>

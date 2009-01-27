@@ -1,0 +1,71 @@
+<api file="spinner.js" show="1">
+  <object base="DlEntry" name="DlSpinner">
+    <constructor>
+      <param default="null" name="decimals" type="Number">How many decimals?</param>
+      <param default="false" name="integer" type="boolean">Accept only integer values?</param>
+      <param default="null" name="maxVal" type="Number">Minimum value</param>
+      <param default="null" name="minVal" type="Number">Maximum value</param>
+      <param default="4" name="size">Passed to 〈DlEntry〉</param>
+      <param default="1" name="step" type="Number">Step for increment/decrement operations</param>
+      <param default="0" name="value">Initial value (passed to 〈DlEntry〉</param>
+      <doc>
+        DlSpinner is a specialization of 〈DlEntry〉 specifically
+        designed to enter numeric values.  It looks like a standard
+        spin button—present in many desktop-based user interfaces.  It
+        has 2 small arrow buttons that can be used to
+        increase/decrease the value using the mouse.
+
+        Obviously, a DlSpinner will automatically use a
+        〈DlValidator.Number()|Number validator〉.
+
+        Besides for the minor differences in constructor arguments,
+        you can use this widget the same way you use a 〈DlEntry〉.
+
+        The value can be modified by direct typing, by clicking the
+        up/down arrows or by using the mouse wheel.
+      </doc>
+    </constructor>
+    <events>
+      <event name="onSpin">
+        <param name="val" type="Number">Current value</param>
+        <doc>
+          Called when the value is updated as a result of a "spinning"
+          event, i.e. user clicked on the up/down arrows, or pressed
+          the UP/DOWN arrow keys.
+        </doc>
+      </event>
+    </events>
+
+    <static-methods></static-methods>
+
+    <object-methods>
+      <method hash="d91c053756496baaf5fdf4a1b18ae23f" name="initDOM">
+        <doc></doc>
+      </method>
+      <method hash="ad480d7b4cffe3d33d7118de4eca369d" internal="1" name="_clearTimer">
+        <param name="restart"></param>
+        <doc></doc>
+      </method>
+      <method hash="5646d47902e23e089bb8c391a082f364" internal="1" name="_createElement">
+        <doc></doc>
+      </method>
+      <method hash="5c2c19ba67b9436a0e76c2a67648c508" internal="1" name="_setListeners">
+        <doc></doc>
+      </method>
+      <method hash="cc94cec825918c52f1e442ef57e91658" internal="1" name="_setupSpinnerBtn">
+        <param name="b"></param>
+        <param name="up"></param>
+        <doc></doc>
+      </method>
+      <method hash="e49d068819b781fec9960d07602ce0c9" internal="1" name="_spinnerUpdateVal">
+        <param name="dir"></param>
+        <doc></doc>
+      </method>
+      <method hash="ecee25d383d395bce8acba781eb45d7e" internal="1" name="_startTimer">
+        <param name="dir"></param>
+        <param name="timeout"></param>
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

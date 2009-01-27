@@ -1,0 +1,631 @@
+<sample>
+
+  <title>DlDialog</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlDialog</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlContainer〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈dialog.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈container.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">fixed</td>
+         <td class="doc"><span default="false" name="fixed">
+        Is this dialog fixed? (if you pass <b>true</b>, the dialog
+        will have a fixed position and the user won't be able to move
+        it by dragging the title bar)
+      </span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">false</td>
+       </tr>
+       <tr>
+         <td class="name">focusable</td>
+         <td class="doc"><span default="true" name="focusable">Dialogs should be focusable (psased to <a href='api://DlWidget.xml'>DlWidget</a>)</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">true</td>
+       </tr>
+       <tr>
+         <td class="name">focusDefault</td>
+         <td class="doc"><span default="null" name="focusDefault">
+        Default widget to focus when the dialog pops up.
+      </span>
+</td>
+         <td class="type">[<b>〈DlWidget〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">iconClass</td>
+         <td class="doc"><span default="null" name="iconClass">
+        Icon class for the dialog.  The icon is displayed in the title
+        bar on the left side.
+      </span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">maxBtn</td>
+         <td class="doc"><span default="true" name="maxBtn">
+        Provide a “maximize” button?  Note that this has no effect if
+        the dialog is not resizable.
+      </span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">true</td>
+       </tr>
+       <tr>
+         <td class="name">quitBtn</td>
+         <td class="doc"><span default="false" name="quitBtn">
+        Provide a “quit” button? (see below)
+      </span>
+</td>
+         <td class="type">[<b>〈Function,String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">false</td>
+       </tr>
+       <tr>
+         <td class="name">modal</td>
+         <td class="doc"><span default="false" name="modal">Make the dialog modal?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">false</td>
+       </tr>
+       <tr>
+         <td class="name">moveDelay</td>
+         <td class="doc"><span default="5000" name="moveDelay">Delay displaying the dialog during drag'n'drop</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">5000</td>
+       </tr>
+       <tr>
+         <td class="name">noShadows</td>
+         <td class="doc"><span default="false" name="noShadows">Don't display shadows?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">false</td>
+       </tr>
+       <tr>
+         <td class="name">resizable</td>
+         <td class="doc"><span default="false" name="resizable">Allow dialog resize?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">false</td>
+       </tr>
+       <tr>
+         <td class="name">title</td>
+         <td class="doc"><span default="&#34;DlDialog&#34;" name="title">Dialog title</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">"DlDialog"</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+        Use this class to create a dialog.  A dialog is
+        <em>usually</em> a top-level container which allows the user
+        to enter some data, and then disappears.  It's a window, in
+        essence, which can be moved, resized or closed (or hidden —
+        “minimized”).  You've seen many samples of it already—almost
+        all samples that you can run in this interactive demo are
+        creating a dialog to display their widgets.
+<p/>
+      </span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="events">
+      <h2>Events</h2>
+   <div class="method">
+        <h3 id="onActivate:object_event">onActivate ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onHide:object_event">onHide ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onQuitBtn:object_event">onQuitBtn ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onShow:object_event">onShow ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="static-methods">
+      <h2>Static functions</h2>
+   <div class="method">
+        <h3 id="activateEventStopper:static_method">DlDialog.activateEventStopper (<span class='param'>act</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">act</td>
+         <td class="doc"><span name="act"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="activateNext:static_method">DlDialog.activateNext ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="activatePrev:static_method">DlDialog.activatePrev ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getActive:static_method">DlDialog.getActive ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="activate:object_method">activate ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="centerOnParent:object_method">centerOnParent ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="deactivate:object_method">deactivate ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getButtonsElement:object_method">getButtonsElement ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getContentElement:object_method">getContentElement ()
+        <div class="overrides">
+             (overrides <a href="api://DlWidget.xml:type=object_method:func=getContentElement">getContentElement in DlWidget</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getModalStopper:object_method">getModalStopper ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getRelElement:object_method">getRelElement ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getTitleElement:object_method">getTitleElement ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="hide:object_method">hide ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="initDOM:object_method">initDOM ()
+        <div class="overrides">
+             (overrides <a href="api://DlWidget.xml:type=object_method:func=initDOM">initDOM in DlWidget</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="makeDraggable:object_method">makeDraggable ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="makeResizable:object_method">makeResizable ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="maximize:object_method">maximize (<span class='param'>c</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">c</td>
+         <td class="doc"><span name="c"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setIconClass:object_method">setIconClass (<span class='param'>iconClass</span>)
+        <div class="overrides">
+             (overrides <a href="api://DlWidget.xml:type=object_method:func=setIconClass">setIconClass in DlWidget</a>)
+        </div>
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">iconClass</td>
+         <td class="doc"><span name="iconClass"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setInnerSize:object_method">setInnerSize (<span class='param'>sz</span>)
+        <div class="overrides">
+             (overrides <a href="api://DlWidget.xml:type=object_method:func=setInnerSize">setInnerSize in DlWidget</a>)
+        </div>
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">sz</td>
+         <td class="doc"><span name="sz"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setModal:object_method">setModal (<span class='param'>modal</span>, <span class='param'>noset</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">modal</td>
+         <td class="doc"><span name="modal"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">noset</td>
+         <td class="doc"><span name="noset"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setSize:object_method">setSize (<span class='param'>sz</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">sz</td>
+         <td class="doc"><span name="sz"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="show:object_method">show (<span class='param'>center</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">center</td>
+         <td class="doc"><span name="center"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="title:object_method">title (<span class='param'>title</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">title</td>
+         <td class="doc"><span name="title"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_createElement:object_method">_createElement ()
+        <div class="overrides">
+             (overrides <a href="api://DlContainer.xml:type=object_method:func=_createElement">_createElement in DlContainer</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_handle_focusKeys:object_method">_handle_focusKeys (<span class='param'>ev</span>)
+        <div class="overrides">
+             (overrides <a href="api://DlWidget.xml:type=object_method:func=_handle_focusKeys">_handle_focusKeys in DlWidget</a>)
+        </div>
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_setDragCaptures:object_method">_setDragCaptures (<span class='param'>capture</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">capture</td>
+         <td class="doc"><span name="capture"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_setResizeCaptures:object_method">_setResizeCaptures (<span class='param'>capture</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">capture</td>
+         <td class="doc"><span name="capture"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+
+
+</sample>
+
+
+
+

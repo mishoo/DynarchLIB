@@ -1,0 +1,175 @@
+<api file="radiogroup.js" show="1">
+  <object base="DlEventProxy" name="DlRadioGroup">
+
+    <constructor>
+      <param name="id" type="String">Radio group ID</param>
+      <doc>
+        A radio group manages a set of 〈DlAbstractButton〉 widgets that
+        are of type TWOSTATE (that is, can be checked or unchecked at
+        any given time).
+
+        You don't normally need to call this constructor directly,
+        instead use 〈DlRadioGroup.get()〉.
+      </doc>
+    </constructor>
+
+    <events>
+      <event name="onChange">
+        <param name="button" type="DlAbstractButton">The changed button</param>
+        <doc>
+          Called when a button in this group changed state.
+        </doc>
+      </event>
+    </events>
+
+    <static-methods>
+      <method hash="c7ba9303afda03616952804b3ffaa9a3" name="get">
+        <param default="null" name="id" optional="1" type="String">Group ID</param>
+        <doc>
+          Returns an existing radio group if you pass an ID, or
+          returns a new radio group having a randomly generated ID if
+          you don't pass any arguments.  This is the preffered way to
+          construct radio groups.
+
+          Originally ID-s were used so that you don't need to hold a
+          reference to the DlRadioGroup object—just store the ID and
+          use this function to retrieve the object.  I now think this
+          was a bad idea.  We recommend to store a reference to the
+          DlRadioGroup object and don't ever think about ID-s.
+
+          Radio group ID-s might be removed in the future.
+        </doc>
+      </method>
+    </static-methods>
+
+    <object-methods>
+
+      <method XXX="Code has changed!" hash="205812ef3dda0d1abe24e39437ee671f" name="addWidget">
+        <param name="w" type="DlAbstractButton">New widget for this group</param>
+        <doc>
+          Adds a widget to this group.
+        </doc>
+      <param name="pos"></param></method>
+
+      <method hash="3cdb166c19b4850056de588d33ccbc96" name="removeWidget">
+        <param name="w" type="DlAbstractButton">Widget to remove</param>
+        <doc>
+          Removes a widget from this group.  But why would you want to
+          do that?
+        </doc>
+      </method>
+
+      <method hash="dfb450f7598bdaf7d94b16883d51a37e" name="changed">
+        <param default="null" name="c" optional="1" type="boolean">Set changed?</param>
+        <doc>
+          Returns true if the value of this group has been changed,
+          that is, if any buttons changed their state.  Note that if a
+          button changed state to <b>checked</b>, then
+          <b>unchecked</b>, this function will still return true (that
+          is, it's not an exact comparison to the initial value).
+        </doc>
+      </method>
+
+      <method hash="5a1edaa56a1f8210c24411de9d151f0c" name="checkAll">
+        <param default="true" name="val" optional="1" type="boolean">Check all?</param>
+        <doc>
+          Selects (checks) all buttons if <b>val</b> is true, unchecks
+          them if <b>val</b> is false.
+        </doc>
+      </method>
+
+      <method hash="260ad7e465e1961356b18c901dae29c5" name="unCheckAll">
+        <doc>
+          Deselects (unchecks) all buttons.
+        </doc>
+      </method>
+
+      <method hash="17ef8f4b8b1bd16cfe1ddc6856866252" name="getButtons">
+        <return type="Array">array of buttons</return>
+        <doc>
+          Returns the array of buttons that this radio group currently
+          manages.
+        </doc>
+      </method>
+
+      <method hash="f0a3fda6b6b639ed506bed88e76e8be1" name="getByValue">
+        <param name="val" type="primitive">Value of the button we're looking for</param>
+        <return type="DlAbstractButton">Button if found, null otherwise</return>
+        <doc>
+          Looks up a button by value in this group and returns it if
+          found.  For this to work it's necessary that your buttons
+          have the value of a primitive type which can be a key in a
+          hash, such as a String, Number, or even boolean.  It won't
+          work though if the values are hashes or other types of
+          objects.
+        </doc>
+      </method>
+
+      <method hash="ed7283abfff8232724f4391927bc6b25" name="getNextButton">
+        <param name="btn" type="DlAbstractButton">Pointer button</param>
+        <doc>
+          Returns the button after <b>btn</b> in the current group, in
+          the order they were added to the group.
+        </doc>
+      </method>
+
+      <method hash="b6c429afb8a08f9da93dbd02cd295fbb" name="getPrevButton">
+        <param name="btn" type="DlAbstractButton">Pointer button</param>
+        <doc>
+          Returns the previous button.
+        </doc>
+      </method>
+
+      <method hash="14525e2e5db4697312a662c4e2773c30" name="getSelected">
+        <return type="Array">array of selected (checked) buttons</return>
+        <doc>
+          Returns an array with the currently checked buttons.
+        </doc>
+      </method>
+
+      <method hash="c1c8e95c85f28f244aca95f12533d901" name="getValue">
+        <return type="Array">array of selected button values</return>
+        <doc>
+          Returns an array with the values of the selected buttons.
+        </doc>
+      </method>
+
+      <method hash="aba9b262c0cae9e795bbd4b5da453cc6" name="maxChecked" varargs="0">
+        <!--XXX: uses *arguments*, check for missing params-->
+        <param default="null" name="maxChecked" optional="1" type="Number"></param>
+        <doc>
+          Returns (and optionally sets) the maximum number of buttons
+          that can be simultaneously checked in the current group.
+        </doc>
+      </method>
+
+      <method hash="4cdb3bc924ee4e3ae65b474cd48bce44" name="minChecked" varargs="0">
+        <!--XXX: uses *arguments*, check for missing params-->
+        <param default="null" name="minChecked" optional="1" type="Number"></param>
+        <doc>
+          Returns (and optionally sets) the minimum number of buttons
+          that can be simultaneously checked in the current group.
+        </doc>
+      </method>
+
+      <method hash="c80819dfbb286503059f5728b0c5700d" name="reset">
+        <doc>
+          Removes all buttons from the current group and resets all
+          state to initial.  Therefore you can reuse this group for a
+          completely different set of buttons.
+        </doc>
+      </method>
+
+      <method hash="53ba45f65de560b5c233d1c39692e464" name="setValue">
+        <param name="val" type="Array">Group value</param>
+        <param default="false" name="hooks" optional="1" type="boolean">Call event hooks?</param>
+        <doc>
+          For each item in the <b>val</b> array, locates the button by
+          calling 〈getByValue()〉 and checks it by calling
+          〈DlAbstractButton::checked()|checked(true)〉.
+        </doc>
+      </method>
+
+    </object-methods>
+  </object>
+</api>

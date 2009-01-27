@@ -1,0 +1,328 @@
+<api file="cryptaes.js" show="1">
+  <fileinfo>
+    XXX This object is defined in src/extras/cryptaes.js
+
+    You need to load it separately—it's not included in thelib.js
+    since many applications will not require this functionality.
+  </fileinfo>
+  <object name="DlCryptAES">
+    <constructor>
+      <param default="null" name="key" type="Array">Encryption key as array of bytes (<em>required!</em>)</param>
+      <param default="&#34;ECB&#34;" name="mode" type="String">Operation mode</param>
+      <param default="null" name="iv" type="Array">Initialization vector (array of bytes)</param>
+      <doc>
+
+        AES (“Advanced Encryption Standard”, also known as “Rijndael”)
+        is a very secure encryption algorithm which replaces DES
+        (“Data Encryption Standard”).  You can <a href="http://en.wikipedia.org/wiki/Rijndael" target="_blank">read about it on Wikipedia</a>.
+
+        This object is an implementation of it which allows you to
+        encrypt/decrypt arbitrary bytes.  You can use it to secure
+        communication with the server over an unsecured line
+        (i.e. when you can't use SSL).  We developed this object to
+        provide a means of secure communication over a 〈DlSocket〉
+        line.
+
+        Our code implements the following <a href="http://en.wikipedia.org/wiki/Electronic_codebook" target="_blank" title="Block cypher operation at Wikipedia">operation modes</a>:
+
+        <ul>
+          <li>ECB (electronic codebook) — the default, but the least secure</li>
+          <li>CBC (cypher block chaining)</li>
+          <li>CFB (cypher feedback)</li>
+          <li>OFB (output feedback)</li>
+          <li>CTR (counter) — seems to be the most secure</li>
+        </ul>
+
+        You can chose the mode of operation by passing the <b>mode</b>
+        argument to constructor (should be one of the acronyms above).
+
+        Except ECB, all other modes of operation use an “initial
+        vector”, which you can pass in <b>iv</b>.  This must be an
+        array with 16 bytes.  The default is all zeroes.  If you don't
+        pass an initial vector, the security is greatly reduced.
+
+        The required <b>key</b> argument must be an array of 16, 24 or
+        32 <em>bytes</em> (that is, numbers between 0 and 255).  These
+        are the encryption strengths supported by the AES (128, 192 or
+        256 bits).
+
+        *** Encryption
+
+        Here's the basic setup to use this object:
+
+        <js canrun="true"><![CDATA[
+          // construct encryption key
+          var key = "00112233445566778899aabbccddeeff".hexToBytes();
+          var aes = new DlCryptAES({ key: key });
+
+          // transform text to bytes
+          var text = "foo bar baz boo!foo bar baz boo!";
+          var data = text.toBytes();
+
+          // encrypt bytes
+          var out = aes.encodeBytes(data);
+          print(out.map("hex", 2).join(" "));
+
+          // decrypt bytes
+          var out2 = aes.decodeBytes(out);
+
+          // transform bytes to text
+          var txt = out2.bytesToString();
+          print(txt);
+        ]]></js>
+
+        The encryption key must be an array of bytes.  We use
+        〈String::hexToBytes()〉 to construct one from the hex string
+        representation.  For better security, you can use the MD5 of
+        some password.
+
+        <blockquote>
+          Also note that we must pass an array of bytes to the
+          encodeBytes function. (there is an 〈encodeText()〉 method as
+          well but we though it's best to present 〈encodeBytes()〉
+          first to demonstrate some things).  The size of the array to
+          be encoded must be a multiple of 16 (cypher block length).
+          We transform text to bytes using 〈String::toBytes()〉.  The
+          reverse transformation is done with
+          〈Array::bytesToString()〉.
+        </blockquote>
+
+        So as you can see in the above sample, I passed a text
+        containing 32 characters.  It's a 16 byte string that repeats
+        twice.  When you run the sample you will notice that the
+        encrypted data also contains 32 bytes which in fact are one 16
+        byte sequence, repeating twice.  This is the main disadvantage
+        of ECB: <em>an input block will always encode to the same
+        output block</em>.
+
+        Let's now modify the sample to use the CBC mode:
+
+        <js canrun="true"><![CDATA[
+          // construct encryption key
+          var key = "00112233445566778899aabbccddeeff".hexToBytes();
+          var aes = new DlCryptAES({ key: key, mode: "CBC" });
+
+          // transform text to bytes
+          var text = "foo bar baz boo!foo bar baz boo!";
+          var data = text.toBytes();
+
+          // encrypt bytes
+          var out = aes.encodeBytes(data);
+          print(out.map("hex", 2).join(" "));
+
+          // decrypt bytes
+          var out2 = aes.decodeBytes(out);
+
+          // transform bytes to text
+          var txt = out2.bytesToString();
+          print(txt);
+        ]]></js>
+
+        Note that now there is no recognizable pattern in the output.
+        There is nothing to tell us that the input was actually a
+        repeated string.  This is a lot better than ECB!
+
+        *** Using an initialization vector
+
+        If you run the above sample multiple times, you will get the
+        same encrypted output.  This is normal—there is no random
+        factor.
+
+        All modes except ECB use one additional block called the
+        “initialization vector” (IV).  This helps scramble the
+        encryption even more.  Here is how we can pass one:
+
+        <js canrun="true"><![CDATA[
+          // construct encryption key
+          var key = "00112233445566778899aabbccddeeff".hexToBytes();
+          var aes = new DlCryptAES({ key: key, mode: "CBC" });
+
+          var iv = "000102030405060708090a0b0c0d0e0f".hexToBytes();
+          aes.setIV(iv);
+
+          // transform text to bytes
+          var text = "foo bar baz boo!foo bar baz boo!";
+          var data = text.toBytes();
+
+          // encrypt bytes
+          var out = aes.encodeBytes(data);
+          print(out.map("hex", 2).join(" "));
+
+          // decrypt bytes
+          var out2 = aes.decodeBytes(out);
+
+          // transform bytes to text
+          var txt = out2.bytesToString();
+          print(txt);
+        ]]></js>
+
+        The output is now different from the previous time (where the
+        initial vector was null).  Note that even a minor change in
+        the IV will lead to a drastically different encrypted output.
+        Generating a new vector for each message will therefore
+        produce different output, even for equal messages, which is
+        good because it prevents the same pattern from repeating.
+
+        If you send such an encrypted message, say from JavaScript to
+        the server, you must be aware that besides the encryption key,
+        the server must know the IV as well in order to decrypt the
+        data.  It's up to you to design the protocol—a simple idea is
+        to concatenate the IV to the encrypted output and have the
+        server take it from there.
+
+        We provide the 〈setTimestampIV()〉 method to generate an IV
+        based on the current date/time.  Here is a sample:
+
+        <js canrun="true"><![CDATA[
+          // construct encryption key
+          var key = "00112233445566778899aabbccddeeff".hexToBytes();
+          var aes = new DlCryptAES({ key: key, mode: "CTR" });
+
+          aes.setTimestampIV();
+
+          // transform text to bytes
+          var text = "foo bar baz boo!foo bar baz boo!";
+          var data = text.toBytes();
+
+          // encrypt bytes
+          var out = aes.encodeBytes(data);
+          print(out.map("hex", 2).join(" "));
+
+          // decrypt bytes
+          var out2 = aes.decodeBytes(out);
+
+          // transform bytes to text
+          var txt = out2.bytesToString();
+          print(txt);
+        ]]></js>
+
+        Execute this sample multiple times and note that the output is
+        spectacularly different each time, even though it's the same
+        text and key.  You can retrieve the IV by calling 〈getIV()〉.
+
+        *** Decryption
+
+        In order to decrypt AES-encoded data, one needs to know the
+        following:
+
+        <ul>
+          <li>The operation mode</li>
+          <li>The initialization vector, if mode is not ECB</li>
+          <li>The encryption key</li>
+        </ul>
+
+        When you design your protocol, you need to make a decision of
+        how to send all this information between browser and server.
+        Of course, in most cases the operation mode will be a constant
+        so you don't need to send it.  You can decide on, say, CTR,
+        and use it on both server and client.  However, both need to
+        know the key and the initialization vector.
+
+        *** Text data encryption
+
+        Since AES is a block cypher, it operates on blocks of 16 bytes
+        at once.  The 〈encodeBytes()〉 and 〈decodeBytes()〉 methods
+        expect that the input array has a size which is a multiple of
+        16.
+
+        There are two modes of operation (OFB and CTR) that don't,
+        theoretically, need this restriction, however our
+        implementation still does it.
+
+        When we encrypt text, we prepend the text length followed by a
+        colon, and add spaces to the resulting text as needed in order
+        to make it have a length which divides by 16.  You need to
+        take this into consideration when decrypting text encoded with
+        〈encodeText()〉.
+
+        Quick sample:
+
+        <js canrun="true"><![CDATA[
+          // construct encryption key
+          var key = "00112233445566778899aabbccddeeff".hexToBytes();
+          var aes = new DlCryptAES({ key: key });
+
+          var text = "foo bar baz boo!foo bar baz boo!";
+          var out = aes.encodeText(text);
+          print(out.map("hex", 2).join(" "));
+
+          // decode as text
+          print(aes.decodeText(out));
+
+          // decode as bytes
+          var out2 = aes.decodeBytes(out);
+
+          // transform bytes to text
+          var txt = out2.bytesToString();
+          print(txt.replace(/ /g, '.'));
+        ]]></js>
+
+        In the last few lines we decode as bytes the encrypted data,
+        and print the output, replacing all spaces with a dot.  As you
+        can see, the actual encoding contains the length of the
+        original string and as many trailing spaces as were needed to
+        make it have 48 bytes.
+
+      </doc>
+    </constructor>
+    <static-methods></static-methods>
+    <object-methods>
+
+      <method hash="fba3e87f44cc912eb1689b38fae8cfcf" name="encodeBytes">
+        <param name="input" type="Array">Initial (plaintext) data as array of bytes</param>
+        <return type="Array">Encrypted data as array of bytes</return>
+        <doc></doc>
+      </method>
+
+      <method hash="f4bd0e67844ed7e9ca04e9b375ce574b" name="decodeBytes">
+        <param name="input" type="Array">Encrypted input data (array of bytes)</param>
+        <return type="Array">Decrypted data (array of bytes)</return>
+        <doc>
+        </doc>
+      </method>
+
+      <method XXX="Code has changed!" hash="1468db5dc0e9e03ed4a34c1fe88369f9" name="encodeText">
+        <param name="str" type="String">Input text (plaintext)</param>
+        <return type="Array">Encrypted data as array of bytes</return>
+        <doc>
+          Encrypts a string.  The text is encoded to UTF8 before
+          encryption via 〈String::toBytes()〉.
+        </doc>
+      </method>
+
+      <method XXX="Code has changed!" hash="7556f830e847f2f9d75e8a1dc682b560" name="decodeText">
+        <param name="input" type="Array">Encrypted input data (array of bytes)</param>
+        <return type="String">Decrypted text</return>
+        <doc>
+          Decrypts a string.  The expected input is what
+          〈encodeText()〉 would output.  After decryption, it will
+          recreate the string by parsing UTF8 (with
+          〈Array::bytesToString()〉).
+        </doc>
+      </method>
+
+      <method hash="44ddd887150ac4f0e24c4ffaf0c61f13" name="getIV">
+        <return type="Array">Initialization vector</return>
+        <doc>
+          Returns the current initialization vector as array of bytes.
+        </doc>
+      </method>
+
+      <method hash="3e4b31c37c3d067efba389721a65dd2c" name="setIV">
+        <param name="iv" type="Array">Initialization vector (array of bytes)</param>
+        <doc>
+          Sets the initialization vector to the given value.
+        </doc>
+      </method>
+
+      <method hash="c854d8703fdc1b1652216ecb613baef2" name="setTimestampIV">
+        <doc>
+          Creates an initialization vector based on the current
+          timestamp.  This provides enough uniqueness for serious
+          encryption.  You can retrieve it with 〈getIV()〉.
+        </doc>
+      </method>
+
+    </object-methods>
+  </object>
+</api>

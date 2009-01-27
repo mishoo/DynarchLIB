@@ -1,0 +1,540 @@
+<sample>
+
+  <title>DlEvent</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlEvent</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>— none —</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈event.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈eventproxy.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev">DOM event</span>
+</td>
+         <td class="type">[<b>〈Event〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+        A DlEvent object represents a DOM event.  It doesn't actually
+        encapsulate a DOM event, but it tries to be a good copy that
+        provides consistent information no matter what browser is
+        used.
+<p/>
+        You shouldn't normally need to construct such an object
+        manually.
+<p class='heading'> Total abstraction over DOM events</p>
+<p/>
+        Once loaded, <a href='src/js/event.js' target='_blank'>event.js</a> will register a
+        <a href='api://DlEvent.xml:type=static_method:func=_genericEventHandler'>global event handler</a> for all
+        possible DOM events.  This handler checks the event and
+        dispatches appropriate <a href='api://DlEventProxy.xml'>DynarchLIB events</a> to
+        various widgets that the event can apply.
+<p/>
+        For example, let's say we have a <a href='api://DlWidget.xml'>simple widget</a> that
+        it's inside a <a href='api://DlContainer.xml'>container</a> which in turn is inside
+        a <a href='api://DlDesktop.xml'>desktop</a> widget.  When the mouse enters the
+        widget the browser generates an "onmouseover" event.
+        DynarchLIB catches this event and sees it relates to an
+        widget.  Then it looks for the widget's ancestors and sees
+        it's inside a container which is inside a desktop.  It will
+        generate events as follows: "onMouseEnter" for the widget, and
+        "onMouseOver" for the widget, container and desktop.
+<p/>
+        All listeners will be passed a <a href='api://DlEvent.xml'>DlEvent</a> object which is
+        initialized from the DOM event.
+<p/>
+        Using methods in <a href='api://DlEventProxy.xml'>DlEventProxy</a>, which all widgets inherit
+        from, you can assign custom handlers for these events.  This
+        way you can use the DynarchLIB event system without having to
+        care about browser differences and the like.
+<p class='heading'> But you can still use DOM events</p>
+<p/>
+        Of course, when you need to, you can resort to plain DOM
+        events.  For example, an "onClick" event is triggered when a
+        widget is clicked.  However, you might want to do something
+        only when the click occurred on some part of the widget
+        (e.g. in a case when your widget is composed of multiple DOM
+        elements, you might want to do something when the click occurs
+        on some specific element in the widget).  For this case you
+        can assign a standard DOM event handler directly to the
+        element using <a href='api://DynarchDomUtils.xml:type=static_method:func=addEvent'>DynarchDomUtils.addEvent()</a>.
+      </span>
+
+     </div>
+   </div>
+    </div>
+
+
+    <div class="static-methods">
+      <h2>Static functions</h2>
+   <div class="method">
+        <h3 id="atUnload:static_method">DlEvent.atUnload (<span class='param'>f</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">f</td>
+         <td class="doc"><span name="f">Callback function</span>
+</td>
+         <td class="type">[<b>〈Function〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Registers a callback function to be executed at the DOM
+          "unload" event.  We're using this to register various
+          handlers that clean up memory to prevent browser memory
+          leaks.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="captureGlobal:static_method">DlEvent.captureGlobal (<span class='param'>type</span>, <span class='param'>f</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">type</td>
+         <td class="doc"><span name="type">DynarchLIB event name</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">f</td>
+         <td class="doc"><span name="f">Callback function</span>
+</td>
+         <td class="type">[<b>〈Function〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Specifies that all events of the given <b>type</b> are
+          captured by your callback.  This means that your supplied
+          function will be called <em>first</em>, then other handlers
+          are called as usual.  Your function can chose to block the
+          event when you don't want further processing, by throwing an
+          exception:
+<p/>
+          <div sample="DlEvent1"></div>
+<p/>
+          This effectively blocks any default handlers that the
+          browser might want to execute, as well as any further
+          handlers assigned by yourself for that event.
+<p/>
+          When you're done with whatever was why you were capturing
+          events for, you should call <a href='api://DlEvent.xml:type=static_method:func=releaseGlobal'>releaseGlobal()</a> in order to
+          restore normal event processing.
+<p/>
+          The <b>type</b> of the event should be one of the following:
+<p/>
+          <ul>
+            <li>onMouseEnter</li>
+            <li>onMouseLeave</li>
+            <li>onMouseDown</li>
+            <li>onMouseUp</li>
+            <li>onMouseMove</li>
+            <li>onClick</li>
+            <li>onDblClick</li>
+            <li>onKeyDown</li>
+            <li>onKeyUp</li>
+            <li>onKeyPress</li>
+            <li>onContextMenu</li>
+            <li>on_DOM_Focus</li>
+            <li>on_DOM_Blur</li>
+          </ul>
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="captureGlobals:static_method">DlEvent.captureGlobals (<span class='param'>obj</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">obj</td>
+         <td class="doc"><span name="obj">Map event name to handler function</span>
+</td>
+         <td class="type">[<b>〈Hash〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          This simply calls <a href='api://DlEvent.xml:type=static_method:func=captureGlobal'>captureGlobal(key, val)</a>
+          for each (key, value) pair in the given hash.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="checkDisabled:static_method">DlEvent.checkDisabled (<span class='param'>w</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">w</td>
+         <td class="doc"><span name="w">widget reference</span>
+</td>
+         <td class="type">[<b>〈DlWidget〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          This is an internal utility function that checks if the
+          given widget is disabled.  An widget is considered disabled
+          if <a href='api://DlWidget.xml:type=object_method:func=disabled'>widget.disabled()</a> returns true
+          either for this widget or for any of its parents.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="fakeBlur:static_method">DlEvent.fakeBlur ()
+        </h3>
+     <div class="doc"><span>
+<p class='warning'> This might change or disappear in future versions.</p>
+<p/>
+          Fakes a blur() call.  For some DOM elements (e.g. input, or
+          textarea) I found out that blur() isn't working properly,
+          therefore we have this function that blurs the element by
+          actually focusing an invisible link.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="focusedWidget:static_method">DlEvent.focusedWidget (<span class='param optional'>w</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">w</td>
+         <td class="doc"><span name="w" optional="1">New focused widget</span>
+</td>
+         <td class="type">[<b>〈DlWidget〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+<p class='warning'> This might change or disappear in future versions.</p>
+<p/>
+          Returns the currently focused widget.  If <b>w</b> is
+          passed, changes the currently focused widget.  You can pass
+          <b>null</b> as well, which means that no widget currently
+          has focus.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="releaseGlobal:static_method">DlEvent.releaseGlobal (<span class='param'>type</span>, <span class='param'>f</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">type</td>
+         <td class="doc"><span name="type">DynarchLIB event name</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">f</td>
+         <td class="doc"><span name="f">Handler function</span>
+</td>
+         <td class="type">[<b>〈Function〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Releases an event capture previously set by
+          <a href='api://DlEvent.xml:type=static_method:func=captureGlobal'>captureGlobal()</a>.  You must pass exactly the same
+          arguments.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="releaseGlobals:static_method">DlEvent.releaseGlobals (<span class='param'>obj</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">obj</td>
+         <td class="doc"><span name="obj"></span>
+</td>
+         <td class="type">[<b>〈Hash〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Calls <a href='api://DlEvent.xml:type=static_method:func=releaseGlobal'>releaseGlobal()</a> for each pair in the hash.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_genericEventHandler:static_method">DlEvent._genericEventHandler (<span class='param'>ev</span>, <span class='param'>ev2</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">ev2</td>
+         <td class="doc"><span name="ev2"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="computePos:object_method">computePos (<span class='param'>widget</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">widget</td>
+         <td class="doc"><span name="widget">Widget or element</span>
+</td>
+         <td class="type">[<b>〈DlWidget,HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Computes the event's position relative to the position of
+          the given widget or element.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="destroy:object_method">destroy ()
+        </h3>
+     <div class="doc"><span>
+          Clears any references that this event might hold to widgets
+          or DOM elements.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getObject:object_method">getObject ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: DlWidget) 
+           <b><span></span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the widget that the current event is related to.
+          When there is no such widget, this returns <b>null</b>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getParentElement:object_method">getParentElement (<span class='param'>tag</span>, <span class='param'>stop</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">tag</td>
+         <td class="doc"><span name="tag">Tag name to look up</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">stop</td>
+         <td class="doc"><span name="stop"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the closest parent element having the given tag, or
+          <b>null</b> if none was found.  For example if an widget is
+          composed of a table having multiple rows and columns, and
+          you catch the onMouseOver event, it will be triggered
+          whenever the caret enters a new cell (TD).  You can use
+          ev.getParentElement("td") to find out which cell is hovered.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="stopDomEvent:object_method">stopDomEvent ()
+        </h3>
+     <div class="doc"><span>
+          Stops the latest triggered DOM event, preventing bubbling
+          and browser's default handlers.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+<code id="DlEvent1" type="js">
+            throw new DlExStopEventBubbling;
+            // the following is equivalent:
+            DlException.stopEventBubbling();
+          </code>
+
+
+</sample>
+
+
+
+

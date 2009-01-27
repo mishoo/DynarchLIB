@@ -1,0 +1,262 @@
+<api file="animation.js" show="1">
+  <object base="DlEventProxy" name="DlAnimation">
+    <constructor>
+      <param name="length" type="Number">Animation lengths (number of frames)</param>
+      <param name="fps" type="Number">Animation speed (frames per second)</param>
+      <doc>
+        A DlAnimation object is actually an useful wrapper around the
+        browser's setInterval() function.  It will emit the "onUpdate"
+        event whenever the animation should be updated, passing
+        appropriate information.  From your own code you would hook on
+        this event and update an element state, such as position, size
+        or colors, etc. to implement animations or fade in/out
+        effects.
+
+        Note that this is quite abstract--it doesn't implement various
+        kinds of special effects.  But it's easy to make your own.
+        DlAnimation also provides some “easing functions” that you can
+        use to calculate smooth accelerated or decelerated animations.
+
+        *** Easing functions
+
+        An easing function is a function that takes one argument
+        <b>t</b> (“time”) and returns the “position” that the
+        animation should take at the given time.  Both time and
+        position are floating number values between 0 and 1.
+
+        <ul>
+          <li>
+            <p>
+              <b>Time</b> — 0 means the first animation frame, 1 means
+              the last animation frame.  Time is between 0 and 1 and
+              any intermediary positions are calculated based on the
+              current frame number.  For example, if you have an
+              animation of 40 frames, then your easing function will
+              be called 40 times with these <b>time</b> values, in
+              order:
+            </p>
+            <p>
+              0, 1/40, 2/40, 3/40, ... 40/40 (1)
+            </p>
+          </li>
+          <li>
+            <p>
+              <b>Position</b> — each time it's called, your function
+              should return a floating point value between 0 and 1
+              which represents the position of the animation at the
+              given time.
+            </p>
+            <p>
+              For example, if you want a flat animation (no
+              acceleration and no deceleration), you can simply return
+              <b>time</b>.
+            </p>
+          </li>
+        </ul>
+
+        Code based on DlAnimation should 〈Number::map()|map〉 the
+        returned position to the initial and final values, and set the
+        element's position accordingly.  Hopefully the next sample
+        clears it all.
+
+        *** Sample
+
+        Following there is a pretty complete sample to demonstrate our
+        easing functions, as well as general usage of this object.
+        Click on the white area to test animations.
+
+        <js canrun="true">
+          var dlg = new DlDialog({ title: "Animation sample", resizable: true, quitBtn: "destroy" });
+          var layout = new DlLayout({ parent: dlg, outerSpace: 5 });
+          var toolbar_cont = new DlContainer({});
+          var toolbar = new DlHbox({ parent: toolbar_cont });
+          var options = [
+            { label: "accel_ab"  , value: "accel_ab"  },
+            { label: "accel_b"   , value: "accel_b"   },
+            { label: "bounce_b"  , value: "bounce_b"  },
+            { label: "elastic_b" , value: "elastic_b" },
+            { label: "magnetic"  , value: "magnetic"  },
+            { label: "shake"     , value: "shake"     }
+          ];
+          new DlLabel({ parent: toolbar, label: "Easing function:" });
+          var select = new DlRadioSelect({ parent: toolbar, options: options, value: "accel_ab" });
+
+          toolbar.addSpace();
+
+          new DlLabel({ parent: toolbar, label: "Length:" });
+          var lengthEntry = new DlSpinner({ parent: toolbar, value: "40", size: 3 });
+
+          toolbar.addSpace();
+
+          new DlLabel({ parent: toolbar, label: "FPS:", tooltip: "Frames per second" });
+          var fpsEntry = new DlSpinner({ parent: toolbar, value: "50", size: 3 });
+
+          var canvas = new DlContainer({ parent: toolbar });
+          canvas.setStyle({ background : "white",
+                            border     : "1px solid black",
+                            position   : "relative" });
+
+          var widget = new DlWidget({ parent: canvas });
+          widget.setStyle({ position   : "absolute",
+                            left       : "0px",
+                            top        : "0px",
+                            width      : "20px",
+                            height     : "20px",
+                            border     : "1px solid red",
+                            background : "yellow" });
+
+          // here we create the animation object
+          // note the onUpdate handler
+          var anim = new DlAnimation();
+          anim.addEventListener("onUpdate", function(t) {
+            // retrieve the name of the easing function
+            var func = select.getValue();
+            // retrieve a reference to the function itself
+            func = DlAnimation.easing[func];
+            // calculate the current position (0..1) based on the easing function
+            var pos = func(t);
+            // map the position to actual X and Y coordinates on screen
+            // this uses 〈Number::map()〉
+            var x = pos.map(start_x, stop_x);
+            var y = pos.map(start_y, stop_y);
+            // finally, reposition the widget
+            widget.setStyle({ left : x + "px",
+                              top  : y + "px" });
+          });
+
+          // these will hold initial and final position of the widget
+          var start_x, stop_x, start_y, stop_y;
+
+          // in this handler we're starting our animation
+          canvas.addEventListener("onMouseDown", function(ev) {
+            // first off, save the widget's current position
+            var pos = widget.getOffsetPos();
+            start_x = pos.x;
+            start_y = pos.y;
+            // now compute the end position, relative to the canvas
+            pos = ev.computePos(this);
+            stop_x = pos.x - 11; // subtract half of widget size
+            stop_y = pos.y - 11;
+            // and now start animation based on current "length" and "FPS" values
+            anim.start(lengthEntry.getValue(), fpsEntry.getValue());
+          });
+
+          layout.packWidget(toolbar_cont, { pos: "top", after: 5 });
+          layout.packWidget(canvas, { pos: "bottom", fill: "*" });
+          layout.setSize({ x: 400, y: 300 });
+          dlg.centerOnParent();
+          dlg.show();
+        </js>
+      </doc>
+    </constructor>
+    <events>
+      <event name="onStart">
+        <doc>
+          Called when the animation starts (see 〈start()〉).
+        </doc>
+      </event>
+      <event name="onStop">
+        <doc>
+          Called when the animation stops (see 〈stop()〉).
+        </doc>
+      </event>
+      <event name="onPause">
+        <doc>
+          Called when the animation is paused (see 〈pause()〉).
+        </doc>
+      </event>
+      <event name="onUpdate">
+        <doc>
+          Called when the animation needs update.
+        </doc>
+      </event>
+    </events>
+
+    <static-methods>
+      <method hash="3c9cd90fe6a06ca2f94e0b5cb9e1c029" name="accel_ab">
+        <param name="t" type="Number">Time [0..1]</param>
+        <doc>
+          Easing function for an animation that accelerates fast at
+          starts, and decelerates slowly at end.
+        </doc>
+      </method>
+      <method hash="ac82437bf4db12b272c8c431e7618226" name="accel_b">
+        <param name="t" type="Number">Time [0..1]</param>
+        <doc>
+          Decelerated move.  The name is misleading.
+        </doc>
+      </method>
+      <method hash="cbff861efad2757dc65df90db9ce2cd4" name="bounce_b">
+        <param name="t" type="Number">Time [0..1]</param>
+        <doc>
+          Bouncing move.
+        </doc>
+      </method>
+      <method hash="75aaac8e8e9f0df7a3d7ed561f900135" name="elastic_b">
+        <param name="t" type="Number">Time [0..1]</param>
+        <doc>
+          Elastic move.
+        </doc>
+      </method>
+      <method hash="62772c6b476e70efdd3e0d398dc02375" name="elastic_b_custom">
+        <param name="elasticity" type="Number"></param>
+        <param name="stability" type="Number"></param>
+        <param name="t" type="Number">Time [0..1]</param>
+        <doc>
+          You can use this function to customize an elastic move.
+          Create a closure that sends elasticity and stability, like
+          this:
+
+          <js>
+            var veryElastic = DlAnimation.easing.elastic_b_custom.$C(10, 5);
+            // now use veryElastic as your easing function:
+            anim.start(length, fps, veryElastic);
+          </js>
+        </doc>
+      </method>
+      <method hash="5f514afd9d47f2bfad1c0e28f01e99dc" name="magnetic">
+        <param name="t" type="Number">Time [0..1]</param>
+        <doc>
+          This looks similar to elastic, but it seems to suggest a
+          magnetic attraction between the moving object and the final
+          position.
+        </doc>
+      </method>
+    <method hash="576d146d9a9a8fbbd8fbdcaab80747d3" name="shake"><param name="t"></param><doc></doc></method></static-methods>
+
+    <object-methods>
+
+      <method hash="e0fb562d100d0cd8f20fc20881fe6f31" name="getPos">
+        <param default="null" name="f" optional="1" type="Function|String">Easing function</param>
+        <doc>
+          Returns the animation position through function <b>f</b>.
+          If <b>f</b> is not passed, it uses the easing function
+          passed at 〈start()〉.
+        </doc>
+      </method>
+
+      <method hash="014378e214a3a1094302d54137c48713" name="start">
+        <param name="length" type="Number">length of the animation</param>
+        <param name="fps" type="Number">speed of the animation</param>
+        <param default="null" name="func" optional="1" type="String|Function">easing function</param>
+        <doc>
+          Starts the animation.  Triggers "onStart" event.
+        </doc>
+      </method>
+
+      <method XXX="Code has changed!" hash="30b2046604d02824479bd41813327191" name="stop">
+        <param name="finished"></param>
+        <doc>
+          Stops the animation and triggers "onStop" event.  The
+          <b>finished</b> argument is passed to "onStop".  It is used
+          internally: when the animation ends, stop(true) is called by
+          the framework and "onStop" handlers will get <b>true</b>,
+          thus knowing that the animation was successfully finished.
+          If you call stop() manually you should not pass an argument.
+        </doc>
+      </method>
+
+    </object-methods>
+
+  </object>
+</api>

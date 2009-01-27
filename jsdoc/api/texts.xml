@@ -1,0 +1,7 @@
+<api file="texts.js">
+  <object name="DlTEXTS">
+    <constructor></constructor>
+    <static-methods></static-methods>
+    <object-methods></object-methods>
+  </object>
+</api>

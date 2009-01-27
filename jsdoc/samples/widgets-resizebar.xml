@@ -1,0 +1,188 @@
+<sample>
+
+  <title>Resize bar</title>
+
+  <text>
+
+    <p>
+      A widget of particular importance in a fluid layout is the
+      <b>DlResizeBar</b>.  While this is useful for other cases as
+      well, it will be most commonly used in a layout to allow the
+      user to have more control on the size of individual panes.
+    </p>
+
+    <p>
+      Here is the first layout sample modified to include a resize
+      bar:
+    </p>
+
+    <div sample="resizebar1" />
+
+    <p>
+      A few conclusions from this example:
+    </p>
+
+    <ul>
+      <li>
+        A <b>DlResizeBar</b> is an ordinary widget and you pack it in
+        a layout the same way you pack other widgets.
+      </li>
+      <li>
+        In the constructor, you need to specify what widget it applies
+        to using the <b>widget</b> argument.
+      </li>
+      <li>
+        You can only apply a resize bar to a widget that has a
+        determinate size.  You can't for instance specify a widget
+        that has fill: "*".
+      </li>
+    </ul>
+
+    <p>
+      You might also have noticed that the resize bar goes way to the
+      left or right of the dialog—it's not restricted in any way.  To
+      apply some restrictions, we can actually use the layout's
+      arguments.  Let's say that we don't want the left pane get
+      smaller than 50 pixels, nor bigger than 300:
+    </p>
+
+    <div sample="resizebar2" />
+
+    <p>
+      The resize bar is by default of vertical type.  If we wanted a
+      horizontal resize bar, we can get it by passing <b>horiz:
+      true</b> in its constructor:
+    </p>
+
+    <div sample="resizebar3" />
+
+    <p>
+      Let's see a more complicated sample based on the last layout
+      example:
+    </p>
+
+    <div sample="resizebar4" />
+
+  </text>
+
+  <code id="resizebar1" type="js" canrun="true"><![CDATA[
+var dlg = new DlDialog({ title: "Layout sample", resizable: true, quitBtn: "destroy" });
+var layout = new DlLayout({ parent: dlg });
+
+var left = new DlContainer({});
+var right = new DlContainer({});
+
+left.getElement().style.backgroundColor = "#fcc";
+right.getElement().style.backgroundColor = "#ccf";
+
+var bar = new DlResizeBar({ widget: left });
+
+layout.packWidget(left, { pos: "left", fill: "30%" });
+layout.packWidget(bar, { pos: "left" });
+layout.packWidget(right, { pos: "right", fill: "*" });
+
+var btn = new DlButton({ parent: left, label: "Close" });
+btn.addEventListener("onClick", function() {
+    dlg.destroy();
+});
+
+layout.setSize({ x: 400, y: 300 });
+dlg.centerOnParent();
+dlg.show();
+  ]]></code>
+
+  <code id="resizebar2" type="js" canrun="true"><![CDATA[
+var dlg = new DlDialog({ title: "Layout sample", resizable: true, quitBtn: "destroy" });
+var layout = new DlLayout({ parent: dlg });
+
+var left = new DlContainer({});
+var right = new DlContainer({});
+
+left.getElement().style.backgroundColor = "#fcc";
+right.getElement().style.backgroundColor = "#ccf";
+
+var bar = new DlResizeBar({ widget: left });
+
+layout.packWidget(left, { pos  : "left",
+                          fill : "30%",
+                          min  : 50,
+                          max  : 300 });
+layout.packWidget(bar, { pos: "left" });
+layout.packWidget(right, { pos: "right", fill: "*" });
+
+var btn = new DlButton({ parent: left, label: "Close" });
+btn.addEventListener("onClick", function() {
+    dlg.destroy();
+});
+
+layout.setSize({ x: 400, y: 300 });
+dlg.centerOnParent();
+dlg.show();
+  ]]></code>
+
+  <code id="resizebar3" type="js" canrun="true"><![CDATA[
+var dlg = new DlDialog({ title: "Layout sample", resizable: true, quitBtn: "destroy" });
+var layout = new DlLayout({ parent: dlg });
+
+var top = new DlContainer({});
+var bottom = new DlContainer({});
+
+top.getElement().style.backgroundColor = "#fcc";
+bottom.getElement().style.backgroundColor = "#ccf";
+
+var bar = new DlResizeBar({ widget: top, horiz: true });
+
+layout.packWidget(top, { pos  : "top",
+                         fill : "30%",
+                         min  : 50,
+                         max  : 200 });
+layout.packWidget(bar, { pos: "top" });
+layout.packWidget(bottom, { pos: "bottom", fill: "*" });
+
+var btn = new DlButton({ parent: top, label: "Close" });
+btn.addEventListener("onClick", function() {
+    dlg.destroy();
+});
+
+layout.setSize({ x: 400, y: 300 });
+dlg.centerOnParent();
+dlg.show();
+  ]]></code>
+
+  <code id="resizebar4" type="js" canrun="true"><![CDATA[
+var dlg = new DlDialog({ title: "Layout sample", resizable: true, quitBtn: "destroy" });
+var layout = new DlLayout({ parent: dlg });
+
+var top = new DlContainer({});
+var left = new DlContainer({});
+var right = new DlContainer({});
+var bottom = new DlContainer({});
+
+var b1 = new DlResizeBar({ widget: left });
+var b2 = new DlResizeBar({ widget: top, horiz: true });
+var b3 = new DlResizeBar({ widget: bottom, horiz: true, invert: true });
+
+top.getElement().style.backgroundColor = "#ffc";
+left.getElement().style.backgroundColor = "#fcc";
+right.getElement().style.backgroundColor = "#ccf";
+bottom.getElement().style.backgroundColor = "#cfc";
+
+layout.packWidget(top, { pos: "top", fill: 30 });
+layout.packWidget(b2, { pos: "top" });
+layout.packWidget(bottom, { pos: "bottom", fill: 30 });
+layout.packWidget(b3, { pos: "bottom" });
+layout.packWidget(left, { pos: "left", fill: "30%" });
+layout.packWidget(b1, { pos: "left" });
+layout.packWidget(right, { pos: "right", fill: "*" });
+
+var btn = new DlButton({ parent: left, label: "Close" });
+btn.addEventListener("onClick", function() {
+    dlg.destroy();
+});
+
+layout.setSize({ x: 400, y: 300 });
+dlg.centerOnParent();
+dlg.show();
+  ]]></code>
+
+</sample>

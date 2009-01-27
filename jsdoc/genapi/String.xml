@@ -1,0 +1,784 @@
+<sample>
+
+  <title>String</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>String</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>— none —</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈jslib.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈texts.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+     <div class="doc"><span>
+      This is a standard JavaScript object.  DynarchLIB adds a few
+      useful extensions.
+    </span>
+
+     </div>
+   </div>
+    </div>
+
+
+    <div class="static-methods">
+      <h2>Static functions</h2>
+   <div class="method">
+        <h3 id="buffer:static_method">String.buffer (<span class="varargs">…</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Function) 
+           <b><span>buffer function</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Creates a string buffer function.  This is useful for cases
+          when you want to generate a long string—when you'd normally
+          repeat “string += some_additions” lines all the time.
+<p/>
+          The “+=” string operator is very slow for long strings in
+          Internet Explorer, therefore our buffer function will chose
+          an optimized approach, depending on the browser.  For IE and
+          Safari/Konqueror, the fastest approach is creating an array
+          and calling join("") at the end.  For Firefox and Opera,
+          string.concat() seems to be the winner.
+<p/>
+          Here's how you use this simple abstraction:
+<p/>
+          <div sample="String1"></div>
+<p/>
+          At each function call, you can pass more than one argument
+          if needed:
+<p/>
+          <div sample="String2"></div>
+<p/>
+          You can also pass some text at initialization phase:
+<p/>
+          <div sample="String3"></div>
+<p/>
+          The browser detection phase happens at compile-time,
+          therefore there's no “if browser == "MSIE"” penalty at
+          run-time.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="firstNonEmpty:static_method">String.firstNonEmpty (<span class="varargs">…</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: String) 
+           <b><span></span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          This method receives a variable number of arguments
+          (normally strings, but you can pass any type that can be
+          stringified using the toString() method).  It'll return the
+          first one which contains at least one non-white-space
+          character.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="template:static_method">String.template (<span class="varargs">…</span>)
+        </h3>
+     <div class="doc"><span>
+          Built on top of <a href='api://String.xml:type=static_method:func=buffer'>String.buffer()</a>, the template() method
+          adds a simple abstraction for building custom HTML at
+          run-time.  You create a template like this:
+<p/>
+          <div sample="String4"></div>
+<p/>
+          And you can execute it later like this:
+<p/>
+          <div sample="String5"></div>
+<p/>
+          A template is a function that receives a single object as
+          argument (a hash table) and returns the template string,
+          replacing strings like “$prop” to the value of the “prop”
+          key in the hash table.  It can accept some more complex
+          syntax as well:
+<p/>
+          <div sample="String6"></div>
+<p/>
+          This method is probably suboptimal because we actually run a
+          search'n'replace regexp match at every template call.  For
+          now it works fine for us—if anyone will complain, we will
+          optimize it to actually <em>compile</em> the template when
+          it's first defined into running JavaScript code, which
+          should make it a lot faster.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="arrayWords:object_method">arrayWords ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Array) 
+           <b><span></span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns an array containing an element for each word of the
+          current string.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="breakable:object_method">breakable (<span class='param optional'>re</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">re</td>
+         <td class="doc"><span default="/([_.-])/g" name="re" optional="1"></span>
+</td>
+         <td class="type">[<b>〈RegExp〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">/([_.-])/g</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          This is a convenience method to make a string breakable.
+          Ordinarily, browsers can't break a long string that doesn't
+          contain spaces, to display it on multiple lines, but
+          sometimes you want to do this.  Some strings can be broken
+          at, say, “-”, “_” of “.” characters (which is the default
+          regexp).
+<p/>
+          This function returns a new (HTML) string which should
+          render identically to the current string, but it can be
+          broken into multiple lines.
+<p/>
+          Here's an example:
+<p/>
+          <div sample="String14"></div>
+<p/>
+          You can pass a RegExp if you want to allow line breaks in
+          other spots than the default regexp does.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="capitalizeString:object_method">capitalizeString ()
+        </h3>
+     <div class="doc"><span>
+          Capitalizes <em>the first letter of a string</em> and
+          returns the new string.
+<p/>
+          This is not very useful and will probably remove it.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="decodeJSON:object_method">decodeJSON (<span class='param optional'>safe</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">safe</td>
+         <td class="doc"><span default="false" name="safe" optional="1"></span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">false</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Tries to interpret the current string as JSON and returns
+          the decoded object.  It's equivalent to calling
+          <a href='api://DlJSON.xml:type=static_method:func=decode'>DlJSON.decode()</a> on the current string:
+<p/>
+          <div sample="String7"></div>
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="fixedWidth:object_method">fixedWidth (<span class='param'>w</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">w</td>
+         <td class="doc"><span name="w"></span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Embeds the current string in a DIV having the inline
+          style="width: <b>w</b>".  <b>w</b> can be any valid CSS
+          width definition.  For example:
+<p/>
+          <div sample="String8"></div>
+<p/>
+          will output “&lt;div style="8em"&gt;foo bar&lt;/div&gt;”.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="hashWords:object_method">hashWords (<span class='param optional'>val</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">val</td>
+         <td class="doc"><span name="val" optional="1"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Hash) 
+           <b><span></span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns a hash whose keys are the words of the current
+          string and values are either <b>val</b>, or <b>true</b> if
+          <b>val</b> wasn't given.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="hexToBytes:object_method">hexToBytes (<span class='param'>unsafe</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">unsafe</td>
+         <td class="doc"><span default="false" name="unsafe">Discard non-hex characters?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">false</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Array) 
+           <b><span>array of bytes</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Assuming this string is the hex representation of some
+          number, convert it to an array of bytes (most significant
+          will be at position zero).
+<p/>
+          Example:
+<p/>
+          <div sample="String11"></div>
+<p/>
+          Passing <b>unsafe</b> true will allow you to have any other
+          characters in the string (will be discarded).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="htmlEmbed:object_method">htmlEmbed (<span class='param'>tag</span>, <span class='param optional'>c</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">tag</td>
+         <td class="doc"><span name="tag"></span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">c</td>
+         <td class="doc"><span name="c" optional="1"></span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Embeds the current string in an HTML <b>tag</b>, optionally
+          having the class name <b>c</b>.
+<p/>
+          <div sample="String9"></div>
+<p/>
+          will output “&lt;div class="news"&gt;foo&lt;/div&gt;”.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="lastIndexOfRegexp:object_method">lastIndexOfRegexp (<span class='param'>re</span>, <span class='param'>caret</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">re</td>
+         <td class="doc"><span name="re"></span>
+</td>
+         <td class="type">[<b>〈RegExp〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">caret</td>
+         <td class="doc"><span name="caret"></span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Number) 
+           <b><span></span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          <fixme>document properly</fixme>
+<p/>
+          This method returns the position immediately after the last
+          occurrence of the given regexp (<b>re</b>) in the current
+          string, smaller than <b>caret</b>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="makeLabel:object_method">makeLabel ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: String) 
+           <b><span>new string</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          A small utility function which makes a non-breakable label
+          from the current string.  Currently this simply replaces all
+          (1 or more consecutive) spaces with one “&amp;nbsp;”.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="noWrap:object_method">noWrap ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: String) 
+           <b><span>new string</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Similar to <a href='api://String.xml:type=object_method:func=makeLabel'>makeLabel()</a> but replaces each space with a
+          “&amp;nbsp;”.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="repeat:object_method">repeat (<span class='param'>i</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">i</td>
+         <td class="doc"><span name="i"></span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: String) 
+           <b><span>new string</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Repeats the current string <b>i</b> times and return the
+          result.  This function is optimized—that is, it uses partial
+          results when replicating a string, such that if you want,
+          for instance, to create a string of 1024 of zeros, you can
+          say:
+<p/>
+          <div sample="String10"></div>
+<p/>
+          and it will only make 10 concatenations.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="replace:object_method">replace (<span class='param'>re</span>, <span class='param'>val</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">re</td>
+         <td class="doc"><span name="re"></span>
+</td>
+         <td class="type">[<b>〈RegExp〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">val</td>
+         <td class="doc"><span name="val"></span>
+</td>
+         <td class="type">[<b>〈Function〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: String) 
+           <b><span>new string</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          This is defined only for old versions of Safari, which
+          didn't support a function as a second argument to
+          <a href='api://String.xml:type=object_method:func=replace'>String::replace()</a>.  It's just a JS compatibility
+          layer—read about it in the <a href="http://docs.sun.com/source/816-6408-10/string.htm#1194258">JS
+          client-side reference</a>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="toBytes:object_method">toBytes ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Array) 
+           <b><span>array of bytes in UTF8</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Converts this string into an array of bytes representing the
+          UTF8 encoding of the string.  See <a href='api://Array.xml:type=object_method:func=bytesToString'>Array::bytesToString()</a>
+          for the reverse transformation.  This method is Unicode
+          safe.
+<p/>
+          <div sample="String12"></div>
+<p/>
+          Note that the length of the output array will be greater
+          than the length of the string when non-ASCII characters
+          appear.  Example:
+<p/>
+          <div sample="String13"></div>
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="trim:object_method">trim (<span class='param optional'>nostart</span>, <span class='param optional'>noend</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">nostart</td>
+         <td class="doc"><span default="false" name="nostart" optional="1">Don't remove at start? (leading white-space)</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">false</td>
+       </tr>
+       <tr>
+         <td class="name">noend</td>
+         <td class="doc"><span default="false" name="noend" optional="1">Don't remove at end? (trailing white-space)</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">false</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: String) 
+           <b><span>trimmed string</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Removes leading and trailing white-space from a string.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="printf:object_method">printf (<span class="varargs">…</span>)
+        </h3>
+     <div class="doc"><span>
+          Formats the given string according to the arguments in a
+          manner similar to the classical <b>printf</b> function.
+          Note that currently it's very limited (not a real “printf”).
+          It supports the following tokens:
+<p/>
+          <pre>            %s — insert the next argument as String
+            %i — insert the next argument as integer
+            %f — insert the next argument as float
+            %o — insert the next argument as whatever it's toString() method returns
+            %% — insert a literal “%” character</pre>
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+<code id="String1" type="js"><![CDATA[
+            var buffer = String.buffer();
+            buffer("<table>");
+            buffer("<tbody><tr><td>");
+            buffer(1);
+            buffer("</td></tr></tbody>");
+            buffer("</table>");
+            alert(buffer.get()); // shows the whole text now
+          ]]></code>
+<code id="String2" type="js"><![CDATA[
+            buffer("Your name is <b>", name, "</b>");
+          ]]></code>
+<code id="String3" type="js"><![CDATA[
+            var buffer = String.buffer("<div class='profile'>");
+            buffer("foo");
+            buffer("bar", "baz");
+            buffer("</div>");
+            alert(buffer.get());
+          ]]></code>
+<code id="String4" type="js"><![CDATA[
+            var tooltip = String.template(
+              "<table>",
+              "<tr><td>Name:</td><td>$name</td></tr>",
+              "<tr><td>Value:</td><td>$value</td></tr>",
+              "</table>"
+            );
+          ]]></code>
+<code id="String5" type="js">
+            alert(tooltip({ name: "Foo", value: "Bar" });
+          </code>
+<code id="String6" type="js"><![CDATA[
+            var news_template = String.template(
+              "<div class='news'>",
+              "<div class='subject'>${message.getSubject()}</div>",
+              "<div class='body'>${message.getBody()}</div>",
+              "<div class='poster'>${user.getFullName()}</div>",
+              "</div>"
+            );
+
+            // assuming "message" has getSubject() and getBody() methods
+            // and "user" has a getFullName() method:
+
+            blog.innerHTML += news_template({ user: user, message: message });
+
+            // NOTE:
+            // “innerHTML += some_code” is a bad idea.  We afford it here for
+            // didactical purposes, but we advise you to *never* do this.
+          ]]></code>
+<code id="String7" type="js">
+            var str = "{foo : true, bar: 1}";
+            var o1 = str.decodeJSON();
+            var o2 = DlJSON.decode(str);
+            // o1 and o2 now contain the same data
+          </code>
+<code id="String8" type="js">
+            alert("foo bar".fixedWidth("8em"));
+          </code>
+<code id="String9" type="js">
+            alert("foo".htmlEmbed("div", "news"))
+          </code>
+<code id="String10" type="js">
+            var str = "0".repeat(1024);
+          </code>
+<code id="String11" type="js">
+            var a = "ff8002".hexToBytes();
+            var a = "ff 80 02".hexToBytes(true);
+            // a[0] == 255
+            // a[1] == 128
+            // a[2] == 2
+          </code>
+<code id="String12" type="js">
+            var a = "ABC".toBytes();
+            // a[0] == 65 (code of 'A')
+            // a[1] == 66
+            // a[2] == 67
+          </code>
+<code canrun="true" id="String13" type="js">
+            var txt = "Şmen";
+            print("String length: " + txt.length);
+            var a = txt.toBytes();
+            print("UTF8 encoding: " + a.map("hex", 2).join(" "));
+            print("Encoding Length: " + a.length);
+          </code>
+<code canrun="true" id="String14" type="js">
+            var str = "this-is-a-really-long-string-that-should-produce-a-scroll-bar.";
+            printHTML(str);
+            printHTML(str.breakable());
+          </code>
+
+
+</sample>
+
+
+
+

@@ -1,0 +1,55 @@
+<api file="iconlistview.js" show="1">
+  <object base="DlContainer" name="DlIconListView">
+    <constructor>
+      <param name="args"></param>
+    </constructor>
+    <static-methods></static-methods>
+    <object-methods></object-methods>
+  </object>
+  <object base="DlAbstractButton" name="DlIconListItem">
+    <constructor>
+      <param default=" CLS" name="classes"></param>
+      <param default="true" name="iconAbove"></param>
+      <param default="null" name="iconClass"></param>
+      <param default="{¶      &#34;y&#34; : 40,¶      &#34;x&#34; : 40¶}" name="iconSize"></param>
+      <param default="{¶      &#34;y&#34; : null,¶      &#34;x&#34; : 100¶}" name="itemSize"></param>
+      <param default="0" name="itemSpacing"></param>
+      <param default="false" name="spaceEvenly"></param>
+      <param default="&#34;table&#34;" name="tagName"></param>
+      <param default=" DlAbstractButton.TYPE.TWOSTATE" name="type"></param>
+    </constructor>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="8e25bd24da62cdad2dca811915c64a61" name="getIconCell">
+        <doc></doc>
+      </method>
+      <method hash="c7853a36f7de41b3374e07b0dbf09683" name="getIconSize">
+        <doc></doc>
+      </method>
+      <method hash="c5d8c82ae19f2a1dbad19b9f2a8092a7" name="getLabelCell">
+        <doc></doc>
+      </method>
+      <method hash="6c38df8163bf0f97af6e9b106b0031e4" name="label">
+        <param name="label"></param>
+        <param name="force"></param>
+        <doc></doc>
+      </method>
+      <method hash="7c424da83ef913cc5b201f23a516c82b" name="setIconAbove">
+        <param name="ia"></param>
+        <param name="init"></param>
+        <doc></doc>
+      </method>
+      <method hash="0e632f7a733fbd6b8aa0aefe395b7517" name="setIconClass">
+        <param name="className"></param>
+        <doc></doc>
+      </method>
+      <method hash="7563a1ea8e393eb4814fd3bd5cbea889" name="setIconSize">
+        <param name="sz"></param>
+        <doc></doc>
+      </method>
+      <method hash="f46091fcfe8afcdee6b79f6f55e94caa" internal="1" name="_createElement">
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

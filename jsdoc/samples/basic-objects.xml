@@ -1,0 +1,283 @@
+<sample>
+
+  <title>Coding style</title>
+
+  <text>
+    <p>
+      You can <a href="sample://basic-events.xml">skip this
+      section</a> if you wish, but if you don't understand any of the
+      other code samples, please come back here.
+    </p>
+    <p>
+      Because JavaScript doesn't have packages—all scripts execute in
+      the same memory context, therefore global variables might
+      clash—DynarchLIB introduces a “special syntax” for writing code.
+    </p>
+    <p>
+      Simply, in JavaScript variables have function scope—which means
+      that if we declare all things in a “.js” file inside a function,
+      they are protected from the outside world, and we can therefore
+      chose what to export.
+    </p>
+    <p>
+      Here is a sample:
+    </p>
+
+    <div sample="object1" />
+
+    <p>
+      Here we create and export a Person class that we can use like an
+      ordinary object.  In fact, it is an ordinary object.  It's just
+      defined differently.  By embedding everything in an anonymous
+      function, we can protect private data (such as the variables:
+      <b>population</b>, <b>males</b>, etc.).  You are not required to
+      use this style to work with DynarchLIB, but you'll definitely
+      want to comply with it if you plan on modifying the toolkit code
+      itself.
+    </p>
+
+    <h2>Inheritance</h2>
+
+    <p>
+      As you might know, in JavaScript you need to assign object
+      prototypes in order to do inheritance.  You also can't access
+      the base object otherwise than specifying it's literal name.
+      The standard syntax is kind of ugly and leads to very verbose
+      code which tends to get harder and harder to maintain.
+    </p>
+
+    <p>
+      DynarchLIB introduces a simple syntax for inheritance:
+    </p>
+
+    <div sample="object2" />
+
+    <p>
+      This is a bit more magic, but once you understand it it'll be
+      very easy to use.  Here is what happens:
+    </p>
+
+    <ol>
+      <li>
+        <p>
+          We declare that Programmer inherits Person by calling:
+          <pre name="dlhl" class="js">var BASE = Programmer.inherits(Person);</pre>
+        </p>
+        <p>
+          After this call, BASE will contain a reference to
+          Person.prototype, and we can easily use it to call the base
+          class' functions.
+        </p>
+        <p>
+          Also, as you can see, we can access the base class'
+          constructor using <b>BASE.constructor</b>.
+        </p>
+      </li>
+
+      <li>
+        <p>
+          DynarchLIB provides an easy way to export objects by
+          calling:
+          <pre name="dlhl" class="js">eval(Dynarch.EXPORT("ObjectName"));</pre>
+        </p>
+
+        <p>
+          Why with eval()?  Because it actually does more than
+          exporting the object.  It creates 2 local variables,
+          <b>P</b> and <b>D</b>.  P will refer to
+          ObjectName.prototype, and D will refer to ObjectName.
+          Because these tend to get used a lot in an object
+          definition, I find it more convenient to use these
+          shortcuts.
+        </p>
+
+        <p>
+          Of course, you are not required to use this method.  You are
+          free to export objects by either assigning them to the
+          global object (window), i.e.:
+        </p>
+
+        <pre name="dlhl" class="js">window.ObjectName = ObjectName;</pre>
+
+        <p>
+          or like in the Person class, which simply declares the
+          global <b>Person</b> variable outside the anonymous
+          function.
+        </p>
+      </li>
+
+    </ol>
+
+    <h2>Performance considerations</h2>
+
+    <p>
+      The general style is that we try to write small and elegant
+      code.  Long experience tells us that optimized code tends to
+      look ugly, be hard to read and introduce mysterious bugs.
+    </p>
+
+    <p>
+      We optimize only when it is needed.  For example, using
+      〈Array::foreach()〉, 〈Array::map()〉 or 〈Array::grep()〉 can result
+      in elegant code, but it's dog slow compared to a plain JS
+      <b>for</b> loop.  But you know what?  Most of the times it
+      doesn't matter.  It's still fast enough.  If you iterate an
+      array of 1000 elements, and for each element you need to create,
+      say, &lt;tr&gt; elements in a table, then the real bottleneck is
+      creating DOM elements.  That's what you want to optimize and not
+      the for loop itself.  Giving up <b>foreach</b> might be faster
+      by a few milliseconds, but the difference is usually ignorable.
+    </p>
+
+    <p>
+      At the opposite pole there's our
+      〈DlEvent._genericEventHandler()|generic event handler〉.  It can
+      get called so many times a second, that a few milliseconds do
+      make a sensible difference.  So I had to remove <b>foreach</b>
+      calls in that code.
+    </p>
+
+    <p>
+      Chose wisely when to optimize (and optimize late if possible).
+    </p>
+
+    <h3>Harmless optimizations</h3>
+
+    <p>
+      There are cases, though, when writing optimized code from the
+      start won't affect readability or stability.  For example if you
+      frequently access a variable named "Foo.Bar.Baz", then it makes
+      sense to create a “local alias” to it:
+    </p>
+
+    <pre name="dlhl" class="js">
+      var BAZ = Foo.Bar.Baz;
+      // use BAZ instead of Foo.Bar.Baz from now on
+    </pre>
+
+    <p>
+      It not only reduces the number of symbol lookups that the JS
+      interpreter must to, but it also reduces the overall code size
+      and actually improves readability. :) But you need to be careful
+      about assignments:
+    </p>
+
+    <pre name="dlhl" class="js">
+      // Foo.Bar.Baz = "something";
+      BAZ = "something"; // this won't be the same
+    </pre>
+
+  </text>
+
+  <code id="object1" type="js"><![CDATA[
+// declare this global variable, because we want to export this object
+var Person;
+
+// declare and instantly call an anonymous function who's only
+// purpose is to hide variables
+(function(){
+
+    // global ("static", if you wish) variables that are accessible
+    // only for the Person object
+
+    var population = [];
+    var males = 0;
+    var females = 0;
+    var totalAge = 0;
+
+    Person = function(name, age, sex) {
+        this.name = name;
+        this.age = age;
+        this.sex = sex;
+        population.push(this);
+        totalAge += age;
+        if (sex == "M")
+            males++;
+        else
+            females++;
+    };
+
+    // the following are static (class) functions that can access the
+    // variables above
+
+    Person.getPopulationSize = function() {
+        return population.length;
+    };
+
+    Person.getManCount = function() {
+        return males;
+    };
+
+    Person.getWomenCount = function() {
+        return females;
+    };
+
+    Person.getAverageAge = function() {
+        return totalAge / Person.getPopulationSize();
+    };
+
+    // this is an instance function (defined in prototype)
+    Person.prototype.kill = function() {
+        population.remove(this);
+        if (this.sex == "M")
+            males--;
+        else
+            females--;
+        totalAge -= this.age;
+    };
+
+})();
+  ]]></code>
+
+  <code id="object2" type="js"><![CDATA[
+(function(){
+
+    // just another static variable similar to those defined in Person
+    var programmers = [];
+
+    // declare that we want to inherit Person
+    var BASE = Programmer.inherits(Person);
+    function Programmer(name, age, sex, languages) {
+        // call the base class' constructor
+        BASE.constructor.call(this, name, age, sex);
+        // Array.$ creates a copy of the given array; don't worry about it now,
+        // we'll explain it later
+        this.languages = Array.$(languages);
+        programmers.push(this);
+    };
+
+    /**
+     * this exports the Programmer object and creates 2 local variables:
+     *
+     * - D -- a shortcut for Programmer
+     * - P -- shortcut for Programmer.prototype
+     */
+    eval(Dynarch.EXPORT("Programmer"));
+
+    /**
+     * so now instead of writing:
+     *
+     *   Programmer.prototype.getLanguages = function
+     *
+     * we can write the more convenient:
+     */
+    P.getLanguages = function() {
+        return this.languages;
+    };
+
+    // static function
+    D.getProgrammers = function() {
+        return programmers;
+    };
+
+    // override the "kill" function from Person
+    P.kill = function() {
+        // call the base class' version first
+        BASE.kill.call(this);
+        programmers.remove(this);
+    };
+
+})();
+  ]]></code>
+
+</sample>

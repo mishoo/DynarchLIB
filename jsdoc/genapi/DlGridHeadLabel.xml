@@ -1,0 +1,133 @@
+<sample>
+
+  <title>DlGridHeadLabel</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlGridHeadLabel</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlButton〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">classes</td>
+         <td class="doc"><span default="{¶      &#34;checked&#34; : &#34;DlGridHeadLabel-1&#34;,¶      &#34;disabled&#34; : &#34;DlGridHeadLabel-disabled&#34;,¶      &#34;unchecked&#34; : &#34;DlGridHeadLabel-0&#34;,¶      &#34;active&#34; : &#34;DlGridHeadLabel-active&#34;,¶      &#34;empty&#34; : &#34;DlGridHeadLabel-empty&#34;,¶      &#34;hover&#34; : &#34;DlGridHeadLabel-hover&#34;¶}" name="classes">
+      </span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">{<br/>      "checked" : "DlGridHeadLabel-1",<br/>      "disabled" : "DlGridHeadLabel-disabled",<br/>      "unchecked" : "DlGridHeadLabel-0",<br/>      "active" : "DlGridHeadLabel-active",<br/>      "empty" : "DlGridHeadLabel-empty",<br/>      "hover" : "DlGridHeadLabel-hover"<br/>}</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+      <param default="{¶      &#34;checked&#34; : &#34;DlGridHeadLabel-1&#34;,¶      &#34;disabled&#34; : &#34;DlGridHeadLabel-disabled&#34;,¶      &#34;unchecked&#34; : &#34;DlGridHeadLabel-0&#34;,¶      &#34;active&#34; : &#34;DlGridHeadLabel-active&#34;,¶      &#34;empty&#34; : &#34;DlGridHeadLabel-empty&#34;,¶      &#34;hover&#34; : &#34;DlGridHeadLabel-hover&#34;¶}" name="classes">
+      </param>
+    </span>
+
+     </div>
+   </div>
+    </div>
+
+
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="label:object_method">label (<span class='param'>label</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">label</td>
+         <td class="doc"><span name="label"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setWidth:object_method">setWidth (<span class='param'>w</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">w</td>
+         <td class="doc"><span name="w"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_onClick:object_method">_onClick ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+
+
+</sample>
+
+
+
+

@@ -1,0 +1,37 @@
+<api file="macbar.js">
+  <object base="DlAbstractButton" name="DlMacBarIcon">
+    <constructor>
+      <param default="&#34;bottom&#34;" name="align"></param>
+      <param default=" CLS" name="classes"></param>
+      <param default="null" name="img"></param>
+      <param default="64" name="maxHeight"></param>
+      <param default="64" name="maxWidth"></param>
+      <param default="32" name="minHeight"></param>
+      <param default="32" name="minWidth"></param>
+      <param default="900" name="tooltipTimeout"></param>
+    </constructor>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="9880e5bfe448e400e72c1f4e30cf8744" name="flash">
+        <doc></doc>
+      <param name="timeout"></param></method>
+      <method hash="eb0ddd70287919dcc89fdaa81fb13c28" name="getImgElement">
+        <doc></doc>
+      </method>
+      <method hash="c380a96ba7b448b12083b2a5e909ca3f" name="initDOM">
+        <doc></doc>
+      </method>
+      <method hash="5bb617a87d5c8cb7b4b1a7059414b3fc" internal="1" name="_createElement">
+        <doc></doc>
+      </method>
+      <method hash="297225cf7b02dfde238a8646a973ffae" internal="1" name="_onMouseEnter" varargs="1">
+        <!--XXX: uses *arguments*, check for missing params-->
+        <doc></doc>
+      </method>
+      <method hash="e7c38660e4dc049308496857a3f94d99" internal="1" name="_onMouseLeave" varargs="1">
+        <!--XXX: uses *arguments*, check for missing params-->
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

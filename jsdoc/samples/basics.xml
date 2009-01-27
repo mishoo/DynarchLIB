@@ -1,0 +1,160 @@
+<sample>
+
+  <title>DynarchLIB basics</title>
+
+  <text>
+    <p>
+      DynarchLIB is a small, portable and efficient JavaScript
+      framework providing the following:
+    </p>
+    <ul>
+
+      <li><p>
+
+        An <a href="sample://basic-objects.xml">unified coding
+        style</a> suitable for writing small and elegant code, which
+        leads to naturally small and fast applications.
+
+      </p></li>
+
+      <li><p>
+
+        A collection of utility functions and useful extensions on top
+        of standard JavaScript objects, which makes programming easier
+        and more fun.
+
+      </p></li>
+
+      <li><p>
+
+        A rich and extensible <a href="sample://widgets.xml">set of
+        <em>widgets</em></a> (user interface controls) having an
+        uniform (but customizable) look and feel and a sane API.
+
+      </p></li>
+
+      <li><p>
+
+        A <a href="sample://basic-events.xml">coherent event
+        system</a> — unifies DOM events with custom events and makes
+        widgets behave as standard UI elements.
+
+      </p></li>
+
+      <li>
+        <p>
+          A server communication framework — provides an easy way to
+          interoperate with a backend server via XML or <a
+          href="sample://extensions-json.xml">JSON</a> RPC requests.
+        </p>
+        <p>
+          Additionally, we provide 〈DlSocket〉, an object that you can
+          use to create an arbitrary TCP/IP connection with the
+          server.  This functionality requires Flash Player (it's a
+          small SWF file of about 1K).
+        </p>
+      </li>
+
+      <li>
+        <p>
+          Strong 〈DlCryptAES|cryptographic functions〉 which you can
+          use to encrypt/decrypt data when for any reasons you can't
+          use SSL.
+        </p>
+      </li>
+
+    </ul>
+
+    <p>
+      DynarchLIB is self-contained.  It is <em>not</em> based on
+      Prototype, nor jQuery nor anything else.  I started DynarchLIB
+      before I even knew about these libraries.  They are great tools,
+      by the way, but DynarchLIB is just different in purpose; it
+      represents a higher level, where you don't usually deal with DOM
+      elements and DOM events, but with widgets having a custom event
+      system instead; internally, DynarchLIB does the dirty work for
+      you.
+    </p>
+
+    <h2>Browser support</h2>
+
+    <p>
+      DynarchLIB is designed with standards in mind.  In an ideal
+      world, it will work on any browser.  (Well, in fact, in an ideal
+      world, there would only be <em>one</em> browser and it would be
+      <em>open-source</em>).  But since we don't live in an ideal
+      world, here's the current status: <b>most things work in all
+      modern browsers</b>, that is, Firefox, IE7, Safari, Konqueror
+      and Opera (most things also work with IE6, but I definitely
+      can't call it a <em>modern</em> browser).
+    </p>
+
+    <p>
+      Even though DynarchLIB has been reasonably tested with all major
+      browsers, you should remember that there's no silver bullet.  If
+      you want to make sure that your application will support a
+      particular browser, you do have to test.
+    </p>
+
+    <h3>Firefox and Internet Explorer 7</h3>
+
+    <p>
+      Though they are very different browsers, they are both very
+      capable for rich AJAX applications.  Our main development
+      platform is Firefox, but we extensively test what we do with IE7
+      too.  DynarchLIB should work as documented in both Firefox and
+      IE7.
+    </p>
+
+    <h3>Internet Explorer 6</h3>
+
+    <p>
+      This documentation might look weird in Internet Explorer 6, due
+      to its lack of PNG support.  It's been more than 10 years since
+      PNG has been standardised, therefore I decided to use it for the
+      presentation pages.
+    </p>
+
+    <p>
+      We are also using PNG images in order to draw dialog round
+      corners and shadows.  Code based on DynarchLIB will still work
+      in IE6, but won't look as good as in a modern browser (it
+      automatically won't display round corners and shadows).
+    </p>
+
+    <p>
+      These problems do not apply to IE7, which—eleven years after PNG
+      has became a standard—finally introduces proper PNG support.
+    </p>
+
+    <h2>Note on Firebug</h2>
+
+    <p>
+      If you are using Firefox to test these samples and you have
+      Firebug installed, we recommend you to disable it.  Otherwise
+      certain operations might seem slow.  We don't know the reason
+      for this but we suspect it's because Firebug must hook on a lot
+      of browser events in order to provide all its great features;
+      this in turn makes our scripts run slower.
+    </p>
+
+    <p>
+      Firebug is a great debugger and profiler—a great tool for
+      development—but when you want to test your application in
+      real-world conditions always disable Firebug (preferably use a
+      browser profile with no extensions).
+    </p>
+
+    <h2>What is this?</h2>
+
+    <p>
+      This application is an interactive documentation to DynarchLIB.
+      It contains simple to advanced samples of how to use the toolkit
+      efficiently.  You can run most of these samples directly through
+      this application, and you can also edit them and test your
+      changes.
+    </p>
+
+  </text>
+
+</sample>

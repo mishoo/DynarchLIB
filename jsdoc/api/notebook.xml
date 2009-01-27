@@ -1,0 +1,71 @@
+<api file="notebook.js">
+  <object base="DlContainer" name="DlNotebook">
+    <constructor>
+      <param name="args"></param>
+    </constructor>
+    <events>
+      <event name="onChange">
+        <doc></doc>
+      </event>
+    </events>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="18883736cd4b0003598a3e366f5c10dc" name="appendWidget">
+        <param name="w"></param>
+        <param name="pos"></param>
+        <doc></doc>
+      </method>
+      <method hash="42fe79c9f8626f3300391f35dd3c9d5b" name="firstPane">
+        <doc></doc>
+      </method>
+      <method hash="eb0ddd70287919dcc89fdaa81fb13c28" name="getContentElement">
+        <doc></doc>
+      </method>
+      <method hash="eebe06ad93657b191d802d03904e848b" name="getCurrentPane">
+        <doc></doc>
+      </method>
+      <method hash="cc18679fcbfbafea93c83b0b0f611791" name="getCurrentPaneIndex">
+        <doc></doc>
+      </method>
+      <method hash="051991a7d0b212043acc4e10ee7c4f31" name="getPane">
+        <param name="index"></param>
+        <doc></doc>
+      </method>
+      <method hash="fc1a4520bc8ae08d601db922a060a8bb" name="initDOM">
+        <doc></doc>
+      </method>
+      <method hash="f89d72a58fd88345d2290eabdd8cfa83" name="isFirstPane">
+        <doc></doc>
+      </method>
+      <method hash="9d0656caa6c14f3dc2724cc206316b03" name="isLastPane">
+        <doc></doc>
+      </method>
+      <method hash="440b6546a36a047b1d501c1113dd1bca" name="lastPane">
+        <doc></doc>
+      </method>
+      <method hash="daeb86edefde981c843cd3d69c56fde4" name="length">
+        <doc></doc>
+      </method>
+      <method hash="3e6df8bbb4d0796129da71a79b5bcaca" name="nextPane">
+        <doc></doc>
+      </method>
+      <method hash="2a028ff3fb6aca791bcb31b0238d2ed3" name="prevPane">
+        <doc></doc>
+      </method>
+      <method hash="3e4bceef434c884a4658599e03186e55" name="setIdealSize">
+        <doc></doc>
+      </method>
+      <method hash="d33a4ccb27aaf2788577885378aabadd" name="setOuterSize">
+        <param name="size"></param>
+        <doc></doc>
+      </method>
+      <method hash="fd4266ba27299b743229243f5a712ce3" name="showPane">
+        <param name="index"></param>
+        <doc></doc>
+      </method>
+      <method hash="d212e59b52c12dd853334da5277c589c" internal="1" name="_createElement">
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

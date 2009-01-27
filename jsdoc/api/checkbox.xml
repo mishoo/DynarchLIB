@@ -1,0 +1,13 @@
+<api file="checkbox.js" show="1">
+  <object base="DlAbstractButton" name="DlCheckbox">
+    <constructor>
+      <param default="{¶      &#34;checked&#34; : &#34;DlCheckbox-1&#34;,¶      &#34;disabled&#34; : &#34;DlCheckbox-disabled&#34;,¶      &#34;unchecked&#34; : &#34;DlCheckbox-0&#34;,¶      &#34;active&#34; : &#34;DlCheckbox-active&#34;,¶      &#34;empty&#34; : &#34;DlCheckbox-empty&#34;,¶      &#34;hover&#34; : &#34;DlCheckbox-hover&#34;¶}" forced="1" name="classes"></param>
+      <doc>
+        A specialization of DlAbstractButton that looks like a check
+        box.  This class is mainly used to setup the right CSS.
+      </doc>
+    <param name="args"></param></constructor>
+    <static-methods></static-methods>
+    <object-methods></object-methods>
+  </object>
+</api>

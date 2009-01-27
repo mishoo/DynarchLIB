@@ -1,0 +1,47 @@
+<api file="buttoncalendar.js" show="1">
+  <object base="DlButtonMenu" name="DlButtonCalendar">
+    <constructor>
+      <param default="{}" name="calendar" type="Hash">Forwarded to 〈DlCalendar〉</param>
+      <param default="&#34;Select date...&#34;" name="date" type="Date|String">Initial date, or label</param>
+      <param default="&#34;%Y/%m/%d&#34;" name="dateFormat" type="String">Format of the date (see 〈Date::print()〉</param>
+      <param default="&#34;IconCalendar&#34;" name="iconClass">Default icon for this button</param>
+      <doc>
+        This is a specialization of 〈DlButtonMenu〉 suitable for
+        accepting calendar dates.  The drop-down menu will display a
+        〈DlCalendar〉 widget.  You can customize that widget with the
+        arguments that you pass in <b>calendar</b> (all are forwarded
+        to 〈DlCalendar〉).
+      </doc>
+    </constructor>
+    <events>
+      <event name="onSelect">
+        <param name="date" type="Date">Selected date</param>
+        <doc>
+          Triggered when a date was chosen from the calendar.  The
+          <b>date</b> argument will be a JavaScript 〈Date〉 object with
+          the selected date.
+        </doc>
+      </event>
+    <event name="onCalendarRendered"><doc></doc></event></events>
+    <static-methods></static-methods>
+    <object-methods>
+      <method XXX="Code has changed!" hash="928e6903d4479b5c9fcf7bde75f7bf5a" name="getCalendar">
+        <doc>
+          Creates and returns a calendar for this widget.  This method
+          is called internally whenever the calendar must popup.  A
+          reference to this method is actually passed to
+          〈DlButtonMenu::setMenu()〉, so that the calendar won't be
+          instantiated until it's first needed.
+        </doc>
+      </method>
+      <method hash="03b6cc027a5ea9aecada95fc6c35e798" name="getValue">
+        <doc>
+          Returns the current date, or null if no date was selected.
+        </doc>
+      </method>
+      <method hash="e4c159526b87207a2fbd6b40653fa4fe" name="initDOM">
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

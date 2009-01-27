@@ -1,0 +1,63 @@
+<sample>
+
+  <title>API documentation</title>
+
+  <text>
+
+    <p>
+      These pages form the DynarchLIB API reference (probably
+      incomplete, sorry).  Partly they are automatically generated
+      from source code.  This means, we have some scripts that parse
+      our source code and generate a set of XML files containing a
+      basic skeleton of available objects, methods, inheritance info,
+      etc.  Then we manually edit those XML-s to add documentation and
+      run a different set of scripts that generate output suitable for
+      our Interactive Documentation App.
+    </p>
+
+    <h2>Type conventions</h2>
+
+    <p>
+      We will sometimes refer to a “Hash” type.  There is no such type
+      in DynarchLIB actually; as you may know, in JavaScript objects
+      are hashes as well.  However we make a logical distinction in
+      some function descriptions.  When we say we expect a Hash, it
+      means that it's some argument in this form:
+    </p>
+
+    <pre name="dlhl" class="js">
+      {
+         propName1: value1,
+         propName2: value2,
+         // etc.
+      }
+    </pre>
+
+    <p>
+      We have in a few cases used the name “primitive” to describe a
+      primitive type.  By primitive type, here, we understand
+      something that makes sense to be a key in a hash.  The plausible
+      cases are <b>String</b>, <b>Number</b> and <b>boolean</b>.
+    </p>
+
+    <p>
+      Each documented object will only document its own methods.  It
+      doesn't make too much sense to document inherited methods as
+      well.  In some cases we might have omitted documentation for
+      overriden functions, especially when they are documented in the
+      base class.  If you're not sure about some object, always be
+      sure to check the documentation of the base class as well.  Also
+      don't forget that events are inherited as well.  Constructor
+      arguments too (that is, arguments described in a base class are
+      generally available to derived classes as well).
+    </p>
+
+    <p>
+      Note that the tree on the left doesn't necessarily imply the
+      inheritance graph.  It's organized manually in a way that
+      hopefully makes sense.
+    </p>
+
+  </text>
+
+</sample>

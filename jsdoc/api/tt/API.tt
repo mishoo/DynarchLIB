@@ -1,0 +1,52 @@
+<!-- [% self.filename %] -*- nxml -*- -->
+<api file="[% self.filename %]">
+
+  [% FOREACH req = self.requires %]
+  <require>[% req %]</require>
+  [% END %]
+
+  [% FOREACH obj = self.objects %]
+  <object name="[% obj.name %]"[% ' base="' _ obj.base _ '"' IF obj.base %]>
+    [% IF obj.constructor %]
+
+    <constructor>
+      [% IF obj.default_args; FOREACH param = obj.default_args; PROCESS do_param;
+         END; ELSE; FOREACH param = obj.constructor.params %]
+      <param name="[% param %]"></param>
+      [% END; END %]
+      <doc>
+      </doc>
+    </constructor>
+    [% END %]
+    [% IF obj.default_events %]
+
+    <events>
+      [% FOREACH event = obj.default_events %]
+      <event name="[% event %]">
+      </event>
+      [% END %]
+    </events>
+    [% END %]
+    [% IF obj.static_methods && obj.static_methods.size %]
+
+    <static-methods>
+
+      [% FOREACH met = obj.static_methods %]
+      [% PROCESS do_method %]
+      [% END %]
+    </static-methods>
+    [% END %]
+    [% IF obj.object_methods && obj.object_methods.size %]
+
+    <object-methods>
+
+      [% FOREACH met = obj.object_methods %]
+      [% PROCESS do_method %]
+      [% END %]
+    </object-methods>
+    [% END %]
+
+  </object>
+
+  [% END %]
+</api>

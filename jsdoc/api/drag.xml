@@ -1,0 +1,88 @@
+<api file="drag.js">
+  <object base="DlEventProxy" name="DlDrag">
+    <constructor>
+      <param default="{¶      &#34;length&#34; : 30,¶      &#34;fps&#34; : 50¶}" name="animation"></param>
+      <param default="{¶      &#34;noDrop&#34; : &#34;CURSOR-NO-DROP&#34;,¶      &#34;okDrop&#34; : &#34;CURSOR-DROP&#34;¶}" name="cursor"></param>
+      <param default="3" name="delta"></param>
+      <param default="&#34;DlWidget-dragging&#34;" name="draggingClass"></param>
+      <param default="false" internal="1" name="_dragging"></param>
+    </constructor>
+    <events>
+      <event name="onDrop">
+        <doc></doc>
+      </event>
+    <event name="onStartDrag"><doc></doc></event></events>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="f6fd9816c8f0a848871af7c0123aa6f8" name="doDrop">
+        <param name="widget"></param>
+        <param name="ev"></param>
+        <doc></doc>
+      </method>
+      <method hash="4d2ed6e2bee076e2dd80d77054606f48" name="dropOK">
+        <param name="widget"></param>
+        <param name="ev"></param>
+        <param name="target"></param>
+        <param name="inside"></param>
+        <doc></doc>
+      </method>
+      <method hash="b9aec592cafedad93461bbbc681060c1" name="makeElementCopy">
+        <param name="widget"></param>
+        <param name="ev"></param>
+        <doc></doc>
+      </method>
+      <method hash="99914b932bd37a50b983c5e7c90ae93b" name="moving">
+        <doc></doc>
+      <param name="widget"></param><param name="ev"></param></method>
+      <method hash="7bf974d33225219ed8dc1903930a4777" name="reset">
+        <param name="wasCancel"></param>
+        <doc></doc>
+      </method>
+      <method hash="aa50165fb152915ff89cb4e46d85e9f6" name="startOK">
+        <param name="widget"></param>
+        <param name="ev"></param>
+        <doc></doc>
+      </method>
+      <method hash="6683d84c0bd431107257d23e201bd5ea" internal="1" name="_handleDrop">
+        <param name="src"></param>
+        <param name="dest"></param>
+        <param name="pos"></param>
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+  <object base="DlDrag" name="DlDragTreeItem">
+    <constructor>
+      <param default="false" name="noReparent"></param>
+    </constructor>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="2c67b1a142033b263c80405111a007ce" name="doDrop">
+        <param name="item"></param>
+        <param name="ev"></param>
+        <doc></doc>
+      </method>
+      <method hash="a21ba81ab0b20f56e88b652dca20ec13" name="dropOK">
+        <param name="item"></param>
+        <param name="ev"></param>
+        <param name="obj"></param>
+        <param name="inside"></param>
+        <doc></doc>
+      </method>
+      <method hash="443c1abb3ae5bc276e0505b6cbc1446f" name="moving">
+        <param name="item"></param>
+        <param name="ev"></param>
+        <doc></doc>
+      </method>
+      <method hash="99b4fe8b1c2b28da051807344e707d6b" name="reset" varargs="1">
+        <!--XXX: uses *arguments*, check for missing params-->
+        <doc></doc>
+      </method>
+      <method hash="13b53c690b877931ba85632f5a6bc200" name="startOK">
+        <param name="widget"></param>
+        <param name="ev"></param>
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

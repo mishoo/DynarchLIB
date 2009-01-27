@@ -1,0 +1,396 @@
+<sample>
+
+  <title>DlRPC</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlRPC</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlEventProxy〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈rpc.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈eventproxy.js, singleton.js, system.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">args</td>
+         <td class="doc"><span default="null" name="args">Arguments to pass to the server</span>
+</td>
+         <td class="type">[<b>〈Hash〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">callback</td>
+         <td class="doc"><span default="null" name="callback">Callback function that will be called when the request is completed (or when it times out)</span>
+</td>
+         <td class="type">[<b>〈Function〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">data</td>
+         <td class="doc"><span default="null" name="data">Data to pass by POST</span>
+</td>
+         <td class="type">[<b>〈String,Hash〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">method</td>
+         <td class="doc"><span default="null" name="method">
+        Request method ("GET" or "POST").  By default, this will be
+        assumed "GET" if <b>data</b> is null, or "POST" if <b>data</b>
+        is present.
+      </span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">timeout</td>
+         <td class="doc"><span default="null" name="timeout">
+        Maximum time allowed for the request (in milliseconds).  If
+        the request doesn't complete after the specified timeout, it
+        will be stopped, the "onTimeout" event will trigger and your
+        callback will be called with <b>{ success:false, timeout: true
+        }</b>.
+      </span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">url</td>
+         <td class="doc"><span default="null" name="url">URL for the request.</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+        You can use this object to initiate a “remote procedure call”.
+        This is a fancy name for a simple HTTP request.  Internally it
+        uses the XMLHttpRequest object available in most browsers, or
+        the ActiveX object for IE6.
+<p/>
+        XMLHttpRequest was designed for sending pieces of XML data.
+        This works via DynarchLIB as well, but we really recommend you
+        to use <a href='api://DlJSON.xml'>json</a>—it reduces the complexity of your code a
+        lot and it's faster for the browser to run.
+<p/>
+        You initiate a call i.e. like this:
+<p/>
+        <div sample="DlRPC1"></div>
+<p/>
+        Because you pass <b>data</b> and no <b>method</b>, the above
+        will automatically chose "POST".  The way you handle
+        <b>data</b> on the server is completely up to you—you can
+        retrieve the entire request content and do anything custom you
+        want; it's not like you submit a form.  We found this to be
+        the most flexible approach because we send JSON which is
+        really easy to parse both on the server and client.
+<p/>
+        You can pass both GET arguments and POST data as well:
+<p/>
+        <div sample="DlRPC2"></div>
+<p/>
+        The above would actually call an URL like this:
+<p/>
+        <pre>http://server.com/rpc-handler?foo=foo;bar=bar</pre>
+<p/>
+        and will still send <b>data</b> in POST.  On the server-side
+        you read <b>args</b> normally (just as if they were submitted
+        by a form).
+<p/>
+        If you want, you can send arguments in POST as well.  This
+        will be as if you submit a form via POST, therefore you can
+        access the arguments on the server-side via standard means.
+        In this case, you cannot send additional <b>data</b> (but you
+        can embed anything you want in arguments, therefore this won't
+        be a problem):
+<p/>
+        <div sample="DlRPC3"></div>
+<p/>
+        Note that you need to explicitly specify the method here
+        ("POST"), otherwise "GET" will be chosen by default.
+<p/>
+        If you use JSON to communicate with the server, DlRPC will
+        provide an useful shortcut: <b>data</b> can be a JavaScript
+        object (Array or Hash), in which case it will be JSON-ized
+        before its sent:
+<p/>
+        <div sample="DlRPC4"></div>
+<p/>
+        On the server you would read the full request body and just
+        de-JSONize to transform it into a native object for your
+        programming language.
+<p/>
+        In conclusion: you use this object to create a non-apparent
+        request to the server.  It won't reload your page and you can
+        attach a callback to be called when the request was finished.
+        All requests are asynchronous—so if you expect an answer from
+        the server you <em>need</em> to pass a callback.
+<p class='warning'> One request per DlRPC object</p>
+<p/>
+        It is not safe for now to assume that one DlRPC object can
+        handle multiple requests.  This means, you should only issue
+        one <a href='api://DlRPC.xml:type=object_method:func=call'>call()</a> request.  If you need to do another request to
+        the server, be it with the same or different arguments, please
+        instantiate a new DlRPC object.
+<p class='warning'> Security</p>
+<p/>
+        It's important to know that browser security restrictions will
+        forbid you to do XMLHttpRequest-s on other servers.  This
+        means that the domain of the main document must be exactly the
+        same as the domain where you'll do RPC requests.  If you need
+        to do requests on different domains, the usual solution is to
+        proxy the request through your own server.
+      </span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="events">
+      <h2>Events</h2>
+   <div class="method">
+        <h3 id="onStart:object_event">onStart (<span class='param'>self</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">self</td>
+         <td class="doc"><span name="self">Request object</span>
+</td>
+         <td class="type">[<b>〈DlRPC〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>Triggered when the request starts.</span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onStop:object_event">onStop (<span class='param'>self</span>, <span class='param'>args</span>, <span class='param'>req</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">self</td>
+         <td class="doc"><span name="self">Request object</span>
+</td>
+         <td class="type">[<b>〈DlRPC〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">args</td>
+         <td class="doc"><span name="args">Arguments from constructor</span>
+</td>
+         <td class="type">[<b>〈Hash〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">req</td>
+         <td class="doc"><span name="req">Low-level request object</span>
+</td>
+         <td class="type">[<b>〈XMLHttpRequest〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Called when the request was completed.  Note that this event
+          won't be called when the request times out.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onTimeout:object_event">onTimeout (<span class='param'>self</span>, <span class='param'>req</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">self</td>
+         <td class="doc"><span name="self">Request object</span>
+</td>
+         <td class="type">[<b>〈DlRPC〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">req</td>
+         <td class="doc"><span name="req">Low-level request object</span>
+</td>
+         <td class="type">[<b>〈XMLHttpRequest〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Triggered when the request times out.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="call:object_method">call (<span class='param'>newArgs</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">newArgs</td>
+         <td class="doc"><span name="newArgs">You can override here any arguments from constructor.  That's not very useful.</span>
+</td>
+         <td class="type">[<b>〈Hash〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Call this method to start the request.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_start:object_method">_start (<span class='param'>data</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">data</td>
+         <td class="doc"><span name="data"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+<code id="DlRPC1" type="js">
+          function myCallback(answer) {
+            if (answer.success) {
+              // use answer.text here to get text data, or
+              // use answer.xml here to get a XMLDocument
+              // (only if your server sent XML back)
+            }
+          };
+          var rpc = new DlRPC({ url      : "http://server.com/rpchandler.cgi",
+                                callback : myRpcCallback
+                                data     : "Anything you want" });
+          rpc.call(); // start
+        </code>
+<code id="DlRPC2" type="js">
+          new DlRPC({ url : "http://server.com/rpc-handler",
+                      args : { foo: "foo",
+                               bar: "bar" },
+                      data : "Anything you want" }).call();
+        </code>
+<code id="DlRPC3" type="js">
+          new DlRPC({ url  : ...,
+                      args : { foo  : "foo",
+                               bar  : "bar",
+                               data : "Anything you want" },
+                      method : "POST" }).call();
+        </code>
+<code id="DlRPC4" type="js">
+          new DlRPC({ url : "http://server/json-handler",
+                      data : { foo      : "foo",
+                               bar      : "bar",
+                               anything : [ "you", "want" ]
+                             }
+                    }).call();
+        </code>
+
+
+</sample>
+
+
+
+

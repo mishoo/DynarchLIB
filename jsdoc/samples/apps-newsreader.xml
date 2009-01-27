@@ -1,0 +1,239 @@
+<sample>
+
+  <title>News reader</title>
+
+  <text>
+
+    <p>
+      This is a very simple RSS feed reader.  Note that it needs
+      server-side support in order to fetch RSS data, because of
+      browser security restrictions—therefore it might not work if you
+      downloaded and run DynarchLIB on your own machine.  It is
+      intended to run on our website.  If you want to run it locally,
+      though, it should be very easy—you just need to configure your
+      Apache to run “.cgi” scripts as CGI, and need to have Perl
+      installed along with a few common modules (CGI, LWP,
+      HTTP::Request).
+    </p>
+
+    <p>
+      The purpose of this sample is just to demonstrate a few basic
+      features of DynarchLIB, such as common widgets—buttons, trees,
+      layout manager, dialog—and the RPC framework.  So again, I must
+      stress that it's not a complete news reader, though it could be
+      well easy to extend.
+    </p>
+
+    <div sample="newsreader" />
+  </text>
+
+  <code id="newsreader" type="js" canrun="true"><![CDATA[
+
+var SERVER = "jsdoc/samples/apps-newsreader.cgi";
+
+// helper function to compose the URL to request a feed
+function getURL(url) {
+    return SERVER + "?get=" + escape(url) + ";cache=" + new Date().getTime();
+};
+
+// the whole application will stay in a dialog box
+var dlg = new DlDialog({ title: "DynarchLIB News Reader", resizable: true, quitBtn: "destroy" });
+
+// this is the toplevel layout manager which will hold
+// the toolbar on the top, the feed tree on the left and
+// the content page on the right
+var layout = new DlLayout({ parent: dlg });
+
+var top = new DlContainer({ className: "DlToolbar" });
+top.getElement().style.padding = "3px";
+var toolbar = new DlHbox({ parent: top });
+
+// a simple URL validator for the URL input field
+var urlValidator = new DlValidator(DlValidator.URL);
+
+var label = new DlLabel({ label: "Add URL (only RSS supported):", parent: toolbar });
+toolbar.addSpace();
+var urlEntry = new DlEntry({ size: 40, parent: toolbar, allowEmpty: true, validators: [ urlValidator ] });
+label.setWidget(urlEntry); // when the label is clicked, it will focus the input field
+
+// when ENTER is pressed, call urlEntry_ENTER function (defined below)
+urlEntry.addEventListener("onKey-ENTER", urlEntry_ENTER);
+
+toolbar.addSpace();
+var btn = new DlButton({ iconClass: "IconSubscribe", parent: toolbar });
+btn.addEventListener("onClick", urlEntry_ENTER);
+
+// this container will hold the feed tree.  The CSS classes DocCont and DocTree
+// are defined in doc.css and we use them here for convenience
+var left = new DlContainer({ scroll: true, className: "DocCont DocTree" });
+left.getElement().style.padding = "5px";
+var tree = new DlTree({ parent: left });
+
+// here we will display the selected feed item content
+var right = new DlContainer({ scroll: true, className: "DocCont DocTree" });
+right.getElement().style.padding = "0 10px";
+
+// a simple widget that allows the end-user to resize the left/right panes
+var rb = new DlResizeBar({ widget: left });
+
+layout.packWidget(top, { pos: "top" });
+layout.packWidget(left, { pos: "left", fill: "30%", min: 50, max: 500 });
+layout.packWidget(rb, { pos: "left" });
+layout.packWidget(right, { pos: "right", fill: "*" });
+
+// a layout manager needs to have an initial size
+layout.setSize({ x: 700, y: 500 });
+
+// finally, center and display the dialog box
+dlg.centerOnParent();
+dlg.show();
+
+// a radio group holds a set of buttons and facilitates retrieving the currently
+// selected button, etc.
+var ITEM_GROUP = DlRadioGroup.get();
+
+// this function will be called when RSS feed data comes in from the server
+// it will update the feed's tree item and create a subtree
+function dataIn(item, btn, url, data) {
+    if (data.success && data.xml && data.xml.documentElement.nodeName != "parsererror") {
+        var rss = DlJSON.domToObject(data.xml.documentElement);
+        item.setIconClass("IconTreeRoot");
+        btn.setLabel(rss.channel.title.$text.bold());
+        btn.userData = rss.channel;
+        var items = rss.channel.item;
+        if (items) {
+            if (!(items instanceof Array))
+                items = [ items ];
+            item.setTree(function(cont) {
+                    var tree = new DlTree({});
+                    items.foreach(function(it){
+                            var w1 = new DlTreeItem({ parent        : tree,
+                                                      iconClass     : "IconPage",
+                                                      itemClassName : "DlTreeItem-withRadio" });
+                            var w2 = new DlRadioButton({
+                                parent  : w1,
+                                label   : it.title.$text,
+                                group   : ITEM_GROUP,
+                                tooltip : it.pubDate.$text,
+                                value   : it
+                            });
+                        });
+                    cont(tree);
+                });
+        }
+        btn.checked(true);
+    } else {
+        btn.getElement().style.color = "red";
+        btn.setTooltip("Error loading feed");
+        btn.userData = null;
+        item.setIconClass("IconStop");
+    }
+};
+
+// a simple context menu that will be assigned to toplevel tree items
+var topItemMenu = new DlVMenu({});
+new DlMenuItem({ parent: topItemMenu, label: "Refresh", iconClass: "IconReload", name: "refresh" });
+new DlMenuItem({ parent: topItemMenu, label: "Remove", iconClass: "IconRemove", name: "del" });
+
+// here is the menu event handler
+topItemMenu.addEventListener("onSelect", function(name, menuItem, treeItem) {
+    switch (name) {
+      case "del":
+        treeItem.destroy();
+        break;
+      case "refresh":
+        treeItem.setIconClass("IconAjaxLoader");
+        treeItem.setTree(null);
+        var url = getURL(treeItem.button.getValue());
+        new DlRPC({ url: url,
+                    callback: dataIn.$C(treeItem, treeItem.button, url) }).call();
+        break;
+    }
+});
+
+// allow moving toplevel tree items by drag'n'drop
+var DND = new DlDragTreeItem({ noReparent: true });
+
+// this helper function adds a feed URL
+function addFeed(url) {
+    var btn = ITEM_GROUP.getByValue(url);
+    if (btn) {
+        btn.checked(true);
+        return;
+    }
+    var item = new DlTreeItem({ parent        : tree,
+                                itemClassName : "DlTreeItem-withRadio",
+                                iconClass     : "IconAjaxLoader",
+                                drag          : DND
+                              });
+    item.setContextMenu(topItemMenu);
+    var btn = new DlRadioButton({ parent : item,
+                                  label  : url,
+                                  group  : ITEM_GROUP,
+                                  value  : url });
+    item.button = btn;
+
+    // now fetch the feed via a RPC call to our SERVER.
+    // when results are ready, dataIn will get called and will
+    // receive, in order: item, btn, url and data (data contains
+    // the RPC response).
+    new DlRPC({ url      : getURL(url),
+                callback : dataIn.$C(item, btn, url) }).call();
+};
+
+// called when ENTER is pressed on the input field, this
+// tries to validate the entered URL and adds it to the tree
+function urlEntry_ENTER() {
+    if (urlEntry.validate()) {
+        var url = urlEntry.getValue();
+        // since we allow empty, we need to check
+        if (/\S/.test(url)) {
+            urlEntry.clear(true);
+            addFeed(url);
+        }
+    }
+};
+
+ITEM_GROUP.addEventListener("onChange", function() {
+    var val = this.getValue()[0];
+    if (val && typeof val != "string") {
+        // we get here if it's a toplevel tree item
+        right.setContent(String.buffer("<h2>", val.title.$text, "</h2>",
+                                       "<p><b><a href='", val.guid.$text, "' target='_blank'>", val.pubDate.$text, "</a></b></p>",
+                                       val.description.$text).get());
+    } else if (typeof val == "string") {
+        var data = this.getSelected()[0].userData;
+        var html = String.buffer();
+        if (data == null) {
+            html("<h2 style='color:red'>Error loading feed</h2>");
+        } else {
+            html("<h1>", data.description.$text, "</h1>");
+            if (data.image) {
+                html("<p style='text-align: center'>");
+                if (data.image.link) {
+                    html("<a href='", data.image.link.$text, "' target='_blank'>");
+                }
+                html("<img src='", data.image.url.$text, "' />");
+                if (data.image.link) {
+                    html("</a>");
+                }
+                html("</p>");
+            }
+        }
+        right.setContent(html.get());
+    }
+});
+
+// add some sample feeds
+addFeed("http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/front_page/rss.xml");
+addFeed("http://planet.gnome.org/rss20.xml");
+addFeed("http://feeds.feedburner.com/BurnThisRSS2");
+
+// addFeed("http://www.pheedo.com/f/freshmeatnet_announcements_global");
+// addFeed("http://www.dynarch.com/rss/news.xml");
+// addFeed("http://www.dynarch.com/rss/releases.xml");
+// addFeed("http://mihai.bazon.net/?rss=blog");
+
+  ]]></code>
+
+</sample>

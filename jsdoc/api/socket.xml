@@ -1,0 +1,209 @@
+<api file="socket.js" show="1">
+  <object base="DlEventProxy" name="DlSocket">
+    <constructor>
+      <param default="null" name="host" type="String">
+        Host name to connect to.  If this is <b>null</b> (default) it
+        will be assumed its the domain of the document
+        (document.domain).
+      </param>
+      <param default="null" name="port" type="String">
+        Port to connect to.
+      </param>
+      <param default="false" name="json" type="boolean">
+        Assume responses from server are JSON? (if <b>true</b>, it
+        decodes incoming data automatically).
+      </param>
+
+      <doc>
+        This is a general purpose object that allows you to connect to
+        an arbitrary server via a TCP/IP connection.  It does not use
+        the HTTP protocol which is actually a great advantage because
+        it allows you to <em>stay connected</em> with the server
+        (while HTTP is a request/response protocol).
+
+        This functionality is not ordinarily exposed by browsers in
+        JavaScript (and I will never understand why), so we have to
+        use a plugin.  We chose to implement this via Flash, because
+        it's widely available.  Therefore, please note that this
+        object is only usable on browsers where Flash 8 (or newer) is
+        installed.  Call
+        〈DlFlashUtils::isSupported()|DlFlashUtils().isSupported()〉 to
+        check if the browser “speaks” the required version of Flash.
+
+        *** Pros and Cons for using this object
+
+        <b>Advantages:</b> it allows you to keep a persistent
+        connection with the server.  This means that you can do
+        authentication only once and then send data between browser
+        and server at will.  The server can chose to send data that
+        the client didn't previously request.  This is useful when
+        implementing real-time actions such as a game or a chat.
+        Browser instantly receives data from server when it is
+        available.  You don't need to poll the server or implement
+        “hanging requests” in order to get server notifications—the
+        server knows all clients and will send data whenever it needs.
+
+        <b>Disadvantages:</b> it requires Flash Player 8.0 or newer.
+        It loads a (very small—around 1K) SWF file (you need to call
+        〈DlFlashUtils::init()|DlFlashUtils().init()〉).  It doesn't
+        work over SSL since this is not supported by Flash's XMLSocket
+        (but see our 〈DlCryptAES〉 object which enables you to encrypt
+        communication).  It requires a custom server (I'm not sure it
+        can work with Apache, Tomcat, or other HTTP servers, since
+        it's not about HTTP).  See below for some hints.
+
+        *** Usage
+
+        Here is an example of how to use this object:
+
+        <js>
+          var socket = new DlSocket({ host: document.domain,
+                                      port: 12345 });
+          socket.addEventListener("onConnect", function(success) {
+              if (success) {
+                  // successful connection, you can begin using the socket here
+              } else {
+                  alert("Could not connect to server");
+              }
+          });
+
+          socket.addEventListener("onData", function(data) {
+              alert("Got data from server: " + data);
+          });
+
+          socket.connect();
+
+          // note that you can call the following only after
+          // you have a successful connection
+          // ("onConnect" event triggered with success = true)
+
+          // send data to server
+          socket.send("Foo bar baz");
+
+          // send object to server (will be JSON-ized)
+          socket.sendJSON({ foo: "foo", bar: "bar" });
+
+          // reconnect after a downtime:
+          socket.reconnect(); // will trigger "onConnect"
+
+          // disconnect from server:
+          socket.disconnect();
+
+          // completely destroy the socket:
+          socket.destroy(); // implies disconnect() first
+        </js>
+
+        *** Notes
+
+        <b>Binary data.</b> DlSocket internally uses an XMLSocket
+        Flash object.  One limitation of it is that the null ("\0")
+        character marks the end of data.  Therefore you must be
+        careful when you send binary data—it will actually send upto
+        the first zero byte.  On the server side, you must send a zero
+        byte after each reply, in order for the browser to receive any
+        data.
+
+        Since it isn't usual to generate truly binary data in
+        JavaScript, this shouldn't be a serious limitation.  But you
+        need to know it.
+
+        <b>Fully asynchronous.</b> This kind of client-server
+        communication is completely asynchronous.  It is <em>not</em>
+        a request/response protocol.
+
+        When you use 〈send()〉 or 〈sendJSON()〉 you need to be careful
+        that these functions send the data but don't return anything,
+        so don't expect an immediate reply from the server.  They give
+        back control to the calling program immediately—while the
+        server might still process the data.
+
+        If the server replies, you will get the answer via the
+        "onData" event.
+
+        It's completely up to you to design a communication protocol
+        suitable for your application.
+
+        *** Hints for the server-side
+
+        This kind of communication requires some network programming
+        skills for the server-side.  You will need to implement your
+        own server that binds to a port and listens for incoming
+        connections.  For an incoming connection it should
+        authenticate the client and probably spawn a new thread, or
+        process, to handle that connection.  All this isn't very
+        complicated, but it's beyond ordinary “web development”
+        knowledge.
+
+      </doc>
+    </constructor>
+    <events>
+      <event name="onConnect">
+        <param name="success" type="boolean">Successful connection?</param>
+        <doc>
+          Triggered when a socket is successfully connected (in which
+          case <b>success</b> will be true) or when connection failed
+          (<b>success</b> is false).  Only after this event was
+          triggered with <b>success = true</b> you can do other calls
+          on the socket.
+        </doc>
+      </event>
+      <event name="onRelease">
+        <param name="reason" type="Number">Reason why this socket was closed</param>
+        <doc>
+          Triggered when the socket was “released”.  This can happen
+          when the connection is lost because of network outage or
+          server shutdown (reason == 0), or when you called
+          〈disconnect()〉 (reason == 1) or when you called 〈destroy()〉
+          (reason == 2).
+
+          Note that after this event is triggered you cannot use the
+          socket until you 〈reconnect()〉 or 〈connect()〉 it again.
+        </doc>
+      </event>
+      <event name="onData">
+        <param name="data">Incoming data from server</param>
+        <doc>
+          Triggered when the server has sent data for us.  The
+          <b>data</b> will usually be a String, but it can be an Hash
+          as well if you passed <b>json: true</b> in constructor.
+        </doc>
+      </event>
+    </events>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="3c72082ff50bf6782090f85a4f662e70" name="connect">
+        <doc>
+          Call this method to initiate a connection.  It will trigger
+          the "onConnect" event both on a successful connection or
+          when there's some error.
+        </doc>
+      </method>
+      <method hash="f93b1bf4a667eb938b740bf0be7b0718" name="disconnect">
+        <doc>
+          Disconnect the socket.
+        </doc>
+      </method>
+      <method hash="9250f32f8218f632d925504913998e52" name="reconnect">
+        <doc>
+          Reconnect a disconnected socket.
+        </doc>
+      </method>
+      <method hash="bfece44c4c4fc1d4c44cda10010f7c26" name="send">
+        <param name="data" type="String">Data to send to server</param>
+        <doc>
+          Send the given data to the server-side.  Note that this
+          method is asynchronous and doesn't return anything.  Add
+          your handler to the "onData" event in order to process
+          incoming data from server.
+        </doc>
+      </method>
+      <method hash="aaa683ed4ba46c11ba52fa35e13e2c03" name="sendJSON">
+        <param name="data">Data to send to server</param>
+        <doc>
+          This function is just like 〈send()〉 but it will
+          〈DlJSON.encode()|JSON-encode〉 the data before sending it.
+        </doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

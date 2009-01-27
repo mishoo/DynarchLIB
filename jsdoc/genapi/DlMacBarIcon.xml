@@ -1,0 +1,211 @@
+<sample>
+
+  <title>DlMacBarIcon</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlMacBarIcon</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlAbstractButton〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈macbar.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈widget.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">align</td>
+         <td class="doc"><span default="&#34;bottom&#34;" name="align"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">"bottom"</td>
+       </tr>
+       <tr>
+         <td class="name">classes</td>
+         <td class="doc"><span default=" CLS" name="classes"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default"> CLS</td>
+       </tr>
+       <tr>
+         <td class="name">img</td>
+         <td class="doc"><span default="null" name="img"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">maxHeight</td>
+         <td class="doc"><span default="64" name="maxHeight"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">64</td>
+       </tr>
+       <tr>
+         <td class="name">maxWidth</td>
+         <td class="doc"><span default="64" name="maxWidth"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">64</td>
+       </tr>
+       <tr>
+         <td class="name">minHeight</td>
+         <td class="doc"><span default="32" name="minHeight"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">32</td>
+       </tr>
+       <tr>
+         <td class="name">minWidth</td>
+         <td class="doc"><span default="32" name="minWidth"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">32</td>
+       </tr>
+       <tr>
+         <td class="name">tooltipTimeout</td>
+         <td class="doc"><span default="900" name="tooltipTimeout"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">900</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+      <param default="&#34;bottom&#34;" name="align"></param>
+      <param default=" CLS" name="classes"></param>
+      <param default="null" name="img"></param>
+      <param default="64" name="maxHeight"></param>
+      <param default="64" name="maxWidth"></param>
+      <param default="32" name="minHeight"></param>
+      <param default="32" name="minWidth"></param>
+      <param default="900" name="tooltipTimeout"></param>
+    </span>
+
+     </div>
+   </div>
+    </div>
+
+
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="flash:object_method">flash (<span class='param'>timeout</span>)
+        <div class="overrides">
+             (overrides <a href="api://DlWidget.xml:type=object_method:func=flash">flash in DlWidget</a>)
+        </div>
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">timeout</td>
+         <td class="doc"><span name="timeout"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getImgElement:object_method">getImgElement ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="initDOM:object_method">initDOM ()
+        <div class="overrides">
+             (overrides <a href="api://DlAbstractButton.xml:type=object_method:func=initDOM">initDOM in DlAbstractButton</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_createElement:object_method">_createElement ()
+        <div class="overrides">
+             (overrides <a href="api://DlAbstractButton.xml:type=object_method:func=_createElement">_createElement in DlAbstractButton</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_onMouseEnter:object_method">_onMouseEnter (<span class="varargs">…</span>)
+        <div class="overrides">
+             (overrides <a href="api://DlAbstractButton.xml:type=object_method:func=_onMouseEnter">_onMouseEnter in DlAbstractButton</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_onMouseLeave:object_method">_onMouseLeave (<span class="varargs">…</span>)
+        <div class="overrides">
+             (overrides <a href="api://DlAbstractButton.xml:type=object_method:func=_onMouseLeave">_onMouseLeave in DlAbstractButton</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+
+
+</sample>
+
+
+
+

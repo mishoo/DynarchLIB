@@ -1,0 +1,47 @@
+<sample>
+
+  <title>How to write your application?</title>
+
+  <text>
+
+    <p>
+      The main thing to do is to use a 〈DlDesktop〉 widget as a
+      top-level container for your widgets.  Of course, you can also
+      put them in 〈DlDialog〉-s as well.  As you can see, for example,
+      in this documentation, we're having a few widgets in the page,
+      and others popup in dialogs.  The widgets in a page are layed in
+      a DlDesktop widget (which further contains a 〈DlLayout〉 widget
+      that manages viewport resizes).
+    </p>
+
+    <p>
+      Another important thing to plan from the start is your client -
+      server communication framework.  We provide 〈DlRPC〉 for that,
+      but it only handles a low-level request.  The way we do it,
+      usually, is to have a wrapper function that calls 〈DlRPC〉 and
+      then forwards the reply to your callback function.  On the
+      server there is a central entry point for XMLHttpRequest-s.
+      This dispatches the call to an actual handler function, based on
+      a method name.  The passes the returned value back to client in
+      JSON.  We strongly advise you to use JSON, rather than XML/SOAP.
+      JSON will make your life a lot easier.
+    </p>
+
+    <p>
+      For an example of an almost complete application, you can see
+      the <a target="_blank" href="jsdoc/doc.js">source of this
+      interactive documentation</a>.  Search for "App.init" to go to
+      the actual entry point.  In that function, we create our
+      toplevel container (〈DlDesktop〉) and layout, toolbar, radio
+      groups, etc.  Then we call initTree() which will fetch "<a
+      href="jsdoc/samples/outline.xml"
+      target="_blank">outline.xml</a>" via an XMLHttpRequest.  When
+      data arrives, initTree() will initialize the left tree.
+      Otherwise, most of the code deals with the sheer complexity of
+      DOM and XML, which we have to use because XML is the only format
+      that can embed HTML while still remain human-readable.
+    </p>
+
+  </text>
+
+</sample>

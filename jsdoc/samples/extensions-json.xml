@@ -1,0 +1,164 @@
+<sample>
+
+  <title>JSON — JavaScript Object Notation</title>
+
+  <text>
+
+    <p>
+      JSON is a format for data interchange, similar in purpose to
+      XML.  Compared to XML, JSON is a lot simpler—it's easier for a
+      human to create, understand or edit it; generally, it's also
+      faster for a machine to parse it because it's smaller and less
+      complex; for JavaScript in particular it is a lot better than
+      XML, because JSON <em>is</em> JavaScript.
+    </p>
+
+    <p>
+      JSON is based on the JavaScript literal notation for arrays and
+      hash tables.  JSON was invented by me.  I'm kidding, but only
+      for a half: I did use JSON before I first hear the buzzword and
+      before anyone else told me that I could actually transmit
+      JavaScript instead of XML over the wire.  It seemed so simple
+      and natural that it <em>didn't need a name</em>.  But, according
+      to the well-known history, JSON was invented by <a
+      target="_blank" href="http://www.crockford.com/">Douglas
+      Crockford</a>.
+    </p>
+
+    <p>
+      Let's compare XML to JSON.  Let's say that we need to store
+      information about a computer—that is, CPU, memory, HDD, etc.
+      Here's what the XML version could look like:
+    </p>
+
+    <div sample="xml1" />
+
+    <p>
+      and here's the JSON version that practically describes the same
+      data:
+    </p>
+
+    <div sample="json1" />
+
+    <p class="dimnote">
+      Yes, I intentionally put in the angle brackets (&lt; / &gt;).
+      You have to agree that they look ugly “escaped” in XML.
+    </p>
+
+    <p>
+      For one thing, the JSON is almost two times smaller — simply
+      because we don't need the closing tags.  A closing bracket is
+      enough and it's really in obedience with the reason why <a
+      target="_blank" title="I meant Dennis Ritchie in this context ;-)"
+      href="http://en.wikipedia.org/wiki/Dennis_Ritchie">God</a> gave
+      us brackets.
+    </p>
+
+    <p>
+      But the <em>most important</em> thing is that the JSON version
+      is very easy to write and understand, as a human.  It's very
+      very plain.  And for a machine, it's very very fast—not only
+      because the format is simpler, but because we have a very fast
+      native parser: the JavaScript interpreter itself.
+    </p>
+
+    <h2>How DynarchLIB can help?</h2>
+
+    <p>
+      JavaScript has a simple way to “deserialize” JSON data.  You can
+      just use <em>eval(json)</em> to convert your <em>json</em> data
+      to a native JavaScript object—which you can iterate and inspect
+      very fast and clean.
+    </p>
+
+    <p>
+      But, JavaScript doesn't have a standard way to “serialize” data,
+      therefore DynarchLIB provides <b>DlJSON.encode</b>.  Here is a
+      verbose example:
+    </p>
+
+    <div sample="json2" />
+
+    <p>
+      So by calling <b>DlJSON.encode</b>(<em>some_object</em>) we get
+      a string representation of that object.  Using it we can later
+      re-create the object by calling <b>DlJSON.decode</b>.
+    </p>
+
+    <h2>JSON over XMLHttpRequest</h2>
+
+    <p>
+      DynarchLIB also provides a convenient way to send/receive
+      JavaScript objects using the XMLHttpRequest calls.  To the
+      developer, the serialization and deserialization of data is
+      transparent.  We will talk about this in a different section.
+    </p>
+
+  </text>
+
+  <code id="xml1" type="xml"><![CDATA[
+<computer>
+  <manufacturer>IBM</manufacturer>
+  <cpu>
+    <manufacturer>Intel</manufacturer>
+    <type>Centrino &lt;Dual Core&gt;</type>
+    <speed>2 GHz</speed>
+  </cpu>
+  <ram>2 GB</ram>
+  <hdd>
+    <manufacturer>Seagate</manufacturer>
+    <size>80 GB</size>
+    <speed>5400 rpm</speed>
+  </hdd>
+  <shares>
+    <share name="movies" path="/opt/movies" />
+    <share name="music" path="/opt/music" />
+  </shares>
+</computer>
+  ]]></code>
+
+  <code id="json1" type="js"><![CDATA[
+{
+  manufacturer: "IBM",
+  cpu: {
+    manufacturer: "Intel",
+    type: "Centrino <Dual Core>",
+    speed: "2 GHz"
+  },
+  ram: "2 GB",
+  hdd: {
+    manufacturer: "Seagate",
+    size: "80 GB",
+    speed: "5400 rpm"
+  },
+  shares: [
+    { name: "movies", path: "/opt/movies" },
+    { name: "music", path: "/opt/music" }
+  ]
+}
+  ]]></code>
+
+  <code id="json2" type="js" canrun="true"><![CDATA[
+var foo = {};
+foo.manufacturer = "IBM";
+foo.cpu = {};
+foo.cpu.manufacturer = "Intel";
+foo.cpu.type = "Centrino <Dual Core>";
+foo.cpu.speed = "2 GHz";
+foo.hdd = {};
+foo.hdd.manufacturer = "Seagate";
+foo.hdd.size = "80 GB";
+foo.hdd.speed = "5400 rpm";
+
+// here we get a string that is the serialization of the object “foo”
+var str = DlJSON.encode(foo);
+
+// and here we re-create the object from that string
+var bar = DlJSON.decode(str);
+
+// test
+print(bar.cpu.manufacturer);
+print(bar.cpu.type);
+  ]]></code>
+
+</sample>

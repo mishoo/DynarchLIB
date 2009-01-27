@@ -1,0 +1,32 @@
+<api file="fieldgrid.js">
+  <object base="DlTable" name="DlFieldGrid">
+    <constructor>
+      <param name="args"></param>
+    </constructor>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="d1dacedd506b5a6d2508b06ccfc4964e" name="addField">
+        <param name="args"></param>
+        <param name="opts"></param>
+        <param name="ret"></param>
+        <doc></doc>
+      </method>
+      <method hash="e59ba60a2d3c62a6e2ef994cf115f8a7" name="getField">
+        <param name="id"></param>
+        <doc></doc>
+      </method>
+      <method hash="5c2b334be91ca906488777cff28561bc" name="getValue">
+        <doc></doc>
+      </method>
+      <method hash="9f85dc036ac6530bfe4ef4c700f8ead1" name="setField">
+        <param name="name"></param>
+        <param name="widget"></param>
+        <doc></doc>
+      </method>
+      <method hash="4fb76ee64c20de66443ceec16c3cd09a" name="setValue">
+        <param name="hash"></param>
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

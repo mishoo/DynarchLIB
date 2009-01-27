@@ -1,0 +1,86 @@
+<sample>
+
+  <title>DlRadioButton</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlRadioButton</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlCheckbox〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈radiobutton.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈checkbox.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">classes</td>
+         <td class="doc"><span default="{¶      &#34;checked&#34; : &#34;DlRadioButton-1&#34;,¶      &#34;disabled&#34; : &#34;DlRadioButton-disabled&#34;,¶      &#34;unchecked&#34; : &#34;DlRadioButton-0&#34;,¶      &#34;active&#34; : &#34;DlRadioButton-active&#34;,¶      &#34;empty&#34; : &#34;DlRadioButton-empty&#34;,¶      &#34;hover&#34; : &#34;DlRadioButton-hover&#34;¶}" forced="1" name="classes"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">{<br/>      "checked" : "DlRadioButton-1",<br/>      "disabled" : "DlRadioButton-disabled",<br/>      "unchecked" : "DlRadioButton-0",<br/>      "active" : "DlRadioButton-active",<br/>      "empty" : "DlRadioButton-empty",<br/>      "hover" : "DlRadioButton-hover"<br/>}</td>
+       </tr>
+       <tr>
+         <td class="name">group</td>
+         <td class="doc"><span default="0" forced="1" name="group"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">0</td>
+       </tr>
+       <tr>
+         <td class="name">args</td>
+         <td class="doc"><span name="args"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+        A specialization of DlAbstractButton that looks like a radio
+        button.  This class is mainly used to setup the right CSS.
+      </span>
+
+     </div>
+   </div>
+    </div>
+
+
+
+
+  </text>
+
+
+</sample>
+
+
+
+

@@ -1,0 +1,37 @@
+<api file="resizebar.js">
+  <object base="DlWidget" name="DlResizeBar">
+    <constructor>
+      <param default="false" name="continuous"></param>
+      <param default="null" name="horiz"></param>
+      <param default="false" name="invert"></param>
+      <param default="false" name="keepPercent"></param>
+      <param default="null" name="max"></param>
+      <param default="null" name="min"></param>
+      <param default="null" name="widget"></param>
+    </constructor>
+    <static-methods>
+      <method hash="55ce16c8be72407f70a08acbb7e86a01" name="getDragBar">
+        <doc></doc>
+      </method>
+    </static-methods>
+    <object-methods>
+      <method hash="ccd546b7043faba208522193db2e8161" name="initDOM">
+        <doc></doc>
+      </method>
+      <method hash="f45408abc5ce4dfefc4904b2b5960e37" name="isHoriz">
+        <doc></doc>
+      </method>
+      <method hash="1d4a6b50c70445f4e22c3c19f4f33f01" internal="1" name="_doResize">
+        <param name="ev"></param>
+        <doc></doc>
+      </method>
+      <method hash="b4821151ce047d2a17d0346028de8b08" internal="1" name="_setListeners">
+        <doc></doc>
+      </method>
+      <method hash="4a343ca1506fbacc5911fd442c87793a" internal="1" name="_setResizeCaptures">
+        <param name="capture"></param>
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

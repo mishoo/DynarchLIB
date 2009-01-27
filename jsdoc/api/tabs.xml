@@ -1,0 +1,72 @@
+<api file="tabs.js">
+  <object base="DlContainer" name="DlTabs">
+    <constructor>
+      <param default="&#34;top&#34;" name="tabPos"></param>
+    </constructor>
+    <events>
+      <event name="onChange">
+        <doc></doc>
+      </event>
+    </events>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="991965bd9a7276e66862a5bc0ab34887" name="addTab">
+        <param name="w"></param>
+        <param name="title"></param>
+        <param name="pos"></param>
+        <doc></doc>
+      </method>
+      <method hash="7539703eca441adf85bc1d1e53c46ce1" name="getCurrentPane">
+        <doc></doc>
+      </method>
+      <method hash="ad4c067a79f942eed0cf7cc2681659c6" name="getCurrentPaneIndex">
+        <doc></doc>
+      </method>
+      <method hash="fb671bae6a2b6b93069eb6715a8b72eb" name="getNotebook">
+        <doc></doc>
+      </method>
+      <method hash="1c32565b17f28f014a04ed4c9fc84416" name="getTabBar">
+        <doc></doc>
+      </method>
+      <method hash="e4fc24466d25379e4c3b99dc9bf25124" name="getTabButton">
+        <param name="index"></param>
+        <doc></doc>
+      </method>
+      <method hash="5c8ce91360f4aa83893dcb8563c3a2fd" name="initDOM">
+        <doc></doc>
+      </method>
+      <method hash="982db6d40d3a8db75f4f0b27e8adc866" name="isFirstPane">
+        <doc></doc>
+      </method>
+      <method hash="ac50c5350ddfe4b260e91e6393b31c28" name="isLastPane">
+        <doc></doc>
+      </method>
+      <method hash="20b8e9a95683659905f38aff6a451374" name="nextPane">
+        <doc></doc>
+      </method>
+      <method hash="8c8a3c638ecf391a02d6d3f8fabe6734" name="prevPane">
+        <doc></doc>
+      </method>
+      <method hash="babaf34894e64d6d749d075412f1f82a" name="setSize">
+        <param name="size"></param>
+        <doc></doc>
+      </method>
+      <method hash="73eef0d1a35d340d9e1c52fc5a350f68" name="setTabAlign">
+        <param name="tabAlign"></param>
+        <doc></doc>
+      </method>
+      <method hash="fb4c828dae911a466468af4bc772e421" name="setTabPos">
+        <param name="tabPos"></param>
+        <doc></doc>
+      </method>
+      <method hash="7ac2e08a2f75106f7315406ab5189cf0" name="showPane">
+        <param name="index"></param>
+        <doc></doc>
+      </method>
+      <method hash="ff5c0e0cbf4647da9903039d44cdb79f" internal="1" name="_handle_focusKeys">
+        <param name="ev"></param>
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

@@ -1,0 +1,31 @@
+<api file="button.js" show="1">
+  <object base="DlAbstractButton" name="DlButton">
+    <constructor>
+      <param default="{¶      &#34;checked&#34; : &#34;DlButton-1&#34;,¶      &#34;disabled&#34; : &#34;DlButton-disabled&#34;,¶      &#34;unchecked&#34; : &#34;DlButton-0&#34;,¶      &#34;active&#34; : &#34;DlButton-active&#34;,¶      &#34;empty&#34; : &#34;DlButton-empty&#34;,¶      &#34;hover&#34; : &#34;DlButton-hover&#34;¶}" name="classes"></param>
+      <param default="null" name="iconClass"></param>
+      <doc>
+        A standard push button widget.  See 〈DlAbstractButton〉 to see
+        what you can do with it.  The existence of the DlButton class
+        is mainly to define the proper DOM and CSS for the element,
+        but it otherwise has the exact same functionality as a
+        DlAbstractButton.
+      </doc>
+    </constructor>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="d137ae598bdc56e77ece410215703620" name="getContentElement">
+        <doc></doc>
+      </method>
+      <method hash="8a424d0eaab65a7f034fe6ec7869ee9b" name="setOuterSize">
+        <param name="size"></param>
+        <doc></doc>
+      </method>
+      <method hash="31bc9eea5eb78326555d8dffb41bea39" internal="1" name="_createElement">
+        <doc></doc>
+      </method>
+      <method hash="34d55370b9b24335924d1d1a758bc0a3" internal="1" name="_createLabelElement">
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

@@ -1,0 +1,160 @@
+<sample>
+
+  <title>The Calendar (date picker) widget</title>
+
+  <text>
+
+    <p>
+      DynarchLIB implements a simple date picker widget.  Here's how
+      to create one:
+    </p>
+
+    <div sample="sample1" />
+
+    <p>
+      As you can see, the event handler is called for any movement,
+      but you get some arguments that help you determine if something
+      was actually selected and how:
+    </p>
+
+    <ul>
+      <li><p>
+        <b>cleared</b> — true if the selection was cleared.  This
+        happens when the calendar has moved to a new month/year by
+        using the navigation.
+      </p></li>
+      <li><p>
+        <b>otherMonth</b> — true if a date from an adjacent month was
+        clicked.
+      </p></li>
+      <li><p>
+        <b>secondClick</b> — true if the user clicked on an already
+        selected date.
+      </p></li>
+      <li><p>
+        <b>date</b> — a JavaScript Date object with the current
+        calendar position.  When <b>cleared</b> is true, this will
+        hold the first day in a month—because there's not actually a
+        selection.
+      </p></li>
+    </ul>
+
+    <p>
+    </p>
+
+    <h2>Navigation</h2>
+
+    <p>
+      There are 3 types of navigation bar, that can be specified by
+      the "navigation" argument:
+    </p>
+
+    <div sample="sample2" />
+
+    <p>
+      So, navigation = 0 means no navigation — only show the current
+      month.  1 means month navigation buttons, and 2 means all.  2 is
+      the default.  When navigation = 0, you might want to disable
+      days from the adjacent month—so you effectively restrict the
+      calendar to the current month.  To do this, pass omDisabled:
+      true:
+    </p>
+
+    <div sample="sample3" />
+
+    <h2>First day of week</h2>
+
+    <p>
+      You can chose what day to display the first by passing the
+      "firstDay" argument:
+    </p>
+
+    <div sample="sample4" />
+
+    <p>
+      If you want to allow users to customize this by simply clicking
+      on the day name, you can pass fixedFirstDay: false:
+    </p>
+
+    <div sample="sample5" />
+
+    <h2>Week numbers</h2>
+
+    <p>
+      If you want the calendar to display week numbers, pass
+      weekNumbers: true.  Week numbers are computed following the ISO
+      8601:1988 specification, which says that the week number 1 is
+      that week that has at least 4 days in the current year
+      (otherwise put, the week that includes the first thursday).
+      This algorithm is suitable when first day of week is Monday.
+    </p>
+
+    <div sample="sample6" />
+
+    <h2>With menu</h2>
+
+    <p>
+      <b>DlCalendar</b> can include an optional menu for quickly
+      selecting years/months.  It's a conext menu, that is, it appears
+      if you right-click anywhere inside the calendar, and it's also a
+      menu for the field that lists the month and year (where it
+      writes i.e. "Jul 2007").
+    </p>
+
+    <p>
+      So if you want to include this menu, pass withMenu: true.  Try
+      it in the next demo.
+    </p>
+
+    <div sample="sample7" />
+
+    <p>
+      Note that having this menu does not involve any performance hit
+      — the calendar will instantiate as fast as without the menu.
+      The menu is created when first needed and cached.  Furthermore,
+      this menu is reused amongst multiple calendars—that is, if you
+      specify this argument for more than one calendar, only one menu
+      will be created.
+    </p>
+
+  </text>
+
+  <code id="sample1" type="js" canrun="true"><![CDATA[
+var cal = new DlCalendar({ parent: getDocCanvas() });
+cal.addEventListener("onSelect", function(cleared, otherMonth, secondClick, date) {
+    print(date.print("%Y/%m/%d"));
+    print("Selected: " + !cleared);
+    print("Adjacent month: " + otherMonth);
+    print("Second click: " + secondClick);
+});
+  ]]></code>
+
+  <code id="sample2" type="js" canrun="true"><![CDATA[
+new DlCalendar({ parent: getDocCanvas(), navigation: 0 });
+new DlCalendar({ parent: getDocCanvas(), navigation: 1 });
+new DlCalendar({ parent: getDocCanvas(), navigation: 2 });
+  ]]></code>
+
+  <code id="sample3" type="js" canrun="true"><![CDATA[
+new DlCalendar({ parent: getDocCanvas(), navigation: 0, omDisabled: true });
+  ]]></code>
+
+  <code id="sample4" type="js" canrun="true"><![CDATA[
+// 0 means Sunday, 1 - Monday, etc.
+new DlCalendar({ parent: getDocCanvas(), firstDay: 0 });
+  ]]></code>
+
+  <code id="sample5" type="js" canrun="true"><![CDATA[
+// 0 means Sunday, 1 - Monday, etc.
+new DlCalendar({ parent: getDocCanvas(), firstDay: 0, fixedFirstDay: false });
+  ]]></code>
+
+  <code id="sample6" type="js" canrun="true"><![CDATA[
+new DlCalendar({ parent: getDocCanvas(), weekNumbers: true });
+  ]]></code>
+
+  <code id="sample7" type="js" canrun="true"><![CDATA[
+new DlCalendar({ parent: getDocCanvas(), weekNumbers: true, withMenu: true });
+  ]]></code>
+
+</sample>

@@ -1,0 +1,14 @@
+<api file="radiobutton.js" show="1">
+  <object base="DlCheckbox" name="DlRadioButton">
+    <constructor>
+      <param default="{¶      &#34;checked&#34; : &#34;DlRadioButton-1&#34;,¶      &#34;disabled&#34; : &#34;DlRadioButton-disabled&#34;,¶      &#34;unchecked&#34; : &#34;DlRadioButton-0&#34;,¶      &#34;active&#34; : &#34;DlRadioButton-active&#34;,¶      &#34;empty&#34; : &#34;DlRadioButton-empty&#34;,¶      &#34;hover&#34; : &#34;DlRadioButton-hover&#34;¶}" forced="1" name="classes"></param>
+      <param default="0" forced="1" name="group"></param>
+      <doc>
+        A specialization of DlAbstractButton that looks like a radio
+        button.  This class is mainly used to setup the right CSS.
+      </doc>
+    <param name="args"></param></constructor>
+    <static-methods></static-methods>
+    <object-methods></object-methods>
+  </object>
+</api>

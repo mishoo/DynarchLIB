@@ -1,0 +1,1608 @@
+<sample>
+
+  <title>DynarchDomUtils</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DynarchDomUtils</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>— none —</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈jslib.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈texts.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+     <div class="doc"><span>
+      Under this namespace we group some useful DOM utility functions.
+    </span>
+
+     </div>
+   </div>
+    </div>
+
+
+    <div class="static-methods">
+      <h2>Static functions</h2>
+   <div class="method">
+        <h3 id="addClass:static_method">DynarchDomUtils.addClass (<span class='param'>el</span>, <span class='param'>ac</span>, <span class='param optional'>dc</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el">Element to work on</span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">ac</td>
+         <td class="doc"><span name="ac">Class name to add</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">dc</td>
+         <td class="doc"><span name="dc" optional="1">Class name to remove</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Adds <b>ac</b> to the element's class names.  Optionally
+          removes <b>dc</b> from the list of class names.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="addEvent:static_method">DynarchDomUtils.addEvent (<span class='param'>el</span>, <span class='param'>evname</span>, <span class='param'>func</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el">Element to work on</span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">evname</td>
+         <td class="doc"><span name="evname">DOM event name without the “on” prefix</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">func</td>
+         <td class="doc"><span name="func">Event handler</span>
+</td>
+         <td class="type">[<b>〈Function〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Registers an event listener (<b>func</b>) for the given
+          element's <b>evname</b> event.  For browsers that support
+          it, we're using addEventListener().  For IE we're using
+          attachEvent().  If none of this is supported, we're doing it
+          the DOM0-way (i.e. el["on" + evname] = func).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="addEvents:static_method">DynarchDomUtils.addEvents (<span class='param'>el</span>, <span class='param'>evs</span>, <span class='param'>func</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el">Element to work on</span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">evs</td>
+         <td class="doc"><span name="evs">List of event names</span>
+</td>
+         <td class="type">[<b>〈Array〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">func</td>
+         <td class="doc"><span name="func">Event handler</span>
+</td>
+         <td class="type">[<b>〈Function〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Adds a single handler for multiple events in <b>el</b>.
+          This simply calls <a href='api://DynarchDomUtils.xml:type=static_method:func=addEvent'>addEvent()</a> for each event in <b>evs</b>,
+          for the given <b>el</b>ement with the given <b>func</b>tion
+          handler.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="addLoadHandler:static_method">DynarchDomUtils.addLoadHandler (<span class='param'>el</span>, <span class='param'>handler</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el"></span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">handler</td>
+         <td class="doc"><span name="handler"></span>
+</td>
+         <td class="type">[<b>〈Function〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Adds an “onload” handler for the given element.  Most
+          browsers support the “onload” event for various elements
+          that require loading data, such as SCRIPT, IFRAME or IMG
+          tags.
+<p/>
+          For IE we're using the “onreadystatechange” event.
+<p/>
+          Your handler will get called after the element finished
+          loading data from server.  If the element is already loaded
+          when you call this function, your handler will never be
+          executed.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="condClass:static_method">DynarchDomUtils.condClass (<span class='param'>el</span>, <span class='param'>cond</span>, <span class='param'>clsTrue</span>, <span class='param optional'>clsFalse</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el">Element to work on</span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">cond</td>
+         <td class="doc"><span name="cond">Condition</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">clsTrue</td>
+         <td class="doc"><span name="clsTrue">Class name if condition is true</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">clsFalse</td>
+         <td class="doc"><span name="clsFalse" optional="1">Class name if condition is false</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Conditionally adds or removes class names from an element.
+          If the given condition (<b>cond</b>) is <b>true</b>, then
+          <b>clsTrue</b> will be added and <b>clsFalse</b> will be
+          removed.
+<p/>
+          If <b>cond</b> is false, then <b>clsFalse</b> will be added
+          and <b>clsTrue</b> will be removed.
+<p/>
+          <b>clsFalse</b> is optional.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="condEvent:static_method">DynarchDomUtils.condEvent (<span class='param'>cond</span>, <span class="varargs">…</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">cond</td>
+         <td class="doc"><span name="cond"></span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Note that this function actually takes 4 arguments (cond,
+          element, event, handler).  The last 3 will be forwarded to
+          <a href='api://DynarchDomUtils.xml:type=static_method:func=addEvent'>addEvent()</a> or to <a href='api://DynarchDomUtils.xml:type=static_method:func=removeEvent'>removeEvent()</a>, depending on
+          <b>cond</b>.
+<p/>
+          If <b>cond</b>ition is true, it will call addEvent; if
+          <b>cond</b> is false, it calls removeEvent.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="condEvents:static_method">DynarchDomUtils.condEvents (<span class='param'>cond</span>, <span class="varargs">…</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">cond</td>
+         <td class="doc"><span name="cond"></span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Same as <a href='api://DynarchDomUtils.xml:type=static_method:func=condEvent'>condEvent()</a>, but works for multiple events (calls
+          <a href='api://DynarchDomUtils.xml:type=static_method:func=addEvents'>addEvents()</a> or <a href='api://DynarchDomUtils.xml:type=static_method:func=removeEvents'>removeEvents()</a> depending on <b>cond</b>).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="createElement:static_method">DynarchDomUtils.createElement (<span class='param'>tag</span>, <span class='param optional'>st</span>, <span class='param optional'>at</span>, <span class='param optional'>par</span>, <span class='param optional'>pos</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">tag</td>
+         <td class="doc"><span name="tag">Tag name</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">st</td>
+         <td class="doc"><span name="st" optional="1">Inline CSS</span>
+</td>
+         <td class="type">[<b>〈Hash〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">at</td>
+         <td class="doc"><span name="at" optional="1">Attributes</span>
+</td>
+         <td class="type">[<b>〈Hash〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">par</td>
+         <td class="doc"><span name="par" optional="1">Parent element</span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">pos</td>
+         <td class="doc"><span name="pos" optional="1">Position</span>
+</td>
+         <td class="type">[<b>〈HTMLElement,Number〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Creates a DOM element with the given <b>tag</b>.  Optionally
+          sets any inline CSS passed in <b>st</b> and any attributes
+          in <b>at</b>, if they are not null.
+<p/>
+          If <b>par</b>ent is given, appends the element to
+          <b>par</b>.  You can specify a <b>pos</b>ition as well.  If
+          specified, it can be a number (in which case it will be
+          assumed to be par.childNodes[pos]) or an HTMLElement which
+          is a child of <b>par</b>.  If <b>pos</b> is specified, the
+          new node is inserted right before it.  Otherwise, the new
+          node is appended at the end of <b>par</b>.
+<p/>
+          Example:
+<p/>
+          <div sample="DynarchDomUtils3"></div>
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="createFromHtml:static_method">DynarchDomUtils.createFromHtml (<span class='param'>html</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">html</td>
+         <td class="doc"><span name="html">HTML code (should be valid)</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Creates DOM elements from the given <b>html</b> code.  It
+          should have exactly one top-level element, which will
+          actually be returned.  Example:
+<p/>
+          <div sample="DynarchDomUtils10"></div>
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="delClass:static_method">DynarchDomUtils.delClass (<span class='param'>el</span>, <span class='param'>dc</span>, <span class='param optional'>ac</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el">Element to work on</span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">dc</td>
+         <td class="doc"><span name="dc">Class name to remove</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">ac</td>
+         <td class="doc"><span name="ac" optional="1">Class name to append</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Removes <b>dc</b> from the list of element's class names.
+          Optionally append <b>ac</b> to the class names.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="elementIsVisible:static_method">DynarchDomUtils.elementIsVisible (<span class='param'>el</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el"></span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns <b>true</b> if the element is visible, that is, if
+          its “display” property is not “none” and its “visibility”
+          style is not “hidden”.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getBorder:static_method">DynarchDomUtils.getBorder (<span class='param'>el</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el"></span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the width and height of the element's border using a
+          bizarre formlua that seems to work.  That is, we substract
+          the element's clientWidth from the element's offsetWidth
+          (and same for the height).
+<p/>
+          The values are returned in a hash, with x for the horizontal
+          width (note it's left border width + right border width,
+          cummulated) and y for the vertical ones.
+<p/>
+          Many times you need this kind of information in order to be
+          able to correctly size an element that has a border set
+          through external CSS.
+<p/>
+          This function is fast but will not be of much use if you
+          have a padding too—we recommend <a href='api://DynarchDomUtils.xml:type=static_method:func=getPaddingAndBorder'>getPaddingAndBorder()</a>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getBRPos:static_method">DynarchDomUtils.getBRPos (<span class='param'>el</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el"></span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the absolute position of the bottom-right corner of
+          the element as { x : horiz_pos, y : vertical_pos }.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getClosestParentByTagName:static_method">DynarchDomUtils.getClosestParentByTagName (<span class='param'>el</span>, <span class='param'>tag</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el"></span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">tag</td>
+         <td class="doc"><span name="tag"></span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Return the most nested element in <b>el</b>'s ancestors list
+          which has the given <b>tag</b> name.  Note that if <b>el</b>
+          has this tag it will be returned itself immediately—if you
+          don't want this, call this function for el.parentNode.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getInnerSize:static_method">DynarchDomUtils.getInnerSize (<span class='param'>el</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el"></span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the element's “inner size”.  This means the size of
+          the element's “content”, excluding any borders and paddings.
+<p/>
+          Basically it substracts these objects:
+<p/>
+          <div sample="DynarchDomUtils5"></div>
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getOuterSize:static_method">DynarchDomUtils.getOuterSize (<span class='param'>el</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el"></span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the dimensions, in pixels, that an element occupies
+          on the screen.  All it does is:
+<p/>
+          <div sample="DynarchDomUtils4"></div>
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getPadding:static_method">DynarchDomUtils.getPadding (<span class='param'>el</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el"></span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the padding of a given element as {x:
+          horiz_paddings, y: vertical_paddings }.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getPaddingAndBorder:static_method">DynarchDomUtils.getPaddingAndBorder (<span class='param'>el</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el"></span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the width and height of the element's borders and
+          paddings.  This effectively investigates the current element
+          style using document.defaultView.getComputedStyle() (for
+          browsers that support it) or <b>el</b>.currentStyle for
+          Internet Explorer (see <a href='api://DynarchDomUtils.xml:type=static_method:func=getStyle'>getStyle()</a>).
+<p/>
+          They are returned as a hash having x for the cummulated
+          horizontal values, and y for the vertical cummulated values.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getPos:static_method">DynarchDomUtils.getPos (<span class='param'>el</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el"></span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the absolute position of the element.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getScrollbarSize:static_method">DynarchDomUtils.getScrollbarSize (<span class='param'>el</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el"></span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the { x: width, y: height } of the scrollbars in the
+          element, if there are any.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getStyle:static_method">DynarchDomUtils.getStyle (<span class='param'>el</span>, <span class='param'>prop</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el"></span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">prop</td>
+         <td class="doc"><span name="prop"></span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Investigates the computed style of the element and returns
+          the value of <b>prop</b>.  Note that <b>prop</b> should be a
+          CSS attribute name in CSS notation, i.e. "border-left"
+          instead of "borderLeft".
+<p/>
+          This function may not work correctly if you want to
+          investigate dimensions that were defined in any other units
+          than “px” (pixels).  For example:
+<p/>
+          <div sample="DynarchDomUtils6"></div>
+<p/>
+          <div sample="DynarchDomUtils7"></div>
+<p/>
+          Depending on browser, you might have useless garbage in the
+          padding var (or zero).  So remember, for this to work, you
+          want to use pixels in all your styles (including external
+          CSS).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getStylePX:static_method">DynarchDomUtils.getStylePX (<span class='param'>el</span>, <span class='param'>prop</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el"></span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">prop</td>
+         <td class="doc"><span name="prop"></span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          This is a wrapper around <a href='api://DynarchDomUtils.xml:type=static_method:func=getStyle'>getStyle()</a> that ensures that you
+          will get a number.  That is, it will call getStyle(el, prop)
+          and then parse the returned value in order to get rid of the
+          unit (i.e. "10px" becomes 10).
+<p/>
+          If the value can't be parsed as a number, it'll return zero.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getWindowSize:static_method">DynarchDomUtils.getWindowSize ()
+        </h3>
+     <div class="doc"><span>
+          Returns the “inner” window dimensions in pixels.
+<p/>
+          <fixme>
+            (perhaps a better name would be getDocumentSize?).
+          </fixme>
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="hasClass:static_method">DynarchDomUtils.hasClass (<span class='param'>el</span>, <span class='param'>cls</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el"></span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">cls</td>
+         <td class="doc"><span name="cls"></span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: boolean) 
+           <b><span>true if <b>el</b> has the given class name</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="importCommonVars:static_method">DynarchDomUtils.importCommonVars ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: String) 
+           <b><span>JS code that you should eval</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          There are a few functions in DynarchDomUtils that we tend to
+          use very frequently, so we created this function that helps
+          us easily import these functions into another context.
+<p/>
+          See also: <a href='api://Dynarch.xml:type=static_method:func=EXPORT'>Dynarch.EXPORT()</a>.
+<p/>
+          Example (verbose code):
+<p/>
+          <div sample="DynarchDomUtils8"></div>
+<p/>
+          Could be shortened like this:
+<p/>
+          <div sample="DynarchDomUtils9"></div>
+<p/>
+          Here's the list of variables that are imported:
+<p/>
+          <pre>            DOM = DynarchDomUtils;
+            AC = DOM.addClass;
+            DC = DOM.delClass;
+            CC = DOM.condClass;
+            CE = DOM.createElement;
+            ID = Dynarch.ID;</pre>
+<p/>
+          The returned string is a JS "var" declaration, which you
+          need to eval() in order to get the aliases into your current
+          context.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="isInside:static_method">DynarchDomUtils.isInside (<span class='param'>el</span>, <span class='param'>parent</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el"></span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">parent</td>
+         <td class="doc"><span name="parent"></span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns true if <b>parent</b> is an ancestor of <em>el</em>.
+          Note it also returns true if parent == el.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="removeEvent:static_method">DynarchDomUtils.removeEvent (<span class='param'>el</span>, <span class='param'>evname</span>, <span class='param'>func</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">evname</td>
+         <td class="doc"><span name="evname"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">func</td>
+         <td class="doc"><span name="func"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          This is <a href='api://DynarchDomUtils.xml:type=static_method:func=addEvent'>addEvent()</a>'s counterpart.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="removeEvents:static_method">DynarchDomUtils.removeEvents (<span class='param'>el</span>, <span class='param'>evs</span>, <span class='param'>func</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">evs</td>
+         <td class="doc"><span name="evs"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">func</td>
+         <td class="doc"><span name="func"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          This is <a href='api://DynarchDomUtils.xml:type=static_method:func=addEvents'>addEvents()</a>'s counterpart.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="scrollIntoView:static_method">DynarchDomUtils.scrollIntoView (<span class='param'>el</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setInnerSize:static_method">DynarchDomUtils.setInnerSize (<span class='param'>el</span>, <span class='param'>x</span>, <span class='param'>y</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el"></span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">x</td>
+         <td class="doc"><span name="x"></span>
+</td>
+         <td class="type">[<b>〈Number,null〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">y</td>
+         <td class="doc"><span name="y"></span>
+</td>
+         <td class="type">[<b>〈Number,null〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Sets the element's inner size to the given <b>x</b> and
+          <b>y</b> values.  This is as simple as el.style.width = x +
+          "px", el.style.height = y + "px", but it does some safety
+          checks to ensure the browser won't croak.
+<p/>
+          If you pass null for any of the values, the respective style
+          won't be modified.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setOpacity:static_method">DynarchDomUtils.setOpacity (<span class='param'>el</span>, <span class='param'>o</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el"></span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">o</td>
+         <td class="doc"><span name="o">fractional number between 0 .. 1</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Sets the element's opacity to the given value.  0 means
+          total transparency, while 1 is fully opaque.  Not working in
+          Konqueror due to lack of browser support.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setOuterSize:static_method">DynarchDomUtils.setOuterSize (<span class='param'>el</span>, <span class='param'>x</span>, <span class='param'>y</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el"></span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">x</td>
+         <td class="doc"><span name="x"></span>
+</td>
+         <td class="type">[<b>〈Number,null〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">y</td>
+         <td class="doc"><span name="y"></span>
+</td>
+         <td class="type">[<b>〈Number,null〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Sets the element's outer size to the given values.  This is
+          a lot more complicated to do properly because elements might
+          have borders or paddings set through external styles.  It's
+          based on <a href='api://DynarchDomUtils.xml:type=static_method:func=getPaddingAndBorder'>getPaddingAndBorder()</a> and it might be slow.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setPos:static_method">DynarchDomUtils.setPos (<span class='param'>el</span>, <span class='param'>x</span>, <span class='param'>y</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el"></span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">x</td>
+         <td class="doc"><span name="x"></span>
+</td>
+         <td class="type">[<b>〈Number,null〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">y</td>
+         <td class="doc"><span name="y"></span>
+</td>
+         <td class="type">[<b>〈Number,null〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Sets an element's position on screen.  It's only effective
+          for elements that have position "absolute" or "relative".
+<p/>
+          In essence, does el.style.top = y + "px", el.style.left = x
+          + "px", but does some safety checks first.
+<p/>
+          If you pass null for any of the value, the respective style
+          won't be modified.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setStyleProperty:static_method">DynarchDomUtils.setStyleProperty (<span class='param'>el</span>, <span class='param'>prop</span>, <span class='param'>val</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el"></span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">prop</td>
+         <td class="doc"><span name="prop">property name</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">val</td>
+         <td class="doc"><span name="val">new value</span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Sets an element CSS property (inline style) to the given
+          value.  Note that “prop” must be in CSS notation,
+          i.e. “border-left” instead of “borderLeft”.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setUnselectable:static_method">DynarchDomUtils.setUnselectable (<span class='param'>el</span>, <span class='param optional'>unsel</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el"></span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">unsel</td>
+         <td class="doc"><span default="true" name="unsel" optional="1"></span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">true</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Makes the element unselectable if <b>unsel</b> is true (or
+          if not passed at all).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="stopEvent:static_method">DynarchDomUtils.stopEvent (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev"></span>
+</td>
+         <td class="type">[<b>〈Event〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Stops the DOM event, preventing it from running the default
+          handlers and from bubbling up.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="swapNodes:static_method">DynarchDomUtils.swapNodes (<span class='param'>n1</span>, <span class='param'>n2</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">n1</td>
+         <td class="doc"><span name="n1"></span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">n2</td>
+         <td class="doc"><span name="n2"></span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Swaps the position of the given two nodes in the DOM.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="trash:static_method">DynarchDomUtils.trash (<span class='param'>el</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el"></span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Trashes the given element to avoid memory leaks.  For this
+          to be efficient, it's advised to not hold any references to
+          <b>el</b>.
+<p/>
+          The way it does this is simply to append it in some parent
+          (our “garbage collector”).  Then we reset the parent's
+          innerHTML to "".  Looks like this way IE finally releases
+          the memory, but you should be very careful not to have any
+          circular references between <b>el</b> and some other object.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+
+  </text>
+<code id="DynarchDomUtils1" type="html"><![CDATA[
+            <div onclick="alert('bar')"></div>
+          ]]></code>
+<code id="DynarchDomUtils2" type="js">
+            DynarchDomUtils.callHandler(div, "onclick");
+          </code>
+<code id="DynarchDomUtils3" type="js">
+            var node = DynarchDomUtils.createElement(
+                   "div",
+
+                   { position: "absolute",
+                     left: "10px",
+                     top: "10px" },
+
+                   { className: "Foo",
+                     innerHTML: "This is the new node" },
+
+                   document.body
+            );
+          </code>
+<code id="DynarchDomUtils4" type="js">
+            return { x: el.offsetWidth, y: el.offsetHeight };
+          </code>
+<code id="DynarchDomUtils5" type="js">
+            { x: el.offsetWidth, y: el.offsetHeight } -
+            DynarchDomUtils.getPaddingAndBorder(el);
+          </code>
+<code id="DynarchDomUtils6" type="html"><![CDATA[
+            <div id="foo" style="padding-left: 1em">foo</div>
+          ]]></code>
+<code id="DynarchDomUtils7" type="js">
+            var padding = DynarchDomUtils.getStyle($("foo"), "padding-left");
+          </code>
+<code id="DynarchDomUtils8" type="js">
+            var div = DynarchDomUtils.createElement("div");
+            DynarchDomUtils.addClass(div, "foo");
+            DynarchDomUtils.addClass(div, "bar");
+            var size = DynarchDomUtils.getInnerSize(div);
+          </code>
+<code id="DynarchDomUtils9" type="js">
+            eval(DynarchDomUtils.importCommonVars());
+            var div = CE("div");
+            AC(div, "foo");
+            AC(div, "bar");
+            var size = DOM.getInnerSize(div);
+          </code>
+<code id="DynarchDomUtils10" type="js"><![CDATA[
+            var html = String.buffer(
+              "<table>",
+              "<tr><td>foo cell</td></tr>",
+              "<tr><td>bar cell</td></tr>",
+              "</table>"
+            );
+            // now you get a reference to the newly created <table>
+            var table = DynarchDomUtils.createFromHtml(html.get());
+            someParent.appendChild(table);
+          ]]></code>
+
+
+</sample>
+
+
+
+

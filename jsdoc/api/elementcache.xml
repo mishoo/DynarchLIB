@@ -1,0 +1,12 @@
+<api file="elementcache.js">
+  <object name="DlElementCache">
+    <constructor></constructor>
+    <static-methods>
+      <method hash="8bf5cd15530799c9c88b1a948f6ffeef" name="get">
+        <param name="tag"></param>
+        <doc></doc>
+      </method>
+    </static-methods>
+    <object-methods></object-methods>
+  </object>
+</api>

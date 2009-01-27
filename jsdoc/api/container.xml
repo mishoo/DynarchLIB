@@ -1,0 +1,172 @@
+<api file="container.js" show="1">
+  <object base="DlWidget" name="DlContainer">
+
+    <constructor>
+      <param default="false" name="scroll" type="boolean">Set <b>overflow: auto</b>?</param>
+      <doc>
+        A container is a widget that can contain other widgets.  It
+        adds methods that help manage the 〈children()|child widgets〉.
+      </doc>
+    </constructor>
+
+    <static-methods>
+      <method hash="b5cc56bb6091ddb217a4570fee9943b7" name="getHiddenContainer">
+        <doc>
+          Returns a container object which is present in the DOM but
+          hidden.  This is useful in certain situations, such as for
+          instance when you want to check the size of an element but
+          don't want to display it.
+        </doc>
+      </method>
+    </static-methods>
+
+    <object-methods>
+      <method XXX="Code has changed!" hash="a7b5f5233f0ded57cdbe3ec65e5049af" name="appendWidget" varargs="1">
+        <!--XXX: uses *arguments*, check for missing params-->
+        <param name="w" type="DlWidget">Widget to append</param>
+        <doc>
+          Appends a new widget inside this container.  Many container
+          widgets will customize (override) either this function, or
+          〈_appendWidgetElement()〉, in order to provide specialized
+          service.
+
+          Any additional arguments received by this function will be
+          passed to 〈_appendWidgetElement()〉.
+        </doc>
+      </method>
+
+      <method hash="3eb231341df7ab5d91d6bac7bca64723" name="children">
+        <param default="null" name="idx" optional="1" type="Number"></param>
+        <return>Array of child widgets, or widget as position <b>idx</b></return>
+        <doc>
+          If <b>idx</b> is <b>null</b>, this function returns the
+          array of child widgets.  Otherwise it returns the child at
+          position <b>idx</b>.
+        </doc>
+      </method>
+
+      <method hash="06db303cda42b1e8c90732cefdb4e40d" name="destroyChildWidgets">
+        <doc>
+          〈DlWidget::destroy()|Destroys〉 all children of this
+          container.  After this step the child widgets are
+          effectively gone and you should not try to access any of
+          them.  Use this method only when you want to radically
+          change the container (for instance, to regenerate the
+          content).
+        </doc>
+      </method>
+
+      <method hash="531d2227398860966ad167a6f5c2d49e" name="disabled">
+        <param name="v"></param>
+        <param name="force"></param>
+        <doc>
+          Disables/enables all child widgets and the container itself.
+          See 〈DlWidget::disable()〉.
+        </doc>
+      </method>
+
+      <method hash="9e3e98518025a68d5b344fe5b1042c50" name="getFirstFocusWidget">
+        <return type="DlWidget"></return>
+        <doc>
+          Returns the first widget that can receive focus in this
+          container.
+        </doc>
+      </method>
+
+      <method hash="60e7da6d6239aa5fead4f72ee97b8d00" name="getLastFocusWidget">
+        <return type="DlWidget"></return>
+        <doc>
+          Returns the last widget that can receive focus in this
+          container.
+        </doc>
+      </method>
+
+      <method hash="375b9509291edb54e6f56d8c5c08bd51" name="getNextFocusWidget">
+        <param name="w" type="DlWidget">Pointer widget</param>
+        <return type="DlWidget"></return>
+        <doc>
+          Returns the next (after <b>w</b>) widget to receive focus in
+          this container.
+        </doc>
+      </method>
+
+      <method hash="a0bbcd8885644e7d3a248fdb8d8d8720" name="getPrevFocusWidget">
+        <param name="w" type="DlWidget">Pointer widget</param>
+        <return type="DlWidget"></return>
+        <doc>
+          Returns the previous (before <b>w</b>) widget to receive
+          focus in this container.
+        </doc>
+      </method>
+
+      <method hash="99a63d6adf6dda96dd4686aec4abb082" name="removeWidget">
+        <param name="w" type="DlWidget"></param>
+        <doc>
+          Removes widget <b>w</b> from the container.
+        </doc>
+      </method>
+
+      <method hash="b423715dc72199d27182661adf9c5c1c" internal="1" name="__doLayout" undoc="1">
+        <doc>
+          Handles an "onResize" event.  You can override this in your
+          container, if you wish, but it's more recommended to add
+          your own onResize handler.
+
+          For a plain DlContainer, this function checks to see if we
+          have a child widget that has the "fillParent" option (see
+          〈DlWidget〉 constructor arguments) and if so, it resizes it
+          to fill the container inner size.
+        </doc>
+      </method>
+
+      <method hash="cc7e2a928cd1d6a9d6e88acf529f14a7" internal="1" name="_appendWidgetElement">
+        <param name="w" type="DlWidget">Widget that has been parented to this container</param>
+        <param default="null" name="p" optional="1" type="Number|String|HTMLElement">Parent element</param>
+        <doc>
+          Appends the <b>w</b>'s 〈DlWidget::getElement()〉 element into
+          this container DOM tree.  If <b>p</b> is unspecified (null)
+          then this function does:
+
+          <js>
+            this.getElement().appendChild(w.getElement());
+          </js>
+
+          If p is specified, it must translate into a parent element
+          where to append the new child.  If it's a String, then the
+          element is looked up with document.getElementById.  If it's
+          a Number, then the element is looked up into this container
+          element's childNodes.
+
+          You shouldn't need to call this function directly.
+        </doc>
+      </method>
+
+      <method hash="df3befba27b3ef579a94af7fcb81f941" internal="1" name="_removeWidgetElement">
+        <param name="w" type="DlWidget"></param>
+        <doc>
+          Removes a widget's DOM element from our tree.  You shouldn't
+          need to call this function directly.
+        </doc>
+      </method>
+
+      <method hash="3626545682bcf5d4d011bcdeae4d6ee6" internal="1" name="_setListeners">
+        <doc></doc>
+      </method>
+
+      <method XXX="Code has changed!" hash="4d563c4a4c80544cdb6ab39b052c7cc8" internal="1" name="_createElement">
+        <doc>
+          This simply calls base class first to create our element,
+          then adds the inline style “overflow: auto” if <b>scroll</b>
+          was specified in constructor.
+        </doc>
+      </method>
+
+      <method hash="299139617433f8f2b291a2b7f9324b6b" internal="1" name="_handleKeybinding">
+        <param name="ev"></param>
+        <param name="w"></param>
+        <doc></doc>
+      </method>
+
+    </object-methods>
+  </object>
+</api>

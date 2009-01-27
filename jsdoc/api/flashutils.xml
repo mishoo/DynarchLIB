@@ -1,0 +1,169 @@
+<api file="flashutils.js" show="1">
+
+  <object base="DlEventProxy" internal="1" name="DlFlashUtils">
+    <constructor>
+      <doc>
+        This object is a 〈DlSingleton|globalized singleton〉, which
+        means you can't manually construct it.  You get a reference to
+        it anytime by calling the DlFlashUtils() global function.
+
+        You shouldn't need to use this object directly, except for
+        initializing.  To make use of any other Flash utilities, you
+        need to call the following <em>during page load</em>:
+
+        <js>
+          DlFlashUtils().init();
+        </js>
+
+        See the 〈init()〉 method.
+      </doc>
+    </constructor>
+    <events XXX="No events in the code!" forced="1" removed="1">
+      <event forced="1" name="onLoad">
+        <doc>
+          Triggered when the Flash applet has been successfully
+          loaded.  After this event is triggered you can safely use
+          the DynarchLIB Flash utilities (i.e. 〈DlFlashStore〉 or
+          〈DlSocket〉).
+        </doc>
+      </event>
+      <event forced="1" name="onStorageStatus">
+        <param name="info" type="Hash">Status information</param>
+        <doc>
+          Triggered when an user accepts or refuses to allow storage
+          space (see 〈DlFlashStore〉).
+
+          <b>info</b> is directly passed by Flash and contains two
+          properties:
+
+          <ul>
+            <li><b>level</b> — usually "error"</li>
+            <li><b>code</b> — "SharedObject.Flush.Success" on success,
+            or "SharedObject.Flush.Failed" on failure.</li>
+          </ul>
+
+          See more <a
+          href="http://www.adobe.com/support/flash/action_scripts/actionscript_dictionary/actionscript_dictionary648.html"
+          target="_blank">information on SharedObject</a> at
+          Adobe.com.
+        </doc>
+      </event>
+    </events>
+    <static-methods></static-methods>
+    <object-methods>
+      <method forced="1" name="init">
+        <doc>
+          If you intend to use our Flash utilities, you need to call
+          this method <em>during page load</em>.  For example,
+          immediately after including DynarchLIB:
+
+          <html><![CDATA[
+            <script src="/DynarchLIB/js/thelib.js"></script>
+            <script>DlFlashUtils().init()</script>
+          ]]></html>
+
+          This is a requirement for Internet Explorer, which won't
+          allow Flash-to-JS communication unless the applet is loaded
+          before the page finished loading.
+
+          After successful initialization, this method will trigger
+          the <b>onLoad</b> event.  It's safe at that point to call
+          any of our Flash utilities.
+        </doc>
+      </method>
+      <method forced="1" name="isSupported">
+        <return type="boolean"><b>true</b> if the required version of Flash is installed, <b>false</b> otherwise</return>
+        <doc>
+          Call this method to check if the current browser supports
+          our Flash utilities.  It returns <b>true</b> if so,
+          <b>false</b> otherwise.
+        </doc>
+      </method>
+      <method forced="1" name="getObject">
+        <doc>
+          Returns the Flash movie DOM element.  For IE this is an
+          &lt;object&gt; element, and for all other browsers it'll be
+          an &lt;embed&gt; element.  This method is internally used by
+          our Flash utilities, you shouldn't need to call it directly.
+        </doc>
+      </method>
+    </object-methods>
+  </object>
+
+  <object name="DlFlashStore">
+    <constructor>
+      <doc>
+        Implements a simple Flash-based local storage.  Using it you
+        can easily store (key, value) pairs on the client machine.
+        You don't need to worry about cookies or server-side, etc.
+        These values are persistent—whatever you put here you'll get
+        after a page refresh or even after the user restarted the
+        browser.  In fact, the Flash storage is so persistent that it
+        survives across browsers (on the same machine and user
+        account).
+
+        For this reason it might be dangerous to store sensitive
+        information such as passwords or credit card numbers.  The
+        users should be informed about this.
+
+        This is not an object but rather a namespace for a few static
+        functions that you can use to access the storage.  They all
+        rely on <a href="http://livedocs.adobe.com/flash/8/main/wwhelp/wwhimpl/common/html/wwhelp.htm?context=LiveDocs_Parts&#38;file=00002661.html" target="_blank">Flash's SharedObject</a>.
+      </doc>
+    </constructor>
+    <static-methods>
+      <method hash="997d18c61641ae59e0c5ff149f4a5fd3" name="clear">
+        <doc>
+          Removes all data from the flash store.
+        </doc>
+      </method>
+      <method hash="89c7906d42e571ff224a27e0e491bf65" name="flush">
+        <param name="showUI" type="boolean" optional="1" default="false">Show Flash dialog when user intervention is needed?</param>
+        <return><b>true</b> on success, <b>false</b> on immediate failure or "pending" when it waits for user intervention</return>
+        <doc>
+          Flushes the store, forcing all data to be written to disk;
+          unless you call this, the data will be cached in memory and
+          written to disk only when the user closes or refreshes the
+          browser.
+
+          Note that Flash normally allows upto 100K of data to be
+          saved per domain.  When flush() needs to save a larger
+          object, user is queried by Flash in a dialog (only if you
+          pass <b>true</b> for <em>showUI</em>).  In this case,
+          flush() returns the string "pending" while the user answers
+          the question.  You can catch "onStorageStatus" event in
+          〈DlFlashUtils〉 in order to decide what to do next.
+        </doc>
+      </method>
+      <method hash="1ce5f97722d32da2c720876dbf716f62" name="get">
+        <param name="key" type="String">Key name</param>
+        <doc>
+          Returns the value of the given key.
+        </doc>
+      </method>
+      <method hash="3bd722818cd4137039f564fc4ef03b4e" name="remove">
+        <param name="key" type="String">Key name</param>
+        <doc>
+          Removes the given key from the store.
+        </doc>
+      </method>
+      <method hash="30a311f8d0bbb3605b8d38a8e96fbe36" name="set">
+        <param name="key" type="String">Key name</param>
+        <param name="val">Key value</param>
+        <doc>
+          Sets a new value for the given key.  Note that <b>val</b>
+          should be a primitive type (String, Boolean, Number).
+          Passing anything else might or might not do what you expect.
+        </doc>
+      </method>
+      <method hash="79d2023386ca52d51be1ac4cd0ed7bb5" name="getAllKeys">
+        <doc>
+          Returns an array of all keys currently stored for the
+          current domain.
+        </doc>
+      </method>
+      <method hash="f031a5cd5e7cf03e47e329959a640a75" internal="1" name="_onStatus"><param name="info"></param><doc></doc></method>
+    </static-methods>
+    <object-methods></object-methods>
+  </object>
+</api>

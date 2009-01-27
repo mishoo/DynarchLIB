@@ -1,0 +1,285 @@
+<sample>
+
+  <title>DlMenuItem</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlMenuItem</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlContainer〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈popupmenu.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈popup.js, hbox.js, vbox.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">iconClass</td>
+         <td class="doc"><span default="null" name="iconClass"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">id</td>
+         <td class="doc"><span default="null" name="id"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">label</td>
+         <td class="doc"><span default="&#34;DlMenuItem&#34;" name="label"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">"DlMenuItem"</td>
+       </tr>
+       <tr>
+         <td class="name">menu</td>
+         <td class="doc"><span default="null" name="menu"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">name</td>
+         <td class="doc"><span default="null" name="name"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">noClose</td>
+         <td class="doc"><span default="false" name="noClose"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">false</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+      <param default="null" name="iconClass"></param>
+      <param default="null" name="id"></param>
+      <param default="&#34;DlMenuItem&#34;" name="label"></param>
+      <param default="null" name="menu"></param>
+      <param default="null" name="name"></param>
+      <param default="false" name="noClose"></param>
+    </span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="events">
+      <h2>Events</h2>
+   <div class="method">
+        <h3 id="onSelect:object_event">onSelect ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="activateSubmenu:object_method">activateSubmenu (<span class='param'>act</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">act</td>
+         <td class="doc"><span name="act"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getContentElement:object_method">getContentElement ()
+        <div class="overrides">
+             (overrides <a href="api://DlWidget.xml:type=object_method:func=getContentElement">getContentElement in DlWidget</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getMenu:object_method">getMenu ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="initDOM:object_method">initDOM ()
+        <div class="overrides">
+             (overrides <a href="api://DlWidget.xml:type=object_method:func=initDOM">initDOM in DlWidget</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setMenu:object_method">setMenu (<span class='param'>menu</span>, <span class='param'>onPopup</span>, <span class='param'>onHide</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">menu</td>
+         <td class="doc"><span name="menu"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">onPopup</td>
+         <td class="doc"><span name="onPopup"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">onHide</td>
+         <td class="doc"><span name="onHide"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_createElement:object_method">_createElement ()
+        <div class="overrides">
+             (overrides <a href="api://DlContainer.xml:type=object_method:func=_createElement">_createElement in DlContainer</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_getDlPopup:object_method">_getDlPopup ()
+        <div class="overrides">
+             (overrides <a href="api://DlWidget.xml:type=object_method:func=_getDlPopup">_getDlPopup in DlWidget</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_inBaseMenu:object_method">_inBaseMenu ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_popupMenu:object_method">_popupMenu (<span class='param'>timeout</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">timeout</td>
+         <td class="doc"><span name="timeout"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_setListeners:object_method">_setListeners ()
+        <div class="overrides">
+             (overrides <a href="api://DlContainer.xml:type=object_method:func=_setListeners">_setListeners in DlContainer</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+
+
+</sample>
+
+
+
+

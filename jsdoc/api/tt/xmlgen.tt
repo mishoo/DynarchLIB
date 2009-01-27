@@ -1,0 +1,183 @@
+<sample>
+
+  <title>[% object %]</title>
+
+  <text>
+
+    [% IF file_info %]
+    <div class="file-info">
+      [% file_info %]
+    </div>
+    [% END %]
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>[% object %]</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>[% base ? "〈$base〉" : '— none —' %]</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈[% objects_hash.$object.js_file %]〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈[% objects_hash.$object.requires.join(', ') %]〉</td>
+        </tr>
+      </table>
+    </div>
+
+    [% IF constructor && (constructor.doc.match('\S') || constructor.params.size > 0) %]
+    <div class="constructor">
+      <h2>Constructor</h2>
+      [% PROCESS show_method method = constructor %]
+    </div>
+    [% END %]
+
+    [% IF events && events.size > 0 %]
+    <div class="events">
+      <h2>Events</h2>
+      [% FOREACH event = events;
+         PROCESS show_event event = event;
+         END %]
+    </div>
+    [% END %]
+
+    [% IF static_methods && static_methods.size > 0 %]
+    <div class="static-methods">
+      <h2>Static functions</h2>
+      [% PROCESS show_method FOREACH method = static_methods %]
+    </div>
+    [% END %]
+
+    [% IF object_methods && object_methods.size > 0 %]
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+      [% PROCESS show_method FOREACH method = object_methods %]
+    </div>
+    [% END %]
+
+  </text>
+
+  [% FOREACH sample = code_samples %]
+  [% sample %]
+  [% END %]
+
+</sample>
+
+[% BLOCK show_event; IF !event.undoc %]
+   [% PROCESS show_method method = event %]
+[% END; END %]
+
+[% BLOCK show_method; IF !method.undoc %]
+   <div class="method">
+     [% IF method.name %]
+        <h3 id="[% "${method.name}:${method.type}" | html %]">[%-
+         GET "${object}." IF method.type == 'static_method';
+         GET method.name;
+        -%]
+        [% SET params_html = [];
+           IF method.linear_params;
+              params_html.push(method.linear_params);
+           ELSE;
+              FOREACH param IN method.params;
+              IF param.optional.defined;
+                 params_html.push("<span class='param optional'>${param.name}</span>");
+              ELSE;
+                 params_html.push("<span class='param'>${param.name}</span>");
+              END;
+              END;
+              IF method.varargs && method.varargs != 'no';
+                 params_html.push('<span class="varargs">…</span>');
+              END;
+           END;
+           GET ' (' _ params_html.join(', ') _ ')';
+        %]
+        [% SET overrides = get_overrides(object, method) %]
+        [% IF overrides %]
+        <div class="overrides">
+             (overrides <a href="api://[% overrides.object.name | html %].xml:type=object_method:func=[% overrides.method.name | html %]">[%
+                           overrides.method.name %] in [% overrides.object.name
+                           %]</a>)
+        </div>
+        [% END %]
+        </h3>
+     [% END %]
+     [% PROCESS show_params params=method.params %]
+     <div class="doc">
+       [% method.doc %]
+     </div>
+   </div>
+[% END; END %]
+
+[% BLOCK show_params; IF params.size > 0 || method.return %]
+   <div class="params">
+     <table>
+       [% FOREACH param = params %]
+       [% NEXT IF param.undoc %]
+       [% IF loop.first %]
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       [% END %]
+       <tr>
+         <td class="name">[% param.name %]</td>
+         <td class="doc">[% param.doc %]</td>
+         <td class="type">[% param.type.defined ? "[<b>〈" _ param.type.split('\|').join(",") _ "〉</b>]" : "—" %]</td>
+         <td class="optional">[% 'optional' IF param.optional.defined %]</td>
+         <td class="default">[% param.default.defined ? "${param.default}" : "—" %]</td>
+       </tr>
+       [% END %]
+       [% IF method.return %]
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">
+           [% "(type: ${method.return.type}) " IF method.return.type.defined %]
+           <b>[% method.return.doc %]</b>
+         </td>
+       </tr>
+       [% END %]
+     </table>
+   </div>
+[% END; END %]
+
+[% BLOCK old_show_params; IF params.size > 0 %]
+   <div class="params">
+     Arguments:
+     <dl>
+     [% FOREACH param = params %]
+     <dt>
+       [% param.name %]
+       <dd>
+         [% param.doc || '—' %]
+         [% IF param.type %]
+         / type = [% param.type %]
+         [% END %]
+         [% IF param.optional %]
+         / optional
+         [% END %]
+         [% IF param.default %]
+         / default = [% param.default %]
+         [% END %]
+       </dd>
+     </dt>
+     [% END %]
+     </dl>
+     [% IF method.return %]
+     <div class="returns">
+       Returns: [% method.return.doc %]
+       [% IF method.return.type %]
+       (type: [% method.return.type %])
+       [% END %]
+     </div>
+     [% END %]
+   </div>
+[% END; END %]

@@ -1,0 +1,221 @@
+<sample>
+
+  <title>DlButtonColorPicker</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlButtonColorPicker</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlButtonMenu〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈buttoncolorpicker.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈buttonmenu.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">hsv</td>
+         <td class="doc"><span default="null" name="hsv">Initial HSV (hue, saturation, value)</span>
+</td>
+         <td class="type">[<b>〈Array〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">rgb</td>
+         <td class="doc"><span default="null" name="rgb">Initial RGB (red, green, blue)</span>
+</td>
+         <td class="type">[<b>〈Array〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">color</td>
+         <td class="doc"><span default="null" name="color">Initial color (in #XXXXXX format, where X are hexadecimal digits)</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+        A specialization of <a href='api://DlButtonMenu.xml'>DlButtonMenu</a> suitable for selecting a
+        color.  Internally it uses a widget with the same API as
+        <a href='api://DlColorPickerHSV.xml'>DlColorPickerHSV</a> (note that it's not required to be of that
+        exact type, as exemplified by our <a href="sample://widgets-compound.xml">compound widgets
+        sample</a>).
+<p/>
+        Triggers the "onSelect" event (see <a href='api://DlButtonMenu.xml'>base class</a>)
+        when a color is selected.
+      </span>
+
+     </div>
+   </div>
+    </div>
+
+
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="getColorElement:object_method">getColorElement ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: HTMLElement) 
+           <b><span>DIV</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the DIV element that displays the current color.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getLabelElement:object_method">getLabelElement ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: HTMLElement) 
+           <b><span>TD</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the element where the label is displayed.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setColorPicker:object_method">setColorPicker (<span class='param'>cp</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">cp</td>
+         <td class="doc"><span name="cp">A color picker</span>
+</td>
+         <td class="type">[<b>〈DlWidget〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Sets the color picker drop-down element for this button.
+          While it is not enforced, this widget should be an instance
+          of <a href='api://DlColorPickerHSV.xml'>DlColorPickerHSV</a>, or a widget that sports a similar
+          API.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setLabel:object_method">setLabel (<span class='param'>label</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">label</td>
+         <td class="doc"><span name="label">New label</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Changes the label of this button.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_createElement:object_method">_createElement ()
+        <div class="overrides">
+             (overrides <a href="api://DlButtonMenu.xml:type=object_method:func=_createElement">_createElement in DlButtonMenu</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_setListeners:object_method">_setListeners ()
+        <div class="overrides">
+             (overrides <a href="api://DlContainer.xml:type=object_method:func=_setListeners">_setListeners in DlContainer</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_updateValues:object_method">_updateValues ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+
+
+</sample>
+
+
+
+

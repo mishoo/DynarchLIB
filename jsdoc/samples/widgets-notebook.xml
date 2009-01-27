@@ -1,0 +1,166 @@
+<sample>
+
+  <title>Notebook</title>
+
+  <text>
+
+    <p>
+      A notebook widget is a container that, at any given time,
+      displays only one of its children.  That is, its children are
+      stacked up one over another.  Such a control is useful for
+      wizards.  It is also used internally for the tabbed container.
+    </p>
+
+    <p>
+      A quick demo here:
+    </p>
+
+    <div sample="sample1" />
+
+    <p>
+      On the <b>DlNotebook</b> object you can call various functions
+      that allow you to move to the next/previous page (nextPane,
+      prevPane), show a specific page (showPane), check wether we're
+      on the first or last page (isFirstPane, isLastPane), etc.  You
+      can add new pages at any time by just creating a new container
+      object having the notebook as the parent.
+    </p>
+
+    <p>
+      Here is a more complex sample that shows how we can use a
+      notebook and widgets that we learned so far (that is, boxes,
+      buttons and a dialog) to implement the layout of what Joel
+      Spolsky calls the <a target="_blank"
+      href="http://www.joelonsoftware.com/uibook/chapters/fog0000000059.html">most
+      moronic “wizard” dialog</a> in the history of the Windows
+      operating system.
+    </p>
+
+    <div sample="stupidest-dialog-ever" />
+
+  </text>
+
+  <code id="sample1" type="js" canrun="true"><![CDATA[
+var notebook = new DlNotebook({ parent: getDocCanvas() });
+var page1 = new DlContainer({ parent: notebook });
+var page2 = new DlContainer({ parent: notebook });
+var page3 = new DlContainer({ parent: notebook });
+page1.setContent("<b>Page 1</b>");
+page2.setContent("<b>Page 2</b>");
+page3.setContent("<b>Page 3</b>");
+notebook.showPane(0);
+notebook.setInnerSize({ x: 200, y: 100 });
+var btn = new DlButton({ parent: getDocCanvas(), label: "Next" });
+btn.addEventListener("onClick", function() {
+   notebook.nextPane();
+});
+  ]]></code>
+
+  <code id="stupidest-dialog-ever" type="js" canrun="true"><![CDATA[
+var dlg = new DlDialog({ title: "Find Setup Wizard" });
+
+// we need a vertical box to contain the notebook panes
+// and the bottom buttons bar
+var top_box = new DlVbox({ parent: dlg, borderSpacing: 10 });
+
+// this will hold the image on the left
+// and the notebook on the right
+var top_hbox = new DlHbox({ parent: top_box });
+
+// add a separator
+top_box.addSeparator();
+
+// create the button box
+var bbox = new DlHbox({ parent: top_box });
+
+// create the bottom buttons
+bbox.addFiller();
+var back = new DlButton({ parent: bbox, label: "< Back" });
+back.disabled(true); // we're initially on the first tab
+var next = new DlButton({ parent: bbox, label: "Next >" });
+var close = new DlButton({ parent: bbox, label: "Close" });
+close.addEventListener("onClick", function() {
+    dlg.destroy();
+});
+close.getElement().style.marginLeft = "10px"; // add some spacing
+bbox.setEqualWidths(30);
+
+// create the wizard image
+var td = top_hbox.createCellElement();
+td.innerHTML = "<img width='118' height='226' src='jsdoc/img/winhelp.gif' />";
+td.style.paddingRight = "10px"; // add some spacing
+
+// the notebook here (wizard pages)
+var notebook = new DlNotebook({ parent: top_hbox });
+
+// FIRST WIZARD PAGE
+
+var cont = new DlContainer({ parent: notebook });
+cont.setContent([ "Find enables you to search for specific words and",
+                  "phrases in help topics, instead of searching for",
+                  "information by category.",
+                  "",
+                  "Before you can use Find, Windows must first create a list",
+                  "(or database), which contains every word from your help",
+                  "file(s).",
+                  "",
+                  "To create this list now click Next.",
+                  "", "" ].join("<br />"));
+cont.getElement().style.padding = "5px";
+
+var group = DlRadioGroup.get();
+[ "Minimize database size (recommended)",
+  "Maximize search capabilities",
+  "Customize search capabilities" ].foreach(function(txt, i) {
+    new DlRadioButton({ parent  : cont,
+                        group   : group,
+                        label   : txt,
+                        checked : i == 0,
+                        value   : txt });
+});
+
+// SECOND WIZARD PAGE
+
+var cont = new DlContainer({ parent: notebook });
+cont.getElement().style.padding = "5px";
+
+// here we will display the selection
+var label = new DlLabel({ parent: cont });
+
+cont = new DlContainer({ parent: cont });
+cont.getElement().style.paddingTop = "10px";
+cont.setContent([ "To paraphrase Joel Spolsky again:",
+                  "",
+                  "“Thank you for submitting yourself to this",
+                  "needless waste of your time”." ].join("<br />"));
+
+// this callback will be called when the notebook pages are switched.
+// we use it in order to update the label that shows the selection.
+notebook.addEventListener("onChange", function(indexOfNewPane) {
+    if (indexOfNewPane == 1) {
+        // second page, indexes are zero-based
+        label.setLabel("Your selection:<br/>" + group.getValue()[0].bold());
+    }
+});
+
+// setup handlers for the next and prev buttons
+
+next.addEventListener("onClick", function() {
+    notebook.nextPane();
+    back.disabled(notebook.isFirstPane());
+    next.disabled(notebook.isLastPane());
+});
+
+back.addEventListener("onClick", function() {
+    notebook.prevPane();
+    back.disabled(notebook.isFirstPane());
+    next.disabled(notebook.isLastPane());
+});
+
+notebook.setInnerSize({ x: "30em", y: "20em" });
+notebook.showPane(0);
+dlg.centerOnParent();
+dlg.show();
+  ]]></code>
+
+</sample>

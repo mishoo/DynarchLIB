@@ -1,0 +1,357 @@
+<sample>
+
+  <title>DlLayout</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlLayout</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlContainer〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈layout.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈container.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">fillParent</td>
+         <td class="doc"><span default="true" name="fillParent">Passed to <a href='api://DlContainer.xml'>DlContainer</a></span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">true</td>
+       </tr>
+       <tr>
+         <td class="name">outerSpace</td>
+         <td class="doc"><span default="0" name="outerSpace">Outer space (padding) for this layout container</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">0</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+        This class is useful to implement a fluid layout.  It's best
+        suitable for vertical or horizontal layout, although you can
+        use it to create more complex ones as well (i.e. combine
+        vertical and horizontal containers in the same layout widget).
+        See our <a href="sample://widgets-layout.xml">layout
+        examples</a> for some sample code.
+<p/>
+        In order to add widgets to a layout you need to call
+        <a href='api://DlLayout.xml:type=object_method:func=packWidget'>layout.packWidget(widget, args)</a>.  Please check
+        our samples and the <a href='api://DlLayout.xml:type=object_method:func=packWidget'>packWidget()</a> method for more
+        information.
+      </span>
+
+     </div>
+   </div>
+    </div>
+
+
+    <div class="static-methods">
+      <h2>Static functions</h2>
+   <div class="method">
+        <h3 id="getArgs:static_method">DlLayout.getArgs (<span class='param'>widget</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">widget</td>
+         <td class="doc"><span name="widget">Queried widget</span>
+</td>
+         <td class="type">[<b>〈DlWidget〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Hash) 
+           <b><span>Layout args as passed to <a href='api://DlLayout.xml:type=object_method:func=packWidget'>packWidget()</a></span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the layout options for the given widget.  These are
+          the options that were passed to <a href='api://DlLayout.xml:type=object_method:func=packWidget'>packWidget()</a>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setFill:static_method">DlLayout.setFill (<span class='param'>widget</span>, <span class='param'>fill</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">widget</td>
+         <td class="doc"><span name="widget"></span>
+</td>
+         <td class="type">[<b>〈DlWidget〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">fill</td>
+         <td class="doc"><span name="fill">Fill argument</span>
+</td>
+         <td class="type">[<b>〈Number,String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Modifies the <b>fill</b> argument for the given widget.  The
+          widget must be <a href='api://DlLayout.xml:type=object_method:func=packWidget'>packed</a> in some layout.  This
+          function will modify the fill option and will call
+          <a href='api://DlLayout.xml:type=object_method:func=doLayout'>doLayout()</a> in order to refresh the display.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="doLayout:object_method">doLayout ()
+        </h3>
+     <div class="doc"><span>
+          Refresh the display (position and size child widgets
+          according to their layout options).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="packWidget:object_method">packWidget (<span class='param'>w</span>, <span class='param'>args</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">w</td>
+         <td class="doc"><span name="w">New child widget</span>
+</td>
+         <td class="type">[<b>〈DlWidget〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">args</td>
+         <td class="doc"><span name="args">Layout options</span>
+</td>
+         <td class="type">[<b>〈Hash〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Adds a new widget to the current layout manager.  This is
+          the method you'll use most frequently in a DlLayout object.
+<p/>
+          First argument (<b>w</b>) is a widget that you want to add.
+          In order for the layout to be able to do its job, widgets
+          that you add to it must have a working implementation for
+          their <a href='api://DlWidget.xml:type=object_method:func=setOuterSize'>setOuterSize()</a> method.
+<p/>
+          The second argument (<b>args</b>) is an hash that can
+          contain the following properties:
+<p/>
+          <ul>
+<p/>
+            <li><b>pos</b> (String) — can be "left" or "right"
+            (horizontal stacking), "top" or "bottom" (vertical
+            stacking) and specifies where do you want to stick the new
+            widget.  <em>Required</em>.</li>
+<p/>
+            <li><b>before</b> (Number) — specifies the number of
+            pixels to leave blank <em>before</em> packing this
+            widget.</li>
+<p/>
+            <li><b>after</b> (Number) — number of pixels to leave
+            blank <em>after</em> packing this widget</li>
+<p/>
+            <li><b>min</b> (Number) — minimum size for this widget
+            (can refer to width if it's stacked horizontally, or to
+            the height if it's stacked vertically).</li>
+<p/>
+            <li><b>max</b> (Number) — maximum width or height for this
+            widget.</li>
+<p/>
+            <li>
+              <b>fill</b> (Number or String) — specifies a fill
+              option for this widget.
+<p/>
+              When this option is missing, the layout will use the
+              current size of the given widget.  Note that this is
+              sometimes dangerous—since the widget doesn't have a
+              parent yet, its size is zero.  DlLayout will first add
+              the widget then check its size, but in some cases this
+              won't work either (for example when you pack another
+              layout widget, since a DlLayout has initially the size
+              zero and you have to set a size manually).
+<p/>
+              If fill is a number, then the packed widget will
+              occupy exactly that number of pixels in the layout (can
+              refer to width or height depending on the <b>pos</b>
+              argument).
+<p/>
+              If fill is a string, it can be one of the
+              following:
+<p/>
+              <ul>
+                <li>Percent (i.e. in the form "15%") — the widget will
+                ocuppy that percent of the available space</li>
+<p/>
+                <li>An asterisk ("*") — the widget will occupy
+                <em>all</em> the available space.  Don't use this
+                option for two wigets in the same layout.</li>
+              </ul>
+            </li>
+<p/>
+          </ul>
+<p/>
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="sizeToFit:object_method">sizeToFit ()
+        </h3>
+     <div class="doc"><span>
+<p class='warning'> Dangerous, doesn't seem to work correctly</p>
+<p/>
+          This method is supposed to resize a layout to a minimum size
+          which is big enough so that no child widgets are invisible
+          or truncated.  But <em>don't rely on it for now</em>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_appendWidgetElement:object_method">_appendWidgetElement (<span class='param'>w</span>, <span class='param'>pos</span>)
+        <div class="overrides">
+             (overrides <a href="api://DlContainer.xml:type=object_method:func=_appendWidgetElement">_appendWidgetElement in DlContainer</a>)
+        </div>
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">w</td>
+         <td class="doc"><span name="w"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">pos</td>
+         <td class="doc"><span name="pos"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_removeWidgetElement:object_method">_removeWidgetElement (<span class='param'>w</span>)
+        <div class="overrides">
+             (overrides <a href="api://DlContainer.xml:type=object_method:func=_removeWidgetElement">_removeWidgetElement in DlContainer</a>)
+        </div>
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">w</td>
+         <td class="doc"><span name="w"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+
+
+</sample>
+
+
+
+

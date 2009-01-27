@@ -1,0 +1,283 @@
+<api file="calendar.js" show="1">
+  <object base="DlWidget" name="DlCalendar">
+    <constructor>
+      <param default="null" name="date" type="Date">Default date</param>
+      <param default=" Date.getFirstDayOfWeek()" name="firstDay" type="Number">First day of week (0 for Sunday, 1 for Monday, etc.)</param>
+      <param default="true" name="fixedFirstDay" type="boolean">If you pass false, the end-user will be able to change first day of week by a click on day name</param>
+      <param default="false" name="navDisabled" type="boolean">If you pass true, navigation bar will be disabled</param>
+      <param default="2" name="navigation" type="Number">Navigation bar type (see below)</param>
+      <param default="false" name="noinit" type="boolean">Don't initialize calendar by default? (you will have to call 〈init()〉 manually)</param>
+      <param default="false" name="omDisabled" type="boolean">
+        Disable dates from adjacent months? (this coupled with
+        <b>navDisabled</b> makes the calendar effectively available
+        only for the current month)
+      </param>
+      <param default="true" name="selected" type="boolean">If you pass false here, the current date won't appear to be selected.</param>
+      <param default="false" name="weekNumbers" type="boolean">Display week numbers?</param>
+      <param default="false" name="withMenu" type="boolean">Use context menu?</param>
+      <param default="null" name="infoDates" type="Hash">Highlight certain dates and display tooltips</param>
+      <param default=" getTooltip" name="tooltip">Using an internal function by default to support “infoDates” (see 〈DlWidget〉's tooltip argument)</param>
+      <param default="null" name="dayTooltip" type="Function">Function to display custom tooltips; receives the hovered day info from infoDates</param>
+
+      <doc>
+        Use this widget to display calendars and allow date selection.
+        Check our <a href="sample://widgets-calendar.xml">calendar
+        samples</a>.
+
+        The navigation bar can be of 3 types:
+
+        <ul>
+          <li>navigation = 0 — display only the month name</li>
+          <li>navigation = 1 — display next/prev year buttons too</li>
+          <li>navigation = 2 — display next/prev month buttons too</li>
+        </ul>
+
+        Note that when navigation is 0 it doesn't mean that the
+        calendar is fixed to the current month.  You can usually go to
+        next/prev month by clicking a date from the adjacent month.
+        You need to pass <b>omDisabled: true</b> to disallow that.
+
+        The calendar can highlight certain dates and display
+        date-specific tooltips.  You can use the “infoDates” argument
+        for this.  It must be an hash that looks like this:
+
+        <js>
+          {
+             "2007-12-31" : { tooltip: "This is Dec. 31, 2007" },
+             "1979-03-08" : { tooltip: "This is my birthday",
+                              className: "Anniversary" }
+             // etc.
+          }
+        </js>
+
+        All dates in this hash will be highlighted (using the CSS
+        class “DlCalendar-infoDay”, if no other className was given)
+        and they will display the given tooltip.
+
+        You can (re)set infoDates at any time after construction using
+        〈setInfoDates()〉.
+
+        XXX TODO: disabling dates!
+      </doc>
+    </constructor>
+    <events>
+      <event name="onSelect">
+        <param name="cleared" type="boolean">Selection was cleared?</param>
+        <param name="otherMonth|navType" type="boolean|Number">
+          When <b>cleared</b> is true, this argument tells you what
+          navigation button was pressed.  When <b>cleared</b> is false
+          this argument is true if a date from an adjacent month was
+          clicked.
+        </param>
+        <param name="secondClick" type="boolean">Was the date already selected? (i.e. dbl-click)</param>
+        <param name="date" type="Date">Current date in the calendar</param>
+        <doc>
+          Triggered when the selection is changed in any way.  This
+          can happen when the user clicks on a date or when the
+          calendar date is changed from the navigation bar
+          (i.e. next/prev month/year, or today).
+
+          *** When “cleared” is true
+
+          In this case the calendar was moved to another month by a
+          click in the navigation bar.  <b>navType</b> (second
+          argument) will be one of the following:
+
+          <ul>
+            <li>-2 : means prev. year</li>
+            <li>-1 : means prev. month</li>
+            <li>0 : means "today" (current month)</li>
+            <li>1 : means next month</li>
+            <li>2 : means next year</li>
+          </ul>
+
+          Third argument (<b>secondClick</b>) is always <b>null</b>.
+
+          *** When “cleared” is false
+
+          Some date in the calendar was clicked.  The second argument
+          (<b>otherMonth</b>) will be <b>true</b> if it's some date
+          from an adjacent month, false otherwise.
+
+          <b>secondClick</b> will be <b>true</b> if the clicked date
+          was already selected (you can use this to intercept
+          double-clicks on a date).
+
+          When <b>otherMonth</b> is <b>true</b>, <b>secondClick</b>
+          will always be false (since it's not possible to dbl.click a
+          date from an adjacent month as the calendar immediately
+          switches to that month).
+        </doc>
+      </event>
+      <event name="onChange">
+        <param name="navType">Navigation button type</param>
+        <doc>
+          Triggered when the calendar has been changed through the
+          navigation bar.  The argument has the same signification as
+          the second argument (<b>navType</b>) in the "onSelect" event
+          above.
+        </doc>
+      </event>
+      <event name="onRendered">
+        <param name="calendar">Reference to the calendar object</param>
+        <doc>
+          This event is triggered each time the calendar content was
+          rendered.  For example, the first time it's displayed, or
+          any time the user will change the month / year, the calendar
+          is redrawn and this event is called.
+        </doc>
+      </event>
+    </events>
+
+    <static-methods></static-methods>
+
+    <object-methods>
+      <method hash="fb7e593676f1f38ad54c7d0cc183578c" name="getDateCell">
+        <param name="date" type="Number">Date (note that's not a 〈Date|date object〉, but a date i.e. 1..31)</param>
+        <return type="HTMLTableCellElement">cell for the given date</return>
+        <doc>
+          Returns the table cell element for the given date in the
+          current calendar.
+        </doc>
+      </method>
+
+      <method hash="07131e46480ece58a8002fcb86e3e5ae" name="getNCols">
+        <doc>
+          Internal utility -- returns the number of columns in the
+          table, which can vary depending on whether week numbers are
+          displayed or not.
+        </doc>
+      </method>
+
+      <method hash="87b1a8120cb87a5efb0b89e8898ccae8" name="getTableElement">
+        <doc>
+          Returns the table element.
+        </doc>
+      </method>
+
+      <method hash="d2e8610f8ea184b16d353a336f7246bf" name="init">
+        <doc>
+          Initializes the calendar.
+        </doc>
+      </method>
+
+      <method hash="69dbe6997aee06dbb1ecffc1ec1b0c6f" name="selectDate">
+        <param name="date" type="Date|Number">Date to select</param>
+        <param default="false" name="nohooks" optional="1" type="boolean">Don't trigger events?</param>
+        <doc>
+          Selects the given date in the calendar.  Calls "onSelect"
+          unless <b>nohooks</b> is true.
+
+          The <b>date</b> can be a Date object but it can also be a
+          number (in which case it is assumed to be a day from the
+          current date).
+        </doc>
+      </method>
+
+      <method hash="eb8c90c5972eee5b4b087508071b271c" name="setMonth">
+        <param name="m" type="Number">Month (0 == January)</param>
+        <doc>
+          Changes the displayed month.  Keeps the year, unless you
+          pass negative numbers (moves to previous years) or numbers
+          bigger than 11 (moves to next years).
+        </doc>
+      </method>
+
+      <method hash="f3d943c11ca8365c3c177a42f06825f6" name="setToday">
+        <doc>
+          Go to today.
+        </doc>
+      </method>
+
+      <method hash="310831ae8ade559728a5ed0d0e8424ff" name="setYear">
+        <param name="y" type="Number">New year</param>
+        <doc>
+          Changes the displayed year.  Keeps the month, clears the
+          date.
+        </doc>
+      </method>
+
+      <method hash="3016df9f95ce366b82716aeef5cded5b" name="getDisplayedInterval">
+        <return type="Hash">The interval of time currently displayed in the calendar</return>
+        <doc>
+          The returned value is an hash in this form:
+
+          <js>
+            {
+              start : { y: 2007, m: 9, d: 29 },
+              end   : { y: 2007, m: 11, d: 9 }
+            }
+          </js>
+
+          meaning that the first day visible is Oct. 29 2007 and the
+          last day visible is Dec. 9 2007 (months are numbered from
+          zero, which is how the JavaScript 〈Date〉 object behaves).
+        </doc>
+      </method>
+
+      <method hash="28899eba3c011e2bc2e8fb70a1b9649e" name="setInfoDates">
+        <param name="a" type="Hash">Info dates (see constructor)</param>
+        <doc>
+          (Re)Sets the “infoDates” hash.  The calendar will be
+          refreshed to highlight dates.
+        </doc>
+      </method>
+
+      <method hash="650e3ccff78c3bb04e426d6ec7e82d58" internal="1" name="_clearTimer" undoc="1">
+        <doc></doc>
+      </method>
+
+      <method hash="556cee3fea9c85182b578a6df94c4be6" internal="1" name="_createElement">
+        <doc></doc>
+      </method>
+
+      <method hash="f8336552ac9cde654a56e499f1853af2" internal="1" name="_createQuickNavMenu">
+        <doc>
+          Internal; creates the context menu for quick navigation.
+        </doc>
+      </method>
+
+      <method hash="b398842a967d6b2e75fe3e0abed3a59b" internal="1" name="_displayCalendar">
+        <doc>
+          Internal; Renders the calendar.  In fact, this function
+          expects the DOM elements to be in place and just "draws" the
+          calendar for the current date.
+        </doc>
+      </method>
+
+      <method hash="8a4f57c08dd3e99f41a0ba51bee88200" internal="1" name="_displayDayNames">
+        <doc>
+          Internal; Displays the day names row.
+        </doc>
+      </method>
+
+      <method hash="3e6e559631c2b45b9463c7c26a1b83fc" internal="1" name="_makeNavPart" varargs="1">
+        <!--XXX: uses *arguments*, check for missing params-->
+        <doc></doc>
+      </method>
+
+      <method hash="ced97e42661768e28ebd0fd42542c5d3" internal="1" name="_navCellClicked">
+        <param name="cell" type="HTMLTableCellElement"></param>
+        <param name="timeout" type="Number"></param>
+        <param name="ev" type="DlEvent"></param>
+        <doc>
+          Internal; Handles a click on a navigation cell.
+        </doc>
+      </method>
+
+      <method hash="c65c59fb902bea0fd4a7fcb8996bd2c9" internal="1" name="_selectCell">
+        <param name="cell"></param>
+        <param name="hooks"></param>
+        <doc></doc>
+      </method>
+
+      <method hash="ea8cfb0683d30df7ced334b88c453ff3" name="initDOM">
+        <doc></doc>
+      </method>
+
+      <method hash="e3c7bbf6d120c33f7b096cbfe7a4b764" internal="1" name="_setListeners">
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

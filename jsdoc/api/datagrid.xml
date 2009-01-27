@@ -1,0 +1,502 @@
+<api file="datagrid.js">
+  <object base="DlEventProxy" name="DlRecord">
+    <constructor>
+      <param default="null" name="data"></param>
+      <param default="null" name="recordSet"></param>
+    </constructor>
+    <events>
+      <event name="onChange">
+        <doc></doc>
+      </event>
+      <event name="onInsert">
+        <doc></doc>
+      </event>
+      <event name="onDelete">
+        <doc></doc>
+      </event>
+    </events>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="b1b2ba02e16390a491300911762984d4" name="compareTo">
+        <param name="rec"></param>
+        <param name="col"></param>
+        <doc></doc>
+      </method>
+      <method hash="f0ad2bb1b731f294a3a6dc035265bba7" name="get">
+        <param name="key"></param>
+        <doc></doc>
+      </method>
+      <method hash="a12c8a30ca2244aedd60a3d562c19428" name="id">
+        <doc></doc>
+      </method>
+      <method hash="d87050a8afe2c601faafcc6dd50a2969" name="set">
+        <param name="key"></param>
+        <param name="val"></param>
+        <param name="nohooks"></param>
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+  <object base="DlEventProxy" name="DlRecordCache">
+    <constructor>
+      <param default="null" name="data"></param>
+    </constructor>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="361bacce4ceba408ce18d4acf3982326" name="formatHTML">
+        <param name="rec"></param>
+        <param name="col"></param>
+        <param name="buf"></param>
+        <doc></doc>
+      </method>
+      <method hash="37c2d8243cd9b51b784c76cb63a53fe8" name="get">
+        <param name="id"></param>
+        <doc></doc>
+      </method>
+      <method hash="99914b932bd37a50b983c5e7c90ae93b" name="getCellClass">
+        <param name="rec"></param>
+        <param name="col"></param>
+        <doc></doc>
+      </method>
+      <method hash="99914b932bd37a50b983c5e7c90ae93b" name="getInsertPos">
+        <param name="rec"></param>
+        <doc></doc>
+      </method>
+      <method hash="99914b932bd37a50b983c5e7c90ae93b" name="getRecClass">
+        <param name="rec"></param>
+        <doc></doc>
+      </method>
+      <method hash="c18d806a5e8ae29c4ff4e8dd96007256" name="getRecords">
+        <param name="ids"></param>
+        <param name="callback"></param>
+        <param name="obj"></param>
+        <doc></doc>
+      </method>
+      <method hash="9cc8ad1713745caee5444bf07dc612f8" name="insert">
+        <param name="rec"></param>
+        <param name="where"></param>
+        <doc></doc>
+      </method>
+      <method hash="fb328d41809ef0a202c367fb333b7ff8" name="remove">
+        <param name="id"></param>
+        <doc></doc>
+      </method>
+      <method hash="71dce73ba3db36b6f54dceddd6d7f8f8" name="sort">
+        <param name="ids"></param>
+        <param name="col"></param>
+        <param name="prev"></param>
+        <param name="rev"></param>
+        <param name="callback"></param>
+        <param name="obj"></param>
+        <doc></doc>
+      </method>
+      <method hash="6b5ba1549855d768a53573e43df1636d" internal="1" name="_init">
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+  <object base="DlButton" name="DlDataGridHeadLabel">
+    <constructor>
+      <param default="{¶      &#34;checked&#34; : &#34;DlDataGridHeadLabel-1&#34;,¶      &#34;disabled&#34; : &#34;DlDataGridHeadLabel-disabled&#34;,¶      &#34;unchecked&#34; : &#34;DlDataGridHeadLabel-0&#34;,¶      &#34;active&#34; : &#34;DlDataGridHeadLabel-active&#34;,¶      &#34;empty&#34; : &#34;DlDataGridHeadLabel-empty&#34;,¶      &#34;hover&#34; : &#34;DlDataGridHeadLabel-hover&#34;¶}" name="classes"></param>
+      <param default="null" name="col"></param>
+      <param default="false" name="focusable"></param>
+      <param default="true" name="noCapture"></param>
+    </constructor>
+    <events>
+      <event name="onChange">
+        <doc></doc>
+      </event>
+      <event name="onVisibility">
+        <doc></doc>
+      </event>
+    </events>
+    <static-methods>
+      <method hash="ef8a6452d187b985c52eec47882da68b" internal="1" name="_on_headMouseLeave">
+        <param name="ev"></param>
+        <doc></doc>
+      </method>
+      <method hash="40474dca3c0d971a191cf85c6fb3258f" internal="1" name="_on_headMouseMove">
+        <param name="ev"></param>
+        <doc></doc>
+      </method>
+    </static-methods>
+    <object-methods>
+      <method hash="6ac782161b509d6112f11eed204ce5c8" name="label" varargs="1">
+        <!--XXX: uses *arguments*, check for missing params-->
+        <param name="label"></param>
+        <doc></doc>
+      </method>
+      <method hash="026035b97815c5cca48cba10417c1558" name="setWidth">
+        <param name="w"></param>
+        <doc></doc>
+      </method>
+      <method hash="d76e4a2fdca7b5c392dd3c5f745112ad" internal="1" name="_getContextMenu">
+        <doc></doc>
+      </method>
+      <method hash="efc843cf94cc072e7138f7a415fed936" internal="1" name="_onClick">
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+  <object base="DlEventProxy" name="DlGridCol">
+    <constructor>
+      <param default="null" name="cssRule"></param>
+      <param default="null" name="iconClass"></param>
+      <param default="null" name="id"></param>
+      <param default="null" name="label"></param>
+      <param default="true" name="resizable"></param>
+      <param default="true" name="sortable"></param>
+      <param default="null" name="style"></param>
+      <param default="null" name="tooltip"></param>
+      <param default="true" name="visible"></param>
+      <param default="null" name="width"></param>
+    </constructor>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="480d9492be0de41de13b7bbecdccb8f5" name="getIconClass">
+        <doc></doc>
+      </method>
+      <method hash="a1a3e1fd223b9ed8a35f44ec34859941" name="getLabel">
+        <doc></doc>
+      </method>
+      <method hash="ea99b48970672a8b889a1e346884fe5b" name="getStyle">
+        <param name="key"></param>
+        <param name="def"></param>
+        <doc></doc>
+      </method>
+      <method hash="4abcb4bc6bb7a1177109c1c61a6e7ecb" name="getTooltip">
+        <doc></doc>
+      </method>
+      <method hash="ddfd477d629002e7b762021c164cf0c0" name="getWidth">
+        <doc></doc>
+      </method>
+      <method hash="124d07bc706f1e04b5e9c02dab4a8c17" name="id">
+        <doc></doc>
+      </method>
+      <method hash="e0406d86ca28a51143a99dad12442c99" name="isResizable">
+        <doc></doc>
+      </method>
+      <method hash="9e388496bb7f0370cd0fc407535e701d" name="isSortable">
+        <doc></doc>
+      </method>
+      <method hash="73c5e7678f9d4bcd3a2627b98a28af63" name="isVisible">
+        <doc></doc>
+      </method>
+      <method hash="54b6b6bd9f95f7e54f3fc11c971efe33" name="setVisible">
+        <param name="v"></param>
+        <doc></doc>
+      </method>
+      <method hash="99914b932bd37a50b983c5e7c90ae93b" name="sort">
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+  <object base="DlDrag" name="DlGridDragCol">
+    <constructor>
+      <param name="args"></param>
+    </constructor>
+    <events>
+      <event name="onChange">
+        <doc></doc>
+      </event>
+      <event name="onReset">
+        <doc></doc>
+      </event>
+    </events>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="22ec848f34cca53a94f98c69d52605a6" name="doDrop">
+        <param name="widget"></param>
+        <param name="ev"></param>
+        <doc></doc>
+      </method>
+      <method hash="dfa77b07babdb85d75eefdb8ec18c164" name="dropOK">
+        <param name="widget"></param>
+        <param name="ev"></param>
+        <param name="target"></param>
+        <param name="inside"></param>
+        <doc></doc>
+      </method>
+      <method hash="5ab9f7108ae9004e1def4883da138225" name="moving">
+        <param name="widget"></param>
+        <param name="ev"></param>
+        <doc></doc>
+      </method>
+      <method hash="941e28b811e08780876ddf5fa1ab4fb0" name="reset" varargs="1">
+        <!--XXX: uses *arguments*, check for missing params-->
+        <doc></doc>
+      </method>
+      <method hash="aa50165fb152915ff89cb4e46d85e9f6" name="startOK">
+        <param name="widget"></param>
+        <param name="ev"></param>
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+  <object base="DlEventProxy" name="DlSelectionModel">
+    <constructor>
+      <param default="true" name="multiple"></param>
+      <param default="null" name="sel"></param>
+    </constructor>
+    <events>
+      <event name="onBodyDblClick">
+        <doc></doc>
+      </event>
+    <event name="onBodyScroll"><doc></doc></event></events>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="e6b80746a2fa4d26e29e8cccb54b9d77" name="clear">
+        <doc></doc>
+      </method>
+      <method hash="20ecb9b3b84fef5b2ba236559a0672ba" name="filter">
+        <param name="h"></param>
+        <doc></doc>
+      </method>
+      <method hash="7ec09c9ef1a7f5dc07a90433870e94e9" name="get">
+        <doc></doc>
+      </method>
+      <method hash="9159febfcd4331f3cc2be9b5f9096d8c" name="getArray">
+        <doc></doc>
+      </method>
+      <method hash="945e991dcc760a595917165365868cf4" name="isSelected">
+        <param name="id"></param>
+        <doc></doc>
+      </method>
+      <method hash="619269cbe3e253d8344a35ab4600c2d4" name="reset">
+        <param name="ids"></param>
+        <doc></doc>
+      </method>
+      <method hash="d3cda2b326a2b154e0217af7e65c3660" name="select">
+        <param name="id"></param>
+        <doc></doc>
+      </method>
+      <method hash="a7450e5a382d726703ecfb3b7782783c" name="size">
+        <doc></doc>
+      </method>
+      <method hash="f1e83e30d1aa66192753a31aa75cae1f" name="toggle">
+        <param name="id"></param>
+        <doc></doc>
+      </method>
+      <method hash="1adf6a2a5a079e4ee26554181204c75e" name="unselect">
+        <param name="id"></param>
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+  <object base="DlContainer" name="DlDataGrid">
+    <constructor>
+      <param default="null" name="cols"></param>
+      <param default="null" name="data"></param>
+      <param default="true" name="focusable"></param>
+      <param default=" DlDataGridHeadLabel" name="headType"></param>
+      <param default="0" name="page"></param>
+      <param default="null" name="records"></param>
+      <param default="50" name="rpp"></param>
+      <param default="null" name="selection"></param>
+      <param default="true" name="virtualScrolling"></param>
+    </constructor>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="6fbfd24d46ab76835dc1b63cea04c52f" name="displayPage">
+        <param name="page"></param>
+        <doc></doc>
+      </method>
+      <method hash="e3048207a168cb6f401374b319dc1ed2" name="getBodyDiv">
+        <doc></doc>
+      </method>
+      <method hash="9c3ae47b9771ec47e51bf3e1e909104f" name="getBoundRecords">
+        <doc></doc>
+      </method>
+      <method hash="94dd9a071222c95f4218a753a692bc93" name="getCol">
+        <param name="col"></param>
+        <doc></doc>
+      </method>
+      <method hash="0e2eab87a72235cf466f32ec9f551f2f" name="getColWidth">
+        <param name="col"></param>
+        <doc></doc>
+      </method>
+      <method hash="eb0ddd70287919dcc89fdaa81fb13c28" name="getHeaderDiv">
+        <doc></doc>
+      </method>
+      <method hash="e2f999ca7767a72c0019baa1bbf226ad" name="getHeaderRow">
+        <doc></doc>
+      </method>
+      <method hash="97fb7d3a7df1d09553ccbb4b91eb027b" name="getHeaderTable">
+        <doc></doc>
+      </method>
+      <method hash="fc9e91e1ca100776b8416339456ef0f3" name="getNPages">
+        <doc></doc>
+      </method>
+      <method hash="49290e975339b9f16b0a2823a23f344b" name="getNRecords">
+        <doc></doc>
+      </method>
+      <method hash="f1a79a7fcf81f4c01f77fc37b94a46cb" name="getRec">
+        <param name="rec"></param>
+        <doc></doc>
+      </method>
+      <method hash="5ed4d8af529bc9c9e8b94f91e7504094" name="getRowElement">
+        <param name="rec_id"></param>
+        <doc></doc>
+      </method>
+      <method hash="3c8f7040d850c7867cc91bef552de4c7" name="getRowsContainer">
+        <doc></doc>
+      </method>
+      <method hash="51e61a16dd426b62cd360c51d369c5c8" name="initWidths">
+        <doc></doc>
+      </method>
+      <method hash="5b200e9abc391cba26cfbd433b37d7c5" name="rec_isSelected">
+        <param name="rec"></param>
+        <doc></doc>
+      </method>
+      <method hash="95bca88dd179a383725fa92504352889" name="refreshDisplay">
+        <doc></doc>
+      </method>
+      <method hash="746f8eb8eb98cd0dc5692ef1b46359f9" name="reorderColumn">
+        <param name="src"></param>
+        <param name="dest"></param>
+        <param name="after"></param>
+        <doc></doc>
+      </method>
+      <method hash="fffd57a1fa33745c3f2e8ea5312c5bd7" name="resetIDS">
+        <param name="ids"></param>
+        <doc></doc>
+      </method>
+      <method hash="70173f9b74bf36001b27ee1e66c76003" name="scrollEnd">
+        <doc></doc>
+      </method>
+      <method hash="3e8359a26c926f20a6bec0048958d68e" name="scrollHome">
+        <doc></doc>
+      </method>
+      <method hash="7f7ff24b3fd99d8d65356f11c4fcac42" name="scrollPage">
+        <param name="page"></param>
+        <doc></doc>
+      </method>
+      <method hash="0f5c4c5764c3a0f389be3d9fb84f0e6b" name="scrollToRecord">
+        <param name="rec_id"></param>
+        <param name="where"></param>
+        <doc></doc>
+      </method>
+      <method hash="6bec5345634a6abf7b02bd09f42b30c1" name="setColVisible">
+        <param name="col"></param>
+        <param name="v"></param>
+        <doc></doc>
+      </method>
+      <method hash="1dcfad9e650b699e5f6096701f69435d" name="setColWidth">
+        <param name="col"></param>
+        <param name="w"></param>
+        <doc></doc>
+      </method>
+      <method hash="a9030503986076f4915bf3fb9b8733ae" name="setSelectionModel">
+        <param name="sel"></param>
+        <doc></doc>
+      </method>
+      <method hash="36e3041b79d2ec2cb76267b9272ad18c" name="setSortColumn">
+        <param name="col"></param>
+        <param name="rev"></param>
+        <doc></doc>
+      </method>
+      <method hash="646b41d8fb7b49ca8f3e57187e654e16" internal="1" name="__doLayout" undoc="1">
+        <doc></doc>
+      </method>
+      <method hash="080dd3f6c6af51bcc0c941ce3e4cf28a" internal="1" name="_body_onDblClick">
+        <param name="ev"></param>
+        <doc></doc>
+      </method>
+      <method hash="519f69ddd44e4b08dc3b0791b0ee4cc6" internal="1" name="_body_onMouseDown">
+        <param name="ev"></param>
+        <doc></doc>
+      </method>
+      <method hash="99914b932bd37a50b983c5e7c90ae93b" internal="1" name="_body_onMouseLeave">
+        <param name="ev"></param>
+        <doc></doc>
+      </method>
+      <method hash="855e79294ba2cbf09f78b7eb002680e1" internal="1" name="_body_onMouseOut">
+        <param name="ev"></param>
+        <doc></doc>
+      </method>
+      <method hash="349d7beee9990b9ba63d72c4f5b25b6d" internal="1" name="_body_onMouseOver">
+        <param name="ev"></param>
+        <doc></doc>
+      </method>
+      <method hash="8a6af7f2067cef5e75857d8a00808a5f" internal="1" name="_computeColPos">
+        <doc></doc>
+      </method>
+      <method hash="6782a0f45cb65d44e2d38f1bd5d0669b" internal="1" name="_createElement">
+        <doc></doc>
+      </method>
+      <method hash="f35dc72ebba24ffd2e41333662b62a53" internal="1" name="_data_onChange">
+        <param name="rec /*"></param>
+        <param name="key"></param>
+        <param name="val"></param>
+        <param name="old */"></param>
+        <doc></doc>
+      </method>
+      <method hash="67d075fb75d65c78a355fa5e588bd411" internal="1" name="_data_onDelete">
+        <param name="id"></param>
+        <doc></doc>
+      </method>
+      <method hash="d6d7a004d12452e68c55763e4801da09" internal="1" name="_data_onInsert">
+        <param name="rec"></param>
+        <param name="where"></param>
+        <doc></doc>
+      </method>
+      <method hash="a242cbc97ac5fdb2e632f49cf7388147" internal="1" name="_display_ids">
+        <param name="ids"></param>
+        <param name="vscroll"></param>
+        <doc></doc>
+      </method>
+      <method hash="577f549481c03a8f10201fdfd398e802" internal="1" name="_fetchRowContentHTML">
+        <param name="buf"></param>
+        <param name="rec"></param>
+        <doc></doc>
+      </method>
+      <method hash="4c7ab2a1de99add980cfd91c67f50af5" internal="1" name="_fetchRowHTML">
+        <param name="buf"></param>
+        <param name="rec"></param>
+        <doc></doc>
+      </method>
+      <method hash="e0d37fae75342d6dcd6c59beb6e73764" internal="1" name="_getDragObject">
+        <doc></doc>
+      </method>
+      <method hash="4548dc9d63ce010c911621a5998bfc1b" internal="1" name="_getVSHeightDiv">
+        <doc></doc>
+      </method>
+      <method hash="67ab97f4247a0c00c79b75d3eb1306d8" internal="1" name="_getVSScrollDiv">
+        <doc></doc>
+      </method>
+      <method hash="190bc16790c693a379d14ecb14727e67" internal="1" name="_handle_focusKeys">
+        <param name="ev"></param>
+        <doc></doc>
+      </method>
+      <method hash="40f8e318efedeb71e55e92ac41eaddbc" internal="1" name="_initHeaders">
+        <doc></doc>
+      </method>
+      <method hash="15970c814ac355867956ed3df4ad14c7" internal="1" name="_makeHeadLabel">
+        <param name="args"></param>
+        <doc></doc>
+      </method>
+      <method hash="305ff62ace584423821aa5c53f9fe788" internal="1" name="_onHeadClick">
+        <param name="col"></param>
+        <param name="btn"></param>
+        <doc></doc>
+      </method>
+      <method hash="1dba28abc53a25e1d81adb76b1d230d7" internal="1" name="_resetVSHeight">
+        <doc></doc>
+      </method>
+      <method hash="09bcb6f22f5da668783ff43d836b9f70" internal="1" name="_sel_onChange">
+        <param name="id"></param>
+        <param name="selected"></param>
+        <doc></doc>
+      </method>
+      <method hash="fe3509fb67b37471fd90e530c81cbc8f" internal="1" name="_sel_onReset">
+        <param name="oldSel"></param>
+        <param name="newSel"></param>
+        <doc></doc>
+      </method>
+      <method hash="3a7fb9aeab80dcd9fa52f53bc5413091" internal="1" name="_setVScroll">
+        <param name="pos"></param>
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

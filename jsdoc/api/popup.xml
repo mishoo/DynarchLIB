@@ -1,0 +1,657 @@
+<api file="popup.js" show="1">
+  <object base="DlContainer" name="DlPopup">
+    <constructor>
+      <param default="true" name="autolink" type="boolean">
+        If you pass <b>false</b> here, as we do in our sample popup,
+        it will affect the way nested (linked) popups work.  See below
+        the discussion on linked popups.
+      </param>
+      <param default="true" name="focusable" type="boolean">
+        Popups might contain focusable widgets so it's a good idea to
+        declare them “focusable” by default.
+      </param>
+      <param default="0" name="level" type="Number">
+        The nesting level for this popup.
+      </param>
+      <param default="{¶      &#34;step2&#34; : 10,¶      &#34;step1&#34; : 5,¶      &#34;speed&#34; : 40¶}" name="scroll" type="Hash|boolean">
+        Really huge popups (that don't fit on screen) will by default
+        provide a vertical scrolling mechanism.  The defaults are 40
+        FPS (frames per second) and use 2 speeds: increment from 5 to
+        5 pixels on mouseover the arrows and use step 10 pixels when
+        the arrow is clicked.
+      </param>
+      <param default="1000" name="zIndex">
+        The starting zIndex for this popup (for level zero).  Note
+        that this will actually be computed at run-time; nested popups
+        will have higher zIndex-es in order to appear on top of parent
+        popups.
+      </param>
+
+      <doc>
+
+        A popup is a container widget that can appear anywhere on
+        screen.  It has an absolute position and can have no parent
+        (it's element will always be directly under document.body).
+        You will rarely need to work with this widget directly; most
+        of the times you should use higher level API-s exported by
+        〈DlButtonMenu〉, 〈DlHMenu〉, 〈DlVMenu〉, etc.
+
+        You can stuck any widgets you want in a popup.  You use it
+        like any ordinary 〈DlContainer|container〉, and when you want
+        it to popup you can call the 〈popup()〉 method.
+
+        A popup is dismissed by a “mousedown” event outside it.  But
+        see “linked popups” below for an exceptional case.
+
+        XXX Don't call constructor!
+
+        Note it's not recommended to call the constructor directly.
+        Use 〈get()〉 instead.  The "caching" section explains why.
+
+        *** Caching
+
+        Popups are cached.  For example you can have any number of
+        〈DlTooltip|tooltips〉 through your application but there will
+        be only one 〈DlTooltip〉 ever instantiated.  This makes sense
+        since there won't ever be two tooltips simultaneously
+        displayed.  The contents of the popup is updated to display
+        the current tooltip right before it's popped up.
+
+        In order for the caching to work you should use
+        〈DlPopup.get()|DlPopup.get(level)〉 instead of calling the
+        constructor directly.  The level specifies the popup “nesting”
+        (see linked popups below).  If a popup for the specified level
+        doesn't exist, it will be created and returned.  If it already
+        exists, it's simply returned.
+
+        These widgets are never destroyed through during the lifetime
+        of your application and are managed automatically—you don't
+        need to care about them.  They are disposed only when the
+        application unloads (along with all widgets, actually) in
+        order to prevent memory leaks.
+
+        *** Subclassing
+
+        It's important to note that even though no two popups of the
+        same level can exist, this is actually possible if they are of
+        different types.  For example, you should be able to attach a
+        tooltip to a menu item.  〈DlTooltip〉 is a level zero popup and
+        so can be 〈DlPopupMenu〉, but it should be allowed for both of
+        them to exist and be visible in the same time.
+
+        In other words, popups are cached by <em>both</em> type and
+        level.
+
+        For this reason, in this samples we're using our own popup
+        class, which inherits DlPopup.  The following code runs
+        automatically in the documentation app:
+
+        <js autorun="true">
+          // declare our popup class
+          OurOwnPopup.inherits(DlPopup);
+          function OurOwnPopup(args) {
+              // don't use autolinking, see "linked popups"
+              args.autolink = false;
+              DlPopup.call(this, args); // call base constructor
+              // popups have no visual style, so let's set some here
+              this.setStyle({
+                  border     : "1px solid red",
+                  background : "#fed",
+                  padding    : "3px"
+              });
+          };
+          // and export it
+          window.OurOwnPopup = OurOwnPopup;
+        </js>
+
+        Now let's see how to display our first popup:
+
+        <js canrun="true">
+          // this box will be displayed in the popup
+          var popup_content = new DlVbox({});
+          new DlCheckbox({ parent: popup_content, label: "Foo option" });
+          new DlCheckbox({ parent: popup_content, label: "Bar option" });
+          new DlCheckbox({ parent: popup_content, label: "Baz option" });
+
+          var btn = new DlButton({ parent: getDocCanvas(), label: "Show popup" });
+          btn.addEventListener("onClick", function() {
+              var p = OurOwnPopup.get();
+              p.popup({
+                  timeout  : 0,
+                  content  : popup_content,
+                  align    : "mouse",
+                  anchor   : this.getElement(),
+                  widget   : this
+              });
+          });
+        </js>
+
+        When you click the button, it displays a popup at mouse
+        position that contains the 3 〈DlCheckbox|checkboxes〉 aligned
+        in a 〈DlVbox|vertical box〉.
+
+        Let's <b>note a small weirdness</b>.  We didn't actually
+        define a static get() function on OurOwnPopup, but yet it
+        exists and Does What We Want :-).  It is added automatically
+        to all widgets that inherit from DlPopup through the magic of
+        the “inherits()” method (see discussion about
+        __patchSubclassPrototype in 〈Function::inherits()〉).
+
+        *** Linked popups
+
+        Popups have a particular feature that helps creating submenus.
+        You can have a popup and when you click something in that
+        popup you want to display a second popup.  Now, if you click
+        inside the second popup, both of them should remain on screen.
+        The first popup will notice the mousedown event outside it,
+        but will realize that this event occurred in a “child” popup
+        so it won't close.
+
+        By default, this works the other way around too: if you click
+        on a parent popup, the child popups will still stay visible.
+        It's useful for menus.  However you can change this behavior
+        by passing <b>autolink = false</b> at construction time — in
+        this case, a click on a parent popup will dismiss child
+        popups.
+
+        Let's revisit the sample above to include support for linked
+        popups:
+
+        <js canrun="true"><![CDATA[
+          var btn = new DlButton({ parent: getDocCanvas(), label: "Show popup" });
+          var popup_content = new DlVbox({});
+          new DlCheckbox({ parent: popup_content, label: "Foo option" });
+          new DlCheckbox({ parent: popup_content, label: "Bar option" });
+          new DlCheckbox({ parent: popup_content, label: "Baz option" });
+          popup_content.addSeparator();
+
+          // this button triggers a second popup
+          var b2 = new DlButton({ parent: popup_content, label: "New popup" });
+
+          btn.addEventListener("onClick", function() {
+              var p = OurOwnPopup.get();
+              p.popup({
+                  timeout : 0,
+                  content : popup_content,
+                  align   : "mouse",
+                  anchor  : this.getElement(),
+                  widget  : this
+              });
+          });
+
+          b2.addEventListener("onClick", function() {
+              var p = OurOwnPopup.get();
+              p.popup({
+                  timeout  : 0,
+                  content  : "<div style='padding: 5px'>HTML <b>popup</b>!</div>",
+                  align    : "mouse",
+                  anchor   : this.getElement(),
+                  widget   : this
+              });
+          });
+        ]]></js>
+
+        So as you can see, what's actually needed is to simply call
+        get() again.  It will notice that we already have a level 0
+        popup and it will create a level 1 popup and attach it to the
+        first one (0).
+
+        〈get()〉 normally receives an argument (the popup level) but if
+        you call it with no arguments, it will check the currently
+        visible popups and return one for the maximum level + 1.
+
+        *** Alignment options
+
+        So far we displayed popups at mouse position.  That's fine for
+        many cases but for menus, for example, we want some better
+        control.
+
+        The 〈popup()〉 method accepts an <b>align</b> argument for
+        that.  If you pass "mouse" as we did so far, the popup is
+        aligned at mouse position.  Here's an example where we align
+        the popups to the widgets that triggered them.  When you test
+        this sample, move the dialog in positions that would cause
+        part of the popup to be offscreen, and note how it falls back
+        to another position.
+
+        <js canrun="true"><![CDATA[
+          var btn = new DlButton({ parent: getDocCanvas(), label: "Show popup" });
+          var popup_content = new DlVbox({});
+          new DlCheckbox({ parent: popup_content, label: "Foo option" });
+          new DlCheckbox({ parent: popup_content, label: "Bar option" });
+          new DlCheckbox({ parent: popup_content, label: "Baz option" });
+          popup_content.addSeparator();
+
+          // this button triggers a second popup
+          var b2 = new DlButton({ parent: popup_content, label: "New popup" });
+
+          btn.addEventListener("onClick", function() {
+              var p = OurOwnPopup.get();
+              p.popup({
+                  timeout : 0,
+                  content : popup_content,
+                  align   : {
+                      prefer: "Tc", // prefer ABOVE the widget (T) and CENTER (c)
+                      fallX1: "_r",
+                      fallX2: "_l",
+                      fallY1: "B_",
+                      fallY2: "T_"
+                  },
+                  anchor  : this.getElement(),
+                  widget  : this
+              });
+          });
+
+          b2.addEventListener("onClick", function() {
+              var p = OurOwnPopup.get();
+              p.popup({
+                  timeout  : 0,
+                  content  : "<div style='padding: 5px'>HTML <b>popup</b>!</div>",
+                  align    : {
+                      prefer : "cR", // prefer CENTERED (c) vertically and at the RIGHT (R)
+                      fallX1 : "_R",
+                      fallX2 : "_L",
+                      fallY1 : "b_",
+                      fallY2 : "t_"
+                  },
+                  anchor   : this.getElement(),
+                  widget   : this
+              });
+          });
+        ]]></js>
+
+        We will explain the meaning of the arguments in the 〈popup()〉
+        method.
+
+        *** Timeouts
+
+        Popups can also be displayed with a timeout.  This is useful
+        for tooltips and menus, but we could figure out other uses as
+        well.
+
+        Here's a sample that displays a tooltip when the button is
+        hovered for more than two seconds.
+
+        <js canrun="true"><![CDATA[
+          var btn = new DlButton({ label: "Buy our product!", parent: getDocCanvas() });
+          btn.addEventListener("onMouseEnter", function() {
+              this._popup = OurOwnPopup.get();
+              this._popup.popup({
+                  timeout : 2000, // two thousand milliseconds
+                  align   : "mouse",
+                  anchor  : this.getElement(),
+                  widget  : this,
+                  content : ( "<div style='padding: 5px'>Still not convinced?<br />" +
+                              "<b>Blah Blah Blah...  <a href='#'>convince me</a></b></div>" )
+              });
+          });
+          btn.addEventListener("onMouseLeave", function() {
+              if (this._popup) {
+                  this._popup.cancel();
+                  this._popup = null;
+              }
+          });
+        ]]></js>
+
+        OK, so much for talking, following is the API reference.
+        There are some functions that we didn't document—those are
+        used internally and we don't recommend you to mess with them.
+        You <em>shouldn't</em> need to call them directly, anyway.
+      </doc>
+    <param default="null" name="align"></param><param default="true" name="shadows"></param></constructor>
+    <events>
+      <event name="onPopup">
+        <param name="args" type="Hash">Arguments that were passed to 〈popup()〉</param>
+        <doc>
+          Triggered when the popup is actually displayed.
+
+          Note that the event is used internally, but you shouldn't
+          rely on it; instead, pass your onPopup and/or onHide
+          handlers to 〈popup()〉.  This is because you never know what
+          exact popup widget is returned by get() and since they can
+          be reused in cases you didn't foresee, it's not wise to
+          register any event handlers directly on the widget.
+        </doc>
+      </event>
+      <event name="onHide">
+        <doc>
+          Triggered when the popup is hidden.
+
+          Note that the event is used internally, but you shouldn't
+          rely on it; instead, pass your onPopup and/or onHide
+          handlers to 〈popup()〉.  This is because you never know what
+          exact popup widget is returned by get() and since they can
+          be reused in cases you didn't foresee, it's not wise to
+          register any event handlers directly on the widget.
+        </doc>
+      </event>
+    </events>
+    <static-methods>
+      <method hash="297874286d3e40453c41377d05e307dc" name="clearAll">
+        <param default="0" name="lev" optional="1" type="Number">Nesting level</param>
+        <doc>
+          Hides all popups of the specified level.  Note that this
+          apply for higher levels too, that is, if you pass zero then
+          <em>all</em> popups will go away (since nested popups depend
+          on their parent popup to be visible).
+        </doc>
+      </method>
+      <method hash="577bac3d3498ce87b0f09c00c86b511d" name="clearAllPopups">
+        <param name="except" optional="1" type="Hash">Popup ID-s</param>
+        <doc>
+          Hides all popups (and their children) except those specified
+          as keys in the <b>except</b> hash.
+        </doc>
+      </method>
+      <method hash="3ab8694e05e334726060cee88d3515fa" name="get">
+        <param default="null" name="level" optional="1" type="Number">Popup level that you're interested in</param>
+        <param default="false" name="nocreate" optional="1" type="boolean">Don't create?</param>
+        <doc>
+          Checks that a popup of the given level exists.  If
+          <b>level</b> is not given or null, it will be assumed to be
+          the number of currently visible popups (therefore normally
+          it will create a new popup).
+
+          If such a popup exists, it is returned.  Otherwise, if
+          <b>nocreate</b> is false (default) it will be created and
+          returned.  If <b>nocreate</b> is true and the popup didn't
+          already exist, then this function will return <b>null</b>.
+
+          This function is copied as a static function to all derived
+          classes.
+        </doc>
+      </method>
+    </static-methods>
+    <object-methods>
+      <method hash="18878bf71fb1b6654f4d97061bbbd917" name="attachToPopup">
+        <param name="popup" type="DlPopup">Parent popup</param>
+        <doc>
+          Attach the current popup to the given one.  This is used
+          internally to setup nesting.
+        </doc>
+      </method>
+      <method hash="a005b34fe848769724b7ff5b2e48ca24" name="detachPopup">
+        <doc>
+          Detach the current popup from its parent, if there is any.
+        </doc>
+      </method>
+      <method hash="f87d09d2176d3a59e99600c6f6ed27d4" name="cancel">
+        <doc>
+          If 〈popup()〉 was called with a timeout that didn't yet
+          occur, this function will cancel it.  Otherwise it does
+          nothing.
+        </doc>
+      </method>
+      <method hash="7fdc08e6296bd262becb4065f9437831" name="checkXPos">
+        <param name="p"></param>
+        <param name="rect"></param>
+        <doc>
+          Used internally.
+        </doc>
+      </method>
+      <method hash="6853591e34704c3f4fe4c72bb3a748c4" name="checkYPos">
+        <param name="p"></param>
+        <param name="rect"></param>
+        <doc>
+          Used internally.
+        </doc>
+      </method>
+      <method hash="687a576ff1a4af24e3c355dc138b1ece" name="getToplevelPopup">
+        <doc>
+          Returns the toplevel popup that this is attached to.
+        </doc>
+      </method>
+      <method hash="c4eeda4d2e858c76cf8d474b72032ebb" name="hide">
+        <param default="null" name="timeout" optional="1" type="Number">milliseconds</param>
+        <doc>
+          Hide this popup.  Optionally wait the specified number of
+          milliseconds (<b>timeout</b>).  During this time you can
+          〈cancel()〉 the operation.  If timeout is null (default) then
+          it's hidden immediately.
+        </doc>
+      </method>
+      <method hash="e7b753375e074272a5e1c579d3c25228" name="popup" params="args">
+        <param forced="1" name="onBeforePopup" optional="1" type="Function">
+          Function that gets called before the content of the widget
+          is updated.  Receives all these arguments as a hash.
+        </param>
+        <param forced="1" name="onPopup" optional="1" type="Function">
+          Handler that gets called after the content of the widget was
+          updated.  Receives all these arguments as a hash.
+        </param>
+        <param forced="1" name="onHide" optional="1" type="Function">
+          Handler that gets called when the popup is hidden.  Receives
+          all these arguments as a hash.
+        </param>
+        <param forced="1" name="content" type="String|Array|HTMLElement|DlWidget">
+          Content of the widget.  See 〈DlWidget::setContent()〉 for a
+          description of supported types.
+        </param>
+        <param forced="1" name="anchor" type="HTMLElement">
+          A DOM element to anchor this popup to.  This is used if
+          align is not "mouse", but currently you <em>have</em> to
+          pass it in any case.
+        </param>
+        <param forced="1" name="align" type="String|Hash">
+          Alignment options.  For Strings, currently only "mouse" is
+          supported, which means the popup will show up at the cursor
+          position.
+
+          If it's a Hash it must define the following keys:
+
+          <ul>
+            <li>prefer — the preferred align option</li>
+            <li>fallX1 — fallback for left side (x &lt; 0)</li>
+            <li>fallX2 — fallback for right side (x &gt; window_width)</li>
+            <li>fallY1 — fallback for top side (y &lt; 0)</li>
+            <li>fallY2 — fallback for bottom side (y &gt; window_height)</li>
+          </ul>
+
+          The values of these keys are Strings with 2 characters.  The
+          first one specifies the vertical alignment and the second
+          one specifies the horizontal alignment.  See some alignment
+          pictures below.
+        </param>
+        <param forced="1" name="mousePos" optional="1" type="Hash">
+          When align is "mouse" you can optionally override the mouse
+          position using this argument — so the widget can be
+          displayed exactly where you want.
+        </param>
+        <param forced="1" name="timeout" optional="1" type="Number">
+          If you want the popup to be displayed after a certain time,
+          pass the number of milliseconds here.  Otherwise it pops up
+          immediately.
+        </param>
+        <doc>
+          Note that this method receives parameters in “constructor
+          style”, that is, it's actually a single parameter which is a
+          hash table containing options described above.
+
+          We exemplified this method before so we will only explain
+          the <b>align</b> option here, since it's the most complex
+          one.  The following pictures list all possible combinations
+          for vertical/horizontal alignment of the popup against the
+          anchor.  The first character signifies vertical alignment,
+          and the second one is the horizontal alignment.
+
+          <table cellspacing="10">
+
+            <tr>
+              <td class="big monospace">"BR"</td>
+              <td><img src="jsdoc/img/popup/BBRR.png"></img></td>
+              <td>the popup is completely below and completely to the right of the anchor</td>
+            </tr>
+
+            <tr>
+              <td class="big monospace">"Br"</td>
+              <td><img src="jsdoc/img/popup/BBr.png"></img></td>
+              <td>the popup is completely below and left aligned with the anchor</td>
+            </tr>
+
+            <tr>
+              <td class="big monospace">"Bc"</td>
+              <td><img src="jsdoc/img/popup/BBc.png"></img></td>
+              <td>the popup is completely below and centered horizontally with the anchor</td>
+            </tr>
+
+            <tr>
+              <td class="big monospace">"Bl"</td>
+              <td><img src="jsdoc/img/popup/BBl.png"></img></td>
+              <td>the popup is completely below and right aligned with the anchor</td>
+            </tr>
+
+            <tr>
+              <td class="big monospace">"BL"</td>
+              <td><img src="jsdoc/img/popup/BBLL.png"></img></td>
+              <td>the popup is completely below and completely to the left of the anchor</td>
+            </tr>
+
+            <tr>
+              <td class="big monospace">"bL"</td>
+              <td><img src="jsdoc/img/popup/bLL.png"></img></td>
+              <td>the popup is below (top-aligned) and completely to the left of the anchor</td>
+            </tr>
+
+            <tr>
+              <td class="big monospace">"cL"</td>
+              <td><img src="jsdoc/img/popup/cLL.png"></img></td>
+              <td>the popup is centered vertically and completely to the left of the anchor</td>
+            </tr>
+
+            <tr>
+              <td class="big monospace">"tL"</td>
+              <td><img src="jsdoc/img/popup/tLL.png"></img></td>
+              <td>the popup is above (bottom aligned) and completely to the left of the anchor</td>
+            </tr>
+
+            <tr>
+              <td class="big monospace">"TL"</td>
+              <td><img src="jsdoc/img/popup/TTLL.png"></img></td>
+              <td>the popup is completely above and completely to the left of the anchor</td>
+            </tr>
+
+            <tr>
+              <td class="big monospace">"Tl"</td>
+              <td><img src="jsdoc/img/popup/TTl.png"></img></td>
+              <td>the popup is completely above and to the left (right-aligned) of the anchor</td>
+            </tr>
+
+            <tr>
+              <td class="big monospace">"Tc"</td>
+              <td><img src="jsdoc/img/popup/TTc.png"></img></td>
+              <td>the popup is completely above and centered horizontally with the anchor</td>
+            </tr>
+
+            <tr>
+              <td class="big monospace">"Tr"</td>
+              <td><img src="jsdoc/img/popup/TTr.png"></img></td>
+              <td>the popup is completely above and to the right (left-aligned) of the anchor</td>
+            </tr>
+
+            <tr>
+              <td class="big monospace">"TR"</td>
+              <td><img src="jsdoc/img/popup/TTRR.png"></img></td>
+              <td>the popup is completely above and completely to the right of the anchor</td>
+            </tr>
+
+            <tr>
+              <td class="big monospace">"tR"</td>
+              <td><img src="jsdoc/img/popup/tRR.png"></img></td>
+              <td>the popup is above (bottom-aligned) and completely to the right of the anchor</td>
+            </tr>
+
+            <tr>
+              <td class="big monospace">"cR"</td>
+              <td><img src="jsdoc/img/popup/cRR.png"></img></td>
+              <td>the popup is vertically centered and completely to the right of the anchor</td>
+            </tr>
+
+            <tr>
+              <td class="big monospace">"bR"</td>
+              <td><img src="jsdoc/img/popup/bRR.png"></img></td>
+              <td>the popup is below (top-aligned) and completely to the right of the anchor</td>
+            </tr>
+
+            <tr>
+              <td class="big monospace">"cc"</td>
+              <td><img src="jsdoc/img/popup/cc.png"></img></td>
+              <td>the popup is vertically and horizontally centered to the anchor</td>
+            </tr>
+
+          </table>
+
+          *** The fallback options
+
+          To ensure proper functionality you must pass fallX1, fallX2,
+          fallY1 and fallY2 to align options as well.  They have the
+          same syntax as the <b>prefer</b> option and specify a
+          fallback mechanism.  X1 means when the popup goes off-screen
+          at the left, X2 for the right.  Y1 means when the popup goes
+          off-screen at the top, and Y2 for the bottom.  A "_"
+          character specifies that the respective position should not
+          be modified (i.e. use the option in "prefer" when possible).
+        </doc>
+      <param name="args"></param></method>
+      <method hash="b8be6722a0070df3a4921257bea34e5d" name="showAt">
+        <param name="anchor"></param>
+        <param name="align"></param>
+        <param name="mousePos"></param>
+        <param name="shift"></param>
+        <param name="fluid"></param>
+        <doc></doc>
+      </method>
+      <method hash="099f92d64561b6e82935b7a0acf6ff94" name="getContentElement">
+        <doc></doc>
+      </method>
+      <method hash="7e0a609db50070cb06b4f6b58b384fc2" internal="1" name="__patchSubclassPrototype" undoc="1">
+        <doc></doc>
+      </method>
+      <method hash="a7e7610b587cd05649ecc33b4a2e53f4" internal="1" name="_bestPosition">
+        <param name="align"></param>
+        <param name="p"></param>
+        <param name="sa"></param>
+        <doc></doc>
+      </method>
+      <method hash="62619788c79e820a940f64e0e7692e2a" internal="1" name="_createElement">
+        <doc></doc>
+      </method>
+      <method hash="fc1a4520bc8ae08d601db922a060a8bb" name="initDOM">
+        <doc></doc>
+      </method>
+      <method hash="0a2658daf2b7e66eb2e1fe48cf55d170" internal="1" name="_doAlign">
+        <param name="align"></param>
+        <param name="p"></param>
+        <param name="sa"></param>
+        <doc></doc>
+      </method>
+      <method hash="ed2d449999e257ac341635b29c56050b" internal="1" name="_handle_focusKeys">
+        <param name="ev"></param>
+        <doc></doc>
+      </method>
+      <method hash="6abeae9af6081d4ae0cd586293c9e3aa" internal="1" name="_scroll_el">
+        <param name="p"></param>
+        <doc></doc>
+      </method>
+      <method hash="cf7bedfe8076a51c21bdda56b8efc2a8" internal="1" name="_scroll_setup">
+        <doc></doc>
+      </method>
+      <method hash="116ae1109c849e42b59aeccc2f5bac4e" internal="1" name="_scroll_visibile">
+        <param name="vis"></param>
+        <doc></doc>
+      </method>
+      <method hash="9af167f836a924bc5cc8cf4d001af129" internal="1" name="_scrollDoubleSpeed">
+        <param name="dbl"></param>
+        <doc></doc>
+      </method>
+      <method hash="6c823d70648e7921ea038916d2c7c0a0" internal="1" name="_scrollSetArrowState">
+        <doc></doc>
+      </method>
+      <method hash="ff898ebcdc42d7fca071e5e91ac63a64" internal="1" name="_scrollStopHandler">
+        <doc></doc>
+      </method>
+      <method hash="535f6900717c2d094b04357b016e2952" internal="1" name="_setListeners">
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

@@ -1,0 +1,2363 @@
+<sample>
+
+  <title>DlWidget</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlWidget</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlEventProxy〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈widget.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈eventproxy.js, event.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">tagName</td>
+         <td class="doc"><span default="&#34;div&#34;" name="tagName">Tag name for the widget's DOM element</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">"div"</td>
+       </tr>
+       <tr>
+         <td class="name">className</td>
+         <td class="doc"><span default="&#34;&#34;" name="className">Class name for the widget's DOM element</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">""</td>
+       </tr>
+       <tr>
+         <td class="name">data</td>
+         <td class="doc"><span default="null" name="data">User data</span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">contextMenu</td>
+         <td class="doc"><span default="null" name="contextMenu">Context menu for this widget</span>
+</td>
+         <td class="type">[<b>〈DlWidget〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">appendArgs</td>
+         <td class="doc"><span default=" window.undefined" name="appendArgs">Special arguments for parent's <a href='api://DlContainer.xml:type=object_method:func=appendWidget'>appendWidget()</a></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default"> window.undefined</td>
+       </tr>
+       <tr>
+         <td class="name">disabled</td>
+         <td class="doc"><span default="false" name="disabled">Initially disabled?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">false</td>
+       </tr>
+       <tr>
+         <td class="name">drag</td>
+         <td class="doc"><span default="null" name="drag">For D'n'D support</span>
+</td>
+         <td class="type">[<b>〈DlDrag〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">element</td>
+         <td class="doc"><span default="null" name="element">Widget's element (will be created if this is null)</span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">fillParent</td>
+         <td class="doc"><span default="null" name="fillParent">Should this widget fill parent's space</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">focusable</td>
+         <td class="doc"><span default="false" name="focusable">Is this widget focusable?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">false</td>
+       </tr>
+       <tr>
+         <td class="name">parent</td>
+         <td class="doc"><span default="null" name="parent">Parent widget</span>
+</td>
+         <td class="type">[<b>〈DlContainer〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">tooltip</td>
+         <td class="doc"><span default="null" name="tooltip">Tooltip for this widget</span>
+</td>
+         <td class="type">[<b>〈String,Function〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">tabIndex</td>
+         <td class="doc"><span default="0" name="tabIndex">TAB index (implies focusable = <b>true</b>)</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">0</td>
+       </tr>
+       <tr>
+         <td class="name">accessKey</td>
+         <td class="doc"><span default="null" name="accessKey">Widget's access key</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">tooltipTimeout</td>
+         <td class="doc"><span default="650" name="tooltipTimeout">Tooltips will be displayed after so many milliseconds</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">650</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+        DlWidget is the base class for all DynarchLIB widgets.  It
+        defines the basic infrastructure, such as standard events,
+        tooltips, context menus and a set of core methods that are
+        generally useful in all widgets.
+<p class='heading'> DOM Elements</p>
+<p/>
+        To begin with, each widget has at least one associated DOM
+        element (let's call it the toplevel element).  It is created
+        in the <a href='api://DlWidget.xml:type=object_method:func=_createElement'>_createElement()</a> method (which is often overridden in
+        derived classes).  You can retrieve this element with
+        <a href='api://DlWidget.xml:type=object_method:func=getElement'>getElement()</a>; in turn, the DOM element keeps a reference to
+        the object it belongs to.  Therefore, having an element, you
+        can always retrieve the object that it's attached to by
+        calling <a href='api://DlWidget.xml:type=static_method:func=getFromElement'>getFromElement()</a>:
+<p/>
+        <div sample="DlWidget8"></div>
+<p/>
+        Most widgets will have many more elements.  An important one
+        is the <em>content element</em>, accessible through
+        <a href='api://DlWidget.xml:type=object_method:func=getContentElement'>getContentElement()</a>.  For a plain DlWidget,
+        getContentElement() is simply an alias to getElement().  There
+        is an important distinction between them.  When you call
+        <a href='api://DlWidget.xml:type=object_method:func=setContent'>setContent()</a> on a widget, it will insert the content that
+        you specify inside the <em>content element</em>, therefore
+        keeping the rest of the DOM intact.  For example, a <a href='api://DlDialog.xml'>DlDialog</a>
+        widget has a complicated DOM, something like this:
+<p/>
+        <div sample="DlWidget9"></div>
+<p/>
+        However, by making <a href='api://DlDialog.xml:type=object_method:func=getContentElement'>DlDialog::getContentElement()</a> return the
+        correct content element (where we put the comment above), we
+        can simply call dialog.setContent(HTML) to include something
+        in the dialog, without destroying other DOM.  The content
+        element is also considered instead of the toplevel one when
+        doing inner size operations, such as in <a href='api://DlWidget.xml:type=object_method:func=getInnerSize'>getInnerSize()</a> or
+        <a href='api://DlWidget.xml:type=object_method:func=setInnerSize'>setInnerSize()</a> functions.
+<p class='heading'> CSS Class Inheritance</p>
+<p/>
+        The toplevel element of a widget will automatically gain CSS
+        class names that match the widget's inheritance tree.  For
+        example, a <a href='api://DlButton.xml'>DlButton</a> widget inherits from <a href='api://DlAbstractButton.xml'>DlAbstractButton</a>
+        which in turns inherits from <a href='api://DlWidget.xml'>DlWidget</a>.  A button's class
+        name will be, by default: "DlWidget DlAbstractButton
+        DlButton", therefore allowing you to easily write CSS that is
+        “inherited” in the same manner as the widget itself.
+<p/>
+        For custom CSS, you can specify an <em>additional</em> class
+        name by using the <b>className</b> constructor argument.
+<p class='heading'> Constructor arguments</p>
+<p/>
+        All the DynarchLIB widgets receive exactly one argument in
+        constructor.  This is an hash table that maps property names
+        to property values.  Derived objects can modify the default
+        values of these properties, or add new ones, at will.  The
+        syntax of this object looks like this:
+<p/>
+        <div sample="DlWidget10"></div>
+<p/>
+        Complex widgets will support a lot of properties that allow
+        you to customize their behavior.  Sometimes, though, you might
+        want to use all defaults.  For this you need to pass an empty
+        object.  An artifact of OOP-style programming in JavaScript is
+        that you need to actually instantiate an object of base class
+        type, in order to make inheritance work.  When we do this, we
+        pass no arguments.  Therefore, you can not properly
+        instantiate, say, a <a href='api://DlContainer.xml'>DlContainer</a> widget by calling:
+<p/>
+        <div sample="DlWidget11"></div>
+<p/>
+        You <em>do</em> need to specify an empty hash as the argument,
+        as in:
+<p/>
+        <div sample="DlWidget12"></div>
+<p/>
+        That's an empty hash table.  You rarely want to construct an
+        widget having all default properties—usually you'll want to at
+        least specify a parent—so this shouldn't be a major problem;
+        but you want to keep it in mind.
+<p/>
+        Note that constructor arguments are inherited.  Therefore, if
+        you extend <b>DlWidget</b> and create your own custom widget
+        class, you don't need to define i.e. the <b>parent</b>
+        argument—it's handled when you call the base class'
+        constructor.
+      </span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="events">
+      <h2>Events</h2>
+   <div class="method">
+        <h3 id="on_DOM_Blur:object_event">on_DOM_Blur ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="on_DOM_Focus:object_event">on_DOM_Focus ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onBlur:object_event">onBlur ()
+        </h3>
+     <div class="doc"><span>
+          Called when the widget lost focus.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onClick:object_event">onClick (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev">Event object</span>
+</td>
+         <td class="type">[<b>〈DlEvent〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Called when the widget has been clicked, that is, when the
+          mouse button has been pressed inside the widget and then
+          released inside the widget.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onContextMenu:object_event">onContextMenu (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev">Event object</span>
+</td>
+         <td class="type">[<b>〈DlEvent〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Called when right button (or more generally, whatever is the
+          context menu button) is pressed on the widget.
+<p/>
+          Note that DlWidget actually hooks on this event in order to
+          display the context menu passed in constructor, if there is
+          any.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onDblClick:object_event">onDblClick (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev">Event object</span>
+</td>
+         <td class="type">[<b>〈DlEvent〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Called when the widget has been double clicked.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onDisabled:object_event">onDisabled (<span class='param'>isDisabled</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">isDisabled</td>
+         <td class="doc"><span name="isDisabled">true if the widget is disabled, false otherwise.</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Called when an widget is disabled <em>or enabled</em>.  The
+          argument that handlers receive is true if the widget is
+          disabled, and false if it's enabled.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onDisplay:object_event">onDisplay (<span class='param'>isVisible</span>, <span class='param'>cssValue</span>, <span class='param'>cssProperty</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">isVisible</td>
+         <td class="doc"><span name="isVisible">True if the widget is visible</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">cssValue</td>
+         <td class="doc"><span name="cssValue">The CSS value</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">cssProperty</td>
+         <td class="doc"><span name="cssProperty">The CSS property</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          This event is triggered when a widget changes display state
+          via <a href='api://DlWidget.xml:type=object_method:func=display'>display()</a> or <a href='api://DlWidget.xml:type=object_method:func=visibility'>visibility()</a>.  The first argument tells
+          you if the widget is visible (false if it's NOT visible);
+          the cssValue will be i.e. "none" when cssProperty is
+          "display", and "hidden" when cssProperty is "visibility".
+<p/>
+          When the widget is visible (isVisible == <b>true</b>) then
+          cssValue is always the empty string.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onFocus:object_event">onFocus ()
+        </h3>
+     <div class="doc"><span>
+          Called when the widget becomes focused.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onKeyDown:object_event">onKeyDown (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev">Event object</span>
+</td>
+         <td class="type">[<b>〈DlEvent〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Only the currently focused widget will receive this event.
+          Note that if the widget is not focusable, it will never
+          receive this event unless it captures it globally.  We'll
+          talk about captures in the <a href='api://DlEvent.xml'>DlEvent</a> documentation.
+<p/>
+          Event gets triggered when a key has been pressed.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onKeyPress:object_event">onKeyPress (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev">Event object</span>
+</td>
+         <td class="type">[<b>〈DlEvent〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Called when a key has been pressed, then depressed.  This is
+          the standard "keypress" DOM event.  Various browser disagree
+          about when should it be triggered; for instance, IE doesn't
+          trigger this event for arrow keys, so for IE only you want
+          to hook on "onKeyDown" rather than "onKeyPress".
+<p/>
+          We will likely “fix” browser disagreements in the future.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onKeyUp:object_event">onKeyUp (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev">Event object</span>
+</td>
+         <td class="type">[<b>〈DlEvent〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Called when a key has been depressed.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onMouseDown:object_event">onMouseDown (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev">Event object</span>
+</td>
+         <td class="type">[<b>〈DlEvent〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Called when the mouse button is pressed inside the widget.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onMouseEnter:object_event">onMouseEnter (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev">Event object</span>
+</td>
+         <td class="type">[<b>〈DlEvent〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Called by the framework when mouse cursor enters the widget.
+          This is equivalent to the non-standard "onmouseenter" event
+          supported by Internet Explorer, only in DynarchLIB it works
+          for all browsers.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onMouseLeave:object_event">onMouseLeave (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev">Event object</span>
+</td>
+         <td class="type">[<b>〈DlEvent〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Called when the mouse cursor leaves the widget.  The reverse
+          of onMouseEnter.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onMouseMove:object_event">onMouseMove (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev">Event object</span>
+</td>
+         <td class="type">[<b>〈DlEvent〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Called when the mouse moves inside the widget.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onMouseOut:object_event">onMouseOut (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev">Event object</span>
+</td>
+         <td class="type">[<b>〈DlEvent〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Called when the mouse leaves various sub-elements of the
+          widget.  The equivalent of the standard "mouseout" DOM
+          event.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onMouseOver:object_event">onMouseOver (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev">Event object</span>
+</td>
+         <td class="type">[<b>〈DlEvent〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Called when the mouse cursor enters various sub-elements of
+          the widget.  It's the equivalent of the standard "mouseover"
+          DOM event.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onMouseUp:object_event">onMouseUp (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev">Event object</span>
+</td>
+         <td class="type">[<b>〈DlEvent〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Called when the mouse button is depressed inside the widget.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onMouseWheel:object_event">onMouseWheel (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev">Event object</span>
+</td>
+         <td class="type">[<b>〈DlEvent〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Triggered when upon a mouse wheel event on the current
+          widget.  You can inspect the mouse wheel delta using
+          “ev.wheelDelta”.  It will be a positive integer (usually +1)
+          when the wheel is scrolled up, and negative (i.e. -1) when
+          the wheel is scrolled down.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onResize:object_event">onResize ()
+        </h3>
+     <div class="doc"><span>
+          Called when the widget is resized.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onTooltipHide:object_event">onTooltipHide ()
+        </h3>
+     <div class="doc"><span>
+          Called when the tooltip for this widget is hidden.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onTooltipShow:object_event">onTooltipShow ()
+        </h3>
+     <div class="doc"><span>
+          Called when a tooltip is displayed for this widget.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="static-methods">
+      <h2>Static functions</h2>
+   <div class="method">
+        <h3 id="getById:static_method">DlWidget.getById (<span class='param'>id</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">id</td>
+         <td class="doc"><span name="id">Object ID</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns an existing object by ID.  All objects have an ID,
+          internally, and they are kept in a private hash table.
+          Therefore, if you wish not to keep widget references in
+          memory, you can only hold their ID, after creation:
+<p/>
+          <div sample="DlWidget1"></div>
+<p/>
+          Personally I find this style distracting.  Always use
+          references.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getFromElement:static_method">DlWidget.getFromElement (<span class='param'>el</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el">A DOM element</span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the DynarchLIB widget associated with the given
+          element, if any.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getResizeRect:static_method">DlWidget.getResizeRect ()
+        </h3>
+     <div class="doc"><span>
+          Currently only used in <a href='api://DlDialog.xml'>DlDialog</a>, this returns a DIV
+          element that is displayed during dialog resizes (i.e. a red
+          border and semiopaque background).
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="addClass:object_method">addClass (<span class='param'>ac</span>, <span class='param'>dc</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ac</td>
+         <td class="doc"><span name="ac">Class name to add</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">dc</td>
+         <td class="doc"><span name="dc">Class name to remove</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          This function does the same as <a href='api://DynarchDomUtils.xml:type=static_method:func=addClass'>DynarchDomUtils.addClass()</a>
+          but works for the element of the current widget.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="blur:object_method">blur ()
+        </h3>
+     <div class="doc"><span>
+          Removes focus from the current element.  Note this doesn't
+          make sense for all widgets.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="condClass:object_method">condClass (<span class='param'>cond</span>, <span class='param'>clsTrue</span>, <span class='param'>clsFalse</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">cond</td>
+         <td class="doc"><span name="cond"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">clsTrue</td>
+         <td class="doc"><span name="clsTrue"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">clsFalse</td>
+         <td class="doc"><span name="clsFalse"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          The same as <a href='api://DynarchDomUtils.xml:type=static_method:func=condClass'>DynarchDomUtils.condClass()</a> but works for the
+          element of the current widget.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="delClass:object_method">delClass (<span class='param'>dc</span>, <span class='param'>ac</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">dc</td>
+         <td class="doc"><span name="dc"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">ac</td>
+         <td class="doc"><span name="ac"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          See <a href='api://DynarchDomUtils.xml:type=static_method:func=delClass'>DynarchDomUtils.delClass()</a>, this calls it for the
+          element of the current widget.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="destroy:object_method">destroy ()
+        <div class="overrides">
+             (overrides <a href="api://DlEventProxy.xml:type=object_method:func=destroy">destroy in DlEventProxy</a>)
+        </div>
+        </h3>
+     <div class="doc"><span>
+          Destroys the current widget.  This necessarily overrides
+          <a href='api://DlEventProxy.xml:type=object_method:func=destroy'>DlEventProxy::destroy()</a> because widgets can be reference
+          counted, so it won't call base class' destroy() function
+          unless our reference count becomes zero or less.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="disabled:object_method">disabled (<span class='param optional'>v</span>, <span class='param optional'>force</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">v</td>
+         <td class="doc"><span default="null" name="v" optional="1">Disable it?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">force</td>
+         <td class="doc"><span default="false" name="force" optional="1">Force new value?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">false</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: boolean) 
+           <b><span>Disabled status</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Disable (if <b>v</b> is <b>true</b>) or enable (if <b>v</b>
+          is <b>false</b>) the current widget.  If <b>force</b> is
+          <b>true</b>, it will force this change even if the widget
+          was already in the requested state.
+<p/>
+          If you don't pass any arguments, this method simply returns
+          the widget's “disabled status” (<b>true</b> if the widget is
+          currently disabled and <b>false</b> otherwise).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="display:object_method">display (<span class='param optional'>v</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">v</td>
+         <td class="doc"><span default="null" name="v" optional="1"></span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">null</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: boolean) 
+           <b><span></span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          If you don't pass any arguments, this function returns the
+          widget's “display” style state as follows, that is, it
+          returns <b>true</b> if the widget is not hidden with the
+          “display: none” inline style.
+<p/>
+          If you pass <b>v</b> it will set “display: none” on the
+          widget's element if <b>v</b> is true (therefore it'll hide
+          the widget), or will clear the “display” style if <b>v</b>
+          is false (so the widget will become visible).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="enabled:object_method">enabled (<span class='param'>v</span>, <span class='param'>force</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">v</td>
+         <td class="doc"><span name="v"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">force</td>
+         <td class="doc"><span name="force"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          This is the exact reverse of disabled.  It's defined as
+          follows:
+<p/>
+          <div sample="DlWidget2"></div>
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="flash:object_method">flash (<span class='param optional'>timeout</span>, <span class='param optional'>steps</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">timeout</td>
+         <td class="doc"><span default="150" name="timeout" optional="1">Milliseconds between blinks</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">150</td>
+       </tr>
+       <tr>
+         <td class="name">steps</td>
+         <td class="doc"><span default="3" name="steps" optional="1">Blink steps</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">3</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          This will flash the current widget by repeatedly calling
+          visibility(false) and visibility(true) a number of times.
+          It's not very nice, nor very useful...
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="focus:object_method">focus ()
+        </h3>
+     <div class="doc"><span>
+          Focuses the current element.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="focusInside:object_method">focusInside ()
+        </h3>
+     <div class="doc"><span>
+          Return true if the focus is somewhere inside the current
+          widget (that is, if either this widget has the focus, or a
+          child widget).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getBRPos:object_method">getBRPos ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Hash) 
+           <b><span>{ x: x_pos, y: y_pos }</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Return the absolute position of the bottom-right corner of
+          the current widget element.  It returns the position as a
+          hash that maps “x” to the horizontal coordinate and “y” to
+          the vertical one.  We're using this representation in most
+          other functions that expect position or size as hashes.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getContentElement:object_method">getContentElement ()
+        </h3>
+     <div class="doc"><span>
+          Returns the <me>content</me> element of this widget.  In
+          DlWidget this is an alias to <a href='api://DlWidget.xml:type=object_method:func=getElement'>getElement()</a>, but other
+          widgets make a good difference between them.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getData:object_method">getData (<span class='param'>key</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">key</td>
+         <td class="doc"><span name="key">Key name</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the value of the given key in this widget's custom
+          data.  See <a href='api://DlWidget.xml:type=object_method:func=setData'>setData()</a>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getElement:object_method">getElement ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: HTMLElement) 
+           <b><span>DOM element of this widget</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Each widget has at least one DOM element associated with it.
+          This function returns it.  For many widgets, we have another
+          similar function: <a href='api://DlWidget.xml:type=object_method:func=getContentElement'>getContentElement()</a>.  In DlWidget these
+          2 functions are exactly the same.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getInnerSize:object_method">getInnerSize ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Hash) 
+           <b><span>{ x: width, y: height }</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the <em>inner</em> size of this widget.  In other
+          words, returns the size that a child widget should have in
+          order to fill completely the <em>content element</em> of
+          this widget.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getOffsetPos:object_method">getOffsetPos ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Hash) 
+           <b><span>{ x: offsetLeft, y: offsetTop }</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Similar to <a href='api://DlWidget.xml:type=object_method:func=getPos'>getPos()</a> but returns the position reported by
+          offsetLeft and offsetTop of this widget's element.  Note
+          that this is not necessarily the absolute position in the
+          document.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getOuterSize:object_method">getOuterSize ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Hash) 
+           <b><span>{ x: width, y: height }</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the <em>outer</em> (full) size of this widget.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getParent:object_method">getParent (<span class='param optional'>type</span>, <span class='param optional'>skipThis</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">type</td>
+         <td class="doc"><span default="null" name="type" optional="1">Constructor function</span>
+</td>
+         <td class="type">[<b>〈Function〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">skipThis</td>
+         <td class="doc"><span default="null" name="skipThis" optional="1">Skip testing this widget?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">null</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Walks the ancestors of this widget and returns the closest
+          parent which is an instance of <b>type</b>.  Note that
+          <b>type</b> must be a Constructor function, since we do the
+          checking with <b>instanceof type</b>.  Example:
+<p/>
+          <div sample="DlWidget3"></div>
+<p/>
+          So it's not the name of the object (no string that is), it's
+          the constructor function itself.
+<p/>
+          If you pass no arguments, this function will simply return
+          the widget's parent.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getPos:object_method">getPos ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Hash) 
+           <b><span>{ x: horis_pos, y: vert_pos }</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the absolute position (relative to the
+          document.body, that is) of the current widget.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getQuickPopup:object_method">getQuickPopup ()
+        </h3>
+     <div class="doc"><span>
+          Helper function called from <a href='api://DlWidget.xml:type=object_method:func=quickPopup'>quickPopup()</a>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getScroll:object_method">getScroll ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Hash) 
+           <b><span>{ x: scrollLeft, y: scrollTop }</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the element's scroll position.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getWidgetId:object_method">getWidgetId ()
+        </h3>
+     <div class="doc"><span>
+          Returns the widget's ID.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="initDOM:object_method">initDOM ()
+        </h3>
+     <div class="doc"><span>
+          This function is called by the constructor to initialize the
+          DOM.  Internally, it registers the widget's events, calls
+          <a href='api://DlWidget.xml:type=object_method:func=_setListeners'>_setListeners()</a> (which derived widgets can override to
+          define any custom events and listeners), then calls
+          <a href='api://DlWidget.xml:type=object_method:func=_createElement'>_createElement()</a>.
+<p/>
+          After we have an element, if this widget has a parent then
+          it will be appended to it by a call to
+          <a href='api://DlContainer.xml:type=object_method:func=appendWidget'>parent.appendWidget(this, appendArgs)</a>.
+<p/>
+          Finally, if the widget should be initially disabled then it
+          will be set so at this stage.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="opacity:object_method">opacity (<span class='param optional'>o</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">o</td>
+         <td class="doc"><span name="o" optional="1">Requested opacity (real number in [0..1])</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          See <a href='api://DynarchDomUtils.xml:type=static_method:func=setOpacity'>DynarchDomUtils.setOpacity()</a>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="position:object_method">position (<span class='param'>p</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">p</td>
+         <td class="doc"><span name="p">CSS “position” value</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Set the CSS position to the given value.  Sort of,
+          equivalent to:
+<p/>
+          <div sample="DlWidget4"></div>
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="quickPopup:object_method">quickPopup (<span class='param'>args</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">args</td>
+         <td class="doc"><span name="args">Passed to <a href='api://DlPopup.xml:type=object_method:func=popup'>DlPopup::popup()</a></span>
+</td>
+         <td class="type">[<b>〈Hash〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Displays a quick popup above this widget.  See
+          <a href='api://DlPopup.xml:type=object_method:func=popup'>DlPopup::popup()</a> for arguments detail.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="ref:object_method">ref ()
+        </h3>
+     <div class="doc"><span>
+          Increases the reference count of this widget.  Returns
+          previous value.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="refCnt:object_method">refCnt ()
+        </h3>
+     <div class="doc"><span>
+          Returns the reference count of this widget.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="refNode:object_method">refNode (<span class='param'>name</span>, <span class='param'>el</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">name</td>
+         <td class="doc"><span name="name">Property name</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el">Property value</span>
+</td>
+         <td class="type">[<b>〈Object〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          This function is the preferred way to store references to
+          DOM elements in widgets.  That's because it maintains,
+          internally, a hash of these values and it will break
+          circular references automatically when the widget is
+          destroyed.  Example:
+<p/>
+          <div sample="DlWidget5"></div>
+<p/>
+          Note that while <b>el</b> will usually be a DOM element, it
+          can be of any type you wish.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="scrollIntoView:object_method">scrollIntoView ()
+        </h3>
+     <div class="doc"><span>
+          Brings the current widget in visible area by adjusting any
+          scrollbars on the parent elements.  When I write this, this
+          function relies on browser's <a href="http://www.google.com/search?&#38;q=scrollintoview">scrollIntoView</a>
+          function which, of course, does different things in
+          different browsers, so it's not very reliable.  In the
+          future we will provide a custom implementation.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setContent:object_method">setContent (<span class='param'>content</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">content</td>
+         <td class="doc"><span name="content">New content for this widget</span>
+</td>
+         <td class="type">[<b>〈String,Function,Array,DlWidget,HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          This function sets the content of this widget.  The
+          innerHTML of the <em>content element</em> that is.  Note
+          that <b>content</b> can be of a few types.  Regardless the
+          type, the content element <em>will be cleared first</em>,
+          which means all DOM inside it will be lost.  Then, depending
+          on the type, the following can happen:
+<p/>
+          <div sample="DlWidget6"></div>
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setContextMenu:object_method">setContextMenu (<span class='param'>menu</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">menu</td>
+         <td class="doc"><span name="menu"></span>
+</td>
+         <td class="type">[<b>〈DlWidget,Function〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Sets a context menu for the current widget.  The <b>menu</b>
+          argument can actually be of any type supported by
+          <a href='api://DlWidget.xml:type=object_method:func=setContent'>setContent()</a>.  If it's a <b>DlWidget</b>, it will be
+          reference counted (<a href='api://DlWidget.xml:type=object_method:func=ref'>ref()</a>-ed).  If we already had another
+          context menu for this widget, it will be <a href='api://DlWidget.xml:type=object_method:func=destroy'>destroy()</a>-ed
+          (note that this doesn't necessarily implies the widget is
+          lost; it's reference count will be decreased and it's only
+          destroyed if it becomes zero).
+<p/>
+          If you supply a function, it won't be called until the
+          context menu is actually requested (therefore it will be
+          lazy instantiated; you want to do this, generally, for a
+          responsive UI).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setData:object_method">setData (<span class='param'>key</span>, <span class='param optional'>val</span>, <span class="varargs">…</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">key</td>
+         <td class="doc"><span name="key">Key name</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">val</td>
+         <td class="doc"><span name="val" optional="1">New value</span>
+</td>
+         <td class="type">—</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Sets the value of given <b>key</b> to <b>val</b> in this
+          widget's custom data.  As you can notice, <b>val</b> is
+          optional.  If you don't pass any value, the key will be
+          removed from this widget's custom data.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setIconClass:object_method">setIconClass (<span class='param'>iconClass</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">iconClass</td>
+         <td class="doc"><span name="iconClass"></span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Sets the “icon class” for the current widget.  This doesn't
+          make sense for all widgets, but we have it in the base class
+          because it's more convenient than duplicating the function
+          in a few other widgets.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setInnerSize:object_method">setInnerSize (<span class='param'>size</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">size</td>
+         <td class="doc"><span name="size">{ x: width, y: height }</span>
+</td>
+         <td class="type">[<b>〈Hash〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Sets the inner size of this widget to the requested
+          dimensions.  Triggers "onResize" event.  Note that <b>x</b>
+          or <b>y</b> can be null, in which case the dimension on the
+          respective axis will not be modified.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setOuterSize:object_method">setOuterSize (<span class='param'>size</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">size</td>
+         <td class="doc"><span name="size">{ x: width, y: height }</span>
+</td>
+         <td class="type">[<b>〈Hash〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Sets the outer size of this widget.  Triggers "onResize".
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setPos:object_method">setPos (<span class='param optional'>x</span>, <span class='param optional'>y</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">x</td>
+         <td class="doc"><span default="null" name="x" optional="1"></span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">y</td>
+         <td class="doc"><span default="null" name="y" optional="1"></span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">null</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Sets the position of this widget.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setStyle:object_method">setStyle (<span class='param'>a</span>, <span class='param optional'>b</span>, <span class="varargs">…</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">a</td>
+         <td class="doc"><span name="a">CSS property name, or hash mapping properties to values</span>
+</td>
+         <td class="type">[<b>〈String,Hash〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">b</td>
+         <td class="doc"><span name="b" optional="1">CSS property value</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Sets one or more inline styles for the current object.
+          Styles are given in the DOM notation (that is, "borderLeft"
+          instead of "border-left").  Examples:
+<p/>
+          <div sample="DlWidget7"></div>
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setTooltip:object_method">setTooltip (<span class='param'>tt</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">tt</td>
+         <td class="doc"><span name="tt">New tooltip</span>
+</td>
+         <td class="type">[<b>〈String,Function〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Actually, <b>tt</b> can be of any type supported by
+          <a href='api://DlWidget.xml:type=object_method:func=setContent'>setContent()</a>.  This function will (re)set tooltip for the
+          current widget.  If you pass null, then the tooltip will be
+          removed.  If you pass a function, it will be called in the
+          moment the tooltip is displayed.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setUnselectable:object_method">setUnselectable (<span class='param'>el</span>, <span class='param'>val</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el">Element to make (un)selectable</span>
+</td>
+         <td class="type">[<b>〈HTMLElement〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">val</td>
+         <td class="doc"><span name="val"></span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Make a DOM element unselectable if <b>val</b> is true, or
+          selectable if <b>val</b> is false.  If you pass null for
+          <b>el</b>, it will use the toplevel element of the current
+          widget instead.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="unref:object_method">unref ()
+        </h3>
+     <div class="doc"><span>
+          Decreases the reference count of this widget and returns
+          current value.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="visibility:object_method">visibility (<span class='param optional'>v</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">v</td>
+         <td class="doc"><span default="null" name="v" optional="1"></span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">null</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          If you pass no arguments, it returns <b>true</b> if the
+          “visibility” inline style of the current widget is not
+          "hidden", or false otherwise.
+<p/>
+          If you pass <b>v = true</b> then the “visibility” will be
+          reset to the empty string; if you pass <b>v = false</b> then
+          it'll be set to "hidden".
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="zIndex:object_method">zIndex (<span class='param optional'>zIndex</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">zIndex</td>
+         <td class="doc"><span default="null" name="zIndex" optional="1"></span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">null</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Sets or retrieves the z-index property of the current
+          widget.  If you don't pass an argument, the current z-index
+          is returned.  If you pass an argument it sets a new z-index
+          for the widget and returns it.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_check_accessKey:object_method">_check_accessKey (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_createElement:object_method">_createElement (<span class='param'>html</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">html</td>
+         <td class="doc"><span name="html">Not used for now</span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Creates the DOM elements for the current widget and sets the
+          association between the object and the toplevel element.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_handle_accessKey:object_method">_handle_accessKey (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_handle_focusKeys:object_method">_handle_focusKeys (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev"></span>
+</td>
+         <td class="type">[<b>〈DlEvent〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          This function handles the "onKeyPress" event (or "onKeyDown"
+          for IE), which is triggered by the framework when the widget
+          is focused and some key is pressed.  This function does
+          nothing but you can override it in derived classes.  For
+          example, <a href='api://DlContainer.xml'>DlContainer</a> overrides this in order to forward
+          the event to some child widget that can handle this
+          keybinding.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_popupTooltip:object_method">_popupTooltip ()
+        </h3>
+     <div class="doc"><span>
+          Pops up the tooltip for this widget, if any.  This is called
+          from the "onMouseEnter" handler.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_setFocusedStyle:object_method">_setFocusedStyle (<span class='param'>focused</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">focused</td>
+         <td class="doc"><span name="focused"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_setListeners:object_method">_setListeners ()
+        </h3>
+     <div class="doc"><span>
+          This function is called from <a href='api://DlWidget.xml:type=object_method:func=initDOM'>initDOM()</a> and you can place
+          your event handlers here, as well as
+          <a href='api://DlEventProxy.xml:type=object_method:func=registerEvents'>registering new events</a>.
+          You're not required to do so—you can add your event
+          listeners in any other place, but it's good to stay
+          organized. ;-)
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+<code id="DlWidget1" type="js">
+            var id = new DlButton({...}).getWidgetId();
+            DlWidget.getById(id).setLabel("New button label");
+          </code>
+<code id="DlWidget2" type="js">
+            if (v != null) {
+                this.disabled(!v, force);
+            }
+            return !this.__disabled;
+          </code>
+<code id="DlWidget3" type="js">
+            var dialog = button.getParent(DlDialog);
+          </code>
+<code id="DlWidget4" type="js">
+            widget.getElement().style.position = p;
+          </code>
+<code id="DlWidget5" type="js">
+            widget.refNode("foo", document.getElementById("foo"));
+
+            // now widget.foo is a real reference to the element:
+            widget.foo.innerHTML = "Foo Here";
+
+            widget.destroy();
+            // widget.foo is now undefined, therefore we don't keep
+            // a reference to the DOM element that could potentially leak
+          </code>
+<code id="DlWidget6" type="js">
+            // assuming this is the current widget
+
+            // for String-s:
+            this.getContentElement().innerHTML = content;
+
+            // for Function-s:
+            this.setContent(content.call(this));
+
+               // so note that if it's a function, it will be called in
+               // the scope of the current widget and the returned value
+               // will be sent to setContent again, therefore it can
+               // return any of the supported types, including a function!
+
+            // for Arrays:
+            this.getContentElement().innerHTML = content.join("");
+
+            // for DlWidget (or derived) objects
+            this.appendWidget(content, appendArgs);
+               // see 〈DlContainer.appendWidget()〉
+
+            // for HTML elements:
+            this.getContentElement().appendChild(content);
+          </code>
+<code id="DlWidget7" type="js">
+            widget.setStyle("background", "yellow");
+            // or
+            widget.setStyle({ background : "yellow",
+                              color      : "red",
+                              padding    : "10px" });
+          </code>
+<code id="DlWidget8" type="js">
+          DlWidget.getFromElement(element);
+        </code>
+<code id="DlWidget9" type="html"><![CDATA[
+          <div class="DlWidget DlContainer DlDialog">
+            <div class="DlDialog-Rel">
+              <div class="DlDialog-WindowButtons"></div>
+              <div class="DlDialog-Title"><div></div></div>
+              <div class="DlDialog-Content">
+                <!-- content goes here -->
+              </div>
+            </div>
+          </div>
+        ]]></code>
+<code id="DlWidget10" type="js">
+          { parent  : someParentObject,
+            tooltip : "Click me!",
+            tagName : "img" }
+        </code>
+<code id="DlWidget11" type="js">
+          new DlContainer(); // won't do what you expect
+        </code>
+<code id="DlWidget12" type="js">
+          new DlContainer({});
+        </code>
+
+
+</sample>
+
+
+
+

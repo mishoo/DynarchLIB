@@ -1,0 +1,134 @@
+<sample>
+
+  <title>Buttons</title>
+
+  <text>
+    <p>
+      DynarchLIB comes with a variety of button widgets.  You also can
+      easily inherit the base objects to create your own customized,
+      if for some reason you're not happy with what we already have.
+    </p>
+
+    <p>
+      All button types inherit from the <b>DlAbstractButton</b> class.
+      It provides functionality to handle any type of button
+      (icon-only, icon + text label, check box, radio button).  The
+      specialized classes—such as <b>DlButton</b>, <b>DlCheckbox</b>,
+      <b>DlRadioButton</b>—exist only for convenience; they define the
+      right class names and properties for each button type.
+    </p>
+
+    <h2>Standard push-buttons</h2>
+
+    <p>
+      You create a simple button using the <b>DlButton</b> class, like
+      this:
+    </p>
+
+    <div sample="sample1" />
+
+    <p>
+      The result is a plain button that has an icon.  Note that
+      buttons are DIV-s, therefore they take all the available width.
+      Although this is usually not what you want, we consider it to be
+      a feature, rather than a bug.  In order to restrict button
+      sizes, we can use a horizontal box widget:
+    </p>
+
+    <div sample="sample2" />
+
+    <p class="dimnote">
+      A box is the recommended way to align things horizontally.
+      Internally it's based on a &lt;table&gt; tag, which in 2007 is
+      <em>still the only portable way</em> to do this.  We will talk
+      more about boxes in a separate section.
+    </p>
+
+    <p>
+      Like all widgets, buttons emit the "onClick" event, therefore we
+      can easily add an event handler:
+    </p>
+
+    <div sample="sample3" />
+
+    <h2>Two-state buttons and check boxes</h2>
+
+    <p>
+      A “two-state” button is a button that can be pressed or
+      depressed.  They are commonly used in toolbars, having only an
+      icon (rather than a text label).
+    </p>
+
+    <div sample="checkbox1" />
+
+    <p>
+      A two-state button is, from a functionality standpoint, like a
+      check box.  However, a check box is visually different, so we
+      included a special class for that (<b>DlCheckbox</b>).  You use
+      it just like a plain button, only this time you don't need to
+      specify the TWOSTATE type.
+    </p>
+
+    <div sample="checkbox2" />
+
+  </text>
+
+  <code id="sample1" type="js" canrun="true"><![CDATA[
+var btn = new DlButton({
+    parent    : getDocCanvas(),
+    label     : "Some Text",
+    iconClass : "IconChardev"
+});
+  ]]></code>
+
+  <code id="sample2" type="js" canrun="true"><![CDATA[
+var box = new DlHbox({ parent: getDocCanvas() });
+var btn1 = new DlButton({
+    parent    : box,
+    label     : "Button 1",
+    iconClass : "IconChardev"
+});
+var btn2 = new DlButton({
+    parent    : box,
+    label     : "Button 2",
+    iconClass : "IconCalendar"
+});
+  ]]></code>
+
+  <code id="sample3" type="js" canrun="true"><![CDATA[
+//@include sample2
+btn1.addEventListener("onClick", function(){
+    print("Button 1 clicked");
+});
+
+btn2.addEventListener("onClick", function(){
+    print("Button 2 clicked");
+});
+  ]]></code>
+
+  <code id="checkbox1" type="js" canrun="true"><![CDATA[
+btn = new DlButton({ parent : getDocCanvas(),
+                     type   : DlButton.TYPE.TWOSTATE,
+                     label  : "Try me" });
+btn.addEventListener("onChange", function(){
+    if (this.checked()) {
+        print("The button is now ON (pressed)");
+    } else {
+        print("The button is now OFF (depressed)");
+    }
+});
+  ]]></code>
+
+  <code id="checkbox2" type="js" canrun="true"><![CDATA[
+cb = new DlCheckbox({ parent : getDocCanvas(),
+                      label  : "With sugar" });
+cb.addEventListener("onChange", function(){
+    if (this.checked()) {
+        print("You like sugar.");
+    } else {
+        print("OK, no sugar.");
+    }
+});
+  ]]></code>
+
+</sample>

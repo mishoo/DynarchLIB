@@ -1,0 +1,215 @@
+<sample>
+
+  <title>DlResizeBar</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlResizeBar</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlWidget〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈resizebar.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈widget.js, layout.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">continuous</td>
+         <td class="doc"><span default="false" name="continuous"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">false</td>
+       </tr>
+       <tr>
+         <td class="name">horiz</td>
+         <td class="doc"><span default="null" name="horiz"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">invert</td>
+         <td class="doc"><span default="false" name="invert"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">false</td>
+       </tr>
+       <tr>
+         <td class="name">keepPercent</td>
+         <td class="doc"><span default="false" name="keepPercent"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">false</td>
+       </tr>
+       <tr>
+         <td class="name">max</td>
+         <td class="doc"><span default="null" name="max"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">min</td>
+         <td class="doc"><span default="null" name="min"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">widget</td>
+         <td class="doc"><span default="null" name="widget"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+      <param default="false" name="continuous"></param>
+      <param default="null" name="horiz"></param>
+      <param default="false" name="invert"></param>
+      <param default="false" name="keepPercent"></param>
+      <param default="null" name="max"></param>
+      <param default="null" name="min"></param>
+      <param default="null" name="widget"></param>
+    </span>
+
+     </div>
+   </div>
+    </div>
+
+
+    <div class="static-methods">
+      <h2>Static functions</h2>
+   <div class="method">
+        <h3 id="getDragBar:static_method">DlResizeBar.getDragBar ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="initDOM:object_method">initDOM ()
+        <div class="overrides">
+             (overrides <a href="api://DlWidget.xml:type=object_method:func=initDOM">initDOM in DlWidget</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="isHoriz:object_method">isHoriz ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_doResize:object_method">_doResize (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_setListeners:object_method">_setListeners ()
+        <div class="overrides">
+             (overrides <a href="api://DlWidget.xml:type=object_method:func=_setListeners">_setListeners in DlWidget</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_setResizeCaptures:object_method">_setResizeCaptures (<span class='param'>capture</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">capture</td>
+         <td class="doc"><span name="capture"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+
+
+</sample>
+
+
+
+

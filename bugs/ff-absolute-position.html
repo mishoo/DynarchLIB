@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <title>Firefox: Absolute position (getBoxObjectFor) returns wrong value</title>
+    <style type="text/css">
+      .target { position: absolute; left: 20px; top: 20px; width: 10px; height: 10px; background: yellow; border: 1px solid black; }
+      .match { position: absolute; left: 0; top: 0; width: 10px; height: 10px; background: red; border: 1px solid blue; opacity: 0.5; }
+    </style>
+    <script type="text/javascript">
+      function test(div) {
+        var box = document.getBoxObjectFor(div);
+/*
+        var foo = [];
+        for (var i in box) {
+          foo.push(i + " : " + box[i]);
+        }
+        alert(foo.join("\n"));
+*/
+        var match = document.getElementById("match");
+        match.style.left = box.x + "px";
+        match.style.top = box.y + "px";
+      }
+    </script>
+  </head>
+  <body>
+    <div class="target" onclick="test(this)"></div>
+    <div id="match" class="match"></div>
+  </body>
+</html>

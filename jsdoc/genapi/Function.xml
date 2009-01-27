@@ -1,0 +1,773 @@
+<sample>
+
+  <title>Function</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>Function</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>— none —</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈jslib.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈texts.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+     <div class="doc"><span>
+      This is a standard JavaScript object.  DynarchLIB adds a few
+      useful extensions.
+<p/>
+      <div class="important">
+        There are a few utilities of major importance that we add to
+        the Function objects.  Pay particular attention to methods
+        <a href='api://Function.xml:type=object_method:func=closure'>closure()</a>, <a href='api://Function.xml:type=object_method:func=inherits'>inherits()</a> and <a href='api://Function.xml:type=object_method:func=setDefaults'>setDefaults()</a> in order to make
+        efficient use of DynarchLIB.
+      </div>
+    </span>
+
+     </div>
+   </div>
+    </div>
+
+
+    <div class="static-methods">
+      <h2>Static functions</h2>
+   <div class="method">
+        <h3 id="getInheritanceGraph:static_method">Function.getInheritanceGraph ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">
+           <b><span>Inheritance hash table</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns a hash table describing the inheritance graph of the
+          existing JavaScript objects.  This graph is set up by
+          <a href='api://Function.xml:type=object_method:func=inherits'>Function::inherits()</a>.  The returned hash table maps object
+          name to base class name.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="identity:static_method">Function.identity (<span class='param'>x</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">x</td>
+         <td class="doc"><span name="x"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">
+           <b><span><b>x</b></span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          The identity function.  It's a function that always returns
+          <b>x</b>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="invoke:static_method">Function.invoke (<span class='param'>x</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">x</td>
+         <td class="doc"><span name="x"></span>
+</td>
+         <td class="type">[<b>〈Function〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">
+           <b><span><b>x</b>()</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          This function calls <b>x()</b> and returns the returned
+          value.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="noop:static_method">Function.noop ()
+        </h3>
+     <div class="doc"><span>
+          No operation — a function that does absolutely nothing.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="returnFalse:static_method">Function.returnFalse ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">
+           <b><span><b>false</b></span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Always returns <b>false</b>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="returnTrue:static_method">Function.returnTrue ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">
+           <b><span><b>true</b></span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Always returns <b>true</b>.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="$0:object_method">$0 (<span class='param'>obj</span>, <span class="varargs">…</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">obj</td>
+         <td class="doc"><span name="obj"></span>
+</td>
+         <td class="type">[<b>〈Object〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          This method does exactly the same as <a href='api://Function.xml:type=object_method:func=closure'>closure()</a>, but it
+          doesn't forward arguments that are passed to the closure at
+          run-time.  In certain cases you don't need those arguments
+          to be forwarded and this method tends to be a bit faster.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="$C:object_method">$C (<span class="varargs">…</span>)
+        </h3>
+     <div class="doc"><span>
+          This method is exactly the same as <a href='api://Function.xml:type=object_method:func=closure'>closure()</a>, but you
+          don't pass the <b>obj</b> argument.  It's for those cases
+          when you don't care about the value of <b>this</b> in your
+          function.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="clearingTimeout:object_method">clearingTimeout (<span class='param'>timeout</span>, <span class='param'>obj</span>, <span class="varargs">…</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">timeout</td>
+         <td class="doc"><span name="timeout"></span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">obj</td>
+         <td class="doc"><span name="obj"></span>
+</td>
+         <td class="type">[<b>〈Object〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Function) 
+           <b><span></span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Similar to the <a href='api://Function.xml:type=object_method:func=closure'>closure()</a> method, clearingTimeout() creates
+          a function that will call the original function in the
+          context of the given object (<b>obj</b>) forwarding it any
+          additional arguments.  The big difference is that this time,
+          your function is not called immediately, but via a
+          <em>setTimeout()</em> (note the first argument).
+<p/>
+          This is very useful when you need to run a lengthy operation
+          as a consequence of user input.  For example, let's say you
+          have a big list of items and want to allow the user to
+          filter it.  You will have an input field and upon the
+          "onkeypress" event, you'll check the current value and
+          re-filter the list.  If the list is big, the user will have
+          to wait a long time between keypresses.
+<p/>
+          Using the clearingTimeout you setup a callback that will
+          only filter the list when the user is "idle".  Example, if
+          you set the timeout to 500 (half a second), then users that
+          type fast won't be bothered by the long filter operation;
+          it'll happen only when they stopped typing for 500 ms.
+<p/>
+          Example:
+<p/>
+          <div sample="Function6"></div>
+<p/>
+          clearingTimeout() returns a function, as you can see.  Each
+          time this function is called, it'll restart the timer.  Only
+          after the timeout, your original function gets called.
+          Here's how we would write the sample above using standard JS
+          constructs:
+<p/>
+          <div sample="Function7"></div>
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="closure:object_method">closure (<span class='param'>obj</span>, <span class="varargs">…</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">obj</td>
+         <td class="doc"><span name="obj">Context object for your closure</span>
+</td>
+         <td class="type">[<b>〈Object〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Function) 
+           <b><span>A closure</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          This is probably the most important addition we bring to the
+          Function object.  It returns a new function which, when
+          called, will call the original function in the context of
+          the object you specify (<b>obj</b>), forwarding any
+          additional arguments that were given to <a href='api://Function.xml:type=object_method:func=closure'>closure()</a>
+          <em>and</em> any arguments that are passed to its call at
+          run-time.  I know this sounds horribly complicated, here's
+          an example:
+<p/>
+          <div sample="Function1"></div>
+<p/>
+          The first argument is the object.  You can pass null if you
+          don't care about it (or see the <b>$C</b> method below).
+          Any additional arguments passed to “closure” will be
+          forwarded to your original function, when it's called.
+<p/>
+          “$” is an alias for this method, since we tend to use it
+          very frequently.  Thus, the following are equivalent:
+<p/>
+          <div sample="Function2"></div>
+<p/>
+          In many cases you'll want to pass an object as well.  For
+          example, it's quite common to need a method of a certain
+          object instance to be called after a timeout.  Here's how
+          you can do it:
+<p/>
+          <div sample="Function3"></div>
+<p/>
+          But using the <a href='api://Function.xml:type=object_method:func=closure'>closure()</a> construct, you can also do it like
+          this:
+<p/>
+          <div sample="Function4"></div>
+<p/>
+          Another common case is when you want to execute an object
+          method as a result of some DOM event.  Here's how you can do
+          that using this construct:
+<p/>
+          <div sample="Function5"></div>
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="delayed:object_method">delayed (<span class='param'>timeout</span>, <span class="varargs">…</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">timeout</td>
+         <td class="doc"><span name="timeout"></span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">
+           <b><span>timeout ID as returned by setTimeout</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          This method simply calls setTimeout() to call your method
+          after the specified timeout, in the context of the specified
+          object (if any) and forwarding any additional arguments.  It
+          might seem identical to <a href='api://Function.xml:type=object_method:func=clearingTimeout'>clearingTimeout()</a> but it's not,
+          because the timer won't be restarted.
+<p/>
+          Example:
+<p/>
+          <div sample="Function8"></div>
+<p/>
+          Besides <b>timeout</b>, you can pass the same arguments as
+          for <a href='api://Function.xml:type=object_method:func=closure'>closure()</a>.  This means you can pass an object so your
+          function will be called in its context, as well as any
+          arguments that you need to pass to the function.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="inherits:object_method">inherits (<span class='param'>base</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">base</td>
+         <td class="doc"><span name="base"></span>
+</td>
+         <td class="type">[<b>〈Object〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          This method sets up inheritance between 2 JavaScript
+          objects.  At its heart, it's equivalent to setting the
+          prototype of the derived object to a new prototype of the
+          base object.  Example:
+<p/>
+          <div sample="Function9"></div>
+<p/>
+          Although it seems quite simple, the <a href='api://Function.xml:type=object_method:func=inherits'>inherits()</a> method is
+          useful.  It does some under-the-hood magic as well, which we
+          use in DynarchLIB.  For example, after the inherits() call
+          in the sample above, the following conditions stand true:
+<p/>
+          <div sample="Function10"></div>
+<p/>
+          <a href='api://Function.xml:type=object_method:func=inherits'>inherits()</a> will also call a method of your derived class,
+          if it's present in the prototype, and in that method you can
+          do some custom stuff on the derived class.  This method is
+          named “__patchSubclassPrototype”.  Here's how we use it to
+          automatically generate the class names for each widget:
+<p/>
+          <div sample="Function11"></div>
+<p/>
+          Now, whenever we inherit a new widget, its prototype will
+          automagically have the new class name in the "_className"
+          property:
+<p/>
+          <div sample="Function12"></div>
+<p/>
+          The code writes itself at compilation time. :-)  That's both
+          simple and efficient.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="inject:object_method">inject (<span class='param'>props</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">props</td>
+         <td class="doc"><span name="props"></span>
+</td>
+         <td class="type">[<b>〈Object〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Merges the given properties into this object's prototype.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="inverse:object_method">inverse (<span class="varargs">…</span>)
+        </h3>
+     <div class="doc"><span>
+          Returns “the inverse” of the current function.  That is,
+          assuming that the current function returns some boolean
+          value, then its inverse will be a function that returns
+          <b>true</b> for whatever arguments that the original
+          function returned <b>false</b>, and vice-versa.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setDefaults:object_method">setDefaults (<span class='param'>obj</span>, <span class='param'>args</span>, <span class='param'>overwrite</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">obj</td>
+         <td class="doc"><span name="obj"></span>
+</td>
+         <td class="type">[<b>〈Object〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">args</td>
+         <td class="doc"><span name="args"></span>
+</td>
+         <td class="type">[<b>〈Hash〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">overwrite</td>
+         <td class="doc"><span name="overwrite"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          This function provides a convenient way to get parameters in
+          object constructors.  It sets properties in the given object
+          (<b>obj</b>) based on the defaults defined in constructor's
+          DEFAULT_ARGS property and the values in <b>args</b>.
+          Example:
+<p/>
+          <div sample="Function13"></div>
+<p/>
+          So this is simply a way to uniformly declare object
+          arguments.  A base object can have its defaults too.  For
+          example, let's make Foo a base object and inherit Bar from
+          it:
+<p/>
+          <div sample="Function14"></div>
+<p/>
+          All our objects use this way to declare arguments.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setInterval:object_method">setInterval (<span class='param'>timeout</span>, <span class="varargs">…</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">timeout</td>
+         <td class="doc"><span name="timeout"></span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">
+           <b><span>interval ID as returned by setInterval</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          This is similar to <a href='api://Function.xml:type=object_method:func=delayed'>delayed()</a> but it uses setInterval().
+          This means that your function will be called repeatedly at
+          <b>timeout</b> intervals.  Same as for delayed(), you can
+          pass additional arguments (object instance or arguments to
+          pass to the function when it is called).
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+<code id="Function1" type="js">
+            function f(a, b, c) {
+              alert(a + " / " + b + " / " + c);
+            }
+            var newFunc = f.closure(null, "foo", "bar");
+            // ... later
+            newFunc("baz"); // displays "foo / bar / baz".
+          </code>
+<code id="Function2" type="js">
+            var newFunc = f.closure(null, "foo", "bar");
+            var newFunc = f.$(null, "foo", "bar");
+          </code>
+<code id="Function3" type="js">
+            var a = new MyObject();
+            setTimeout(function() {
+              a.someMethod("foo");
+            }, 1000);
+          </code>
+<code id="Function4" type="js">
+            setTimeout(a.someMethod.$(a, "foo"), 1000);
+          </code>
+<code id="Function5" type="js">
+            obj.someHandler = function(div) {
+              // handle the event here...
+            };
+            div.onclick = obj.someHandler.$(obj, div);
+          </code>
+<code id="Function6" type="js">
+            function filterList(input) {
+               var str = input.value;
+               // do the filtering here
+            };
+            input.onkeypress = filterList.clearingTimeout(500, null, input);
+          </code>
+<code id="Function7" type="js">
+            function filterList(input) {...}
+            var timer = null;
+            input.onkeypress = function() {
+               if (timer)
+                  clearTimeout(timer);
+               timer = setTimeout(function() {
+                  filterList(input);
+               }, 500);
+            };
+          </code>
+<code id="Function8" type="js">
+            function foo(txt) {
+               alert(txt);
+            }
+
+            foo.delayed(1000, null, "this is foo");
+
+            // equivalent setTimeout code:
+            setTimeout(function() { foo("this is foo") }, 1000);
+          </code>
+<code id="Function9" type="js">
+            function BaseClass() {}
+            function DerivedClass() {}
+
+            // the standard JS way to create objects
+            DerivedClass.prototype = new BaseClass;
+
+            // using DynarchLIB
+            DerivedClass.inherits(BaseClass);
+          </code>
+<code id="Function10" type="js">
+            DerivedClass.prototype.constructor == DerivedClass;
+            DerivedClass._objectType == "DerivedClass";
+            DerivedClass.prototype._objectType == "DerivedClass";
+            DerivedClass.BASE == BaseClass.prototype;
+            Function.getInheritanceGraph()["DerivedClass"] == "BaseClass";
+          </code>
+<code id="Function11" type="js">
+            DlWidget.prototype._className = [ "DlWidget" ];
+            DlWidget.prototype.__patchSubclassPrototype = function() {
+              // here, *this* refers to the prototype of the *derived* class
+
+              // note we need to make a copy of the _className array
+              this._className = Array.$(this._className);
+
+              // now add the name of the derived object
+              this._className.push(this._objectType);
+            }
+          </code>
+<code id="Function12" type="js">
+            DlContainer.inherits(DlWidget);
+            // outputs "DlWidget DlContainer"
+            alert(DlContainer.prototype._className.join(" "));
+          </code>
+<code id="Function13" type="js">
+            function Foo(args) {
+                if (args) {
+                    Foo.setDefaults(this, args);
+                }
+            }
+            Foo.DEFAULT_ARGS = {
+                _label : [ "label" , "No label" ],
+                _type  : [ "type"  , null ]
+            };
+
+            var f = new Foo();
+            // Now, f._label == "No label"
+            // and f._type == null
+
+            var c = new Foo({ type: "checkbox" });
+            // c._label is still "No label" (since it wasn't passed)
+            // c._type == "checkbox"
+          </code>
+<code id="Function14" type="js">
+            Bar.inherits(Foo);
+            function Bar(args) {
+                if (args) {
+                    Bar.setDefaults(this, args);
+                    // call base class constructor now
+                    Foo.call(this, args);
+                }
+            }
+            Bar.DEFAULT_ARGS = {
+                _label   : [ "label"   , "This is Bar" ],
+                _newProp : [ "newProp" , "blah" ]
+            };
+
+            var b = new Bar();
+            // b._label == "This is Bar"
+            // b._type == null
+            // b._newProp == "blah"
+
+            var b = new Bar({ type: "checkbox", newProp: 1 });
+            // b._label == "This is Bar"
+            // b._type == "checkbox"
+            // b._newProp == 1
+          </code>
+
+
+</sample>
+
+
+
+

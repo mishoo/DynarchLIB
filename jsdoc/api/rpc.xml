@@ -1,0 +1,169 @@
+<api file="rpc.js">
+  <object base="DlEventProxy" name="DlRPC">
+    <constructor>
+      <param default="null" name="args" type="Hash">Arguments to pass to the server</param>
+      <param default="null" name="callback" type="Function">Callback function that will be called when the request is completed (or when it times out)</param>
+      <param default="null" name="data" type="String|Hash">Data to pass by POST</param>
+      <param default="null" name="method" type="String">
+        Request method ("GET" or "POST").  By default, this will be
+        assumed "GET" if <b>data</b> is null, or "POST" if <b>data</b>
+        is present.
+      </param>
+      <param default="null" name="timeout" type="Number">
+        Maximum time allowed for the request (in milliseconds).  If
+        the request doesn't complete after the specified timeout, it
+        will be stopped, the "onTimeout" event will trigger and your
+        callback will be called with <b>{ success:false, timeout: true
+        }</b>.
+      </param>
+      <param default="null" name="url" type="String">URL for the request.</param>
+
+      <doc>
+        You can use this object to initiate a “remote procedure call”.
+        This is a fancy name for a simple HTTP request.  Internally it
+        uses the XMLHttpRequest object available in most browsers, or
+        the ActiveX object for IE6.
+
+        XMLHttpRequest was designed for sending pieces of XML data.
+        This works via DynarchLIB as well, but we really recommend you
+        to use 〈DlJSON|json〉—it reduces the complexity of your code a
+        lot and it's faster for the browser to run.
+
+        You initiate a call i.e. like this:
+
+        <js>
+          function myCallback(answer) {
+            if (answer.success) {
+              // use answer.text here to get text data, or
+              // use answer.xml here to get a XMLDocument
+              // (only if your server sent XML back)
+            }
+          };
+          var rpc = new DlRPC({ url      : "http://server.com/rpchandler.cgi",
+                                callback : myRpcCallback
+                                data     : "Anything you want" });
+          rpc.call(); // start
+        </js>
+
+        Because you pass <b>data</b> and no <b>method</b>, the above
+        will automatically chose "POST".  The way you handle
+        <b>data</b> on the server is completely up to you—you can
+        retrieve the entire request content and do anything custom you
+        want; it's not like you submit a form.  We found this to be
+        the most flexible approach because we send JSON which is
+        really easy to parse both on the server and client.
+
+        You can pass both GET arguments and POST data as well:
+
+        <js>
+          new DlRPC({ url : "http://server.com/rpc-handler",
+                      args : { foo: "foo",
+                               bar: "bar" },
+                      data : "Anything you want" }).call();
+        </js>
+
+        The above would actually call an URL like this:
+
+        <pre>http://server.com/rpc-handler?foo=foo;bar=bar</pre>
+
+        and will still send <b>data</b> in POST.  On the server-side
+        you read <b>args</b> normally (just as if they were submitted
+        by a form).
+
+        If you want, you can send arguments in POST as well.  This
+        will be as if you submit a form via POST, therefore you can
+        access the arguments on the server-side via standard means.
+        In this case, you cannot send additional <b>data</b> (but you
+        can embed anything you want in arguments, therefore this won't
+        be a problem):
+
+        <js>
+          new DlRPC({ url  : ...,
+                      args : { foo  : "foo",
+                               bar  : "bar",
+                               data : "Anything you want" },
+                      method : "POST" }).call();
+        </js>
+
+        Note that you need to explicitly specify the method here
+        ("POST"), otherwise "GET" will be chosen by default.
+
+        If you use JSON to communicate with the server, DlRPC will
+        provide an useful shortcut: <b>data</b> can be a JavaScript
+        object (Array or Hash), in which case it will be JSON-ized
+        before its sent:
+
+        <js>
+          new DlRPC({ url : "http://server/json-handler",
+                      data : { foo      : "foo",
+                               bar      : "bar",
+                               anything : [ "you", "want" ]
+                             }
+                    }).call();
+        </js>
+
+        On the server you would read the full request body and just
+        de-JSONize to transform it into a native object for your
+        programming language.
+
+        In conclusion: you use this object to create a non-apparent
+        request to the server.  It won't reload your page and you can
+        attach a callback to be called when the request was finished.
+        All requests are asynchronous—so if you expect an answer from
+        the server you <em>need</em> to pass a callback.
+
+        XXX One request per DlRPC object
+
+        It is not safe for now to assume that one DlRPC object can
+        handle multiple requests.  This means, you should only issue
+        one 〈call()〉 request.  If you need to do another request to
+        the server, be it with the same or different arguments, please
+        instantiate a new DlRPC object.
+
+        XXX Security
+
+        It's important to know that browser security restrictions will
+        forbid you to do XMLHttpRequest-s on other servers.  This
+        means that the domain of the main document must be exactly the
+        same as the domain where you'll do RPC requests.  If you need
+        to do requests on different domains, the usual solution is to
+        proxy the request through your own server.
+      </doc>
+    </constructor>
+    <events>
+      <event name="onStart">
+        <param name="self" type="DlRPC">Request object</param>
+        <doc>Triggered when the request starts.</doc>
+      </event>
+      <event name="onStop">
+        <param name="self" type="DlRPC">Request object</param>
+        <param name="args" type="Hash">Arguments from constructor</param>
+        <param name="req" type="XMLHttpRequest">Low-level request object</param>
+        <doc>
+          Called when the request was completed.  Note that this event
+          won't be called when the request times out.
+        </doc>
+      </event>
+      <event name="onTimeout">
+        <param name="self" type="DlRPC">Request object</param>
+        <param name="req" type="XMLHttpRequest">Low-level request object</param>
+        <doc>
+          Triggered when the request times out.
+        </doc>
+      </event>
+    </events>
+    <static-methods></static-methods>
+    <object-methods>
+      <method XXX="Code has changed!" hash="63e9a0a2e5247c4da8aad6147dde1f40" name="call">
+        <param name="newArgs" type="Hash">You can override here any arguments from constructor.  That's not very useful.</param>
+        <doc>
+          Call this method to start the request.
+        </doc>
+      </method>
+      <method hash="b78ed49d4396eb2f9955b1f29a78a2a2" internal="1" name="_start">
+        <param name="data"></param>
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

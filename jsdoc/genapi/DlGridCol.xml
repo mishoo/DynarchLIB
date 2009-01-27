@@ -1,0 +1,276 @@
+<sample>
+
+  <title>DlGridCol</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlGridCol</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlEventProxy〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈datagrid.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈container.js, drag.js, resizebar.js, dialog.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">cssRule</td>
+         <td class="doc"><span default="null" name="cssRule"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">iconClass</td>
+         <td class="doc"><span default="null" name="iconClass"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">id</td>
+         <td class="doc"><span default="null" name="id"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">label</td>
+         <td class="doc"><span default="null" name="label"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">resizable</td>
+         <td class="doc"><span default="true" name="resizable"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">true</td>
+       </tr>
+       <tr>
+         <td class="name">sortable</td>
+         <td class="doc"><span default="true" name="sortable"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">true</td>
+       </tr>
+       <tr>
+         <td class="name">style</td>
+         <td class="doc"><span default="null" name="style"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">tooltip</td>
+         <td class="doc"><span default="null" name="tooltip"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">visible</td>
+         <td class="doc"><span default="true" name="visible"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">true</td>
+       </tr>
+       <tr>
+         <td class="name">width</td>
+         <td class="doc"><span default="null" name="width"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+      <param default="null" name="cssRule"></param>
+      <param default="null" name="iconClass"></param>
+      <param default="null" name="id"></param>
+      <param default="null" name="label"></param>
+      <param default="true" name="resizable"></param>
+      <param default="true" name="sortable"></param>
+      <param default="null" name="style"></param>
+      <param default="null" name="tooltip"></param>
+      <param default="true" name="visible"></param>
+      <param default="null" name="width"></param>
+    </span>
+
+     </div>
+   </div>
+    </div>
+
+
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="getIconClass:object_method">getIconClass ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getLabel:object_method">getLabel ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getStyle:object_method">getStyle (<span class='param'>key</span>, <span class='param'>def</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">key</td>
+         <td class="doc"><span name="key"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">def</td>
+         <td class="doc"><span name="def"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getTooltip:object_method">getTooltip ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getWidth:object_method">getWidth ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="id:object_method">id ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="isResizable:object_method">isResizable ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="isSortable:object_method">isSortable ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="isVisible:object_method">isVisible ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setVisible:object_method">setVisible (<span class='param'>v</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">v</td>
+         <td class="doc"><span name="v"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="sort:object_method">sort ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+
+
+</sample>
+
+
+
+

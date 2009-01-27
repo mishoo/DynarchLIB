@@ -1,0 +1,229 @@
+<sample>
+
+  <title>DlSingleton</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlSingleton</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>— none —</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈singleton.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+     <div class="doc"><span>
+        This is a small framework for creating singletons.  A
+        singleton is an useful design pattern.  A singleton class is a
+        class that can be instantiated only once through an
+        application, therefore at most one object of that type will
+        ever exist.  For instance, our <a href='api://DlFlashUtils.xml'>DlFlashUtils</a> object is a
+        singleton.
+<p/>
+        Here's how to declare your own singleton:
+<p/>
+        <div sample="DlSingleton3"></div>
+<p/>
+        This way you can effectively hide the constructor of your
+        objects and therefore make sure that they are created only
+        once by forcing users to go through DlSingleton.
+<p/>
+        Note that the constructor of a singleton must not receive any
+        arguments.  This is important for the whole idea to work.
+      </span>
+
+     </div>
+   </div>
+    </div>
+
+
+    <div class="static-methods">
+      <h2>Static functions</h2>
+   <div class="method">
+        <h3 id="get:static_method">DlSingleton.get (<span class='param'>type</span>, <span class='param optional'>noCreate</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">type</td>
+         <td class="doc"><span name="type">Object type</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">noCreate</td>
+         <td class="doc"><span default="false" name="noCreate" optional="1">Don't create?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">false</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Checks to see if an object of the given type was already
+          created.  If so, it returns that object.
+<p/>
+          Otherwise, if <b>noCreate</b> is false (default) it will
+          instantiate such an object, save it and return it.  If
+          <b>noCreate</b> is true this function simply returns
+          <b>false</b>.
+<p/>
+          So you can check if a menu was already created with:
+<p/>
+          <div sample="DlSingleton1"></div>
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="register:static_method">DlSingleton.register (<span class='param'>type</span>, <span class='param'>ctor</span>, <span class='param optional'>globalize</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">type</td>
+         <td class="doc"><span name="type">Object type</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">ctor</td>
+         <td class="doc"><span name="ctor">Reference to constructor</span>
+</td>
+         <td class="type">[<b>〈Function〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">globalize</td>
+         <td class="doc"><span default="false" name="globalize" optional="1">Globalize?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">false</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Registers a new singleton object.  The <b>type</b> must be a
+          name for your object—it can be anything you want, not
+          necessarily the name of the constructor.
+<p/>
+          <b>ctor</b> must be a reference to the constructor function.
+<p/>
+          If you pass <b>globalize</b> true, then this will create a
+          global function with the name given in <b>type</b>.  You can
+          use this function instead of calling
+          <a href='api://DlSingleton.xml:type=static_method:func=get'>DlSingleton.get(type)</a> when you want to
+          instantiate/retrieve the object.  I.e.:
+<p/>
+          <div sample="DlSingleton2"></div>
+<p/>
+          It's important to note that <b>globalize</b> doesn't publish
+          the constructor, but a function that is simply a shortcut
+          for calling DlSingleton.get.  Therefore you can still be
+          sure that the object will be instantiated at most once.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+
+  </text>
+<code id="DlSingleton1" type="js">
+            // supposing you're at a stage when you can do something
+            // useful if the menu was already created, but you don't
+            // want to do anything (not even create it) otherwise.
+            var menu = DlSingleton.get("myMenu", true);
+            if (menu) {
+                // menu exists, do something with it
+            }
+          </code>
+<code id="DlSingleton2" type="js">
+            DlSingleton.register("MyWickedObject", MyWickedObjectConstructor);
+
+            // later, the following 2 are equivalent:
+            DlSingleton.get("MyWickedObject");
+            MyWickedObject();
+
+            // and also the following 2:
+            DlSingleton.get("MyWickedObject", true);
+            MyWickedObject(true);
+            // (to avoid instantiation)
+          </code>
+<code id="DlSingleton3" type="js">
+          // @require singleton.js
+          (function(){
+
+              MyPopupMenu.inherits(DlHMenu);
+              function MyPopupMenu() {
+                  DlHMenu.call(this, {});
+                  // do your menu initialization here
+              };
+
+              MyPopupMenu.prototype.myCustomFunc = function() {
+                  // whatever
+              };
+
+              // register the singleton.  The object is NOT
+              // instantiated at this time.
+              DlSingleton.register("myMenu", MyPopupMenu);
+
+          })();
+
+          // Now, note that MyPopupMenu is not EXPORT-ed,
+          // therefore the constructor is not available here.  If we want
+          // to get our menu, we can use the following:
+
+          var menu = DlSingleton.get("myMenu");
+
+          // the above will create the menu and save a reference to it.
+          // Next time DlSingleton.get("myMenu") is called,
+          // it will return a reference to the already created object.
+
+          menu.myCustomFunc();
+        </code>
+
+
+</sample>
+
+
+
+

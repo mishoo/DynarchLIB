@@ -1,0 +1,379 @@
+<sample>
+
+  <title>DlDrag</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlDrag</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlEventProxy〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈drag.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈jslib.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">animation</td>
+         <td class="doc"><span default="{¶      &#34;length&#34; : 30,¶      &#34;fps&#34; : 50¶}" name="animation"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">{<br/>      "length" : 30,<br/>      "fps" : 50<br/>}</td>
+       </tr>
+       <tr>
+         <td class="name">cursor</td>
+         <td class="doc"><span default="{¶      &#34;noDrop&#34; : &#34;CURSOR-NO-DROP&#34;,¶      &#34;okDrop&#34; : &#34;CURSOR-DROP&#34;¶}" name="cursor"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">{<br/>      "noDrop" : "CURSOR-NO-DROP",<br/>      "okDrop" : "CURSOR-DROP"<br/>}</td>
+       </tr>
+       <tr>
+         <td class="name">delta</td>
+         <td class="doc"><span default="3" name="delta"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">3</td>
+       </tr>
+       <tr>
+         <td class="name">draggingClass</td>
+         <td class="doc"><span default="&#34;DlWidget-dragging&#34;" name="draggingClass"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">"DlWidget-dragging"</td>
+       </tr>
+       <tr>
+         <td class="name">_dragging</td>
+         <td class="doc"><span default="false" internal="1" name="_dragging"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">false</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+      <param default="{¶      &#34;length&#34; : 30,¶      &#34;fps&#34; : 50¶}" name="animation"></param>
+      <param default="{¶      &#34;noDrop&#34; : &#34;CURSOR-NO-DROP&#34;,¶      &#34;okDrop&#34; : &#34;CURSOR-DROP&#34;¶}" name="cursor"></param>
+      <param default="3" name="delta"></param>
+      <param default="&#34;DlWidget-dragging&#34;" name="draggingClass"></param>
+      <param default="false" internal="1" name="_dragging"></param>
+    </span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="events">
+      <h2>Events</h2>
+   <div class="method">
+        <h3 id="onDrop:object_event">onDrop ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onStartDrag:object_event">onStartDrag ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="doDrop:object_method">doDrop (<span class='param'>widget</span>, <span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">widget</td>
+         <td class="doc"><span name="widget"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="dropOK:object_method">dropOK (<span class='param'>widget</span>, <span class='param'>ev</span>, <span class='param'>target</span>, <span class='param'>inside</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">widget</td>
+         <td class="doc"><span name="widget"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">target</td>
+         <td class="doc"><span name="target"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">inside</td>
+         <td class="doc"><span name="inside"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="makeElementCopy:object_method">makeElementCopy (<span class='param'>widget</span>, <span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">widget</td>
+         <td class="doc"><span name="widget"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="moving:object_method">moving (<span class='param'>widget</span>, <span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">widget</td>
+         <td class="doc"><span name="widget"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="reset:object_method">reset (<span class='param'>wasCancel</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">wasCancel</td>
+         <td class="doc"><span name="wasCancel"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="startOK:object_method">startOK (<span class='param'>widget</span>, <span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">widget</td>
+         <td class="doc"><span name="widget"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_handleDrop:object_method">_handleDrop (<span class='param'>src</span>, <span class='param'>dest</span>, <span class='param'>pos</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">src</td>
+         <td class="doc"><span name="src"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">dest</td>
+         <td class="doc"><span name="dest"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">pos</td>
+         <td class="doc"><span name="pos"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+
+
+</sample>
+
+
+
+

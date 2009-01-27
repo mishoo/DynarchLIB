@@ -1,0 +1,26 @@
+<api file="exception.js">
+  <object name="DlException">
+    <constructor>
+      <param name="message"></param>
+      <param name="code"></param>
+    </constructor>
+    <static-methods>
+      <method hash="83c344b4d0ed887a2cb1655678339f69" name="blockDefaultEvent">
+        <doc></doc>
+      </method>
+      <method hash="9b487846766114d1705014a2bd62ad76" name="defineException">
+        <param name="className"></param>
+        <param name="base"></param>
+        <doc></doc>
+      </method>
+      <method hash="fb3063548022e947f104fd52e5571c76" name="stopEventBubbling">
+        <doc></doc>
+      </method>
+    </static-methods>
+    <object-methods>
+      <method hash="f577a78df3fe5fbd49e5d19fd31953a3" name="toString">
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

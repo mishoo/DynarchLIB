@@ -1,0 +1,240 @@
+<api file="tree.js" show="1">
+
+  <object base="DlContainer" name="DlTree">
+    <constructor>
+      <param name="args"></param>
+      <doc>
+        All arguments are passed to 〈DlContainer|base class〉
+        constructor.
+
+        This is a tree widget, similar to what you can see in this
+        interactive documentation in the left bar.
+
+        A tree usually contains 〈DlTreeItem|tree items〉, but can also
+        contain any kind of widget.
+
+        See our <a href="sample://widgets-tree.xml">tree samples</a>
+        for some code.
+      </doc>
+    </constructor>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="057435543b9bdbe69cfb9e303f4fc28b" name="addSeparator">
+        <param name="cls" optional="1" type="String">CSS class name</param>
+        <doc>
+          Adds a separator in the tree.  If <b>cls</b> is given, it
+          will have the specified class name, otherwise
+          “DlTree-separator” is used.
+        </doc>
+      </method>
+      <method hash="e60b489ed7869793437310a6882acdcc" name="getItem">
+        <param name="idx" type="Number">Item index</param>
+        <doc>
+          Returns the 〈DlTreeItem|item〉 at the specified index.
+        </doc>
+      </method>
+      <method hash="001409fca73ccbf6d05b73fbad753b6e" name="getItems">
+        <doc>
+          Returns an array with all items in this tree (note, it
+          doesn't include subtrees).
+        </doc>
+      </method>
+      <method hash="6c1595e7631c5ae21023024bb2cde5cd" name="appendWidget">
+        <param name="w"></param>
+        <param name="pos"></param>
+        <doc></doc>
+      </method>
+      <method hash="9d2e8bf8fd94eb6315bd365283cc5c59" name="removeWidget">
+        <param name="w"></param>
+        <doc></doc>
+      </method>
+      <method hash="2ba6eff6f55d2c906b69cda8c0d7fe5e" internal="1" name="_appendWidgetElement">
+        <param name="w"></param>
+        <param name="pos"></param>
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+
+  <object base="DlContainer" name="DlTreeItem">
+    <constructor>
+      <param default="null" name="iconClass" type="String">Icon for this tree item</param>
+      <param default="null" name="itemClassName" type="String">The class name of the item element</param>
+      <param default="null" name="label" type="String"></param>
+      <doc>
+        A tree item widget.  This is simply a container which adds
+        helper functions needed for tree items (expand / collapse,
+        code to display tree lines) and can display a label and a
+        icon.  A tree doesn't keep information about selected items
+        and such—you can use radio buttons for this, as described in
+        our <a href="sample://widgets-tree.xml">tree sample</a>.
+      </doc>
+    </constructor>
+    <events>
+      <event name="onExpand">
+        <doc>Triggered when this item's subtree is expanded</doc>
+      </event>
+      <event name="onCollapse">
+        <doc>Triggered when this item's subtree is collapsed</doc>
+      </event>
+      <event name="onLabelMouseDown">
+        <doc>Triggered when mouse button is pressed on this item's label</doc>
+      </event>
+    </events>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="d4a2ec16af4a08f6eed90f85bdb88cae" name="addSubItem">
+        <param name="item" type="DlTreeItem">Item to append to <b>this</b> item's tree</param>
+        <param name="pos" optional="1">Position of this item (as accepted by 〈DlContainer::_appendWidgetElement〉</param>
+        <doc>
+          Adds the given <b>item</b> to this item's subtree.  If no
+          subtree exists, one is created automatically.
+        </doc>
+      </method>
+      <method hash="9dd00e5595e9cfcdf97d78f0fbcc59d4" name="expand">
+        <param default="true" name="expand" optional="1" type="boolean">Whether to expand or collapse it (<b>true</b> to expand)</param>
+        <param default="false" name="nohooks" optional="1" type="boolean">Don't trigger events?</param>
+        <doc>
+          Expands or collapses this item (depending on the value of
+          the <b>expand</b> argument, which is by default
+          <b>true</b>).
+        </doc>
+      </method>
+      <method hash="3b163aad0d181ebc294459a1ef074535" name="expandParents">
+        <param default="true" name="expand" optional="1" type="boolean">Expand or collapse?</param>
+        <doc>
+          Expands or collapses all parents of the current item.  For
+          example, to make sure an item is visible, call
+          item.expandParents(true).
+        </doc>
+      </method>
+      <method hash="eb0ddd70287919dcc89fdaa81fb13c28" name="getDivElement">
+        <doc>
+          A tree item is split into two DOM parts: one which contains
+          the label, the expander button (if there is a subtree), and
+          the icon (if any).  Another part is a DIV that contains the
+          subtree.
+
+          This function returns the first DIV.
+        </doc>
+      </method>
+      <method hash="e3048207a168cb6f401374b319dc1ed2" name="getSubtreeDiv">
+        <doc>
+          Returns the DIV that's holding the item's subtree.
+        </doc>
+      </method>
+      <method hash="d137ae598bdc56e77ece410215703620" name="getTableElement">
+        <doc>
+          Returns this item's TABLE element.
+        </doc>
+      </method>
+      <method hash="be9f04bd748aa4c0e793de073752efca" name="getExpanderElement">
+        <doc>
+          Returns the table cell containing the expander icon.
+        </doc>
+      </method>
+      <method hash="e0c8d34d0afb71c1bd8cb3ffc66f0a98" name="getIconElement">
+        <doc>
+          Returns the table cell containing the icon.
+        </doc>
+      </method>
+      <method hash="c98400f8c3165691d05041f5c3e864b9" name="getIndex">
+        <doc>
+          Returns the index of this item in the parent tree.
+        </doc>
+      </method>
+      <method hash="d19d0cfab8b3111ca1d5515ff6c19065" name="getParentItem">
+        <doc>
+          Returns the parent item.
+        </doc>
+      </method>
+      <method hash="a17166dfd6a504c4d53462145a4d47a1" name="getPath">
+        <return type="Array">array of 〈DlTreeItem〉-s</return>
+        <doc>
+          Returns all parent items (most nested one first).
+        </doc>
+      </method>
+      <method hash="ef9c569f2593146947eb0c61a91351c4" name="getSubtreeWidget">
+        <doc>
+          Returns the subtree widget of this item.
+        </doc>
+      </method>
+      <method hash="2178417a445a34ff22bb27acc7eb5bf7" name="isExpanded">
+        <return type="boolean"><b>true</b> if the item is expanded, <b>false</b> otherwise.</return>
+        <doc>
+          Note, it will also return false if there is no subtree.
+        </doc>
+      </method>
+      <method hash="9454f6dee31764d7d2a1a8a4d76e14d5" name="setTree">
+        <param name="tree" type="DlWidget|Function">New subtree for this item</param>
+        <param default="false" name="expand" optional="1" type="boolean">Automatically expand it?</param>
+        <param default="null" name="timeout" optional="1" type="Number">Cache timeout</param>
+        <doc>
+          Sets the subtree of this item.  You'd normally call this
+          function only once for an item.
+
+          The <b>tree</b> argument can be any 〈DlWidget〉 (but it will
+          usually be a 〈DlTree〉), or it can be a function.  If it's a
+          function, it is called the first time the item is expanded
+          and it must return a 〈DlWidget〉 (again, usually a 〈DlTree〉).
+
+          The result of the function is normally cached so the
+          function won't be called a second time.  But if you want to
+          “expire” the returned widget, and have your function called
+          again after a while, you can pass the <b>timeout</b>
+          argument.
+        </doc>
+      </method>
+      <method hash="4c3f8e124da09b483987a11df4bf1fb7" name="toggle">
+        <doc>
+          Toggles the item's subtree (expand if currently collapsed,
+          or the reverse).
+        </doc>
+      </method>
+      <method hash="280010c652c36855b13cf22deebc2c46" name="updateExpanderState">
+        <doc>
+          Internal function - called to update the state of the
+          expander icon.
+        </doc>
+      </method>
+      <method hash="daa7bb796024589c282b8758cbd2482d" name="getContentElement">
+        <doc></doc>
+      </method>
+      <method hash="fc1a4520bc8ae08d601db922a060a8bb" name="initDOM">
+        <doc></doc>
+      </method>
+      <method hash="9d2a8cd8767d2bec4a18f6eea5826b8b" name="setIconClass">
+        <param name="iconClass"></param>
+        <doc></doc>
+      </method>
+      <method hash="8f936b1ee0478abad05d41b59a5ed333" internal="1" name="_appendWidgetElement">
+        <param name="w"></param>
+        <param name="subtree"></param>
+        <doc></doc>
+      </method>
+      <method hash="8f5a012b2a14de0fb4b1860a6c4d6e1c" internal="1" name="_createElement">
+        <doc></doc>
+      </method>
+      <method hash="87805e237eb1fef81136dc8f6454e565" internal="1" name="_onLabelMouseDown">
+        <param name="ev"></param>
+        <doc></doc>
+      </method>
+      <method hash="589acd2857e9af3a4b7648e628c4f7bf" internal="1" name="_removeWidgetElement">
+        <param name="w"></param>
+        <doc></doc>
+      </method>
+      <method hash="42f98119a6ad84bd3e9d4c0a36ab7088" internal="1" name="_setFirstLast">
+        <param name="isFirst"></param>
+        <param name="isLast"></param>
+        <doc></doc>
+      </method>
+      <method hash="fb97d7becd3f66642ee971872050aa7a" internal="1" name="_setFocusedStyle">
+        <param name="focused"></param>
+        <doc></doc>
+      </method>
+      <method hash="901ab32d386ac5b185cf46b67e9100ff" internal="1" name="_setListeners">
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

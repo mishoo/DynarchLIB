@@ -1,0 +1,184 @@
+<sample>
+
+  <title>Implementing Drag'n'Drop</title>
+
+  <text>
+
+    <p>
+      All widgets are capable of drag'n'drop.  In order to make use of
+      it, you will need to write a simple class that handles the DnD
+      events.  This class should inherit from 〈DlDrag〉.  Note that you
+      won't actually have to write a derived class, it's usually
+      enough to overwrite some functions from a fresh 〈DlDrag〉
+      object—as you can see in the following sample.
+    </p>
+
+    <p>
+      First sample shows you basic DnD support.  We create 3 “source”
+      widgets (yellow) and 3 containers (white).  Any container
+      accepts any source widget.  We're using a single 〈DlDrag〉 object
+      to handle DnD.  Explanations below.
+    </p>
+
+    <div sample="dnd1" />
+
+    <p class="dimnote">
+      Note that—lazy as I am—I used copy/paste and wrote inline
+      styles, rather than adding some external CSS to this page (which
+      would have been the right solution).  The code can be really
+      short.
+    </p>
+
+    <p>
+      So, as you can see, we enable drag'n'drop support by creating a
+      〈DlDrag〉 object which we pass to widgets that we want to be
+      draggable using the “drag” argument in constructor.  We need to
+      override at least two functions:
+    </p>
+
+    <ul>
+      <li>
+        〈DlDrag::dropOK〉 — this function needs to decide if dropping
+        the object is permitted on the current mouse position.  It
+        should save this result in the “this.canDrop” property of the
+        〈DlDrag〉 object and also return it.  Additionally, this
+        function can (and should) save various other information about
+        the current dropping spot.  In this sample we save the target
+        widget in the “this.target” property.
+      </li>
+      <li>
+        〈DlDrag::doDrop〉 — perform the actual drop operation.  This
+        will be called by the framework automatically when a DnD
+        gesture is successfully completed (that is, after dropOK()
+        returned true and the mouse button was depressed).
+      </li>
+    </ul>
+
+    <p>
+      There are a few other interesting functions that you can
+      override in 〈DlDrag〉 — see the API reference.
+    </p>
+
+    <h2>〈DlDragTreeItem〉</h2>
+
+    <p>
+      This is a specialization of the 〈DlDrag〉 object intended to
+      provide drag'n'drop support for tree items.  Here is a quick
+      sample:
+    </p>
+
+    <div sample="dnd2" />
+
+  </text>
+
+  <code id="dnd1" type="js" canrun="true"><![CDATA[
+
+    var drag = new DlDrag({});
+
+    // this function will be called automatically and it has to
+    // decide if it's OK to drop sourceWidget onto targetWidget.
+    drag.dropOK = function(sourceWidget, ev, targetWidget, inside) {
+            this.target = targetWidget;
+            this.canDrop = [ dest1, dest2, dest3 ].contains(targetWidget);
+            return this.canDrop;
+    };
+
+    // this will be called if the mouse button was depressed in a place
+    // where dropOK() returned true.  Handles the actual drop operation.
+    drag.doDrop = function(sourceWidget, ev) {
+            var target = this.target;
+            target.appendWidget(sourceWidget);
+    };
+
+    var dlg = new DlDialog({ title: "DnD sample", quitBtn: "destroy", resizable: true });
+    var cont = new DlContainer({ parent: dlg, fillParent: true });
+    cont.setStyle({ position : "relative",
+                    padding  : "10px"
+                  });
+
+    var src = new DlWidget({ parent: cont, drag: drag });
+    src.setStyle({ border           : "1px solid red",
+                   marginBottom     : "3px",
+                   background       : "yellow",
+                   padding          : "1px" });
+    src.setContent("src 1");
+    src.setUnselectable();
+
+    var src = new DlWidget({ parent : cont, drag: drag });
+    src.setStyle({ border           : "1px solid red",
+                   marginBottom     : "3px",
+                   background       : "yellow",
+                   padding          : "1px" });
+    src.setContent("src 2");
+    src.setUnselectable();
+
+    var src = new DlWidget({ parent : cont, drag: drag });
+    src.setStyle({ border           : "1px solid red",
+                   marginBottom     : "3px",
+                   background       : "yellow",
+                   padding          : "1px" });
+    src.setContent("src 3");
+    src.setUnselectable();
+
+    var dest1 = new DlContainer({ parent: cont });
+    dest1.setStyle({ border     : "1px solid green",
+                     background : "white",
+                     position   : "absolute",
+                     right      : "10px",
+                     bottom     : "10px",
+                     width      : "60px",
+                     height     : "60px",
+                     padding    : "6px" });
+
+    var dest2 = new DlContainer({ parent: cont });
+    dest2.setStyle({ border     : "1px solid green",
+                     background : "white",
+                     position   : "absolute",
+                     right      : "10px",
+                     top        : "10px",
+                     width      : "60px",
+                     height     : "60px",
+                     padding    : "6px" });
+
+    var dest3 = new DlContainer({ parent: cont });
+    dest3.setStyle({ border     : "1px solid green",
+                     background : "white",
+                     position   : "absolute",
+                     left       : "10px",
+                     bottom     : "10px",
+                     width      : "60px",
+                     height     : "60px",
+                     padding    : "6px" });
+
+    dlg.setSize({ x: 400, y: 300 });
+    dlg.centerOnParent();
+    dlg.show();
+  ]]></code>
+
+  <code id="dnd2" type="js" canrun="true"><![CDATA[
+    var drag = new DlDragTreeItem({});
+    var group = DlRadioGroup.get();
+
+    // just a helper function that creates the DlTreeItem
+    // and the DlRadioButton within it.
+    function createItem(parent, label) {
+            var item = new DlTreeItem({ parent        : parent,
+                                        drag          : drag,
+                                        itemClassName : "DlTreeItem-withRadio" });
+            var button = new DlRadioButton({ parent : item,
+                                             label  : label,
+                                             value  : label,
+                                             group  : group });
+            return item;
+    };
+
+    var tree = new DlTree({ parent: getDocCanvas() });
+
+    var fruits = createItem(tree, "Fruits");
+    [ "Apples", "Pears", "Oranges" ].foreach(createItem.$C(fruits));
+
+    var vegetables = createItem(tree, "Vegetables");
+    [ "Potatoes", "Tomatoes", "Carrots" ].foreach(createItem.$C(vegetables));
+  ]]></code>
+
+</sample>

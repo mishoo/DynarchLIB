@@ -1,0 +1,2423 @@
+<api file="jslib.js" show="1">
+  <object name="Array">
+
+    <constructor>
+      <doc>
+        This is a standard JavaScript object.  DynarchLIB adds a few
+        useful extensions.
+      </doc>
+    </constructor>
+
+    <static-methods>
+      <method hash="e1953523096f01fe8657c07a47a659b2" name="$">
+        <param name="obj" type="Array">Source array object</param>
+        <param name="start" optional="1" type="Number">Index to start copy from</param>
+        <return type="Array">New array</return>
+        <doc>
+          Returns a copy of the source array, optionally starting at
+          the specified index (<b>start</b>).
+        </doc>
+      </method>
+      <method hash="5d3da3d5f18c4e51e5bb3d9b469b8927" name="hashKeys">
+        <param name="obj" type="Object"></param>
+        <return type="Array">New array</return>
+        <doc>
+          Returns an array containing the keys (property names) in the
+          given object (hash).
+        </doc>
+      </method>
+      <method hash="131972585b6b76d3760c068c607edde7" name="hashValues">
+        <param name="obj" type="Object"></param>
+        <return type="Array">New array</return>
+        <doc>
+          Returns an array containing the values in the given object.
+        </doc>
+      </method>
+    </static-methods>
+
+    <object-methods>
+
+      <method deprecated="1" hash="ac8fa7051708d37310a396b939aa3422" name="accumulate" undoc="1" varargs="1">
+        <param name="f"></param>
+        <param name="val"></param>
+        <doc>
+          <fixme>Document or remove?</fixme>
+        </doc>
+      </method>
+
+      <method deprecated="1" hash="6504ebe59828008299bfe866fd33b14a" name="assign_each" undoc="1">
+        <param name="f"></param>
+        <param name="obj" optional="1"></param>
+        <doc>
+          <fixme>Document or remove?</fixme>
+        </doc>
+      </method>
+
+      <method deprecated="1" hash="123aa6f491892e22f464bb16a4ea448b" name="r_assign_each" undoc="1">
+        <param name="f"></param>
+        <param name="obj" optional="1"></param>
+        <doc>
+          <fixme>Document or remove?</fixme>
+        </doc>
+      </method>
+
+      <method hash="8df3627185871b4f9fd32e5b2e325b13" name="contains">
+        <param name="el">Element to search for</param>
+        <return type="boolean"><b>true</b> if <b>el</b> exists in the array</return>
+      </method>
+
+      <method hash="365a623d990447c37ede7d94baa63167" name="find">
+        <param name="el">Element to search for</param>
+        <return type="Number">Position of the element, or -1 if not found.</return>
+        <doc>
+          Search for the given element in the array and returns the
+          index of its first occurrence.  If no occurrence has been
+          found, return -1.
+        </doc>
+      </method>
+
+      <method hash="fcade7002151a40c5867f7f7ea284306" name="foreach">
+        <param name="f" type="Function">Callback function</param>
+        <param name="obj" optional="1" type="Object">Context object for your function</param>
+        <return>Undefined or some value you specify with $RETURN — see below</return>
+        <doc>
+          Calls the given function for each element of the array.
+          Optionally, the function will be called in the context of
+          the specified object (<b>obj</b>).  If <b>obj</b> is not
+          specified, <b>f</b> will be called in the context of the
+          array.
+
+          Loop control methods are available: $CONTINUE(), $BREAK(),
+          $RETURN(val).  $CONTINUE() will stop the rest of your
+          function and go on with the next iteration.  $BREAK() will
+          stop looping completely and return undefined.  $RETURN(val)
+          will stop looping and <b>val</b> will be the result of the
+          foreach() call.
+
+          The function that you supply receives 2 arguments: the
+          current element and its zero-based index.
+
+          This function is exemplified more in our <a href="sample://extensions-array.xml">array extensions
+          sample</a>.
+        </doc>
+      </method>
+
+      <method hash="85161276e5b4d6e0a71160c8642930da" name="r_foreach">
+        <param name="f"></param>
+        <param name="obj" optional="1"></param>
+        <doc>
+          Similar to 〈foreach()〉, but iterates backwards.
+        </doc>
+      </method>
+
+      <method hash="d2674dafabcdcea91f773cb1d6e9148b" name="map" varargs="1">
+        <param name="f" type="Function|String"></param>
+        <param name="obj" optional="1" type="Object"></param>
+        <return type="Array">New array</return>
+        <doc>
+          Transforms the original array into a new array containing
+          values returned by your function.  <b>f</b> can be a
+          Function or a String.  Description of each case:
+
+          <dl>
+            <dt><b>f</b> is a Function</dt>
+            <dd>
+              It will be called for each element in the array with the
+              element and its index as arguments.  The value that
+              <b>f</b> returns will be collected in the returned
+              array.
+            </dd>
+            <dt><b>f</b> is a String</dt>
+            <dd>
+              This is useful for an array of objects.  For each
+              element in the array, it checks if element[f] is a
+              function.  If so, it gets called in the context of the
+              element and its return value is collected.  If it's a
+              property, it's value is collected.
+            </dd>
+          </dl>
+
+          This function is exemplified more in our <a href="sample://extensions-array.xml">array extensions
+          sample</a>.
+        </doc>
+      </method>
+
+      <method hash="d7454069af4448583613975ae8ca024d" name="r_map" varargs="1">
+        <param name="f"></param>
+        <param name="obj" optional="1"></param>
+        <doc>
+          Similar to 〈map()〉, but iterates backwards.
+        </doc>
+      </method>
+
+      <method hash="1c2053598e3dc4e27bd77d8995bad922" name="grep" varargs="1">
+        <param name="cond" removed="1" type="RegExp|Function|String"></param>
+        <param name="obj" optional="1" type="Object"></param>
+        <return type="Array">New array containing matching values</return>
+        <doc>
+          grep() collects elements elements that match a certain
+          condition (<b>cond</b>).  <b>cond</b> can be of the
+          following types:
+
+          <ul>
+            <li>
+              〈RegExp〉 — then grep will collect those elements that
+              match the given regexp.
+            </li>
+            <li>
+              〈Function〉 — grep will call this function for each
+              element and will collect those elements for which the
+              function returned <b>true</b>.
+            </li>
+            <li>
+              〈String〉 — grep will assume that <b>cond</b> is a member
+              property (or method!) of each element in the array, and
+              it will collect those elements for which the method
+              call, or property, evaluates to <b>true</b>.
+            </li>
+          </ul>
+
+          Here is an example for the last case, since it might seem
+          more complicated:
+
+          <js>
+            var o1 = { foo: true };
+            var o2 = { foo: false };
+            var o3 = { foo: true };
+            var a = [ o1, o2, o3 ];
+            a = a.grep("foo"); // now a contains only o1 and o3
+          </js>
+
+          It can be a function as well:
+
+          <js>
+            // let's create an object
+            function Person(age) {
+              this.age = age;
+            };
+            Person.prototype.isMinor = function() {
+              return this.age &lt; 18;
+            };
+
+            var o1 = new Person(10);
+            var o2 = new Person(20);
+            var o3 = new Person(18);
+            var a = [ o1, o2, o3 ];
+            a = a.grep("isMinor"); // now a contains only o1
+          </js>
+
+          This function is exemplified more in our <a href="sample://extensions-array.xml">array extensions
+          sample</a>.
+        </doc>
+      </method>
+
+      <method hash="7d9283dd328b288d5960b759afc6dd0a" name="grep_first">
+        <param name="f" type="Function">Callback function</param>
+        <return>The first matching value</return>
+        <doc>
+          Returns the first value from the array for which your
+          supplied callback returns <b>true</b>.  If no such value was
+          found, returns <b>null</b>.
+        </doc>
+      <param name="i"></param></method>
+
+      <method hash="c655f533ab88593969d4ccf0064a47ea" name="grep_last">
+        <param name="f" type="Function"></param>
+        <doc>
+          Same as 〈grep_first()〉 but searches backwards from the end
+          of the array.
+        </doc>
+      <param name="i"></param></method>
+
+      <method hash="9e8080a9fc13f44fa740913d0d0425b5" name="keys_map">
+        <param name="obj" type="Object">A hash table</param>
+        <return>New array containing values in the given hash</return>
+        <doc>
+          Assumes each element in the array is a key in the given
+          object and returns an array containing the associated
+          values.
+
+          For example:
+
+          <js>
+            var obj = { foo : 'JavaScript is ',
+                        bar : 'poor',
+                        baz : 'great' };
+            var a = [ "foo", "baz" ];
+            var b = a.keys_map(obj);
+          </js>
+
+          b is now [ "JavaScript is", "great" ].
+        </doc>
+      </method>
+
+      <method hash="e8d42d2aa1cf55689e8dcdb4ddca681e" name="limitIndex">
+        <param name="idx" type="Number">An index value you want to bound</param>
+        <return type="Number">A valid index in the array</return>
+        <doc>
+          This function bounds the given <b>idx</b> within the limits
+          of a valid index in the array:
+
+          if <b>idx</b> is smaller than zero, it returns 0.  If
+          <b>idx</b> is greater than, or equal to array.length, it
+          returns array.length - 1.  Returns <b>idx</b> unchanged
+          otherwise.
+        </doc>
+      </method>
+
+      <method hash="676611776ef87b3343fb14711faca9cb" name="nullLimitIndex">
+        <param name="idx" type="Number">An index value</param>
+        <return><b>idx</b> or <b>null</b></return>
+        <doc>
+          Returns the <b>idx</b> if it's a valid index in the array,
+          or null otherwise.
+        </doc>
+      </method>
+
+      <method hash="b145b5957cf14bd32f6dd3c150e46f08" name="rotateIndex">
+        <param name="idx" type="Number">Index</param>
+        <return>Valid index in the array</return>
+        <doc>
+          Returns a valid index in the array as follows: if the given
+          <b>idx</b> is a valid index, return it.  If it's less than
+          zero, returns the maximum valid index.  If it's more than
+          the maximum valid index, returns zero.
+        </doc>
+      </method>
+
+      <method hash="a8fdd93953cdd86b133c888498994284" name="max" varargs="1">
+        <param name="f" optional="1" type="Function"></param>
+        <param name="obj" optional="1" type="Object"></param>
+        <return>The maximum value in the array</return>
+        <doc>
+          When you pass no arguments, this function simply returns the
+          maximum value from the array according to 〈Math.max()〉.
+
+          If you pass a function <b>f</b>, the maximum value returned
+          from that function (called for each element in the array)
+          will be returned.
+        </doc>
+      </method>
+
+      <method hash="60d4fe8dc533c85e2943e69ba1205a27" name="min" varargs="1">
+        <param name="f" optional="1" type="Function"></param>
+        <param name="obj" optional="1" type="Object"></param>
+        <doc>
+          Similar to 〈max()〉, but returns the smallest value.
+        </doc>
+      </method>
+
+      <method hash="380a74bb58b1b5806635b826ed36dcf7" name="peek">
+        <return>Last element in the array</return>
+      </method>
+
+      <method hash="5078a21d044c7fe6449433b0bdf0c732" name="pushUnique">
+        <param name="el"></param>
+        <return>New length of the array, or <b>null</b> if unchanged</return>
+        <doc>
+          Appends <b>el</b> to the array only if it wasn't there
+          already.  If <b>el</b> was appended, it returns the new
+          length of the array (guaranteed to be greater than zero).
+          If <b>el</b> was already in the array, return <b>null</b>.
+        </doc>
+      </method>
+
+      <method hash="d52830064664c809f4b4afff9ead992f" name="mergeSort">
+        <param name="cmp" type="Function">Comparator function</param>
+        <param default="false" name="reverse" optional="1" type="boolean">Reverse sort?</param>
+        <return type="Array">Sorted array.  The original array is not changed</return>
+        <doc>
+          According to the <a href="http://docs.sun.com/source/816-6408-10/array.htm#1196882">JavaScript
+          client-side reference</a>, the sort() function already
+          provided by browsers in Array objects should be “stable”.
+          What does this mean?  If, according to the comparator
+          function, 2 elements are equal, then their positions
+          (relative to each other) are guaranteed to remain the same
+          in the sorted array.
+
+          However, in Firefox for instance this doesn't hold true.
+
+          The mergeSort() method that we added to Array-s is a stable
+          sort function.  It returns a new array containing the sorted
+          values.
+
+          <b>cmp</b> is a function that takes two arguments <em>a</em>
+          and <em>b</em> and returns a value as follows:
+
+          <ul>
+            <li>If <em>a</em> &lt; <em>b</em> return -1 (or another
+            strictly negative value)</li>
+            <li>If <em>a</em> &gt; <em>b</em> return +1 (or another
+            strictly positive value)</li>
+            <li>If <em>a</em> == <em>b</em> return 0 (the order of
+            <em>a</em> and <em>b</em> is guaranteed to remain the same
+            in the sorted array)</li>
+          </ul>
+
+          If you pass <b>reverse = true</b>, the meaning of the
+          <b>cmp</b> function will be inversed—this simply means that
+          it will sort descending instead of ascending.
+        </doc>
+      </method>
+
+      <method hash="b54a132fc30d6643f804038ec84afad5" name="qsort">
+        <param name="cmp" type="Function">Comparator function</param>
+        <param default="false" name="reverse" optional="1" type="boolean">Reverse sort?</param>
+        <return type="boolean">true if the array was modified</return>
+        <doc>
+          Sorts the elements in the current array based on the “quick
+          sort” algorithm.  Pass a comparator function.
+
+          Note that qsort() is a <em>destructive function</em>—it
+          modifies the given array in place, instead of returning a
+          brand new one.  If you need the original, be sure to work on
+          a copy.  See 〈Array.$()〉 to create a copy of an array.
+        </doc>
+      </method>
+
+      <method hash="ae949745a28c800397b7abcb7d2f2d59" name="remove">
+        <param name="el">Element to remove</param>
+        <return>this</return>
+        <doc>
+          Removes all occurrences of the given element from the array.
+        </doc>
+      </method>
+
+      <method hash="5550efc07ba415b28b2efe0ed007ed6f" name="toHash">
+        <param name="val" optional="1" type="Object|Function">Value or function</param>
+        <param default="null" name="obj" optional="1" type="Object"></param>
+        <return>New hash table</return>
+        <doc>
+          This function transforms the current array into an hash
+          table by using the array elements as keys, and the given
+          value <b>val</b> as value.
+
+          If <b>val</b> is not passed, then the values of the returned
+          hash will be the indexes of each element + 1.
+
+          If <b>val</b> is a <b>Function</b>, it will be called for
+          each key in the hash in the context of <b>obj</b> object (or
+          null if <b>obj</b> was not passed) and its return value will
+          be used for that key's value.  It will receive 2 arguments
+          (the key and the iteration number, starting with zero).
+          This can be useful in various cases.  For example, here is
+          how we can create a set of bit flags:
+
+          <js><![CDATA[
+            var flags = "VIEWED REPLIED FORWARDED SPAM IMPORTANT"
+                        .split(/\s/);
+                        .toHash(function(key, index) {
+                            return 1 << (index + 1); // index is zero-based
+                        });
+            // now we have: flags.VIEWED     == 1
+            //              flags.REPLIED    == 2
+            //              flags.FORWARDED  == 4
+            //              flags.IMPORTANT  == 8
+          ]]></js>
+        </doc>
+      </method>
+
+      <method hash="716d3e29de12b72a94193bb065287a4a" name="toHash2">
+        <return type="hash">A new hash table</return>
+        <doc>
+          Create a new hash table based on the current array by using
+          even elements as key names, and odd elements as
+          values. Example:
+
+          <js>
+            var a = [ "foo", "bar", "baz", "caz" ];
+            var h = a.toHash2();
+            alert(h.foo); // "bar"
+            alert(h.baz); // "caz"
+          </js>
+        </doc>
+      </method>
+
+      <method hash="5e182c76be8c2d8756e3df3dc0769d65" name="bytesToString">
+        <return type="String"></return>
+        <doc>
+          Assumes that this array contains the UTF8 encoding of some
+          string.  Parses UTF8 and forms the string.  This is the
+          reverse of 〈String::toBytes()〉.
+        </doc>
+      </method>
+
+    </object-methods>
+
+  </object>
+
+
+  <object name="Function">
+    <constructor>
+      This is a standard JavaScript object.  DynarchLIB adds a few
+      useful extensions.
+
+      <div class="important">
+        There are a few utilities of major importance that we add to
+        the Function objects.  Pay particular attention to methods
+        〈closure()〉, 〈inherits()〉 and 〈setDefaults()〉 in order to make
+        efficient use of DynarchLIB.
+      </div>
+    </constructor>
+
+    <static-methods>
+
+      <method hash="8abb8fbd8276b422439ec5dd5414374f" name="getInheritanceGraph">
+        <return>Inheritance hash table</return>
+        <doc>
+          Returns a hash table describing the inheritance graph of the
+          existing JavaScript objects.  This graph is set up by
+          〈Function::inherits()〉.  The returned hash table maps object
+          name to base class name.
+        </doc>
+      </method>
+
+      <method hash="da86120f7d1f6fbeefbbdf2f59e352b2" name="identity">
+        <param name="x"></param>
+        <return><b>x</b></return>
+        <doc>
+          The identity function.  It's a function that always returns
+          <b>x</b>.
+        </doc>
+      </method>
+
+      <method hash="0ec4a496361a67e13aff95ef60c8a23a" name="invoke">
+        <param name="x" type="Function"></param>
+        <return><b>x</b>()</return>
+        <doc>
+          This function calls <b>x()</b> and returns the returned
+          value.
+        </doc>
+      </method>
+
+      <method hash="99914b932bd37a50b983c5e7c90ae93b" name="noop">
+        <doc>
+          No operation — a function that does absolutely nothing.
+        </doc>
+      </method>
+
+      <method hash="2764a73f66a5aa2c696500a5d09c2b85" name="returnFalse">
+        <return><b>false</b></return>
+        <doc>
+          Always returns <b>false</b>.
+        </doc>
+      </method>
+
+      <method hash="aa50165fb152915ff89cb4e46d85e9f6" name="returnTrue">
+        <return><b>true</b></return>
+        <doc>
+          Always returns <b>true</b>.
+        </doc>
+      </method>
+
+    </static-methods>
+
+    <object-methods>
+
+      <method alias="$" hash="b37f05039371245de9ef6bb311a9f48d" name="closure" varargs="1">
+        <param name="obj" type="Object">Context object for your closure</param>
+        <return type="Function">A closure</return>
+        <doc>
+          This is probably the most important addition we bring to the
+          Function object.  It returns a new function which, when
+          called, will call the original function in the context of
+          the object you specify (<b>obj</b>), forwarding any
+          additional arguments that were given to 〈closure()〉
+          <em>and</em> any arguments that are passed to its call at
+          run-time.  I know this sounds horribly complicated, here's
+          an example:
+
+          <js>
+            function f(a, b, c) {
+              alert(a + " / " + b + " / " + c);
+            }
+            var newFunc = f.closure(null, "foo", "bar");
+            // ... later
+            newFunc("baz"); // displays "foo / bar / baz".
+          </js>
+
+          The first argument is the object.  You can pass null if you
+          don't care about it (or see the <b>$C</b> method below).
+          Any additional arguments passed to “closure” will be
+          forwarded to your original function, when it's called.
+
+          “$” is an alias for this method, since we tend to use it
+          very frequently.  Thus, the following are equivalent:
+
+          <js>
+            var newFunc = f.closure(null, "foo", "bar");
+            var newFunc = f.$(null, "foo", "bar");
+          </js>
+
+          In many cases you'll want to pass an object as well.  For
+          example, it's quite common to need a method of a certain
+          object instance to be called after a timeout.  Here's how
+          you can do it:
+
+          <js>
+            var a = new MyObject();
+            setTimeout(function() {
+              a.someMethod("foo");
+            }, 1000);
+          </js>
+
+          But using the 〈closure()〉 construct, you can also do it like
+          this:
+
+          <js>
+            setTimeout(a.someMethod.$(a, "foo"), 1000);
+          </js>
+
+          Another common case is when you want to execute an object
+          method as a result of some DOM event.  Here's how you can do
+          that using this construct:
+
+          <js>
+            obj.someHandler = function(div) {
+              // handle the event here...
+            };
+            div.onclick = obj.someHandler.$(obj, div);
+          </js>
+        </doc>
+      </method>
+
+      <method hash="17fa535c074d44f7928821e3f909f0df" name="$$" undoc="1">
+        <param name="a" type="Array"></param>
+        <doc></doc>
+      </method>
+
+      <method hash="266616e7b8b80f43238a8e404b27ba5a" name="$A" undoc="1">
+        <param name="obj"></param>
+        <param name="a"></param>
+        <doc></doc>
+      </method>
+
+      <method hash="60afdc818cac70bdb42c5eb4e053e513" name="$C" varargs="1">
+        <doc>
+          This method is exactly the same as 〈closure()〉, but you
+          don't pass the <b>obj</b> argument.  It's for those cases
+          when you don't care about the value of <b>this</b> in your
+          function.
+        </doc>
+      </method>
+
+      <method hash="90ac4c5bdf8ba1aaf26593ab31d2a9f8" name="clearingTimeout" varargs="1">
+        <param name="timeout" type="Number"></param>
+        <param name="obj" type="Object"></param>
+        <return type="Function"></return>
+        <doc>
+          Similar to the 〈closure()〉 method, clearingTimeout() creates
+          a function that will call the original function in the
+          context of the given object (<b>obj</b>) forwarding it any
+          additional arguments.  The big difference is that this time,
+          your function is not called immediately, but via a
+          <em>setTimeout()</em> (note the first argument).
+
+          This is very useful when you need to run a lengthy operation
+          as a consequence of user input.  For example, let's say you
+          have a big list of items and want to allow the user to
+          filter it.  You will have an input field and upon the
+          "onkeypress" event, you'll check the current value and
+          re-filter the list.  If the list is big, the user will have
+          to wait a long time between keypresses.
+
+          Using the clearingTimeout you setup a callback that will
+          only filter the list when the user is "idle".  Example, if
+          you set the timeout to 500 (half a second), then users that
+          type fast won't be bothered by the long filter operation;
+          it'll happen only when they stopped typing for 500 ms.
+
+          Example:
+
+          <js>
+            function filterList(input) {
+               var str = input.value;
+               // do the filtering here
+            };
+            input.onkeypress = filterList.clearingTimeout(500, null, input);
+          </js>
+
+          clearingTimeout() returns a function, as you can see.  Each
+          time this function is called, it'll restart the timer.  Only
+          after the timeout, your original function gets called.
+          Here's how we would write the sample above using standard JS
+          constructs:
+
+          <js>
+            function filterList(input) {...}
+            var timer = null;
+            input.onkeypress = function() {
+               if (timer)
+                  clearTimeout(timer);
+               timer = setTimeout(function() {
+                  filterList(input);
+               }, 500);
+            };
+          </js>
+        </doc>
+      </method>
+
+      <method hash="471efd5d64cca78c75b7c91436017887" name="delayed" varargs="1">
+        <param name="timeout" type="Number"></param>
+        <return>timeout ID as returned by setTimeout</return>
+        <doc>
+          This method simply calls setTimeout() to call your method
+          after the specified timeout, in the context of the specified
+          object (if any) and forwarding any additional arguments.  It
+          might seem identical to 〈clearingTimeout()〉 but it's not,
+          because the timer won't be restarted.
+
+          Example:
+
+          <js>
+            function foo(txt) {
+               alert(txt);
+            }
+
+            foo.delayed(1000, null, "this is foo");
+
+            // equivalent setTimeout code:
+            setTimeout(function() { foo("this is foo") }, 1000);
+          </js>
+
+          Besides <b>timeout</b>, you can pass the same arguments as
+          for 〈closure()〉.  This means you can pass an object so your
+          function will be called in its context, as well as any
+          arguments that you need to pass to the function.
+        </doc>
+      </method>
+
+      <method hash="4d0a7e75317980fb3aca48219aeddacd" name="setInterval" varargs="1">
+        <param name="timeout" type="Number"></param>
+        <return>interval ID as returned by setInterval</return>
+        <doc>
+          This is similar to 〈delayed()〉 but it uses setInterval().
+          This means that your function will be called repeatedly at
+          <b>timeout</b> intervals.  Same as for delayed(), you can
+          pass additional arguments (object instance or arguments to
+          pass to the function when it is called).
+        </doc>
+      </method>
+
+      <method hash="022b7aa24b8d4cce4a64dcd53b7f55e5" name="$0" varargs="1">
+        <param name="obj" type="Object"></param>
+        <doc>
+          This method does exactly the same as 〈closure()〉, but it
+          doesn't forward arguments that are passed to the closure at
+          run-time.  In certain cases you don't need those arguments
+          to be forwarded and this method tends to be a bit faster.
+        </doc>
+      </method>
+
+      <method hash="bc85900e9bbd87bad8a3e9a3c72fbab4" name="inherits">
+        <param name="base" type="Object"></param>
+        <doc>
+          This method sets up inheritance between 2 JavaScript
+          objects.  At its heart, it's equivalent to setting the
+          prototype of the derived object to a new prototype of the
+          base object.  Example:
+
+          <js>
+            function BaseClass() {}
+            function DerivedClass() {}
+
+            // the standard JS way to create objects
+            DerivedClass.prototype = new BaseClass;
+
+            // using DynarchLIB
+            DerivedClass.inherits(BaseClass);
+          </js>
+
+          Although it seems quite simple, the 〈inherits()〉 method is
+          useful.  It does some under-the-hood magic as well, which we
+          use in DynarchLIB.  For example, after the inherits() call
+          in the sample above, the following conditions stand true:
+
+          <js>
+            DerivedClass.prototype.constructor == DerivedClass;
+            DerivedClass._objectType == "DerivedClass";
+            DerivedClass.prototype._objectType == "DerivedClass";
+            DerivedClass.BASE == BaseClass.prototype;
+            Function.getInheritanceGraph()["DerivedClass"] == "BaseClass";
+          </js>
+
+          〈inherits()〉 will also call a method of your derived class,
+          if it's present in the prototype, and in that method you can
+          do some custom stuff on the derived class.  This method is
+          named “__patchSubclassPrototype”.  Here's how we use it to
+          automatically generate the class names for each widget:
+
+          <js>
+            DlWidget.prototype._className = [ "DlWidget" ];
+            DlWidget.prototype.__patchSubclassPrototype = function() {
+              // here, *this* refers to the prototype of the *derived* class
+
+              // note we need to make a copy of the _className array
+              this._className = Array.$(this._className);
+
+              // now add the name of the derived object
+              this._className.push(this._objectType);
+            }
+          </js>
+
+          Now, whenever we inherit a new widget, its prototype will
+          automagically have the new class name in the "_className"
+          property:
+
+          <js>
+            DlContainer.inherits(DlWidget);
+            // outputs "DlWidget DlContainer"
+            alert(DlContainer.prototype._className.join(" "));
+          </js>
+
+          The code writes itself at compilation time. :-)  That's both
+          simple and efficient.
+        </doc>
+      </method>
+
+      <method hash="5bbece1b52f224fbaa7d220be036ebaa" name="inject">
+        <param name="props" type="Object"></param>
+        <doc>
+          Merges the given properties into this object's prototype.
+        </doc>
+      </method>
+
+      <method hash="82908cf54c66731d23dcf40262764dad" name="setDefaults">
+        <param name="obj" type="Object"></param>
+        <param name="args" type="Hash"></param>
+        <doc>
+          This function provides a convenient way to get parameters in
+          object constructors.  It sets properties in the given object
+          (<b>obj</b>) based on the defaults defined in constructor's
+          DEFAULT_ARGS property and the values in <b>args</b>.
+          Example:
+
+          <js>
+            function Foo(args) {
+                if (args) {
+                    Foo.setDefaults(this, args);
+                }
+            }
+            Foo.DEFAULT_ARGS = {
+                _label : [ "label" , "No label" ],
+                _type  : [ "type"  , null ]
+            };
+
+            var f = new Foo();
+            // Now, f._label == "No label"
+            // and f._type == null
+
+            var c = new Foo({ type: "checkbox" });
+            // c._label is still "No label" (since it wasn't passed)
+            // c._type == "checkbox"
+          </js>
+
+          So this is simply a way to uniformly declare object
+          arguments.  A base object can have its defaults too.  For
+          example, let's make Foo a base object and inherit Bar from
+          it:
+
+          <js>
+            Bar.inherits(Foo);
+            function Bar(args) {
+                if (args) {
+                    Bar.setDefaults(this, args);
+                    // call base class constructor now
+                    Foo.call(this, args);
+                }
+            }
+            Bar.DEFAULT_ARGS = {
+                _label   : [ "label"   , "This is Bar" ],
+                _newProp : [ "newProp" , "blah" ]
+            };
+
+            var b = new Bar();
+            // b._label == "This is Bar"
+            // b._type == null
+            // b._newProp == "blah"
+
+            var b = new Bar({ type: "checkbox", newProp: 1 });
+            // b._label == "This is Bar"
+            // b._type == "checkbox"
+            // b._newProp == 1
+          </js>
+
+          All our objects use this way to declare arguments.
+        </doc>
+      <param name="overwrite"></param></method>
+
+      <method hash="437ed54dfd3a4997e840b026b70297a9" name="inverse" varargs="1">
+        <doc>
+          Returns “the inverse” of the current function.  That is,
+          assuming that the current function returns some boolean
+          value, then its inverse will be a function that returns
+          <b>true</b> for whatever arguments that the original
+          function returned <b>false</b>, and vice-versa.
+        </doc>
+      </method>
+
+    </object-methods>
+
+  </object>
+
+  <object name="Number">
+    <constructor>
+      This is a standard JavaScript object.  DynarchLIB adds a few
+      useful extensions.
+    </constructor>
+
+    <static-methods></static-methods>
+
+    <object-methods>
+
+      <method hash="fa4c70a9dd91ec5ef9684877384db2e5" name="bits1Array">
+        <return type="Array">An array of numbers</return>
+        <doc>
+          <fixme>The name of this method is misleading</fixme>
+          <p>
+            This method returns an array of numbers (powers of 2) that
+            sum to the current number.  Example:
+
+            <js canrun="true">
+              alert((55).bits1Array().join("\n"));
+            </js>
+
+            Obviously, the current number must be a positive integer.
+          </p>
+        </doc>
+      </method>
+
+      <method hash="18f2e8d231f89ebf16d538900540f041" name="formatBytes">
+        <param name="fixed" optional="1" type="Number">Use a fixed number of decimals?</param>
+        <doc>
+          Assuming the current number is some memory size, i.e. bytes,
+          kilobytes, etc., this method returns a string representation
+          of it.  I.e., if the number is 124, it returns "124B", if
+          the number is 2000 it returns "2K", etc.
+
+          If the “fixed” argument is passed, then the returned value
+          won't be rounded--instead, “fixed” decimals will be
+          returned, along with the corresponding unit.  Units are “B”
+          for bytes, “K” for kilobytes, “M” for megabytes and “G” for
+          gigabytes.
+        </doc>
+      </method>
+
+      <method hash="477d3fb3c4fe303ebc2d903fa07ad388" name="formatTime">
+        <doc>
+          Assuming the current number is a number of seconds, this
+          method returns the time format as a string -- "hh:mm:ss".
+          For example, if the number is 3600, it will return
+          "01:00:00" (one hour).
+        </doc>
+      </method>
+
+      <method XXX="Code has changed!" hash="c3b836bb7b2034ebe411f162b475225f" name="hex">
+        <param name="width" optional="1" type="Number">Length of the result</param>
+        <doc>
+          Returns the hex representation of the current number, as a
+          string, optionally having the specified width (zero-padded
+          if it's smaller).
+        </doc>
+      </method>
+
+      <method hash="58bbfe7d377290bf373e82255af23e63" name="limit">
+        <param name="min" type="Number"></param>
+        <param name="max" type="Number"></param>
+        <return type="Number">Bounded number</return>
+        <doc>
+          Returns a number within the specified limits.  Example:
+
+          <js>
+            alert((5).limit(1, 6)) // 5
+            alert((5).limit(1, 3)) // 3
+            alert((5).limit(8, 10)) // 8
+          </js>
+        </doc>
+      </method>
+
+      <method hash="bfaa49e5668f2756e80c86873379b10e" name="nullLimit">
+        <param name="min" type="Number"></param>
+        <param name="max" type="Number"></param>
+        <doc>
+          Same as 〈limit()〉, but if the current number is off limits,
+          return null rather than the closest edge.
+        </doc>
+      </method>
+
+      <method hash="740141c88e49a533a3913005ed12862e" name="rotateLimit">
+        <param name="min" type="Number"></param>
+        <param name="max" type="Number"></param>
+        <doc>
+          Similar to 〈limit()〉 but it will “rotate” the number, that
+          is, return <b>max</b> if the number is smaller than
+          <b>min</b>, and <b>min</b> if the number is greater than
+          <b>max</b>.  Returns the number unchanged otherwise.
+        </doc>
+      </method>
+
+      <method hash="829e6e73b7147d50575ca1b6c31547a6" name="times">
+        <param name="f" type="Function"></param>
+        <param name="obj" optional="1" type="Object"></param>
+        <doc>
+          Executes the function that you pass as first argument
+          (<b>f</b>) N times (where N is the current number).  If you
+          pass the optional <b>obj</b> argument, then your function
+          will be executed in the context of the given object.
+
+          Your function will be passed the current iteration as first
+          argument.
+
+          For example:
+
+          <js>
+            // execute an anonymous function 5 times
+            (5).times(function(i) {
+               alert(i); // displays 0, 1, 2, 3, 4
+            });
+
+            // execute a method (cards.shuffle()) 10 times
+            (10).times(cards.shuffle.$(cards));
+
+            // can also do it like this (should be faster):
+            (10).times(cards.shuffle, cards);
+          </js>
+
+          What's with the parens around 10, by the way?  An
+          idiosyncrasy of JS is that you can't call a method of the
+          Number object (and there might be other cases too) unless
+          you put it in parens.  That is, 10.times won't work
+          (probably because it expects the dot to be actually a part
+          of the number, i.e. 10.50).  So if you want to call Number
+          methods on literal numbers, you have to say
+          i.e. (10).method.  On the other hand, if your number is in
+          some variable, then this will work:
+
+          <js>
+            var n = 10;
+            n.times(cards.shuffle, cards);
+          </js>
+        </doc>
+      </method>
+
+      <method hash="00826698ce9f77ad537eb95b4c48222e" name="zeroPad">
+        <param name="width" type="Number"></param>
+        <param name="zero" type="String" optional="1" default="null"></param>
+        <return type="String">padded number as string</return>
+        <doc>
+          Pads the current number with zeroes until it gets
+          <b>width</b> number of digits.  E.g.
+
+          <js>
+            alert((5).zeroPad(3))
+          </js>
+
+          will output "005".
+
+          If the second argument (<b>zero</b>) is passed, then the
+          number will be padded with that string instead of 0.
+
+          <js>
+            alert((5).zeroPad(3, "-"))
+          </js>
+        </doc>
+      </method>
+
+      <method hash="d85e84eafd9fa3b3ff8793403cf7d36c" name="map">
+        <param name="start" type="Number"></param>
+        <param name="stop" type="Number"></param>
+        <return type="Number">mapped number</return>
+        <doc>
+          Translates the current number, which is assumed to be a real
+          number in the interval [0, 1], to a number in the given
+          [<b>start</b>, <b>end</b>] interval.
+
+          <js>
+            alert((0.2).map(0, 5)) // 1
+            alert((0.8).map(0, 40)) // 32
+          </js>
+
+          If N is the current number, this function is equivalent to:
+
+          <js>
+            return start + (stop - start) * N;
+          </js>
+
+          In other words, N is assumed to be a “percent divided by
+          100”, if you wish, and it'll return a number that is at
+          position (N*100)% in the interval [<b>start</b>,
+          <b>stop</b>].
+        </doc>
+      </method>
+
+      <method hash="abab0fd6669738c6ad2ec05cb2362ce6" name="mapInt">
+        <param name="start" type="Number"></param>
+        <param name="stop" type="Number"></param>
+        <return type="Number">mapped number</return>
+        <doc>
+          Same as 〈map()〉 but it will always round to the nearest
+          integer.
+        </doc>
+      </method>
+
+    </object-methods>
+  </object>
+
+  <object name="Math">
+
+    <constructor>
+      This is a standard JavaScript object.  DynarchLIB adds a few
+      useful extensions.
+    </constructor>
+
+    <static-methods>
+
+      <method hash="23ec80dc5cdac5a82d4c6cf57705b0cb" name="limit">
+        <param name="n" type="Number"></param>
+        <param name="min" type="Number"></param>
+        <param name="max" type="Number"></param>
+        <return type="Number"></return>
+        <doc>
+          See 〈Number::limit()〉.
+        </doc>
+      </method>
+
+      <method hash="761fd3f8810505ea62b52439497af3d7" name="nullLimit">
+        <param name="n" type="Number"></param>
+        <param name="min" type="Number"></param>
+        <param name="max" type="Number"></param>
+        <doc>
+          See 〈Number::nullLimit()〉.
+        </doc>
+      </method>
+
+      <method hash="f79d02f5d0278c91227feb910809a582" name="rotateLimit">
+        <param name="n" type="Number"></param>
+        <param name="min" type="Number"></param>
+        <param name="max" type="Number"></param>
+        <doc>
+          See 〈Number::rotateLimit()〉.
+        </doc>
+      </method>
+
+    </static-methods>
+
+    <object-methods></object-methods>
+
+  </object>
+
+  <object name="Date">
+
+    <constructor>
+      This is a standard JavaScript object.  DynarchLIB adds a few
+      useful extensions.
+    </constructor>
+
+    <static-methods>
+
+      <method hash="4438fbbbf3e1322b6c36cfb1e56ad0ea" name="getDayName">
+        <param name="day" type="Number">0 (Sunday) to 6 (Saturday)</param>
+        <param default="false" name="sh" optional="1" type="boolean">Short name?</param>
+        <doc>
+          Returns the name of the <b>day</b> as a string.  The texts
+          are defined in texts.js.
+        </doc>
+      </method>
+
+      <method hash="c759d3c8fd6c48fea13f20649182cdfe" name="getFirstDayOfWeek">
+        <doc>
+          Returns the “first day of week” according to current locale.
+          This is actually defined in texts.js.
+        </doc>
+      </method>
+
+      <method hash="439e8e723ddaee3c7c81d95d00b1e125" name="getMonthName">
+        <param name="mon" type="Number">0 (January) to 11 (December)</param>
+        <param default="false" name="sh" optional="1" type="boolean"></param>
+        <doc>
+          Returns the name of the <b>mon</b>th.
+        </doc>
+      </method>
+
+      <method hash="86cc5ee908555215e17a09ebf545077e" name="isWeekend">
+        <param name="day" type="Number">0 (Sunday) to 6 (Saturday)</param>
+        <doc>
+          Returns <b>true</b> if <b>day</b> is a weekend day.
+          Weekends are considered to be Saturday and Sunday.
+        </doc>
+      </method>
+
+      <method XXX="Code has changed!" hash="b254ab7e222df37249071fa555737ae1" name="parseMySQL">
+        <param name="str" type="String">A date string as "YYYY-MM-DD HH:MM:SS"</param>
+        <return type="Date">Date object</return>
+        <doc>
+          Parses the given date string and returns a new Date object.
+          We named this function “parseMySQL” since that format is by
+          default used by MySQL to report date/time fields; however,
+          many other tools might use the same format.
+        </doc>
+      </method>
+
+    </static-methods>
+
+    <object-methods>
+      <method hash="95b27b5550ba3ca8070495a437ab196a" name="dateEqualsTo">
+        <param name="date" type="Date"></param>
+        <param default="false" name="monthOnly" optional="1" type="boolean">Check only year and month?</param>
+        <doc>
+          Returns true if the current date object equals the given
+          <b>date</b> argument.  If <b>monthOnly</b> is <b>true</b>,
+          then it will check only year and month; otherwise checks the
+          date too.
+        </doc>
+      </method>
+
+      <method hash="a5258935a6f665ede98e4384a500a091" name="getDayOfYear">
+        <return type="Number">Day of the year</return>
+        <doc>
+          Returns the day in the year that the current date
+          represents, i.e. 1 - 365.
+        </doc>
+      </method>
+
+      <method XXX="Code has changed!" hash="06f244f90222adeadae0a4a0fb7b9117" name="getMonthDays">
+        <param default="Current month" name="m" optional="1" type="Number">Month number</param>
+        <return type="Number">Number of days in month</return>
+        <doc>
+          Returns the number of days in the given month.  If <b>m</b>
+          is not passed, it's assumed to be the month in the current
+          date object.
+        </doc>
+      </method>
+
+      <method hash="1523438f25b17769d5af36a26a0b2384" name="getWeekNumber">
+        <return type="Number">Week number</return>
+        <doc>
+          Returns the week number in the year that the current date
+          object falls into.
+        </doc>
+      </method>
+
+      <method hash="bb094967e1981aa29a845fc91f9f5c63" name="print">
+        <param name="str" type="String">format string</param>
+        <return type="String">Formatted date</return>
+        <doc>
+          Formats the current date according to the specified
+          <b>str</b> format.  This supports a subset of the
+          POSIX-style time format strings:
+
+          <pre>
+            %a — abbreviated day name
+            %A — full day name
+            %b — abbreviated month name
+            %B — full month name
+            %C — the century number
+            %d — the day of the month (01 .. 31)
+            %e — the day of the month (1 .. 31)
+            %H — hour (00 .. 23)
+            %I — hour (01 .. 12)
+            %j — the day of the year (001 .. 366)
+            %k — hour (0 .. 23)
+            %l — hour (1 .. 12)
+            %m — month (01 .. 12)
+            %M — minute (00 .. 59)
+            %n — a newline character
+            %p — "PM" or "AM"
+            %P — "pm" or "am"
+            %s — seconds since epoch
+            %S — seconds (00 .. 59)
+            %t — a tab character
+            %W — week number
+            %u — the day of the week (1 .. 7, 1 is Monday)
+            %w — the day of the week (0 .. 6, 0 is Sunday)
+            %y — year without the century (00 .. 99)
+            %Y — full year, i.e. 2007
+            %% — a literal '%' character
+          </pre>
+        </doc>
+      </method>
+
+    </object-methods>
+
+  </object>
+
+  <object name="String">
+    <constructor>
+      This is a standard JavaScript object.  DynarchLIB adds a few
+      useful extensions.
+    </constructor>
+
+    <static-methods>
+
+      <method hash="da19ad59bfd2e7caef48633fafa2f96f" name="firstNonEmpty" varargs="1">
+        <return type="String"></return>
+        <doc>
+          This method receives a variable number of arguments
+          (normally strings, but you can pass any type that can be
+          stringified using the toString() method).  It'll return the
+          first one which contains at least one non-white-space
+          character.
+        </doc>
+      </method>
+
+      <method forced="1" name="buffer" varargs="1">
+        <return type="Function">buffer function</return>
+        <doc>
+          Creates a string buffer function.  This is useful for cases
+          when you want to generate a long string—when you'd normally
+          repeat “string += some_additions” lines all the time.
+
+          The “+=” string operator is very slow for long strings in
+          Internet Explorer, therefore our buffer function will chose
+          an optimized approach, depending on the browser.  For IE and
+          Safari/Konqueror, the fastest approach is creating an array
+          and calling join("") at the end.  For Firefox and Opera,
+          string.concat() seems to be the winner.
+
+          Here's how you use this simple abstraction:
+
+          <js><![CDATA[
+            var buffer = String.buffer();
+            buffer("<table>");
+            buffer("<tbody><tr><td>");
+            buffer(1);
+            buffer("</td></tr></tbody>");
+            buffer("</table>");
+            alert(buffer.get()); // shows the whole text now
+          ]]></js>
+
+          At each function call, you can pass more than one argument
+          if needed:
+
+          <js><![CDATA[
+            buffer("Your name is <b>", name, "</b>");
+          ]]></js>
+
+          You can also pass some text at initialization phase:
+
+          <js><![CDATA[
+            var buffer = String.buffer("<div class='profile'>");
+            buffer("foo");
+            buffer("bar", "baz");
+            buffer("</div>");
+            alert(buffer.get());
+          ]]></js>
+
+          The browser detection phase happens at compile-time,
+          therefore there's no “if browser == "MSIE"” penalty at
+          run-time.
+        </doc>
+      </method>
+
+      <method hash="a6f2073a5d792377628eda20894945fa" name="template" varargs="1">
+        <doc>
+          Built on top of 〈String.buffer()〉, the template() method
+          adds a simple abstraction for building custom HTML at
+          run-time.  You create a template like this:
+
+          <js><![CDATA[
+            var tooltip = String.template(
+              "<table>",
+              "<tr><td>Name:</td><td>$name</td></tr>",
+              "<tr><td>Value:</td><td>$value</td></tr>",
+              "</table>"
+            );
+          ]]></js>
+
+          And you can execute it later like this:
+
+          <js>
+            alert(tooltip({ name: "Foo", value: "Bar" });
+          </js>
+
+          A template is a function that receives a single object as
+          argument (a hash table) and returns the template string,
+          replacing strings like “$prop” to the value of the “prop”
+          key in the hash table.  It can accept some more complex
+          syntax as well:
+
+          <js><![CDATA[
+            var news_template = String.template(
+              "<div class='news'>",
+              "<div class='subject'>${message.getSubject()}</div>",
+              "<div class='body'>${message.getBody()}</div>",
+              "<div class='poster'>${user.getFullName()}</div>",
+              "</div>"
+            );
+
+            // assuming "message" has getSubject() and getBody() methods
+            // and "user" has a getFullName() method:
+
+            blog.innerHTML += news_template({ user: user, message: message });
+
+            // NOTE:
+            // “innerHTML += some_code” is a bad idea.  We afford it here for
+            // didactical purposes, but we advise you to *never* do this.
+          ]]></js>
+
+          This method is probably suboptimal because we actually run a
+          search'n'replace regexp match at every template call.  For
+          now it works fine for us—if anyone will complain, we will
+          optimize it to actually <em>compile</em> the template when
+          it's first defined into running JavaScript code, which
+          should make it a lot faster.
+        </doc>
+      </method>
+
+    </static-methods>
+
+    <object-methods>
+
+      <method hash="42b734ea7f2db9ad39b0d36795542ad0" name="arrayWords">
+        <return type="Array"></return>
+        <doc>
+          Returns an array containing an element for each word of the
+          current string.
+        </doc>
+      </method>
+
+      <method deprecated="1" hash="7e37c9e930f37ab87575f0acf702cf52" name="capitalizeString">
+        <doc>
+          Capitalizes <em>the first letter of a string</em> and
+          returns the new string.
+
+          This is not very useful and will probably remove it.
+        </doc>
+      </method>
+
+      <method hash="fdd8078d65b81aad899cd33ac95c2b4b" name="decodeJSON">
+        <param default="false" name="safe" optional="1" type="boolean"></param>
+        <doc>
+          Tries to interpret the current string as JSON and returns
+          the decoded object.  It's equivalent to calling
+          〈DlJSON.decode()〉 on the current string:
+
+          <js>
+            var str = "{foo : true, bar: 1}";
+            var o1 = str.decodeJSON();
+            var o2 = DlJSON.decode(str);
+            // o1 and o2 now contain the same data
+          </js>
+        </doc>
+      </method>
+
+      <method hash="cc573c65a5c97aa3e3b8ebe896bc4062" name="fixedWidth">
+        <param name="w" type="String"></param>
+        <doc>
+          Embeds the current string in a DIV having the inline
+          style="width: <b>w</b>".  <b>w</b> can be any valid CSS
+          width definition.  For example:
+
+          <js>
+            alert("foo bar".fixedWidth("8em"));
+          </js>
+
+          will output “&lt;div style="8em"&gt;foo bar&lt;/div&gt;”.
+        </doc>
+      </method>
+
+      <method hash="c0eff0e1af4efe9e177c014d6a3612a8" name="hashWords" varargs="no">
+        <param name="val" optional="1"></param>
+        <return type="Hash"></return>
+        <doc>
+          Returns a hash whose keys are the words of the current
+          string and values are either <b>val</b>, or <b>true</b> if
+          <b>val</b> wasn't given.
+        </doc>
+      </method>
+
+      <method hash="bbba2e164204471163736b66a0e660c2" name="htmlEmbed">
+        <param name="tag" type="String"></param>
+        <param name="c" optional="1" type="String"></param>
+        <doc>
+          Embeds the current string in an HTML <b>tag</b>, optionally
+          having the class name <b>c</b>.
+
+          <js>
+            alert("foo".htmlEmbed("div", "news"))
+          </js>
+
+          will output “&lt;div class="news"&gt;foo&lt;/div&gt;”.
+        </doc>
+      </method>
+
+      <method hash="edd77ad4a60aa8f134ca0a795dc42be1" name="lastIndexOfRegexp">
+        <param name="re" type="RegExp"></param>
+        <param name="caret" type="Number"></param>
+        <return type="Number"></return>
+        <doc>
+          <fixme>document properly</fixme>
+
+          This method returns the position immediately after the last
+          occurrence of the given regexp (<b>re</b>) in the current
+          string, smaller than <b>caret</b>.
+        </doc>
+      </method>
+
+      <method hash="3f51eefba4f6d084ae49f056ffc712f0" name="makeLabel">
+        <return type="String">new string</return>
+        <doc>
+          A small utility function which makes a non-breakable label
+          from the current string.  Currently this simply replaces all
+          (1 or more consecutive) spaces with one “&amp;nbsp;”.
+        </doc>
+      </method>
+
+      <method hash="d5c51d8f00efc439008f31b437be91f2" name="noWrap">
+        <return type="String">new string</return>
+        <doc>
+          Similar to 〈makeLabel()〉 but replaces each space with a
+          “&amp;nbsp;”.
+        </doc>
+      </method>
+
+      <method hash="967f97ff45436703b504ede5bc0337bd" name="repeat">
+        <param name="i" type="Number"></param>
+        <return type="String">new string</return>
+        <doc>
+          Repeats the current string <b>i</b> times and return the
+          result.  This function is optimized—that is, it uses partial
+          results when replicating a string, such that if you want,
+          for instance, to create a string of 1024 of zeros, you can
+          say:
+
+          <js>
+            var str = "0".repeat(1024);
+          </js>
+
+          and it will only make 10 concatenations.
+        </doc>
+      </method>
+
+      <method hash="1359a32ad227a4c8c3558f88cc68cc0c" name="replace">
+        <param name="re" type="RegExp"></param>
+        <param name="val" type="Function"></param>
+        <return type="String">new string</return>
+        <doc>
+          This is defined only for old versions of Safari, which
+          didn't support a function as a second argument to
+          〈String::replace()〉.  It's just a JS compatibility
+          layer—read about it in the <a href="http://docs.sun.com/source/816-6408-10/string.htm#1194258">JS
+          client-side reference</a>.
+        </doc>
+      </method>
+
+      <method hash="988f57c7ade98aac044fbe2dc29933eb" name="trim">
+        <param default="false" name="nostart" optional="1" type="boolean">Don't remove at start? (leading white-space)</param>
+        <param default="false" name="noend" optional="1" type="boolean">Don't remove at end? (trailing white-space)</param>
+        <return type="String">trimmed string</return>
+        <doc>
+          Removes leading and trailing white-space from a string.
+        </doc>
+      </method>
+
+      <method XXX="Code has changed!" hash="4b74abb0290628fd4f5e81f5bfbe102a" internal="1" name="printf" varargs="1">
+        <doc>
+          Formats the given string according to the arguments in a
+          manner similar to the classical <b>printf</b> function.
+          Note that currently it's very limited (not a real “printf”).
+          It supports the following tokens:
+
+          <pre>
+            %s — insert the next argument as String
+            %i — insert the next argument as integer
+            %f — insert the next argument as float
+            %o — insert the next argument as whatever it's toString() method returns
+            %% — insert a literal “%” character
+          </pre>
+        </doc>
+      </method>
+
+      <method hash="6477016fdb3fbed07f9aed9efbc656c9" name="hexToBytes">
+        <param default="false" name="unsafe" type="boolean">Discard non-hex characters?</param>
+        <return type="Array">array of bytes</return>
+        <doc>
+          Assuming this string is the hex representation of some
+          number, convert it to an array of bytes (most significant
+          will be at position zero).
+
+          Example:
+
+          <js>
+            var a = "ff8002".hexToBytes();
+            var a = "ff 80 02".hexToBytes(true);
+            // a[0] == 255
+            // a[1] == 128
+            // a[2] == 2
+          </js>
+
+          Passing <b>unsafe</b> true will allow you to have any other
+          characters in the string (will be discarded).
+        </doc>
+      </method>
+
+      <method XXX="Code has changed!" hash="c0be9e1a68cb31431c6feab8d1d4f052" name="toBytes">
+        <return type="Array">array of bytes in UTF8</return>
+        <doc>
+          Converts this string into an array of bytes representing the
+          UTF8 encoding of the string.  See 〈Array::bytesToString()〉
+          for the reverse transformation.  This method is Unicode
+          safe.
+
+          <js>
+            var a = "ABC".toBytes();
+            // a[0] == 65 (code of 'A')
+            // a[1] == 66
+            // a[2] == 67
+          </js>
+
+          Note that the length of the output array will be greater
+          than the length of the string when non-ASCII characters
+          appear.  Example:
+
+          <js canrun="true">
+            var txt = "Şmen";
+            print("String length: " + txt.length);
+            var a = txt.toBytes();
+            print("UTF8 encoding: " + a.map("hex", 2).join(" "));
+            print("Encoding Length: " + a.length);
+          </js>
+        </doc>
+      </method>
+
+      <method hash="95d41840f7ceb7cebed8d27fa497ece6" name="breakable">
+        <param default="/([_.-])/g" name="re" optional="1" type="RegExp"></param>
+        <doc>
+          This is a convenience method to make a string breakable.
+          Ordinarily, browsers can't break a long string that doesn't
+          contain spaces, to display it on multiple lines, but
+          sometimes you want to do this.  Some strings can be broken
+          at, say, “-”, “_” of “.” characters (which is the default
+          regexp).
+
+          This function returns a new (HTML) string which should
+          render identically to the current string, but it can be
+          broken into multiple lines.
+
+          Here's an example:
+
+          <js canrun="true">
+            var str = "this-is-a-really-long-string-that-should-produce-a-scroll-bar.";
+            printHTML(str);
+            printHTML(str.breakable());
+          </js>
+
+          You can pass a RegExp if you want to allow line breaks in
+          other spots than the default regexp does.
+        </doc>
+      </method>
+
+  </object-methods>
+
+  </object>
+
+  <object name="Dynarch">
+
+    <constructor></constructor>
+
+    <static-methods>
+
+      <method hash="300146f75a5798ada77221d81271cdb4" name="copy">
+        <param name="dest" type="Object"></param>
+        <param name="src" type="Object"></param>
+        <doc>
+          Copies each key of <b>src</b> into <b>dest</b>.  Any
+          existing keys in <b>dest</b> will be removed.
+        </doc>
+      </method>
+
+      <method hash="050a1ba67a515dd88992a0df1d5ed692" name="EXPORT">
+        <param name="name" type="String">Name of object to export</param>
+        <param default="false" name="imp" optional="1">Import common vars?</param>
+        <return type="String">JavaScript code that you should eval</return>
+        <doc>
+          This method exports a class, object or variable
+          (<b>name</b>) defined in the current scope to the outside
+          world.  For example:
+
+          <js>
+            (function(){
+               var foo = true;
+            })();
+          </js>
+
+          In the previous example, <em>foo</em> is a private variable,
+          since it only exists in the surrounding function.  If we
+          wanted to export it, we can say:
+
+          <js>
+            eval(Dynarch.EXPORT("foo"));
+          </js>
+
+          This isn't too useful in itself, we could have said easier
+          and more cleaner:
+
+          <js>
+            window.foo = foo;
+          </js>
+
+          But we advise you to use 〈Dynarch.EXPORT()〉 because it's an
+          abstraction layer—if you ever want to do more than just
+          assigning the variable to the window (global) object, you'll
+          only have to change it in one place.  Dynarch.EXPORT also
+          accepts an optional argument, <b>imp</b>, which if
+          <b>true</b> will import some common methods into the local
+          context.  For example, there are a few DOM utilities that
+          you'll use a lot, such as DynarchDomUtils.createElement.
+          That's a long name.  You don't wanna write it all the time.
+          You can import it into the local context by either eval-ing
+          〈DynarchDomUtils.importCommonVars()〉, or by calling
+          Dynarch.EXPORT like this: (since it's likely you also want
+          to export something...)
+
+          <js>
+            (function(){
+
+              var BASE = MyObject.inherits(DlWidget);
+              function MyObject() {};
+
+              eval(Dynarch.EXPORT("MyObject", true));
+
+              // now window.MyObject will actually point to our constructor,
+              // CE is now an alias to DynarchDomUtils.createElement,
+              // and we also have 2 local variables, P and D, that access
+              // the prototype, respectively the constructor of the current object.
+
+              // so we can override a function like this:
+              P._createElement = function() {
+
+                // and here we call base class' function
+                BASE._createElement.call(this);
+                var el = this.getElement();
+                var div = CE("div", null, null, el);
+
+              };
+
+            })();
+          </js>
+        </doc>
+      </method>
+
+      <method hash="8ff2495f36201f918b3ec6cc4d3f6bd2" internal="1" name="getFunctionName">
+        <param name="f" type="Function"></param>
+        <return type="String">The name of the given function</return>
+        <doc>
+          Pass a function by reference and this method will return
+          that function's name.  Note it's not very well tested, but
+          it works great for the case that we're interested in:
+          retrieving the name of an object constructor.
+
+          This function is used in 〈Function.inherits()〉 in order to
+          automatically insert the _objectType property into the
+          derived objects.
+        </doc>
+      </method>
+
+      <method hash="f3edb662984ba741a49fe6566636abf2" name="ID">
+        <param name="namespace" optional="1" type="String"></param>
+        <doc>
+          Returns an auto-generated string ID which is guaranteed to
+          be unique per page.
+        </doc>
+      </method>
+
+      <method hash="d97a8f4f6c78f53b4418b756bfd8e0df" name="makeCopy">
+        <param name="src" type="Object"></param>
+        <return type="Object">Copy of <b>src</b></return>
+        <doc>
+          Creates and returns a shallow copy of the <b>src</b> object.
+          Note that this is a “superficial” copy, so to say, that is:
+
+          <js>
+            var a = { foo: [ 1, 2, 3 ] };
+            var copy = Dynarch.makeCopy(a);
+
+            alert(a.foo[1]); // 2
+            alert(copy.foo[1]); // 2
+            // great so far
+
+            a.foo[1] = "Changed!";
+            alert(copy.foo[1]); // "Changed!";
+            // maybe not that great now...
+          </js>
+
+          Therefore, this function won't deep-copy arrays or other
+          nested objects that <b>src</b> might contain.  If you modify
+          an object or array that <b>src</b> refers to, the
+          modifications will be reflected in all copies, because it
+          simply copies an object reference, rather than the object
+          itself.  That's fast, but not always what you want.  See
+          〈Dynarch.makeDeepCopy()〉 for an alternative.
+        </doc>
+      </method>
+
+      <method hash="8dc1d1784117d66cd5b7ed8a9156bac8" name="makeDeepCopy">
+        <param name="src" type="Object"></param>
+        <return type="Object">Deep copy of <b>src</b></return>
+        <doc>
+          Creates and returns a <em>deep</em> (<em>recursive</em>)
+          copy of the <b>src</b> object.  All objects or arrays
+          referenced from the <b>src</b> object will get copied as
+          well, such that if you modify one, the modification won't be
+          reflected in copies.
+        </doc>
+      </method>
+
+      <method hash="37dd8d47b22a74460b7f8a7aae9422b9" name="merge">
+        <param name="dest" type="Object"></param>
+        <param name="src" type="Object"></param>
+        <doc>
+          Merges the <b>src</b> object into the <b>dest</b> object.
+        </doc>
+      </method>
+
+      <method hash="63e95ad904670346f7da5fc5ca07ab69" name="mergeUndefined">
+        <param name="dest" type="Object"></param>
+        <param name="src" type="Object"></param>
+        <doc>
+          Merges <b>src</b> into <b>dest</b> but only for those keys
+          that are not already defined in <b>dest</b>.
+        </doc>
+      </method>
+
+      <method hash="e49febe6c66fe336c27e0c69a4ef03a2" internal="1" name="setDefaults">
+        <param name="defaults" type="Object"></param>
+        <param name="args" type="Object"></param>
+        <param default="false" name="overwrite" optional="1" type="boolean"></param>
+        <doc>
+          You have to call this function in the context of some
+          object.  <b>this</b> is important.
+
+          It will look into <b>defaults</b> and <b>args</b> and set
+          properties accordingly into <b>this</b> (whatever that
+          means).  If <b>overwrite</b> is false (default) then
+          existing properties into <b>this</b> will be left untouched.
+
+          See 〈Function.setDefaults()〉 for some more comprehensive
+          documentation.
+        </doc>
+      </method>
+
+      <method hash="ebac676d557d92a300ee99fdf28be736" name="getBaseURL">
+        <doc>
+          Returns the URL of the DynarchLIB installation.
+        </doc>
+      </method>
+
+      <method hash="fbb261d025ca865585f2701cfc76c14d" name="getFileURL">
+        <param name="file" type="String"></param>
+        <doc>
+          Returns the URL of a <b>file</b> in the DynarchLIB installation.
+        </doc>
+      </method>
+
+    </static-methods>
+    <object-methods></object-methods>
+
+  </object>
+
+  <object name="DynarchDomUtils">
+
+    <constructor>
+      Under this namespace we group some useful DOM utility functions.
+    </constructor>
+
+    <static-methods>
+
+      <method XXX="Code has changed!" hash="e9b1356813bdbaf372a535fa0aa79402" name="addClass">
+        <param name="el" type="HTMLElement">Element to work on</param>
+        <param name="ac" type="String">Class name to add</param>
+        <param name="dc" optional="1" type="String">Class name to remove</param>
+        <doc>
+          Adds <b>ac</b> to the element's class names.  Optionally
+          removes <b>dc</b> from the list of class names.
+        </doc>
+      </method>
+
+      <method XXX="Code has changed!" hash="a7d72fd10a405018af7fbfd68a81bd59" name="delClass">
+        <param name="el" type="HTMLElement">Element to work on</param>
+        <param name="dc" type="String">Class name to remove</param>
+        <param name="ac" optional="1" type="String">Class name to append</param>
+        <doc>
+          Removes <b>dc</b> from the list of element's class names.
+          Optionally append <b>ac</b> to the class names.
+        </doc>
+      </method>
+
+      <method hash="cd9d7110a8dc5414e5b2222d5f38dbc4" name="condClass">
+        <param name="el" type="HTMLElement">Element to work on</param>
+        <param name="cond" type="boolean">Condition</param>
+        <param name="clsTrue" type="String">Class name if condition is true</param>
+        <param name="clsFalse" optional="1" type="String">Class name if condition is false</param>
+        <doc>
+          Conditionally adds or removes class names from an element.
+          If the given condition (<b>cond</b>) is <b>true</b>, then
+          <b>clsTrue</b> will be added and <b>clsFalse</b> will be
+          removed.
+
+          If <b>cond</b> is false, then <b>clsFalse</b> will be added
+          and <b>clsTrue</b> will be removed.
+
+          <b>clsFalse</b> is optional.
+        </doc>
+      </method>
+
+      <method hash="8c487c8934845b692a349ae1708cfbbb" name="hasClass">
+        <param name="el" type="HTMLElement"></param>
+        <param name="cls" type="String"></param>
+        <return type="boolean">true if <b>el</b> has the given class name</return>
+        <doc></doc>
+      </method>
+
+      <method hash="7c48251f45a479ebeedaec7027c91ea9" name="addEvent">
+        <param name="el" type="HTMLElement">Element to work on</param>
+        <param name="evname" type="String">DOM event name without the “on” prefix</param>
+        <param name="func" type="Function">Event handler</param>
+        <doc>
+          Registers an event listener (<b>func</b>) for the given
+          element's <b>evname</b> event.  For browsers that support
+          it, we're using addEventListener().  For IE we're using
+          attachEvent().  If none of this is supported, we're doing it
+          the DOM0-way (i.e. el["on" + evname] = func).
+        </doc>
+      </method>
+
+      <method hash="9aae269fb8693ba40adb9a20ee7527c0" name="addEvents">
+        <param name="el" type="HTMLElement">Element to work on</param>
+        <param name="evs" type="Array">List of event names</param>
+        <param name="func" type="Function">Event handler</param>
+        <doc>
+          Adds a single handler for multiple events in <b>el</b>.
+          This simply calls 〈.addEvent()〉 for each event in <b>evs</b>,
+          for the given <b>el</b>ement with the given <b>func</b>tion
+          handler.
+        </doc>
+      </method>
+
+      <method hash="df5aca04a0b8eb25becf8f479344a4ad" name="removeEvent">
+        <param name="el"></param>
+        <param name="evname"></param>
+        <param name="func"></param>
+        <doc>
+          This is 〈.addEvent()〉's counterpart.
+        </doc>
+      </method>
+
+      <method hash="192f061c8840ac93cf0dbf4c29bcff77" name="removeEvents">
+        <param name="el"></param>
+        <param name="evs"></param>
+        <param name="func"></param>
+        <doc>
+          This is 〈.addEvents()〉's counterpart.
+        </doc>
+      </method>
+
+      <method hash="f970f1414941ebe75fd18f891ca3c348" name="condEvent" varargs="1">
+        <param name="cond" type="boolean"></param>
+        <doc>
+          Note that this function actually takes 4 arguments (cond,
+          element, event, handler).  The last 3 will be forwarded to
+          〈.addEvent()〉 or to 〈.removeEvent()〉, depending on
+          <b>cond</b>.
+
+          If <b>cond</b>ition is true, it will call addEvent; if
+          <b>cond</b> is false, it calls removeEvent.
+        </doc>
+      </method>
+
+      <method hash="a3fff4492f135c44c640950b30f2a7fa" name="condEvents" varargs="1">
+        <param name="cond" type="boolean"></param>
+        <doc>
+          Same as 〈.condEvent()〉, but works for multiple events (calls
+          〈.addEvents()〉 or 〈.removeEvents()〉 depending on <b>cond</b>).
+        </doc>
+      </method>
+
+      <method hash="4af842452f40264fb58ece8919e4a336" name="addLoadHandler">
+        <param name="el" type="HTMLElement"></param>
+        <param name="handler" type="Function"></param>
+        <doc>
+          Adds an “onload” handler for the given element.  Most
+          browsers support the “onload” event for various elements
+          that require loading data, such as SCRIPT, IFRAME or IMG
+          tags.
+
+          For IE we're using the “onreadystatechange” event.
+
+          Your handler will get called after the element finished
+          loading data from server.  If the element is already loaded
+          when you call this function, your handler will never be
+          executed.
+        </doc>
+      </method>
+
+      <method hash="0baf7bdfd9b8e1337e68050551873e65" name="callHandler" undoc="1">
+        <param name="obj" type="Object"></param>
+        <param name="method" type="String"></param>
+        <doc>
+          Calls the given <b>method</b> in the <b>obj</b>ect.  We
+          typically use this to call DOM event handlers, i.e. if I
+          have in some HTML:
+
+          <html><![CDATA[
+            <div onclick="alert('bar')"></div>
+          ]]></html>
+
+          in JS, if I have a reference to that DIV I can say:
+
+          <js>
+            DynarchDomUtils.callHandler(div, "onclick");
+          </js>
+
+          <fixme>Remove this?</fixme>
+        </doc>
+      </method>
+
+      <method hash="d4819c731c1925ccf4b88188381180cc" name="createElement">
+        <param name="tag" type="String">Tag name</param>
+        <param name="st" optional="1" type="Hash">Inline CSS</param>
+        <param name="at" optional="1" type="Hash">Attributes</param>
+        <param name="par" optional="1" type="HTMLElement">Parent element</param>
+        <param name="pos" optional="1" type="HTMLElement|Number">Position</param>
+        <doc>
+          Creates a DOM element with the given <b>tag</b>.  Optionally
+          sets any inline CSS passed in <b>st</b> and any attributes
+          in <b>at</b>, if they are not null.
+
+          If <b>par</b>ent is given, appends the element to
+          <b>par</b>.  You can specify a <b>pos</b>ition as well.  If
+          specified, it can be a number (in which case it will be
+          assumed to be par.childNodes[pos]) or an HTMLElement which
+          is a child of <b>par</b>.  If <b>pos</b> is specified, the
+          new node is inserted right before it.  Otherwise, the new
+          node is appended at the end of <b>par</b>.
+
+          Example:
+
+          <js>
+            var node = DynarchDomUtils.createElement(
+                   "div",
+
+                   { position: "absolute",
+                     left: "10px",
+                     top: "10px" },
+
+                   { className: "Foo",
+                     innerHTML: "This is the new node" },
+
+                   document.body
+            );
+          </js>
+        </doc>
+      </method>
+
+      <method hash="7be5ce39fa5ed677b5b52f1ca813c0f2" name="getBorder">
+        <param name="el" type="HTMLElement"></param>
+        <doc>
+          Returns the width and height of the element's border using a
+          bizarre formlua that seems to work.  That is, we substract
+          the element's clientWidth from the element's offsetWidth
+          (and same for the height).
+
+          The values are returned in a hash, with x for the horizontal
+          width (note it's left border width + right border width,
+          cummulated) and y for the vertical ones.
+
+          Many times you need this kind of information in order to be
+          able to correctly size an element that has a border set
+          through external CSS.
+
+          This function is fast but will not be of much use if you
+          have a padding too—we recommend 〈.getPaddingAndBorder()〉.
+        </doc>
+      </method>
+
+      <method hash="525372f60477b1c400d3ae0fafe95e9f" name="getPaddingAndBorder">
+        <param name="el" type="HTMLElement"></param>
+        <doc>
+          Returns the width and height of the element's borders and
+          paddings.  This effectively investigates the current element
+          style using document.defaultView.getComputedStyle() (for
+          browsers that support it) or <b>el</b>.currentStyle for
+          Internet Explorer (see 〈.getStyle()〉).
+
+          They are returned as a hash having x for the cummulated
+          horizontal values, and y for the vertical cummulated values.
+        </doc>
+      </method>
+
+      <method hash="7ad6f95db9e1f50fbca77dea54ac12cb" name="getBRPos">
+        <param name="el" type="HTMLElement"></param>
+        <doc>
+          Returns the absolute position of the bottom-right corner of
+          the element as { x : horiz_pos, y : vertical_pos }.
+        </doc>
+      </method>
+
+      <method hash="f5375ea845f6d66f079c86acd5f0b56e" name="getClosestParentByTagName">
+        <param name="el" type="HTMLElement"></param>
+        <param name="tag" type="String"></param>
+        <doc>
+          Return the most nested element in <b>el</b>'s ancestors list
+          which has the given <b>tag</b> name.  Note that if <b>el</b>
+          has this tag it will be returned itself immediately—if you
+          don't want this, call this function for el.parentNode.
+        </doc>
+      </method>
+
+      <method hash="f602ea0847cad3a6a1e671afb82c07e3" name="getOuterSize">
+        <param name="el" type="HTMLElement"></param>
+        <doc>
+          Returns the dimensions, in pixels, that an element occupies
+          on the screen.  All it does is:
+
+          <js>
+            return { x: el.offsetWidth, y: el.offsetHeight };
+          </js>
+        </doc>
+      </method>
+
+      <method hash="a7a9d802e57826c75379a8f1b9e4b589" name="getInnerSize">
+        <param name="el" type="HTMLElement"></param>
+        <doc>
+          Returns the element's “inner size”.  This means the size of
+          the element's “content”, excluding any borders and paddings.
+
+          Basically it substracts these objects:
+
+          <js>
+            { x: el.offsetWidth, y: el.offsetHeight } -
+            DynarchDomUtils.getPaddingAndBorder(el);
+          </js>
+        </doc>
+      </method>
+
+      <method hash="e141d74e5c09b13a5da37519c544ac50" name="getPadding">
+        <param name="el" type="HTMLElement"></param>
+        <doc>
+          Returns the padding of a given element as {x:
+          horiz_paddings, y: vertical_paddings }.
+        </doc>
+      </method>
+
+      <method XXX="Code has changed!" hash="c6bd63cb0b0178d06d3f568a11485e0b" name="getPos">
+        <param name="el" type="HTMLElement"></param>
+        <doc>
+          Returns the absolute position of the element.
+        </doc>
+      </method>
+
+      <method hash="7be5ce39fa5ed677b5b52f1ca813c0f2" name="getScrollbarSize">
+        <param name="el" type="HTMLElement"></param>
+        <doc>
+          Returns the { x: width, y: height } of the scrollbars in the
+          element, if there are any.
+        </doc>
+      </method>
+
+      <method hash="9c9668dcfe54b245e0fe661607211cce" name="getStyle">
+        <param name="el" type="HTMLElement"></param>
+        <param name="prop" type="String"></param>
+        <doc>
+          Investigates the computed style of the element and returns
+          the value of <b>prop</b>.  Note that <b>prop</b> should be a
+          CSS attribute name in CSS notation, i.e. "border-left"
+          instead of "borderLeft".
+
+          This function may not work correctly if you want to
+          investigate dimensions that were defined in any other units
+          than “px” (pixels).  For example:
+
+          <html><![CDATA[
+            <div id="foo" style="padding-left: 1em">foo</div>
+          ]]></html>
+
+          <js>
+            var padding = DynarchDomUtils.getStyle($("foo"), "padding-left");
+          </js>
+
+          Depending on browser, you might have useless garbage in the
+          padding var (or zero).  So remember, for this to work, you
+          want to use pixels in all your styles (including external
+          CSS).
+        </doc>
+      </method>
+
+      <method hash="5579ffd44208bbc956eb276d5fe66454" name="getStylePX">
+        <param name="el" type="HTMLElement"></param>
+        <param name="prop" type="String"></param>
+        <doc>
+          This is a wrapper around 〈.getStyle()〉 that ensures that you
+          will get a number.  That is, it will call getStyle(el, prop)
+          and then parse the returned value in order to get rid of the
+          unit (i.e. "10px" becomes 10).
+
+          If the value can't be parsed as a number, it'll return zero.
+        </doc>
+      </method>
+
+      <method hash="aaae548601a8fbed2bbc7e850730913b" name="getWindowSize">
+        <doc>
+          Returns the “inner” window dimensions in pixels.
+
+          <fixme>
+            (perhaps a better name would be getDocumentSize?).
+          </fixme>
+        </doc>
+      </method>
+
+      <method hash="bb338d9832899b682e42f03e924834bc" name="importCommonVars">
+        <return type="String">JS code that you should eval</return>
+        <doc>
+          There are a few functions in DynarchDomUtils that we tend to
+          use very frequently, so we created this function that helps
+          us easily import these functions into another context.
+
+          See also: 〈Dynarch.EXPORT()〉.
+
+          Example (verbose code):
+
+          <js>
+            var div = DynarchDomUtils.createElement("div");
+            DynarchDomUtils.addClass(div, "foo");
+            DynarchDomUtils.addClass(div, "bar");
+            var size = DynarchDomUtils.getInnerSize(div);
+          </js>
+
+          Could be shortened like this:
+
+          <js>
+            eval(DynarchDomUtils.importCommonVars());
+            var div = CE("div");
+            AC(div, "foo");
+            AC(div, "bar");
+            var size = DOM.getInnerSize(div);
+          </js>
+
+          Here's the list of variables that are imported:
+
+          <pre>
+            DOM = DynarchDomUtils;
+            AC = DOM.addClass;
+            DC = DOM.delClass;
+            CC = DOM.condClass;
+            CE = DOM.createElement;
+            ID = Dynarch.ID;
+          </pre>
+
+          The returned string is a JS "var" declaration, which you
+          need to eval() in order to get the aliases into your current
+          context.
+        </doc>
+      </method>
+
+      <method hash="263ff724f9035f620a451189259e89da" name="isInside">
+        <param name="el" type="HTMLElement"></param>
+        <param name="parent" type="HTMLElement"></param>
+        <doc>
+          Returns true if <b>parent</b> is an ancestor of <em>el</em>.
+          Note it also returns true if parent == el.
+        </doc>
+      </method>
+
+      <method hash="87aa495588df0376a9459c64f29639fe" internal="1" name="related" undoc="1">
+        <param name="element" type="HTMLElement"></param>
+        <param name="ev" type="Event">the DOM event</param>
+        <doc>
+          Returns <b>true</b> if the <b>ev</b>ent is related to the
+          element, false otherwise.  This is an internal function,
+          don't use it.
+        </doc>
+      </method>
+
+      <method hash="b4f48788d5c958d14f0d2bf371c0699c" name="setInnerSize">
+        <param name="el" type="HTMLElement"></param>
+        <param name="x" type="Number|null"></param>
+        <param name="y" type="Number|null"></param>
+        <doc>
+          Sets the element's inner size to the given <b>x</b> and
+          <b>y</b> values.  This is as simple as el.style.width = x +
+          "px", el.style.height = y + "px", but it does some safety
+          checks to ensure the browser won't croak.
+
+          If you pass null for any of the values, the respective style
+          won't be modified.
+        </doc>
+      </method>
+
+      <method hash="6bcc1ae22746ff1074ad66e501c2b75f" name="setOuterSize">
+        <param name="el" type="HTMLElement"></param>
+        <param name="x" type="Number|null"></param>
+        <param name="y" type="Number|null"></param>
+        <doc>
+          Sets the element's outer size to the given values.  This is
+          a lot more complicated to do properly because elements might
+          have borders or paddings set through external styles.  It's
+          based on 〈.getPaddingAndBorder()〉 and it might be slow.
+        </doc>
+      </method>
+
+      <method XXX="Code has changed!" hash="e32858723ffac15c4de1e14a5959cbb5" name="setOpacity">
+        <param name="el" type="HTMLElement"></param>
+        <param name="o" type="Number">fractional number between 0 .. 1</param>
+        <doc>
+          Sets the element's opacity to the given value.  0 means
+          total transparency, while 1 is fully opaque.  Not working in
+          Konqueror due to lack of browser support.
+        </doc>
+      </method>
+
+      <method hash="58f2dcfde3c23d763f052a310ec6b3ae" name="setPos">
+        <param name="el" type="HTMLElement"></param>
+        <param name="x" type="Number|null"></param>
+        <param name="y" type="Number|null"></param>
+        <doc>
+          Sets an element's position on screen.  It's only effective
+          for elements that have position "absolute" or "relative".
+
+          In essence, does el.style.top = y + "px", el.style.left = x
+          + "px", but does some safety checks first.
+
+          If you pass null for any of the value, the respective style
+          won't be modified.
+        </doc>
+      </method>
+
+      <method hash="ee316cce36c362696d6247ce2c1bde2b" name="setStyleProperty">
+        <param name="el" type="HTMLElement"></param>
+        <param name="prop" type="String">property name</param>
+        <param name="val">new value</param>
+        <doc>
+          Sets an element CSS property (inline style) to the given
+          value.  Note that “prop” must be in CSS notation,
+          i.e. “border-left” instead of “borderLeft”.
+        </doc>
+      </method>
+
+      <method XXX="Code has changed!" hash="d34c5de7cfdd26248446d94c7554c54f" name="setUnselectable">
+        <param name="el" type="HTMLElement"></param>
+        <param default="true" name="unsel" optional="1" type="boolean"></param>
+        <doc>
+          Makes the element unselectable if <b>unsel</b> is true (or
+          if not passed at all).
+        </doc>
+      </method>
+
+      <method hash="da423516c8f22202aa39d5739432a7d8" name="stopEvent">
+        <param name="ev" type="Event"></param>
+        <doc>
+          Stops the DOM event, preventing it from running the default
+          handlers and from bubbling up.
+        </doc>
+      </method>
+
+      <method hash="14e0dbbb727324d0e028541a3cc412ca" name="elementIsVisible">
+        <param name="el" type="HTMLElement"></param>
+        <doc>
+          Returns <b>true</b> if the element is visible, that is, if
+          its “display” property is not “none” and its “visibility”
+          style is not “hidden”.
+        </doc>
+      </method>
+
+      <method hash="b720aa056b145de94f5baa96c0faecdd" name="createFromHtml">
+        <param name="html" type="String">HTML code (should be valid)</param>
+        <doc>
+          Creates DOM elements from the given <b>html</b> code.  It
+          should have exactly one top-level element, which will
+          actually be returned.  Example:
+
+          <js><![CDATA[
+            var html = String.buffer(
+              "<table>",
+              "<tr><td>foo cell</td></tr>",
+              "<tr><td>bar cell</td></tr>",
+              "</table>"
+            );
+            // now you get a reference to the newly created <table>
+            var table = DynarchDomUtils.createFromHtml(html.get());
+            someParent.appendChild(table);
+          ]]></js>
+        </doc>
+      </method>
+
+      <method hash="d8d734c2632952ab48cb60bcb33712a5" name="ie_getBackgroundColor" undoc="1">
+        <param name="el"></param>
+        <doc>
+          This function doesn't work, don't use it.
+        </doc>
+      </method>
+
+      <method hash="085f2537be142a7bb54acae2e11b688c" name="trash">
+        <param name="el" type="HTMLElement"></param>
+        <doc>
+          Trashes the given element to avoid memory leaks.  For this
+          to be efficient, it's advised to not hold any references to
+          <b>el</b>.
+
+          The way it does this is simply to append it in some parent
+          (our “garbage collector”).  Then we reset the parent's
+          innerHTML to "".  Looks like this way IE finally releases
+          the memory, but you should be very careful not to have any
+          circular references between <b>el</b> and some other object.
+        </doc>
+      </method>
+
+      <method hash="3aa1f2e95e3d2f4bff146e85ac1cfab0" name="swapNodes">
+        <param name="n1" type="HTMLElement"></param>
+        <param name="n2" type="HTMLElement"></param>
+        <doc>
+          Swaps the position of the given two nodes in the DOM.
+        </doc>
+      </method>
+
+    <method hash="f73f0ca89c38b8781640084654edb6e6" name="scrollIntoView"><param name="el"></param><doc></doc></method></static-methods>
+
+    <object-methods></object-methods>
+  </object>
+
+  <object name="Object">
+
+    <constructor>
+      <doc>
+        This is a standard JavaScript object.  DynarchLIB adds a few
+        useful extensions.
+      </doc>
+    </constructor>
+
+    <static-methods>
+
+      <method hash="ecd1390db048e0e61ba8e5647915ce57" name="isEmpty">
+        <param name="o"></param>
+        <doc>
+          Receives an object (hash) as argument and returns
+          <b>true</b> if that hash doesn't contain any keys (is
+          empty).  Returns false if at least one key has been found.
+        </doc>
+      </method>
+
+      <method forced="1" name="makeCopy">
+        <doc>
+          Alias to 〈Dynarch.makeCopy()〉.  The following 2 are
+          equivalent:
+
+          <js>
+            var copy = Object.makeCopy(source);
+            var copy = Dynarch.makeCopy(source);
+          </js>
+        </doc>
+      </method>
+
+      <method forced="1" name="makeDeepCopy">
+        <doc>
+          Alias to 〈Dynarch.makeDeepCopy()〉.
+        </doc>
+      </method>
+
+    </static-methods>
+
+    <object-methods>
+    </object-methods>
+
+  </object>
+</api>

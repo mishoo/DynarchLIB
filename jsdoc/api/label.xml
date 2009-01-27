@@ -1,0 +1,38 @@
+<api file="label.js" show="1">
+  <object base="DlAbstractButton" name="DlLabel">
+    <constructor>
+      <param default="null" name="widget" optional="1" type="DlWidget">Widget to activate when the label is clicked</param>
+      <doc>
+        A label widget.  Although the functionality that a label
+        requires is usually very simple, we inherit this widget from
+        〈DlAbstractButton〉 to easily provide additional goodies (such
+        as, if you wish, you can pass a hover or active class name,
+        etc.).  Therefore, a label has all the functionality of a
+        button, but a different look.
+      </doc>
+    </constructor>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="9dda876a4c6c4599cc1a20384b576213" name="getWidget">
+        <doc>
+          Returns the associated widget.
+        </doc>
+      </method>
+      <method hash="6cebdecd1c8bf584b9e6e789c876d405" name="setWidget">
+        <param name="widget" type="DlWidget">New widget for this label</param>
+        <doc>
+          Sets an widget to be focused when the label is clicked or
+          activated by an access key.
+        </doc>
+      </method>
+      <method hash="b14c2ec38c93538bd0f5019892c4909c" internal="1" name="_handle_accessKey">
+        <param name="ev"></param>
+        <doc></doc>
+      </method>
+      <method hash="6ce81feea0e5f73094de18f5e271bb73" internal="1" name="_onMouseDown">
+        <param name="ev"></param>
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

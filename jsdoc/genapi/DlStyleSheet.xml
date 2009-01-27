@@ -1,0 +1,300 @@
+<sample>
+
+  <title>DlStyleSheet</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlStyleSheet</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlEventProxy〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈stylesheet.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈eventproxy.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+     <div class="doc"><span>
+      Object to create and manipulate an inline stylesheet.  You can
+      use this object to dynamically insert random CSS rules that
+      apply to all document.
+<p/>
+      For example, if I wanted to <em>dynamically</em> decide that all
+      DIV-s with class “foo-style” should have red text, we can do the
+      following (see the text below before you execute the sample):
+<p/>
+      <div sample="DlStyleSheet2"></div>
+<p/>
+      <div class="foo-style">
+        Some <b>Foo Text</b> Here.
+      </div>
+<p/>
+      Note that these are global styles.  The above defined style will
+      apply, from now on, to all elements in the document that have
+      the "foo-style" class name.
+<p/>
+      If you save the value returned by <a href='api://DlStyleSheet.xml:type=object_method:func=insertRule'>insertRule()</a>, you can
+      <a href='api://DlStyleSheet.xml:type=object_method:func=deleteRule'>remove</a> the rule or <a href='api://DlStyleSheet.xml:type=object_method:func=modifyRule'>modify</a> it
+      later.
+    </span>
+
+     </div>
+   </div>
+    </div>
+
+
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="deleteRule:object_method">deleteRule (<span class='param'>rule</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">rule</td>
+         <td class="doc"><span name="rule">CSS rule to remove</span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          If you want to completely remove a certain rule, call this
+          function and pass it the value returned by <a href='api://DlStyleSheet.xml:type=object_method:func=insertRule'>insertRule()</a>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="disabled:object_method">disabled (<span class='param optional'>dis</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">dis</td>
+         <td class="doc"><span default="null" name="dis" optional="1">Disable this style?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">null</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Disable or enable this stylesheet, if <b>dis</b> is passed.
+          If <b>dis</b> is null, simply return <b>true</b> if the
+          stylesheet is currently disabled, or false otherwise.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getRules:object_method">getRules ()
+        </h3>
+     <div class="doc"><span>
+          Returns an array with all rules in this stylesheet.  Note
+          that these are actually objects of type <a href="http://www.w3.org/TR/DOM-Level-2-Style/css.html#CSS-CSSStyleRule" target="_blank">CSSStyleRule</a> (as defined by W3C DOM CSS
+          specification), except for IE where they are proprietary.
+<p/>
+          You shouldn't find much use for this method.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="insertRule:object_method">insertRule (<span class='param'>sel</span>, <span class='param'>style</span>, <span class='param optional'>index</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">sel</td>
+         <td class="doc"><span name="sel">CSS Selector</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">style</td>
+         <td class="doc"><span name="style">CSS rule definition</span>
+</td>
+         <td class="type">[<b>〈String,Hash〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">index</td>
+         <td class="doc"><span default="null" name="index" optional="1">position where to insert this rule in the current stylesheet</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">null</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">
+           <b><span>CSS rule (index or object! see below)</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          If <b>index</b> is null (default) the rule will be appended
+          (thus, at the end).
+<p/>
+          This function inserts a new rule into the current
+          stylesheet.  The selector is a standard CSS selector, i.e.:
+<p/>
+          <ul>
+            <li> .someClassName </li>
+            <li> h1 </li>
+            <li> #someID </li>
+            <li> .someClassName, .otherClassName </li>
+          </ul>
+<p/>
+          etc.  Any standard CSS selectors should be supported.  Even
+          in IE.
+<p/>
+          The <b>style</b> is either a string specifying the CSS text,
+          or an object (which serves the same purpose):
+<p/>
+          <ul>
+            <li> "color: red"</li>
+            <li> { color: "red" }</li>
+            <li> "color red; background-color: yellow" </li>
+            <li> { color: "red", "background-color" : "yellow" } </li>
+          </ul>
+<p/>
+          The return value is either an object or an index, depending
+          on the browser and the selector form.  IE does not support
+          multiple selectors (separated by commas) so we had to work
+          around this, but in this case we don't return a CSS rule
+          object but an internal ID.
+<p/>
+          Either way, you should not worry about the return value—just
+          save it if you intend to call later <a href='api://DlStyleSheet.xml:type=object_method:func=deleteRule'>deleteRule()</a> or
+          <a href='api://DlStyleSheet.xml:type=object_method:func=modifyRule'>modifyRule()</a>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="modifyRule:object_method">modifyRule (<span class='param'>rule</span>, <span class='param'>changes</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">rule</td>
+         <td class="doc"><span name="rule">CSS rule as returned by <a href='api://DlStyleSheet.xml:type=object_method:func=insertRule'>insertRule()</a></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">changes</td>
+         <td class="doc"><span name="changes">What to change?</span>
+</td>
+         <td class="type">[<b>〈Hash〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Modify a rule previously inserted with <a href='api://DlStyleSheet.xml:type=object_method:func=insertRule'>insertRule()</a>.
+          <b>rule</b> is whatever was returned by <a href='api://DlStyleSheet.xml:type=object_method:func=insertRule'>insertRule()</a> and
+          <b>changes</b> is a hash, i.e.:
+<p/>
+          <div sample="DlStyleSheet1"></div>
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="refresh:object_method">refresh ()
+        </h3>
+     <div class="doc"><span>
+          In rare situations (that is, never) you will want to try
+          this method to refresh the page after you changed the
+          stylesheet.  It does <em>not</em> reload the page, it just
+          forces a style refresh by calling
+          <a href='api://DlStyleSheet.xml:type=object_method:func=disabled'>disabled(false)</a> and then disabled(true). (an
+          old hack that used to be needed for Gecko).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_init:object_method">_init ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+<code id="DlStyleSheet1" type="js">
+            style.modifyRule(rule, { "background-color" : "red",
+                                     "color"            : "white" });
+          </code>
+<code canrun="1" id="DlStyleSheet2" type="js">
+        var style = new DlStyleSheet();
+        style.insertRule(".foo-style", { color: "red", padding: "1em" });
+        print("Now close the dialog and watch the Foo Text");
+      </code>
+
+
+</sample>
+
+
+
+

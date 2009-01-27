@@ -1,0 +1,314 @@
+<api file="abstractbutton.js" show="1">
+  <object base="DlWidget" name="DlAbstractButton">
+    <constructor>
+      <param default="false" name="alwaysCheck" type="boolean">Set to <b>true</b> if a click should always check this button</param>
+      <param default="false" name="checked" type="boolean">Initially checked?</param>
+      <param default="{}" name="classes" type="Hash">Button class names (see below)</param>
+      <param default="null" name="group" type="DlRadioGroup|String">Button radio group (see below)</param>
+      <param default="&#34;&#34;" name="label" type="String">Button label</param>
+      <param default="false" name="noCapture" type="boolean">Don't capture mouse events?</param>
+      <param default=" TYPE.STANDARD" name="type" type="Number">Button type</param>
+      <param default=" window.undefined" name="value">Value of this button (see below)</param>
+      <doc>
+        A DlAbstractButton is the base class for most things that can
+        be clicked.  This include 〈DlButton〉, 〈DlRadioButton〉,
+        〈DlCheckbox〉 and even 〈DlLabel〉.
+
+        *** CSS
+
+        It defines basic functionality that allows your buttons to get
+        a special style when they are hovered, or when they are
+        pressed / depressed / checked / unchecked.  For this you use
+        the <b>classes</b> argument, which should look for example
+        like this:
+
+        <js>
+          {
+            active    : "DlButton-active",    // class when button is pressed
+            hover     : "DlButton-hover",     // class when button is hovered
+            checked   : "DlButton-1",         // class when button is "checked"
+            unchecked : "DlButton-0",         // class when button is "unchecked"
+            empty     : "DlButton-empty",     // class when button is empty
+            disabled  : "DlButton-disabled"   // class when button is disabled
+          }
+        </js>
+
+        Note that "checked" and "unchecked" styles only make sense for
+        buttons that are of <b>type</b> "TWOSTATE".  "STANDARD" and
+        "TWOSTATE" are the only types available at the time of
+        writing.  For TWOSTATE buttons you might find it easy to work
+        with a 〈DlRadioGroup〉 object to keep track of what's selected
+        (see also the <a href="sample://widgets-radiobuttons.xml">radio groups sample
+        page</a>).
+
+        *** Mouse capture
+
+        A button will normally capture mouse events in the following
+        case: you press the button and, without depressing the mouse
+        button, you move the mouse away.  In this case, no other
+        widgets will receive mouse moves until you depress the mouse
+        button.  If you move the mouse back to the 〈DlAbstractButton〉
+        widget and depress it, it will get an "onClick" event.  If you
+        depress the mouse somewhere else, the click is "cancelled".
+
+        In various situations you won't like the capturing behavior,
+        although it's standard and common for most push buttons, check
+        boxes and radio buttons.  When you don't want the framework to
+        capture these events, pass <b>noCapture: true</b>.
+
+        *** Button value
+
+        Many widgets have a 〈value()〉 method.  This includes
+        DlAbstractButton.  For buttons, the value is optional, but
+        it's many times useful.  You set the value calling
+        〈value()|widget.value(some_value)〉 and you retrieve it by
+        calling widget.value() (no arguments).  It's used in a few
+        places to automate data retrieval, such as in 〈DlRadioGroup〉
+        (if you have multiple check boxes in a group and want to see
+        what are the values of the selected buttons, you just call
+        group.getValue()).  See the <a href="sample://widgets-radiobuttons.xml">radio groups
+        sample</a>.
+      </doc>
+    </constructor>
+
+    <events>
+      <event name="onCheck">
+        <doc>Triggered when the button is checked</doc>
+      </event>
+      <event name="onUncheck">
+        <doc>Triggered when the button is unchecked</doc>
+      </event>
+      <event name="onChange">
+        <doc>
+          Triggered when the button is either checked or unchecked
+          (that is, is changed).
+        </doc>
+      </event>
+      <event name="onUpdateLabel">
+        <param name="label" type="String">New label</param>
+        <doc>
+          Triggered when the label of the button has been modified.
+        </doc>
+      </event>
+    </events>
+
+    <static-methods></static-methods>
+
+    <object-methods>
+
+      <method hash="47d9fedb6ba6fbbfa6893a4345eb87ec" name="checked" varargs="1">
+        <!--XXX: uses *arguments*, check for missing params-->
+        <param default="null" name="checked" optional="1" type="boolean"></param>
+        <param default="false" name="nohooks" optional="1" type="boolean"></param>
+        <doc>
+          Returns the checked (true) or unchecked (false) state of the
+          button.  It only makes sense for buttons of type
+          “DlAbstractButton.TYPE.TWOSTATE”.
+
+          If you pass the <b>checked</b> argument, it will change the
+          button state.  <b>true</b> means to check the button,
+          <b>false</b> to uncheck it.  It also triggers the “onChange”
+          and “onCheck” or “onUncheck” events, but only if the button
+          changes the state and <em>unless</em> you pass <b>nohooks =
+          true</b>.
+        </doc>
+      </method>
+
+      <method hash="9f66d35c39c3f0bea7c8a07e2c282a77" name="group">
+        <return type="DlButtonGroup"></return>
+        <doc>
+          Returns the 〈DlRadioGroup|radio group〉 of this button, if
+          any.  Null if no group has been defined.
+        </doc>
+      </method>
+
+      <method hash="7b5beaf637629973f746f00ea7c7c91d" name="label">
+        <param default="null" name="label" optional="1" type="String">New label</param>
+        <param default="false" name="force" optional="1" type="boolean">Force new label?</param>
+        <doc>
+          Returns or changes the label of the button.  If you pass no
+          arguments, the existing label is returned.  If you pass
+          <b>label</b>, then a new label is set for the button and
+          “onUpdateLabel” is triggered, but only if the new label is
+          different from the existing label, or if <b>force</b> is
+          true.
+        </doc>
+      </method>
+
+      <method hash="b01af628f328c2587734ea01de8faa07" name="toggle">
+        <param default="false" name="nohooks" optional="1" type="boolean">Don't call event listeners?</param>
+        <doc>
+          Toggle the button, that is, call 〈checked()|checked(true)〉
+          if the current state is unchecked, or checked(false) if the
+          current state is checked.  <b>nohooks</b> is passed to the
+          〈checked()〉 method.
+        </doc>
+      </method>
+
+      <method hash="f5ed6620443cdba234c60fb64ecaf66d" name="disabled">
+        <param name="v"></param>
+        <param name="force"></param>
+        <doc></doc>
+      </method>
+
+      <method hash="4aa898ded440561b37e64cc5cab71e86" name="initDOM">
+        <doc></doc>
+      </method>
+
+      <method hash="5b625a04eceffd57ce0bc3212d3f549d" name="value" varargs="1">
+        <!--XXX: uses *arguments*, check for missing params-->
+        <param name="newval" optional="1" type="Object">New value for this button</param>
+        <doc>
+          Optionally sets a new value for this button if <b>newval</b>
+          is passed.  Returns the current value.
+        </doc>
+      </method>
+
+      <method XXX="Code has changed!" hash="00d29246daaa30179d334d66b61207e4" name="keyClicked">
+        <param name="ev" type="DlEvent">Key event</param>
+        <doc>
+          Called automatically when the button is activated by a key
+          press.  This can happen when the button is focused and ENTER
+          or SPACE is pressed, or when the button's access key has
+          been pressed.  The button must be focusable.
+
+          This method flashes the button shortly and triggers
+          “onClick”.
+        </doc>
+      </method>
+
+      <method hash="f0a555b17bdf55b151769c92135530ee" internal="1" name="_cap_onMouseEnter">
+        <param name="ev" type="DlEvent"></param>
+        <doc>
+          This function is called when we have mouse capture and the
+          cursor enters the button.  Adjusts the button style
+          accordingly by adding the "active" class name.
+        </doc>
+      </method>
+
+      <method hash="39ae9d3f5e2ada3a100eb61a85365d14" internal="1" name="_cap_onMouseLeave">
+        <param name="ev" type="DlEvent"></param>
+        <doc>
+          Called when we have mouse capture and the cursor leaves the
+          button.  Removes the "active" class name.
+        </doc>
+      </method>
+
+      <method XXX="Code has changed!" hash="091c7c61f82bf617c28169b713541815" internal="1" name="_cap_onMouseUp">
+        <param name="ev" type="DlEvent"></param>
+        <doc>
+          Called when we have mouse capture and the mouse button is
+          depressed while the cursor is inside the button.  Releases
+          the mouse capture.
+        </doc>
+      </method>
+
+      <method hash="7c8aef80d508a6e08ff78ec3a174b21f" internal="1" name="_checkTwoState">
+        <param default="false" name="nothrow" optional="1" type="boolean">Don't throw exceptions?</param>
+        <return type="boolean">True if the button is TWOSTATE, false otherwise</return>
+        <doc>
+          Check if the current button is of type
+          DlAbstractButton.TYPE.TWOSTATE and throws an exception if
+          it's not.  If you specify <b>nothrow = true</b>, then no
+          exceptions are thrown and you can use the return value.
+        </doc>
+      </method>
+
+      <method hash="3a1d202f65e74e73a9d22a18b3fdc14c" internal="1" name="_createElement">
+        <doc></doc>
+      </method>
+
+      <method hash="81fb9dc54255c84f53bc801e411d0dc9" internal="1" name="_handle_focusKeys">
+        <param name="ev"></param>
+        <doc></doc>
+      </method>
+
+      <method hash="d48bee51055bd291b1c2770c5b5360ea" internal="1" name="_onChange">
+        <doc>
+          Handles the "onChange" event.  If the button belongs to a
+          〈DlRadioGroup|group〉, calls the group's onChange event
+          passing this button as the argument.
+        </doc>
+      </method>
+
+      <method hash="4691f124b6461024650cef0833b7a501" internal="1" name="_onClick">
+        <doc>
+          Handles the "onClick" event.  If the button is TWOSTATE and
+          alwaysCheck is false (see constructor), it
+          〈toggle()|toggles〉 the button.  If alwaysCheck is true then
+          it calls 〈checked()|checked(true)〉.
+        </doc>
+      </method>
+
+      <method hash="1607b2b078cadae81fc0bb2a5b78fd2c" internal="1" name="_onDisabled">
+        <param name="v" type="boolean">Disabled value (true if disabled)</param>
+        <doc>
+          Handles the "onDisabled" event.  Updates the button styles
+          accordingly (adds the <b>disabled</b> class if disabled or
+          removes it if enabled).  Release mouse capture if the button
+          was currently holding it.
+        </doc>
+      </method>
+
+      <method hash="09df1dd04553846bff219fca73953d5f" internal="1" name="_onMouseDown">
+        <param name="ev" type="DlEvent"></param>
+        <doc>
+          Called when a mouse button is pressed on the widget.  If
+          it's the left button, update class names accordingly (add
+          the <b>hover</b> and <b>active</b> classes) and acquire
+          mouse capture.
+        </doc>
+      </method>
+
+      <method hash="ee6c572e9160e296adcecb140e41c0dc" internal="1" name="_onMouseEnter">
+        <param name="ev" type="DlEvent"></param>
+        <doc>
+          Called when the mouse enters the widget.  It's different
+          from 〈_cap_onMouseEnter()〉 because this one is called when we
+          <em>don't</em> have mouse capture.  Adds the <b>hover</b>
+          class.
+        </doc>
+      </method>
+
+      <method hash="66d86e376b07797612beb9411c28a475" internal="1" name="_onMouseLeave">
+        <param name="ev" type="DlEvent"></param>
+        <doc>
+          Called when the mouse leaves the widget and we're not
+          holding the capture.  Removes the <b>hover</b> and
+          <b>active</b> classes.
+        </doc>
+      </method>
+
+      <method hash="d0784a7d4247c88f7d552cd4a7b7c359" internal="1" name="_onMouseUp">
+        <param name="ev" type="DlEvent"></param>
+        <doc>
+          Called when the mouse button is depressed on the widget and
+          we're not holding capture.  Removes the <b>active</b> class.
+        </doc>
+      </method>
+
+      <method hash="93f511bf79f894e13ea88b5a04429cda" internal="1" name="_onUpdateLabel">
+        <doc>
+          Called when the button label is modified.  Checks if the new
+          label is empty and accordingly adds or removes the
+          <b>empty</b> class name.
+        </doc>
+      </method>
+
+      <method hash="974c90fdff1f8c58d2e9fc686a8a3d69" internal="1" name="_setListeners">
+        <doc></doc>
+      </method>
+
+      <method hash="a2f5db350cff7c29af1e4e14b532c8eb" internal="1" name="_updateState">
+        <doc></doc>
+      </method>
+
+      <method hash="4bf83939b498a659d41fd289a8efed14" internal="1" name="_handle_accessKey">
+        <param name="ev"></param>
+        <doc></doc>
+      </method>
+
+    </object-methods>
+
+  </object>
+</api>

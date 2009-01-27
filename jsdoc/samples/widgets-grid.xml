@@ -1,0 +1,750 @@
+<sample>
+
+  <title>Grid Widget (DlDataGrid)</title>
+
+  <text>
+
+    <p>
+      〈DlDataGrid〉 is a new widget, replacing our previous grid
+      (DlGrid).  The old code is still available in the
+      “src/js/deprecated” folder from the DynarchLIB package.
+    </p>
+
+    <p>
+      The new grid is rewritten from scratch with a high focus on
+      performance, but it also has a few neat new features—for example
+      allowing one to hide/show columns at runtime, or to reorder
+      columns by drag'n'drop.  It's comprised of the following pieces:
+    </p>
+
+    <ul>
+      <li>
+        〈DlRecord〉 — an object that keeps data for a single record (grid row)
+      </li>
+      <li>
+        〈DlRecordCache〉 — an object that maintains multiple records
+      </li>
+      <li>
+        〈DlDataGrid〉 — the widget itself
+      </li>
+      <li>
+        〈DlGridCol〉 — defines one column
+      </li>
+      <li>
+        〈DlSelectionModel〉 — object that handles the grid selection
+      </li>
+    </ul>
+
+    <p>
+      We'll discuss them all but for now only the first 3 are
+      essentials.
+    </p>
+
+    <p>
+      DlRecord and DlRecordCache represent the data model and
+      DlDataGrid is the view.  The grid displays data from a record
+      cache, but it doesn't necessarily display all records or all
+      columns.  It actually displays a subset of the data (and of
+      course, it can happen that this subset is the entire list).
+    </p>
+
+    <p>
+      The new grid widget is centered around the idea that each record
+      has an unique ID; the record cache doesn't maintain the order of
+      the records, the grid (or external code) is solely responsible
+      for this.  In other words, we work as much as possible with
+      record ID-s instead of row indexes.  This makes it easy to
+      identify records when we communicate with the server
+      irrespective of their actual positions inside the grid (which
+      can be sorted, etc).
+    </p>
+
+    <p>
+      Here's one verbose example:
+    </p>
+
+    <div sample="grid1" />
+
+    <p>
+      You can already notice a few features of the new grid:
+    </p>
+
+    <ul>
+      <li>
+        You can select multiple rows by shift-click / ctrl-click.
+      </li>
+      <li>
+        Once you focused the grid, you can also use the keyboard to
+        navigate and select; this was available in the old grid as
+        well, actually, but some ugly hacks were needed to allow
+        selection of multiple rows.
+      </li>
+      <li>
+        You can drag and drop column headers to reorder columns.
+      </li>
+      <li>
+        Right clicking on the headers allow you to hide/show columns.
+        Note that they even remember their positions ;-)
+      </li>
+      <li>
+        Obviously, clicking the column header sorts the grid.
+      </li>
+    </ul>
+
+    <h2>Paging and virtual scrolling</h2>
+
+    <p>
+      The new grid displays only a subset (let's call it a page) of
+      the data at any given moment.  This defaults to 50 rows.  When
+      the grid is scrolled, it replaces the existing 50 rows with
+      other rows, such that the browser won't slow down in proportion
+      with an increasing number of rows.  In addition, since it's not
+      needed for display, you can design your code to fetch row data
+      from server only when needed.  This way you can “display” grids
+      of thousands of rows with no performance hit.
+    </p>
+
+    <p>
+      We call this feature “virtual scrolling”.
+    </p>
+
+    <p>
+      Let's see a sample which we had for the old grid too—displaying
+      all classes in the current JS interpreter:
+    </p>
+
+    <div sample="grid2" />
+
+    <p>
+      The old grid took 3 seconds to display this, while the new one
+      does it in like half a second.  As you scroll through the grid,
+      you can notice some minor flickering (in Firefox), as off-screen
+      rows are removed and other new rows are added.  We couldn't work
+      around this, but it's a minor compromise to make for 6 times
+      better performance.
+    </p>
+
+    <p>
+      Virtual scrolling can be controlled by two parameters to
+      DlDataGrid constructor:
+    </p>
+
+    <ul>
+      <li>
+        <p>
+          <b>rpp</b> — “records per page”.  This defaults to 50.  The
+          grid will keep <em>at most</em> this many records in the
+          DOM.  If more records are to be displayed, they are
+          displayed as the page is scrolled, if
+          <b>virtualScrolling</b> is true.  Otherwise you need to
+          provide a paging mechanism (i.e. "prev page" or "next page"
+          buttons and use the grid's
+          <b>〈DlDataGrid::displayPage()|displayPage〉</b> method).
+        </p>
+        <p>
+          <b>rpp</b> can also be zero or null, in which case the grid
+          displays all records that are available.  This works best
+          for a relatively small number of records (200 records and 10
+          columns work decently fast in my tests).  For anything over
+          200 records you really need <b>rpp</b> to be a small value
+          (50 is best), otherwise the browser slows down to a crawl.
+        </p>
+      </li>
+      <li>
+        <p>
+          <b>virtualScrolling</b> : <b>true</b> | false — default is
+          true; this boolean specifies if we want the grid to use
+          virtual scrolling.
+        </p>
+      </li>
+    </ul>
+
+    <h2>What's with resetIDS()?</h2>
+
+    <p>
+      As I mentioned above, the grid does not necessarily display all
+      records from the data cache.  You need to explicitly tell the
+      grid the ID-s of the rows that it should display.  This is done
+      with resetIDS() which takes an array of ID-s.  This array also
+      defines the initial order of the records in the display.
+    </p>
+
+    <h2>Grid columns</h2>
+
+    <p>
+      The grid internally creates a DlGridCol object for each column
+      passed in the <b>columns</b> argument.  All the properties are
+      passed to the DlGridCol constructor.  This object supports the
+      following properties (showing the defaults):
+    </p>
+
+    <pre class="js" name="dlhl">"id"        : null
+"width"     : null
+"style"     : null
+"label"     : null
+"tooltip"   : null
+"iconClass" : null
+"sortable"  : true
+"resizable" : true
+"visible"   : true</pre>
+
+    <p>
+      For example, if you want a column to be initially hidden, you
+      need to pass visible: false, as shown in the next sample.  Note
+      that it's not currently possible to <em>create</em> columns
+      after the grid was initialized.  One can only hide or show them,
+      therefore all columns must be specified from the start.
+    </p>
+
+    <h2>Selection model</h2>
+
+    <p>
+      When you construct the grid you can specify a selection model.
+      If you don't, the grid creates its own and it's available in
+      <b>grid._selection</b> (really not a public API), but normally
+      you'll roll your own object.  Using it you can find out at any
+      time what records are selected, as an array of record ID-s, or
+      as a hash.  The following sample demonstrates it.
+    </p>
+
+    <div sample="grid3" />
+
+    <p>
+      The selection model accepts a <b>multiple</b> argument (boolean)
+      which defaults to true.  If you pass false there, the grid won't
+      support multiple row selection.
+    </p>
+
+    <h2>Data changes</h2>
+
+    <p>
+      The grid “listens” to data changes in the cache and
+      automatically refreshes the modified records, inserts or removes
+      records, to match with the cache, therefore all you need to do
+      is to modify the data model.  The following sample illustrates
+      that.
+    </p>
+
+    <div sample="grid4" />
+
+    <p>
+      One thing to notice is that upon an "onInsert" event the grid
+      adds that row into the display, although it wasn't mentioned in
+      resetIDS().  In general this is what we want.
+    </p>
+
+    <h2>Under the hood</h2>
+
+    <p>
+      Now that you know all the basics, it's time for some more
+      advanced tips.  For example, what happens if inside some object
+      you have a property which is a Date object?  The grid will
+      display it by converting it to string, but it's hardly what you
+      want to happen.
+    </p>
+
+    <p>
+      Probably the most important trick that's going to be useful in
+      real applications is to inherit the DlRecord or/and
+      DlRecordCache objects.  The following sample shows how we can
+      create a custom DlRecordCache object.
+    </p>
+
+    <div sample="grid5" />
+
+    <p>
+      There are other interesting functions in DlRecordCache which are
+      automatically called by the grid and you can override:
+    </p>
+
+    <ul>
+      <li>getRecClass(rec) { return a CSS class name for the given record }</li>
+      <li>getCellClass(rec, col) { return a CSS class name for the given record and column }</li>
+      <li>getRecords(ids, callback, obj) { see below }</li>
+      <li>getInsertPos(rec) { return the position at which this newly inserted record should be displayed }</li>
+    </ul>
+
+    <p>
+      When your data is huge, <b>getRecords</b> is of particular
+      importance.  The default implementation simply calls
+      cache.get(id) for each ID and returns the collected records, but
+      this won't work when you're loading the data “lazily” from the
+      server.  In such cases you need to override this method and make
+      it request the data from the server.
+    </p>
+
+    <p>
+      I will try to illustrate this in the next sample.  Note that
+      it's a “client-side”-only sample, it doesn't load data from the
+      server; it just generates it randomly after a timeout (to
+      emulate the time spent into the client-server round trip).  The
+      sample is a bit complicated, but I'll explain things below.
+    </p>
+
+    <div sample="grid6" />
+
+    <p>
+      Now here's what happens.  When the grid needs to display data,
+      it calls cache.getRecords().  This method receives a callback;
+      the original idea was that this callback is supposed to be
+      called with an array of full records, only after we retrieve
+      data from server.  However in practice this didn't work because
+      of the asynchronous nature of the AJAX calls — the browser being
+      “free” while a call is active, the user can still scroll while
+      the server is retrieving records for the first call.  Which
+      means that by the time the records get cached in the client and
+      the callback called, the user might view a totally different set
+      of records.  This led to incredibly difficult to debug issues,
+      so I gave up the idea.  SO, the right solution is to have the
+      callback called right away; it will be passed an array that
+      contains DlRecord objects, though some of them might be “fake”
+      (i.e. not fully retrieved from server, which is why I'm using
+      the _loading hack).  In this case, the grid will display "..."
+      (as actually returned by the DlRecord::get() function) and
+      later — when full data is available — we manually trigger the
+      "onChange" event in the cache for those rows, so that the view
+      gets updated.
+    </p>
+
+    <p>
+      As you can see in the code, it has to mess up with some
+      internals of these objects — for instance it sets the recordSet
+      for a created record manually to the cache, and it manually
+      needs to modify the record._data — it would make sense, if we
+      have a single column, to use record.set() in order to modify its
+      value; but in the general case where we have to display a lot of
+      columns, record.set() is not OK because it triggers the onChange
+      event for each column, which is a waste of time since the grid
+      actually re-displays the full row upon onChange.
+    </p>
+
+    <p>
+      One other thing to notice here is that the grid instantly
+      displays the value of “known” columns (in this case, the ID),
+      while it waits for the other columns' value to come.  This is
+      useful in many cases, i.e. when you want to display data from an
+      SQL join.  An example where it's really useful: say you want to
+      display a table of pages; each page contains some specific data
+      (i.e. title, date created, etc) and each one is created by some
+      user (first name, last name, date last seen, etc.; this data
+      comes from a different table in DB).  You can cache these
+      separately on the client.  Then, if you need to display a table
+      that contains user comments, you also have some specific data
+      (subject, date created, comment etc.) but you also have user's
+      data which might have been already cached.  By defining your own
+      cache and record objects you can achieve maximum flexibility
+      needed for your application.
+    </p>
+
+    <h2>That's all for now</h2>
+
+    <p>
+      Until a full API reference for the new grid is available, I
+      think I have covered most use cases so that's the end of this
+      article.  Enjoy!
+    </p>
+
+  </text>
+
+  <code id="grid1" type="js" canrun="true"><![CDATA[
+        var dialog = new DlDialog({ title: "Grid sample", resizable: true, quitBtn: "destroy" });
+
+        // this array is passed to DlRecordCache in order to initialize the data
+        var data = [
+                new DlRecord({ data: { id: "john" , first_name: "John" , last_name: "Doe", phone: "555-6789", employer: "Nowhere" }}),
+                new DlRecord({ data: { id: "foo"  , first_name: "Foo"  , last_name: "Bar", phone: "123-4567", employer: "Somewhere" }}),
+                new DlRecord({ data: { id: "dave" , first_name: "David", last_name: "Beckham", phone: "n/a", employer: "Real Madrid" }})
+        ];
+
+        var cache = new DlRecordCache({ data: data });
+
+        var columns = [
+                { id: "first_name" , label: "First Name" , width: 100 },
+                { id: "last_name"  , label: "Last Name"  , width: 100 },
+                { id: "phone"      , label: "Phone"      , width: 150 }
+        ];
+
+        // create the grid now
+
+        var grid = new DlDataGrid({ parent: dialog, cols: columns, data: cache, fillParent: true });
+        grid.resetIDS([ "john", "foo", "dave" ]);
+        grid.displayPage(0);    // we'll discuss this later
+
+        // must size the dialog
+        dialog.setSize({ x: 600, y: 400 });
+        dialog.show(true);
+  ]]></code>
+
+  <code id="grid2" type="js" canrun="true"><![CDATA[
+        var dialog = new DlDialog({ title: "Grid sample", resizable: true, quitBtn: "destroy" });
+
+        // this array is passed to DlRecordCache in order to initialize the data
+        var data = [];
+
+        var inheritance = Function.getInheritanceGraph();
+        for (var i in inheritance) {
+                var cells = { id: i, object: i, base: inheritance[i] };
+                var methods = 0;
+                var overrides = 0;
+                try {
+                        var p1, p2;
+                        eval("p1=" + i + ".prototype");
+                        eval("p2=" + inheritance[i] + ".prototype");
+                        for (var j in p1) {
+                                if (typeof p1[j] == "function") {
+                                        methods++;
+                                        if (typeof p2[j] == "function")
+                                                overrides++;
+                                }
+                        }
+                        cells.no_methods = methods;
+                        cells.no_overrides = overrides;
+                        data.push(new DlRecord({ data: cells }));
+                } catch(ex) {}
+        }
+
+        var all_ids = data.map("id"); // fetch all ID-s
+
+        var cache = new DlRecordCache({ data: data });
+
+        var columns = [
+                { id: "object", label: "Object", width: 100 },
+                { id: "base", label: "Base", width: 100 },
+                { id: "no_methods", label: "M", width: 40, tooltip: "Number of methods" },
+                { id: "no_overrides", label: "O", width: 40, tooltip: "Number of overriden methods" }
+        ];
+
+        // create the grid now
+
+        var grid = new DlDataGrid({ parent: dialog,
+                                    cols: columns,
+                                    data: cache,
+                                    fillParent: true
+                                    // virtualScrolling: false,
+                                    // rpp: null
+                                  });
+        grid.resetIDS(all_ids);
+        grid.displayPage(0);
+
+        // must size the dialog
+        dialog.setSize({ x: 600, y: 400 });
+        dialog.show(true);
+  ]]></code>
+
+  <code id="grid3" type="js" canrun="true"><![CDATA[
+        var dialog = new DlDialog({ title: "Grid sample", resizable: true, quitBtn: "destroy" });
+
+        var data = [
+                new DlRecord({ data: { id: "john" , first_name: "John" , last_name: "Doe", phone: "555-6789", employer: "Nowhere" }}),
+                new DlRecord({ data: { id: "foo"  , first_name: "Foo"  , last_name: "Bar", phone: "123-4567", employer: "Somewhere" }}),
+                new DlRecord({ data: { id: "dave" , first_name: "David", last_name: "Beckham", phone: "n/a", employer: "Real Madrid" }})
+        ];
+
+        var cache = new DlRecordCache({ data: data });
+
+        var columns = [
+                { id: "first_name" , label: "First Name" , width: 100 },
+                { id: "last_name"  , label: "Last Name"  , width: 100 },
+                { id: "phone"      , label: "Phone"      , width: 150 },
+                { id: "employer"   , label: "Employer"   , width: 150, visible: false }
+        ];
+
+        // use a layout this time
+        var layout = new DlLayout({ parent: dialog });
+
+        var output = new DlContainer({ scroll: true });
+
+        var sel = new DlSelectionModel({});
+
+        var grid = new DlDataGrid({ cols: columns, data: cache, fillParent: true, selection: sel });
+        grid.resetIDS([ "john", "foo", "dave" ]);
+        grid.displayPage(0);
+
+        layout.packWidget(grid, { pos: "top", fill: "50%" });
+        layout.packWidget(output, { pos: "bottom", fill: "*" });
+
+        sel.addEventListener([ "onChange", "onReset" ], function() {
+                var array = sel.getArray(); // array of selected IDs
+                var hash = sel.get();       // hash of selected IDs
+                var html = [];
+                if (array.length == 0)
+                        html.push("None selected");
+                else {
+                        // some nice wizardry to quickly retrieve the last name;
+                        // it's based on these methods:
+                        //    cache.get(id) -- returns the record with that ID
+                        //    record.get(propName) -- returns the value of that property
+                        // chaining some map calls transforms the array of Id-s into array of last_name-s
+                        html.push("Selected: " + array.map(cache.get, cache).map("get", "last_name"));
+                }
+                if (hash["john"]) {
+                        html.push("John is selected");
+                }
+                output.setContent(html.join("<br />"));
+        });
+
+        dialog.setSize({ x: 600, y: 400 });
+        dialog.show(true);
+  ]]></code>
+
+  <code id="grid4" type="js" canrun="true"><![CDATA[
+        var dialog = new DlDialog({ title: "Grid sample", resizable: true, quitBtn: "destroy" });
+
+        var data = [
+                new DlRecord({ data: { id: "john" , first_name: "John" , last_name: "Doe", phone: "555-6789", employer: "Nowhere" }}),
+                new DlRecord({ data: { id: "foo"  , first_name: "Foo"  , last_name: "Bar", phone: "123-4567", employer: "Somewhere" }}),
+                new DlRecord({ data: { id: "dave" , first_name: "David", last_name: "Beckham", phone: "n/a", employer: "Real Madrid" }})
+        ];
+
+        var cache = new DlRecordCache({ data: data });
+
+        var columns = [
+                { id: "first_name" , label: "First Name" , width: 100 },
+                { id: "last_name"  , label: "Last Name"  , width: 100 },
+                { id: "phone"      , label: "Phone"      , width: 150 },
+                { id: "employer"   , label: "Employer"   , width: 150 }
+        ];
+
+        // use a layout this time
+        var layout = new DlLayout({ parent: dialog });
+
+        var sel = new DlSelectionModel({});
+
+        var grid = new DlDataGrid({ cols: columns, data: cache, fillParent: true, selection: sel });
+        grid.resetIDS([ "john", "foo", "dave" ]);
+        grid.displayPage(0);
+
+        var toolbar = new DlContainer({});
+
+        // a generic handler for the onChange events provided by the entry fields
+        // *this* in this function is the input field
+        function modifyProp(prop_id) {
+                var a = sel.getArray();
+                if (a.length == 0) {
+                        return;
+                }
+                var record = cache.get(a[0]);
+                record.set(prop_id, this.getValue());
+        };
+
+        // create some text input fields here
+        var hbox = new DlHbox({ parent: toolbar });
+        var entries = {};
+        [ "first_name", "last_name", "employer", "phone" ].foreach(function(id){
+                var f = entries[id] = new DlEntry({ parent: hbox, emptyText: id });
+                f.addEventListener("onChange", modifyProp.$(f, id));
+        });
+
+        // and some "add/remove" buttons
+        var hbox = new DlHbox({ parent: toolbar });
+
+        var add = new DlButton({ parent: hbox, label: "Insert" });
+        add.addEventListener("onClick", function() {
+                var id = prompt("Enter ID for new record");
+                if (!id)
+                        return;
+                var data = { id: id };
+                [ "first_name", "last_name", "employer", "phone" ].foreach(function(id){
+                        data[id] = entries[id].getValue();
+                });
+                var record = new DlRecord({ data: data });
+                cache.insert(record);
+        });
+
+        var del = new DlButton({ parent: hbox, label: "Delete" });
+        del.addEventListener("onClick", function() {
+                var a = sel.getArray();
+                if (a == 0)
+                        return alert("No rows selected");
+                a.foreach(cache.remove, cache);
+        });
+
+        layout.packWidget(toolbar, { pos: "bottom" });
+        layout.packWidget(grid, { pos: "top", fill: "*" });
+
+        sel.addEventListener([ "onChange", "onReset" ], function() {
+                var array = sel.getArray();
+                if (array.length > 0) {
+                        var record = cache.get(array[0]);
+                        // update entries
+                        [ "first_name", "last_name", "employer", "phone" ].foreach(function(id){
+                                var f = entries[id];
+                                // pass true to avoid calling onChange hooks
+                                f.setValue(record.get(id), true);
+                        });
+                }
+        });
+
+        dialog.setSize({ x: 600, y: 400 });
+        dialog.show(true);
+  ]]></code>
+
+  <code id="grid5" type="js" canrun="true"><![CDATA[
+(function(){
+
+        MyCache2.inherits(DlRecordCache);
+        function MyCache2(args) {
+                DlRecordCache.call(this, args);
+        };
+
+        eval(Dynarch.EXPORT("MyCache2"));
+
+        // rec is a DlRecord
+        // col is the column (property) ID
+        // buf is a String.buffer()
+        P.formatHTML = function(rec, col, buf) {
+                if (col == "date") {
+                        // format date for display
+                        buf(rec.get("date").print("%a, %b %e, %Y"));
+                } else if (col == "last_name") {
+                        // bold last name
+                        buf(rec.get("last_name").htmlEscape().bold());
+                } else {
+                        // usual stuff
+                        buf(rec.get(col).toString().htmlEscape());
+                }
+        };
+
+})();
+
+var dialog = new DlDialog({ title: "Grid sample", resizable: true, quitBtn: "destroy" });
+
+var data = [
+
+        new DlRecord({ data: { id: "john" , first_name: "John" ,
+                               last_name: "Doe", phone: "555-6789",
+                               date: new Date(), employer: "Nowhere" }}),
+
+        new DlRecord({ data: { id: "foo"  , first_name: "Foo"  ,
+                               last_name: "Bar", phone: "123-4567",
+                               date: new Date(2000, 2, 1), employer: "Somewhere" }}),
+
+        new DlRecord({ data: { id: "dave" , first_name: "David",
+                               last_name: "Beckham", phone: "n/a",
+                               date: new Date(2007, 7, 26), employer: "Real Madrid" }})
+];
+
+var cache = new MyCache2({ data: data });
+
+var columns = [
+        { id: "first_name" , label: "First Name" , width: 100 },
+        { id: "last_name"  , label: "Last Name"  , width: 100 },
+        { id: "phone"      , label: "Phone"      , width: 150 },
+        { id: "date"       , label: "Date"       , width: 150 },
+        { id: "employer"   , label: "Employer"   , width: 150, visible: false }
+];
+
+var layout = new DlLayout({ parent: dialog });
+
+var sel = new DlSelectionModel({});
+
+var grid = new DlDataGrid({ cols: columns, data: cache, fillParent: true, selection: sel });
+grid.resetIDS(data.map("id"));
+grid.displayPage(0);
+
+layout.packWidget(grid, { pos: "top", fill: "*" });
+
+dialog.setSize({ x: 600, y: 400 });
+dialog.show(true);
+  ]]></code>
+
+  <code id="grid6" type="js" canrun="true"><![CDATA[
+(function(){
+
+        MyRecord.inherits(DlRecord);
+        function MyRecord(args) {
+                DlRecord.call(this, args);
+        };
+
+        eval(Dynarch.EXPORT("MyRecord"));
+
+        P.get = function(col) {
+
+                if (this._loading && col != "id")  // "fake" record?
+                        return "...";              // show that we're loading it
+
+                return D.BASE.get.call(this, col); // cached record, call superclass
+        };
+
+})();
+
+(function(){
+
+        MyCache.inherits(DlRecordCache);
+        function MyCache(args) {
+                DlRecordCache.call(this, args);
+        };
+
+        eval(Dynarch.EXPORT("MyCache"));
+
+        P.getRecords = function(ids, callback, obj) {
+                var a = [];     // records to be displayed (can contain fake records)
+
+                // create an array of records that are not in the cache
+                var uncached = [];
+                ids.foreach(function(id){
+                        var rec = this.get(id);
+                        if (rec) {
+                                a.push(rec); // all fine, we have it already
+                        } else {
+                                rec = new MyRecord({ recordSet : this,         // specify the record set (cache)
+                                                     data      : { id: id }}); // it still has a known ID
+                                rec._loading = true; // remember that data wasn't loaded yet
+                                a.push(rec);         // we still put it into the array, but it's fake
+                                uncached.push(rec);  // not cached
+                        }
+                }, this);
+
+                // now call the given callback!
+                callback.call(obj, a);
+
+                // if all the objects were in the cache, then the data is
+                // displayed fine already.  IF uncached objects exist, we need
+                // to fetch data for them and do some manual tricks to get them
+                // displayed.
+
+                if (uncached.length > 0) {
+                        // normally you'd request uncached data from server now, using DlRPC or DlSocket;
+                        // in this sample, to emulate the time spent, I'm using setTimeout
+                        setTimeout(function() {
+                                uncached.foreach(function(rec){
+                                        delete rec._loading; // remember that it was loaded
+                                        // initialize data
+                                        rec._data.random = Math.floor(Math.random() * 100000);
+                                        this._data[rec.id()] = rec; // cache this record
+                                        this.callHooks("onChange", rec); // essential to update the grid
+                                }, this);
+                        }.$(this), 500); // let's say it takes half a second
+                }
+        };
+
+})();
+
+var dialog = new DlDialog({ title: "Grid sample", resizable: true, quitBtn: "destroy" });
+
+var cache = new MyCache({}); // initially empty cache!
+
+var columns = [
+        { id: "id"     , label: "ID"     , width: 50 }, // let's display the ID too
+        { id: "random" , label: "Random" , width: 150 }
+];
+
+var grid = new DlDataGrid({ parent: dialog, fillParent: true, cols: columns, data: cache });
+
+// generate an array of 1000 ids
+var ids = [];
+(1000).times(function(i){
+        ids.push(i);
+});
+
+// Even though our cache is empty, we do initialize the grid with these
+// ID-s.  When it needs to display data, our grid will call
+// cache.getRecords which we implemented above.
+grid.resetIDS(ids);
+grid.displayPage(0);
+
+dialog.setSize({ x: 600, y: 400 });
+dialog.show(true);
+  ]]></code>
+
+</sample>

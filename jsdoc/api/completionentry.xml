@@ -1,0 +1,173 @@
+<api file="completionentry.js" show="1">
+
+  <object base="DlPopup" internal="1" name="DlCompletionPopup" undoc="1">
+    <constructor>
+      <param name="args"></param>
+    </constructor>
+    <static-methods></static-methods>
+    <object-methods></object-methods>
+  </object>
+
+  <object base="DlEntry" name="DlCompletionEntry">
+    <constructor>
+      <param default="true" name="noSelect" type="boolean">Changes the default in 〈DlEntry〉</param>
+      <param default="false" name="noTab" type="boolean">Don't complete at TAB?</param>
+      <param default="null" name="shift" undoc="1"></param>
+      <param default="true" name="smart" type="boolean">Smart completion? (see below)</param>
+      <param default="500" name="timeout">Timeout before automatic completion begins</param>
+      <doc>
+        This object is a specialization of 〈DlEntry〉 that can display
+        a popup menu showing autocomplete options.  It's entirely up
+        to you what appears in that menu—you populate it in a handler
+        for the "onCompletion" event.
+
+        For the most cases, you can generate your "onCompletion"
+        handler using the 〈.completeFromWords()|completeFromWords〉
+        utility.
+
+        See our <a href="sample://widgets-completionentry.xml">completion entry
+        sample</a> for more discussion and code samples.
+
+        *** “Smart” completion
+
+        When you pass <b>smart: true</b>, the widget will notice cases
+        when the completion menu contains only one item and will
+        automatically complete from that item (won't wait for the user
+        to press ENTER on it).
+      </doc>
+    </constructor>
+
+    <events>
+      <event name="onCompletion">
+        <doc>
+          Called when the UI requires completion, that is, after
+          <b>timeout</b> (see constructor arguments) has passed.  In
+          order to get any kind of completion, you must supply a
+          handler for this function.
+
+          Your handler will check the status of the input field
+          (i.e. what's the word at the caret position?) and should try
+          to produce some auto completion results.  If there are any
+          results, it should call 〈completionReady()〉.  Otherwise,
+          call 〈cancelCompletion()〉.
+        </doc>
+      </event>
+      <event name="onSelect">
+        <doc>
+          Triggered when an item is selected from the completion menu.
+        </doc>
+      </event>
+    </events>
+
+    <static-methods>
+      <method hash="07d1efdee30b59bbfa8b23e5f40d76ac" name="completeFromWords">
+        <param name="entry" type="DlCompletionEntry">Entry field</param>
+        <param name="words" type="Array">Word list</param>
+        <param name="args" type="Hash">Additional options</param>
+        <doc>
+          Creates a handler suitable for the "onCompletion" event that
+          would auto-complete from a list of words.  <b>args</b> is a
+          hash that can contain the following options:
+
+          <ul>
+            <li>sep — separator.  Default is /\s+/g (regexp)</li>
+            <li>noselect — don't select the completed word?</li>
+            <li>addSep — add the separator after successful completion?</li>
+          </ul>
+
+
+        </doc>
+      </method>
+    </static-methods>
+
+    <object-methods>
+
+      <method hash="23b0acb293851010ff99c9138a221fd9" name="completeFromWords">
+        <param name="words"></param>
+        <param name="args"></param>
+        <doc>
+          This is a convenience method that simply calls
+          〈.completeFromWords()〉 passing <b>this</b> as first
+          argument.
+        </doc>
+      </method>
+
+      <method hash="b7c5b1fa7007749f098a045a18e33952" name="cancelCompletion">
+        <doc>
+          From your onComplete handler, call this method when there
+          are no possible completions.
+        </doc>
+      </method>
+
+      <method XXX="Code has changed!" hash="c30a89126cfd5edec249b3e0d723209b" name="completionReady">
+        <param name="data" type="Array">Array of hashes; each one describes one completion item</param>
+        <doc>
+          Call this function from your onComplete handler when you
+          have some auto-completion data.  The <b>data</b> must be an
+          Array which contains hashes with the following possible
+          properties:
+
+          <ul>
+            <li>
+              <b>label</b> — the label to display in the menu item
+            </li>
+            <li>
+              <b>nomodify</b> — if <b>true</b> then the entry field
+              won't be modified when this "completion" is selected.
+            </li>
+            <li>
+              <b>completion</b> — if the completion is different from
+              the label, pass completion here.  If not specified, it
+              will assume <b>label</b>.
+            </li>
+            <li>
+              <b>start</b> — position in the input field at which to
+              start modifying text.  If not specified, it will be the
+              caret position.
+            </li>
+            <li>
+              <b>rstart</b> — range start (position at which to leave
+              the left selection edge).  If not specified, it will be
+              the same as <b>start</b>.
+            </li>
+            <li>
+              <b>noselect</b> — pass <b>true</b> here if you don't
+              want the completed text to remain selected.
+            </li>
+          </ul>
+        </doc>
+      </method>
+
+      <method hash="f7430898018d067c030f935225eae6cc" internal="1" name="__clearTimer" undoc="1">
+        <doc></doc>
+      </method>
+
+      <method hash="79e523de363b1d9c1d3c0f31a9a986e8" internal="1" name="_applyCompletion">
+        <param name="c" type="Hash"></param>
+        <param name="finish" type="boolean">Enter pressed?</param>
+        <doc>
+          This is an internal function that applies a completion
+          <b>c</b> from the data received by 〈completionReady()〉.
+          Don't call this directly.
+        </doc>
+      </method>
+
+      <method hash="bd3fa30d502f140736019888fab39c03" internal="1" name="_handle_focusKeys">
+        <param name="ev"></param>
+        <doc></doc>
+      </method>
+
+      <method hash="19b14edcf02fb6540bee759267b4a1f0" internal="1" name="_hideMenu">
+        <doc>
+          Internal function — hides the completion popup menu.
+        </doc>
+      </method>
+
+      <method hash="bdd0aea75d0c62a1265291ca6ee1b134" internal="1" name="_setListeners">
+        <doc></doc>
+      </method>
+
+    </object-methods>
+
+  </object>
+</api>

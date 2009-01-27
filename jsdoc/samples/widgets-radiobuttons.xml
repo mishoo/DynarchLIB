@@ -1,0 +1,207 @@
+<sample>
+
+  <title>Radio Groups</title>
+
+  <text>
+    <p>
+      Radio buttons are like check boxes but with the additional hint
+      that only one can be pressed at each time.  To define which
+      buttons are part of the same group (that is, exclude each
+      other), you need to use the <b>DlRadioGroup</b> class.  We use
+      radio groups in many places—virtually in all widgets when one or
+      more things can be selected.  Instead of duplicating this
+      functionality everywhere, we're having this class and you'll be
+      able to use most of these widgets with an unique API.
+    </p>
+
+    <p>
+      Here's a simple example.
+    </p>
+
+    <div sample="sample1" />
+
+    <p>
+      Note that all buttons are part of the same group, therefore they
+      are mutually exclusive.  To continue our sample, let's create a
+      new group of buttons:
+    </p>
+
+    <div sample="sample2" />
+
+    <p>
+      So you see, we can have multiple groups, each taking care of
+      certain buttons.  They emit an "onChange" event that allows us
+      to intercept the new value.  At any time, we can call the
+      group's <b>getValue()</b> function, which returns an array with
+      the values of the selected buttons.  In the case of standard
+      radio buttons, there will be only one selected value, but as I
+      said, there's more to radio groups than that.
+    </p>
+
+    <p class="dimnote">
+      One other thing to notice with radio groups is that you don't
+      usually need to store the buttons themselves.  That is, we
+      don't remember the value returned by <b>new
+      DlRadioButton</b>—because we only care about the group's value,
+      not the buttons individually.
+    </p>
+
+    <h2>Multiple buttons selected</h2>
+
+    <p>
+      So we can have more buttons selected in a radio group.  Here is
+      a sample where we want to allow maximum 3 choices from a list.
+    </p>
+
+    <div sample="sample3" />
+
+    <p>
+      In the sample above we're deciding that a maximum of 3 buttons
+      can be selected from the whole group, by calling
+      <b>maxChecked(3)</b> on the group object.  The group object
+      takes care to deselect a button automatically when you try to
+      select more than 3.  It will pick that button which was most
+      early selected.  The group's <b>getValue()</b> function retruns
+      an array with the values of all selected buttons.  If no button
+      is selected, the returned array is empty.
+    </p>
+
+    <p>
+      We're using <b>DlCheckbox</b> rather than <b>DlRadioButton</b>
+      because it gives a visual indication that more can be selected
+      at a time.  Note that we're also using a simple technique to
+      reduce code size—instead of writing code for each DlCheckbox, we
+      create them in a for loop.  Okay, it's not a for loop, it's the
+      <b>foreach()</b> function, which using DynarchLIB you can call
+      against any array and it will call your supplied callback for
+      each element in the array.
+    </p>
+
+    <h2>Keep order</h2>
+
+    <p>
+      You might notice in the sample above that when you press “Show
+      value” it doesn't always print values in the same order that the
+      buttons have been originally added to the group.  In fact,
+      getValue() returns the values of the selected buttons <em>in the
+      order that they were clicked</em>.  If you want to retrieve the
+      values in the original order, you can do the following:
+    </p>
+
+    <div sample="sample4" />
+
+    <p>
+      The <b>getButtons()</b> method on the radio group returns all
+      buttons; then we filter (grep) them by selecting only the
+      checked ones, then we map the result through a method that
+      returns the value of each button.  Because <b>getButtons()</b>
+      returns the buttons array in the initial order, we get the
+      result we wanted.
+    </p>
+
+  </text>
+
+  <code id="sample1" type="js" canrun="true"><![CDATA[
+// let's setup a box and a container for our buttons
+var box = new DlHbox({ parent        : getDocCanvas(),
+                       borderSpacing : 5 });
+
+var cont = new DlContainer({ parent: box });
+
+// create a new radio group
+var osGroup = DlRadioGroup.get();
+
+new DlRadioButton({ parent  : cont,
+                    label   : "Linux",
+                    value   : "linux",
+  /* selected */    checked : true,
+                    group   : osGroup });
+
+new DlRadioButton({ parent  : cont,
+                    label   : "Windows",
+                    value   : "win32",
+                    group   : osGroup });
+
+new DlRadioButton({ parent  : cont,
+                    label   : "Mac OS X",
+                    value   : "mac",
+                    group   : osGroup });
+
+osGroup.addEventListener("onChange", function(){
+    print("Your operating system: " + this.getValue()[0]);
+});
+  ]]></code>
+
+  <code id="sample2" type="js" canrun="true"><![CDATA[
+//@include sample1
+// create a new container in the box, will be
+// horizontally aligned with the first
+var cont = new DlContainer({ parent: box });
+
+var browserGroup = DlRadioGroup.get();
+
+new DlRadioButton({ parent  : cont,
+                    label   : "Firefox",
+                    value   : "firefox",
+                    checked : true,
+                    group   : browserGroup });
+
+new DlRadioButton({ parent  : cont,
+                    label   : "Internet Explorer",
+                    value   : "IE",
+                    group   : browserGroup });
+
+new DlRadioButton({ parent  : cont,
+                    label   : "Safari",
+                    value   : "safari",
+                    group   : browserGroup });
+
+browserGroup.addEventListener("onChange", function(){
+    print("Your browser: " + this.getValue()[0]);
+});
+  ]]></code>
+
+  <code id="sample3" type="js" canrun="true"><![CDATA[
+var brandGroup = DlRadioGroup.get();
+brandGroup.maxChecked(3);
+
+var box = new DlVbox({ parent        : getDocCanvas(),
+                       borderSpacing : 2,
+                       className     : "DlWidget-3D" });
+
+[ "IBM", "Apple", "HP", "Dell", "Acer", "Asus" ].sort().foreach(
+    function(brand) {
+        new DlCheckbox({ parent : box,
+                         label  : brand,
+                         value  : brand,
+                         group  : brandGroup });
+    }
+);
+
+box.addSeparator();
+
+var btn = new DlButton({ parent: box, label: "Show value" });
+btn.addEventListener("onClick", function(){
+    var a = brandGroup.getValue();
+    if (a.length == 0) {
+        print("Nothing is selected");
+    } else {
+        print("You selected: " + a.join(", "));
+    }
+});
+
+  ]]></code>
+
+  <code id="sample4" type="js" canrun="true"><![CDATA[
+    //@include sample3
+    btn.addEventListener("onClick", function(){
+            var a = brandGroup.getButtons()
+                              .grep("checked") // retain only checked buttons
+                              .map("getValue"); // transform to values
+            if (a.length > 0) {
+                    print("Ordered: " + a.join(", "));
+            }
+    });
+  ]]></code>
+
+</sample>

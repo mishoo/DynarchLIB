@@ -1,0 +1,1199 @@
+<sample>
+
+  <title>Array</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>Array</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>— none —</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈jslib.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈texts.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+     <div class="doc"><span>
+        This is a standard JavaScript object.  DynarchLIB adds a few
+        useful extensions.
+      </span>
+
+     </div>
+   </div>
+    </div>
+
+
+    <div class="static-methods">
+      <h2>Static functions</h2>
+   <div class="method">
+        <h3 id="$:static_method">Array.$ (<span class='param'>obj</span>, <span class='param optional'>start</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">obj</td>
+         <td class="doc"><span name="obj">Source array object</span>
+</td>
+         <td class="type">[<b>〈Array〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">start</td>
+         <td class="doc"><span name="start" optional="1">Index to start copy from</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Array) 
+           <b><span>New array</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns a copy of the source array, optionally starting at
+          the specified index (<b>start</b>).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="hashKeys:static_method">Array.hashKeys (<span class='param'>obj</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">obj</td>
+         <td class="doc"><span name="obj"></span>
+</td>
+         <td class="type">[<b>〈Object〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Array) 
+           <b><span>New array</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns an array containing the keys (property names) in the
+          given object (hash).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="hashValues:static_method">Array.hashValues (<span class='param'>obj</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">obj</td>
+         <td class="doc"><span name="obj"></span>
+</td>
+         <td class="type">[<b>〈Object〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Array) 
+           <b><span>New array</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns an array containing the values in the given object.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="bytesToString:object_method">bytesToString ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: String) 
+           <b><span></span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Assumes that this array contains the UTF8 encoding of some
+          string.  Parses UTF8 and forms the string.  This is the
+          reverse of <a href='api://String.xml:type=object_method:func=toBytes'>String::toBytes()</a>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="contains:object_method">contains (<span class='param'>el</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el">Element to search for</span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: boolean) 
+           <b><span><b>true</b> if <b>el</b> exists in the array</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc">
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="find:object_method">find (<span class='param'>el</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el">Element to search for</span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Number) 
+           <b><span>Position of the element, or -1 if not found.</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Search for the given element in the array and returns the
+          index of its first occurrence.  If no occurrence has been
+          found, return -1.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="foreach:object_method">foreach (<span class='param'>f</span>, <span class='param optional'>obj</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">f</td>
+         <td class="doc"><span name="f">Callback function</span>
+</td>
+         <td class="type">[<b>〈Function〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">obj</td>
+         <td class="doc"><span name="obj" optional="1">Context object for your function</span>
+</td>
+         <td class="type">[<b>〈Object〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">
+           <b><span>Undefined or some value you specify with $RETURN — see below</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Calls the given function for each element of the array.
+          Optionally, the function will be called in the context of
+          the specified object (<b>obj</b>).  If <b>obj</b> is not
+          specified, <b>f</b> will be called in the context of the
+          array.
+<p/>
+          Loop control methods are available: $CONTINUE(), $BREAK(),
+          $RETURN(val).  $CONTINUE() will stop the rest of your
+          function and go on with the next iteration.  $BREAK() will
+          stop looping completely and return undefined.  $RETURN(val)
+          will stop looping and <b>val</b> will be the result of the
+          foreach() call.
+<p/>
+          The function that you supply receives 2 arguments: the
+          current element and its zero-based index.
+<p/>
+          This function is exemplified more in our <a href="sample://extensions-array.xml">array extensions
+          sample</a>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="grep:object_method">grep (<span class='param'>cond</span>, <span class='param optional'>obj</span>, <span class="varargs">…</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">cond</td>
+         <td class="doc"><span name="cond" removed="1"></span>
+</td>
+         <td class="type">[<b>〈RegExp,Function,String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">obj</td>
+         <td class="doc"><span name="obj" optional="1"></span>
+</td>
+         <td class="type">[<b>〈Object〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Array) 
+           <b><span>New array containing matching values</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          grep() collects elements elements that match a certain
+          condition (<b>cond</b>).  <b>cond</b> can be of the
+          following types:
+<p/>
+          <ul>
+            <li>
+              <a href='api://RegExp.xml'>RegExp</a> — then grep will collect those elements that
+              match the given regexp.
+            </li>
+            <li>
+              <a href='api://Function.xml'>Function</a> — grep will call this function for each
+              element and will collect those elements for which the
+              function returned <b>true</b>.
+            </li>
+            <li>
+              <a href='api://String.xml'>String</a> — grep will assume that <b>cond</b> is a member
+              property (or method!) of each element in the array, and
+              it will collect those elements for which the method
+              call, or property, evaluates to <b>true</b>.
+            </li>
+          </ul>
+<p/>
+          Here is an example for the last case, since it might seem
+          more complicated:
+<p/>
+          <div sample="Array1"></div>
+<p/>
+          It can be a function as well:
+<p/>
+          <div sample="Array2"></div>
+<p/>
+          This function is exemplified more in our <a href="sample://extensions-array.xml">array extensions
+          sample</a>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="grep_first:object_method">grep_first (<span class='param'>f</span>, <span class='param'>i</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">f</td>
+         <td class="doc"><span name="f">Callback function</span>
+</td>
+         <td class="type">[<b>〈Function〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">i</td>
+         <td class="doc"><span name="i"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">
+           <b><span>The first matching value</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the first value from the array for which your
+          supplied callback returns <b>true</b>.  If no such value was
+          found, returns <b>null</b>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="grep_last:object_method">grep_last (<span class='param'>f</span>, <span class='param'>i</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">f</td>
+         <td class="doc"><span name="f"></span>
+</td>
+         <td class="type">[<b>〈Function〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">i</td>
+         <td class="doc"><span name="i"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Same as <a href='api://Array.xml:type=object_method:func=grep_first'>grep_first()</a> but searches backwards from the end
+          of the array.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="keys_map:object_method">keys_map (<span class='param'>obj</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">obj</td>
+         <td class="doc"><span name="obj">A hash table</span>
+</td>
+         <td class="type">[<b>〈Object〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">
+           <b><span>New array containing values in the given hash</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Assumes each element in the array is a key in the given
+          object and returns an array containing the associated
+          values.
+<p/>
+          For example:
+<p/>
+          <div sample="Array3"></div>
+<p/>
+          b is now [ "JavaScript is", "great" ].
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="limitIndex:object_method">limitIndex (<span class='param'>idx</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">idx</td>
+         <td class="doc"><span name="idx">An index value you want to bound</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Number) 
+           <b><span>A valid index in the array</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          This function bounds the given <b>idx</b> within the limits
+          of a valid index in the array:
+<p/>
+          if <b>idx</b> is smaller than zero, it returns 0.  If
+          <b>idx</b> is greater than, or equal to array.length, it
+          returns array.length - 1.  Returns <b>idx</b> unchanged
+          otherwise.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="map:object_method">map (<span class='param'>f</span>, <span class='param optional'>obj</span>, <span class="varargs">…</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">f</td>
+         <td class="doc"><span name="f"></span>
+</td>
+         <td class="type">[<b>〈Function,String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">obj</td>
+         <td class="doc"><span name="obj" optional="1"></span>
+</td>
+         <td class="type">[<b>〈Object〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Array) 
+           <b><span>New array</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Transforms the original array into a new array containing
+          values returned by your function.  <b>f</b> can be a
+          Function or a String.  Description of each case:
+<p/>
+          <dl>
+            <dt><b>f</b> is a Function</dt>
+            <dd>
+              It will be called for each element in the array with the
+              element and its index as arguments.  The value that
+              <b>f</b> returns will be collected in the returned
+              array.
+            </dd>
+            <dt><b>f</b> is a String</dt>
+            <dd>
+              This is useful for an array of objects.  For each
+              element in the array, it checks if element[f] is a
+              function.  If so, it gets called in the context of the
+              element and its return value is collected.  If it's a
+              property, it's value is collected.
+            </dd>
+          </dl>
+<p/>
+          This function is exemplified more in our <a href="sample://extensions-array.xml">array extensions
+          sample</a>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="max:object_method">max (<span class='param optional'>f</span>, <span class='param optional'>obj</span>, <span class="varargs">…</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">f</td>
+         <td class="doc"><span name="f" optional="1"></span>
+</td>
+         <td class="type">[<b>〈Function〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">obj</td>
+         <td class="doc"><span name="obj" optional="1"></span>
+</td>
+         <td class="type">[<b>〈Object〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">
+           <b><span>The maximum value in the array</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          When you pass no arguments, this function simply returns the
+          maximum value from the array according to <a href='api://Math.xml:type=static_method:func=max'>Math.max()</a>.
+<p/>
+          If you pass a function <b>f</b>, the maximum value returned
+          from that function (called for each element in the array)
+          will be returned.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="mergeSort:object_method">mergeSort (<span class='param'>cmp</span>, <span class='param optional'>reverse</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">cmp</td>
+         <td class="doc"><span name="cmp">Comparator function</span>
+</td>
+         <td class="type">[<b>〈Function〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">reverse</td>
+         <td class="doc"><span default="false" name="reverse" optional="1">Reverse sort?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">false</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Array) 
+           <b><span>Sorted array.  The original array is not changed</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          According to the <a href="http://docs.sun.com/source/816-6408-10/array.htm#1196882">JavaScript
+          client-side reference</a>, the sort() function already
+          provided by browsers in Array objects should be “stable”.
+          What does this mean?  If, according to the comparator
+          function, 2 elements are equal, then their positions
+          (relative to each other) are guaranteed to remain the same
+          in the sorted array.
+<p/>
+          However, in Firefox for instance this doesn't hold true.
+<p/>
+          The mergeSort() method that we added to Array-s is a stable
+          sort function.  It returns a new array containing the sorted
+          values.
+<p/>
+          <b>cmp</b> is a function that takes two arguments <em>a</em>
+          and <em>b</em> and returns a value as follows:
+<p/>
+          <ul>
+            <li>If <em>a</em> &lt; <em>b</em> return -1 (or another
+            strictly negative value)</li>
+            <li>If <em>a</em> &gt; <em>b</em> return +1 (or another
+            strictly positive value)</li>
+            <li>If <em>a</em> == <em>b</em> return 0 (the order of
+            <em>a</em> and <em>b</em> is guaranteed to remain the same
+            in the sorted array)</li>
+          </ul>
+<p/>
+          If you pass <b>reverse = true</b>, the meaning of the
+          <b>cmp</b> function will be inversed—this simply means that
+          it will sort descending instead of ascending.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="min:object_method">min (<span class='param optional'>f</span>, <span class='param optional'>obj</span>, <span class="varargs">…</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">f</td>
+         <td class="doc"><span name="f" optional="1"></span>
+</td>
+         <td class="type">[<b>〈Function〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">obj</td>
+         <td class="doc"><span name="obj" optional="1"></span>
+</td>
+         <td class="type">[<b>〈Object〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Similar to <a href='api://Array.xml:type=object_method:func=max'>max()</a>, but returns the smallest value.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="nullLimitIndex:object_method">nullLimitIndex (<span class='param'>idx</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">idx</td>
+         <td class="doc"><span name="idx">An index value</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">
+           <b><span><b>idx</b> or <b>null</b></span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the <b>idx</b> if it's a valid index in the array,
+          or null otherwise.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="peek:object_method">peek ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">
+           <b><span>Last element in the array</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc">
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="pushUnique:object_method">pushUnique (<span class='param'>el</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">
+           <b><span>New length of the array, or <b>null</b> if unchanged</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Appends <b>el</b> to the array only if it wasn't there
+          already.  If <b>el</b> was appended, it returns the new
+          length of the array (guaranteed to be greater than zero).
+          If <b>el</b> was already in the array, return <b>null</b>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="qsort:object_method">qsort (<span class='param'>cmp</span>, <span class='param optional'>reverse</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">cmp</td>
+         <td class="doc"><span name="cmp">Comparator function</span>
+</td>
+         <td class="type">[<b>〈Function〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">reverse</td>
+         <td class="doc"><span default="false" name="reverse" optional="1">Reverse sort?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">false</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: boolean) 
+           <b><span>true if the array was modified</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Sorts the elements in the current array based on the “quick
+          sort” algorithm.  Pass a comparator function.
+<p/>
+          Note that qsort() is a <em>destructive function</em>—it
+          modifies the given array in place, instead of returning a
+          brand new one.  If you need the original, be sure to work on
+          a copy.  See <a href='api://Array.xml:type=static_method:func=$'>Array.$()</a> to create a copy of an array.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="r_foreach:object_method">r_foreach (<span class='param'>f</span>, <span class='param optional'>obj</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">f</td>
+         <td class="doc"><span name="f"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">obj</td>
+         <td class="doc"><span name="obj" optional="1"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Similar to <a href='api://Array.xml:type=object_method:func=foreach'>foreach()</a>, but iterates backwards.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="r_map:object_method">r_map (<span class='param'>f</span>, <span class='param optional'>obj</span>, <span class="varargs">…</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">f</td>
+         <td class="doc"><span name="f"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">obj</td>
+         <td class="doc"><span name="obj" optional="1"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Similar to <a href='api://Array.xml:type=object_method:func=map'>map()</a>, but iterates backwards.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="remove:object_method">remove (<span class='param'>el</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">el</td>
+         <td class="doc"><span name="el">Element to remove</span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">
+           <b><span>this</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Removes all occurrences of the given element from the array.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="rotateIndex:object_method">rotateIndex (<span class='param'>idx</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">idx</td>
+         <td class="doc"><span name="idx">Index</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">
+           <b><span>Valid index in the array</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns a valid index in the array as follows: if the given
+          <b>idx</b> is a valid index, return it.  If it's less than
+          zero, returns the maximum valid index.  If it's more than
+          the maximum valid index, returns zero.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="toHash:object_method">toHash (<span class='param optional'>val</span>, <span class='param optional'>obj</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">val</td>
+         <td class="doc"><span name="val" optional="1">Value or function</span>
+</td>
+         <td class="type">[<b>〈Object,Function〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">obj</td>
+         <td class="doc"><span default="null" name="obj" optional="1"></span>
+</td>
+         <td class="type">[<b>〈Object〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">null</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">
+           <b><span>New hash table</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          This function transforms the current array into an hash
+          table by using the array elements as keys, and the given
+          value <b>val</b> as value.
+<p/>
+          If <b>val</b> is not passed, then the values of the returned
+          hash will be the indexes of each element + 1.
+<p/>
+          If <b>val</b> is a <b>Function</b>, it will be called for
+          each key in the hash in the context of <b>obj</b> object (or
+          null if <b>obj</b> was not passed) and its return value will
+          be used for that key's value.  It will receive 2 arguments
+          (the key and the iteration number, starting with zero).
+          This can be useful in various cases.  For example, here is
+          how we can create a set of bit flags:
+<p/>
+          <div sample="Array4"></div>
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="toHash2:object_method">toHash2 ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: hash) 
+           <b><span>A new hash table</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Create a new hash table based on the current array by using
+          even elements as key names, and odd elements as
+          values. Example:
+<p/>
+          <div sample="Array5"></div>
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+<code id="Array1" type="js">
+            var o1 = { foo: true };
+            var o2 = { foo: false };
+            var o3 = { foo: true };
+            var a = [ o1, o2, o3 ];
+            a = a.grep("foo"); // now a contains only o1 and o3
+          </code>
+<code id="Array2" type="js">
+            // let's create an object
+            function Person(age) {
+              this.age = age;
+            };
+            Person.prototype.isMinor = function() {
+              return this.age &lt; 18;
+            };
+
+            var o1 = new Person(10);
+            var o2 = new Person(20);
+            var o3 = new Person(18);
+            var a = [ o1, o2, o3 ];
+            a = a.grep("isMinor"); // now a contains only o1
+          </code>
+<code id="Array3" type="js">
+            var obj = { foo : 'JavaScript is ',
+                        bar : 'poor',
+                        baz : 'great' };
+            var a = [ "foo", "baz" ];
+            var b = a.keys_map(obj);
+          </code>
+<code id="Array4" type="js"><![CDATA[
+            var flags = "VIEWED REPLIED FORWARDED SPAM IMPORTANT"
+                        .split(/\s/);
+                        .toHash(function(key, index) {
+                            return 1 << (index + 1); // index is zero-based
+                        });
+            // now we have: flags.VIEWED     == 1
+            //              flags.REPLIED    == 2
+            //              flags.FORWARDED  == 4
+            //              flags.IMPORTANT  == 8
+          ]]></code>
+<code id="Array5" type="js">
+            var a = [ "foo", "bar", "baz", "caz" ];
+            var h = a.toHash2();
+            alert(h.foo); // "bar"
+            alert(h.baz); // "caz"
+          </code>
+
+
+</sample>
+
+
+
+

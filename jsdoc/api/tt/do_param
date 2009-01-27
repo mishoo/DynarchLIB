@@ -1,0 +1,8 @@
+
+      <param name="[% param.name %]"[% ' internal="1"' IF param.internal %]>
+        [% IF param.exists('default') %]
+        <default>[%+ param.default | xml +%]</default>
+        [% END %]
+        <doc>
+        </doc>
+      </param>

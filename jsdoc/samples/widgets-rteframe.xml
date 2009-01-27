@@ -1,0 +1,331 @@
+<sample>
+
+  <title>Rich Text Editor (DlRteFrame)</title>
+
+  <text>
+
+    <p>
+      This widget provides a framework for creating an HTML editor.
+      It's not a full editor in itself, but using DynarchLIB you can
+      easily create one.  <b>DlRteFrame</b> creates an editable IFRAME
+      (a document in "design mode") and exports an API that we can use
+      in order to do various operations with the editor content.
+      Here's a basic example:
+    </p>
+
+    <div sample="rte1" />
+
+    <p>
+      Though it looks simple, the functionality it provides is quite
+      complete if you wish to build a full editor on top of it.  For
+      example, there is a lot you can do with the default keybindings
+      (try them by running the sample above):
+    </p>
+
+    <ul>
+
+      <li><b>CTRL-ALT-O</b> — creates an ordered list</li>
+
+      <li><b>CTRL-ALT-U</b> — creates an UNordered list</li>
+
+      <li><b>CTRL-B</b>, <b>CTRL-I</b>, <b>CTRL-U</b>, <b>CTRL--</b>
+      (control + dash that is) — these are quite standard editor
+      commands for bold, italic, underline and strikeout.</li>
+
+      <li><b>CTRL-1</b> ... <b>CTRL-6</b> — format headings, i.e. H1,
+      H2, etc.</li>
+
+      <li><b>CTRL-Q</b> — format &lt;blockquote&gt;</li>
+
+      <li>etc. — there are many more defined in <a
+      href="src/js/rteframe.js" target="_blank">rteframe.js</a></li>
+
+    </ul>
+
+    <p>
+      You can easily change the keybinding for a defined command (and
+      you can also define new commands but we'll deal with this
+      later).  Here's how to modify the STRIKE key to CTRL-K:
+    </p>
+
+    <div sample="rte2" />
+
+    <p>
+      Note that since COMMANDS is shared among all DlRteFrame
+      instances, if you modify it like this it will affect all newly
+      created editors.  If you want to affect only a specific
+      instance, here's how to: (too late now if you executed the
+      previous sample :-p)
+    </p>
+
+    <div sample="rte3" />
+
+    <h2>A toolbar example</h2>
+
+    <p>
+      Although <b>DlRteFrame</b> does not provide a toolbar by
+      itself, it's fairly easy to create one based on widgets that we
+      already have—dropdown-s, buttons, boxes, menus, color picker,
+      etc.  Here is a quick example:
+    </p>
+
+    <div sample="rte4" />
+
+    <p>
+      You will immediately notice that the toolbar doesn't get updated
+      as you move the caret through the editor.  For this we can use
+      the <em>onUpdate</em> event which DlRteFrame emits:
+    </p>
+
+    <div sample="rte5" />
+
+    <p>
+      The handler that you supply for the <em>onUpdate</em> event
+      should be very fast, because it gets called a lot as user types
+      or clicks in the editor.
+    </p>
+
+    <p class="dimnote">
+      Again, I must stress the usefulness of radio groups.  Note in
+      this toolbar example that we don't need to keep track of
+      individual buttons—instead we can work with all buttons in a
+      group at once.  We only set event handlers for the group, and
+      when we set the pressed/depressed state, we also act upon the
+      whole group.
+    </p>
+
+  </text>
+
+  <code id="rte1" type="js" canrun="true"><![CDATA[
+    var dlg = new DlDialog({ title: "RTE Demo", resizable: true, quitBtn: "destroy" });
+    var layout = new DlLayout({ parent: dlg });
+    var rte = new DlRteFrame({});
+    layout.packWidget(rte, { pos: "top", fill: "*" });
+    layout.setSize({ x: 550, y: 350 });
+    rte.initDesignMode(function() {
+            // using the date.getTime() trick to avoid browser cache
+            rte.loadStyle("jsdoc/samples/rte.css?" + new Date().getTime());
+            rte.setHTML("<h1>Check it out</h1>" +
+                        "<p>This is <b>Bold</b> and this is <i>Italic</i>, " +
+                        "let alone <u>underline</u>.</p>" +
+                        "<pre>Preformatted\nblock\nhere.</pre>");
+            rte.focus();
+    });
+    dlg.centerOnParent();
+    dlg.show();
+  ]]></code>
+
+  <code id="rte2" type="js" canrun="true"><![CDATA[
+    //@include rte1
+    rte.COMMANDS.strike.key = "CTRL 'K'";
+    rte.updateKeymap();
+  ]]></code>
+
+  <code id="rte3" type="js" canrun="true"><![CDATA[
+    //@include rte1
+    // create a deep copy of the keymap first
+    rte.COMMANDS = Object.makeDeepCopy(rte.COMMANDS);
+    rte.COMMANDS.strike.key = "CTRL 'K'";
+    rte.updateKeymap();
+  ]]></code>
+
+  <code id="rte4" type="js" canrun="true"><![CDATA[
+    var dlg = new DlDialog({ title: "RTE Demo", resizable: true, quitBtn: "destroy" });
+    var layout = new DlLayout({ parent: dlg });
+
+    var rte = new DlRteFrame({});
+
+    var toolbar = new DlContainer({ className: "DlToolbar" });
+    toolbar.getElement().style.padding = "3px";
+
+    var hbox = new DlHbox({ parent: toolbar });
+
+    // create a drop-down box for block formatting options
+
+    var block_options = [
+            { label: "Heading 1"    , value: "h1" },
+            { label: "Heading 2"    , value: "h2" },
+            { label: "Heading 3"    , value: "h3" },
+            { label: "Heading 4"    , value: "h4" },
+            null,
+            { label: "Body text"    , value: "p" },
+            { label: "Preformatted" , value: "pre" },
+            null,
+            { label: "Address"      , value: "address" }
+    ];
+    var block_select = new DlRadioSelect({ parent    : hbox,
+                                           options   : block_options,
+                                           value     : "p",
+                                           tooltip   : "Format block",
+                                           iconClass : "IconFormatBlock" });
+
+    block_select.addEventListener("onChange", function() {
+            rte.execCommand("formatblock", this.getValue());
+    });
+
+    hbox.addSpace();
+    hbox.addSeparator();
+    hbox.addSpace();
+
+    // create inline format buttons
+
+    var INLINE_GROUP = DlRadioGroup.get();
+    INLINE_GROUP.maxChecked(null);
+    [ "Bold", "Italic", "Underline", "Strike" ].foreach(function(name) {
+            new DlButton({ parent     : hbox,
+                           type       : DlButton.TYPE.TWOSTATE,
+                           value      : name.toLowerCase(),
+                           tooltip    : name,
+                           iconClass  : "Icon" + name,
+                           group      : INLINE_GROUP });
+    });
+
+    INLINE_GROUP.addEventListener("onChange", function(btn) {
+            rte.execCommand(btn.getValue());
+    });
+
+    hbox.addSpace();
+    hbox.addSeparator();
+    hbox.addSpace();
+
+    // create alignment buttons.
+
+    // note that the code looks exactly the same as for the inline format
+    // buttons
+
+    var ALIGN_GROUP = DlRadioGroup.get();
+    [ "Left", "Center", "Right", "Full" ].foreach(function(name) {
+            new DlButton({ parent     : hbox,
+                           type       : DlButton.TYPE.TWOSTATE,
+                           value      : "justify" + name.toLowerCase(),
+                           tooltip    : "Align " + name,
+                           iconClass  : "IconAlign" + name,
+                           group      : ALIGN_GROUP });
+    });
+
+    ALIGN_GROUP.addEventListener("onChange", function(btn) {
+            rte.execCommand(btn.getValue());
+    });
+
+    hbox.addSpace();
+    hbox.addSeparator();
+    hbox.addSpace();
+
+    // add a "remove formatting" button
+
+    var removeFormat = new DlButton({ parent: hbox,
+                                      tooltip: "Remove Formatting",
+                                      iconClass: "IconStop" });
+    removeFormat.addEventListener("onClick", function() {
+            rte.execCommand("removeformat");
+    });
+
+    hbox.addFiller();
+
+    var html = new DlButton({ label: "HTML", parent: hbox, tooltip: "Display the HTML" });
+    html.addEventListener("onClick", function() {
+            var dlg2 = new DlDialog({ title: "HTML", parent: dlg, modal: true,
+                                      resizable: true, quitBtn: "destroy" });
+            var entry = new DlEntry({ type: "textarea", parent: dlg2, fillParent: true });
+            entry.setValue(rte.getHTML());
+            entry.setSize({ x: 400, y: 300 });
+            dlg2.centerOnParent();
+            dlg2.show();
+            entry.focus();
+            dlg2.addEventListener("onDestroy", function() {
+                    rte.setHTML(entry.getValue());
+                    rte.focus();
+            });
+    });
+
+    hbox.addSpace();
+    hbox.addSeparator();
+    hbox.addSpace();
+
+    // now let's get fancy add add support for foreground/background colors
+
+    // note that we're trying to use NiceColorPicker if it's available.
+    // it won't be, by default, but you just need to visit and run the sample
+    // "compound widgets" in "Advanced topics", then come back here to see the effect.
+
+    var cp = (typeof NiceColorPicker == "function"
+              ? new NiceColorPicker({})
+              : new DlColorPickerHSV({}));
+    var textColor = new DlButtonColorPicker({ parent: hbox,
+                                              connected: true,
+                                              tooltip: "Text color",
+                                              label: "FG" });
+    textColor.setColorPicker(cp);
+    textColor.addEventListener("onSelect", function(rgb, hsv, color) {
+            rte.execCommand("forecolor", color);
+    });
+
+    hbox.addSpace();
+    var backColor = new DlButtonColorPicker({ parent: hbox,
+                                              connected: true,
+                                              tooltip: "Background color",
+                                              label: "BG" });
+    backColor.setColorPicker(cp);
+    backColor.addEventListener("onSelect", function(rgb, hsv, color) {
+            rte.execCommand("backcolor", color);
+    });
+
+    layout.packWidget(toolbar, { pos: "top" });
+    layout.packWidget(rte, { pos: "top", fill: "*" });
+    layout.setSize({ x: 550, y: 350 });
+
+    rte.initDesignMode(function() {
+            // using the date.getTime() trick to avoid browser cache
+            rte.loadStyle("jsdoc/samples/rte.css?" + new Date().getTime());
+            rte.setHTML("<h1>Check it out</h1>" +
+                        "<p>This is <b>Bold</b> and this is <i>Italic</i>, " +
+                        "let alone <u>underline</u>.</p>" +
+                        "<pre>Preformatted\nblock\nhere.</pre>");
+            rte.focus();
+    });
+
+    dlg.centerOnParent();
+    dlg.show();
+  ]]></code>
+
+  <code id="rte5" type="js" canrun="true"><![CDATA[
+    //@include rte4
+    rte.addEventListener("onUpdate", function() {
+            // create a function that would return *true* if the state of
+            // a button is ON, and *false* if the button is OFF.
+            var getCommandState = rte.queryCommandState.$(rte);
+
+            // now getCommandState("bold") would return *true* if the
+            // caret is in a location where the Bold button should be ON,
+            // and *false* otherwise.
+
+            // collect command names for buttons that should
+            // be active (ON) in inline format buttons
+            var val = [ "bold", "underline", "italic", "strike" ];
+            val = val.grep(getCommandState);
+            INLINE_GROUP.setValue(val);
+
+            /*** Note that the grep call above is equivalent to:
+
+             val = val.grep(function(cmd) {
+                     return rte.queryCommandState(cmd);
+             });
+
+             However, it's cheaper and smaller code to cache that
+             function. ;-)
+
+             ***/
+
+            // we do exactly the same for alignment buttons too (even
+            // though there will be only one button pressed here, we don't
+            // have to care)
+            val = [ "justifyleft", "justifyright", "justifycenter", "justifyfull" ];
+            val = val.grep(getCommandState);
+            ALIGN_GROUP.setValue(val);
+
+            // reset the value of the block format dropdown
+            block_select.setValue(rte.queryCommandValue("formatblock"), null, true);
+    });
+  ]]></code>
+
+</sample>

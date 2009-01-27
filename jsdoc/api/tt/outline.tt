@@ -1,0 +1,108 @@
+[% SET pages = {} %]
+<outline>
+
+  [% PROCESS show_page label="Introduction" src="api://intro.xml" %]
+
+  <item label="JavaScript extensions">
+    [% PROCESS show_page label="Object" src="api://Object.xml" %]
+    [% PROCESS show_page label="Function" src="api://Function.xml" %]
+    [% PROCESS show_page label="Array" src="api://Array.xml" %]
+    [% PROCESS show_page label="String" src="api://String.xml" %]
+    [% PROCESS show_page label="Number" src="api://Number.xml" %]
+    [% PROCESS show_page label="Date" src="api://Date.xml" %]
+  </item>
+
+  <item label="Core utilities">
+    [% PROCESS show_page label="Dynarch" src="api://Dynarch.xml" %]
+    [% PROCESS show_page label="DynarchDomUtils" src="api://DynarchDomUtils.xml" %]
+    [% PROCESS show_page label="DlSingleton" src="api://DlSingleton.xml" %]
+  </item>
+
+  <item label="Core objects">
+
+    [% PROCESS show_page label="DlEventProxy" src="api://DlEventProxy.xml" %]
+    [% PROCESS show_page label="DlEvent" src="api://DlEvent.xml" %]
+    [% PROCESS show_page label="DlWidget" src="api://DlWidget.xml" %]
+    [% PROCESS show_page label="DlContainer" src="api://DlContainer.xml" %]
+    [% PROCESS show_page label="DlDesktop" src="api://DlDesktop.xml" %]
+
+  </item>
+
+  <item label="Communication">
+
+    [% PROCESS show_page label="DlRPC" src="api://DlRPC.xml" %]
+    [% PROCESS show_page label="DlCryptAES" src="api://DlCryptAES.xml" %]
+
+  </item>
+
+  <item label="Flash utilities">
+    [% PROCESS show_page label="DlFlashUtils" src="api://DlFlashUtils.xml" %]
+    [% PROCESS show_page label="DlFlashStore" src="api://DlFlashStore.xml" %]
+    [% PROCESS show_page label="DlSocket" src="api://DlSocket.xml" %]
+    [% PROCESS show_page label="DlSound" src="api://DlSound.xml" %]
+  </item>
+
+  <item label="Basic widgets">
+
+    [% WRAPPER show_page_w
+               label="DlAbstractButton"
+               src="api://DlAbstractButton.xml" %]
+      [% PROCESS show_page label="DlLabel" src="api://DlLabel.xml" %]
+      [% PROCESS show_page label="DlButton" src="api://DlButton.xml" %]
+      [% PROCESS show_page label="DlCheckbox" src="api://DlCheckbox.xml" %]
+      [% PROCESS show_page label="DlRadioButton" src="api://DlRadioButton.xml" %]
+      [% PROCESS show_page label="DlRadioGroup" src="api://DlRadioGroup.xml" %]
+    [% END %]
+
+    <sep />
+    [% WRAPPER show_page_w label="DlBox" src="api://DlBox.xml" %]
+      [% PROCESS show_page label="DlHbox" src="api://DlHbox.xml" %]
+      [% PROCESS show_page label="DlVbox" src="api://DlVbox.xml" %]
+    [% END %]
+
+    <sep />
+    [% WRAPPER show_page_w label="DlButtonMenu" src="api://DlButtonMenu.xml" %]
+       [% PROCESS show_page label="DlRadioSelect" src="api://DlRadioSelect.xml" %]
+       [% PROCESS show_page label="DlButtonCalendar" src="api://DlButtonCalendar.xml" %]
+       [% PROCESS show_page label="DlButtonColorPicker" src="api://DlButtonColorPicker.xml" %]
+    [% END %]
+
+    <sep />
+    [% WRAPPER show_page_w label="DlEntry" src="api://DlEntry.xml" %]
+       [% PROCESS show_page label="DlSpinner" src="api://DlSpinner.xml" %]
+       [% PROCESS show_page label="DlCompletionEntry" src="api://DlCompletionEntry.xml" %]
+       [% PROCESS show_page label="DlValidator" src="api://DlValidator.xml" %]
+    [% END %]
+
+    <sep />
+    [% WRAPPER show_page_w label="DlPopup" src="api://DlPopup.xml" %]
+       [% PROCESS show_page label="DlPopupMenu" src="api://DlPopupMenu.xml" %]
+       [% PROCESS show_page label="DlTooltip" src="api://DlTooltip.xml" %]
+       [% PROCESS show_page label="DlDialogPopup" src="api://DlDialogPopup.xml" %]
+    [% END %]
+
+  </item>
+
+  <item label="Other goodies">
+    [% FOREACH obj IN objects_hash.keys.sort %]
+       [% NEXT IF !obj.match('^Dl') %]
+       [% NEXT IF !objects_hash.$obj.show %]
+       [% PROCESS show_page label="$obj" src="api://${obj}.xml" %]
+    [% END %]
+  </item>
+
+</outline>
+
+[% BLOCK show_page -%]
+  [%- IF !pages.$src -%]
+     [%- SET pages.$src = 1; CALL genobj.push(src) -%]
+<item label="[% label | html %]" src="[% src %]" />
+  [%- END -%]
+[%- END %]
+
+[% BLOCK show_page_w -%]
+  [%- IF !pages.$src -%]
+     [%- SET pages.$src = 1; CALL genobj.push(src) -%]
+<item label="[% label | html %]" src="[% src %]">[% content %]</item>
+  [%- END -%]
+[%- END %]

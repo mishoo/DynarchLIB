@@ -1,0 +1,252 @@
+<sample>
+
+  <title>DlGridLayout</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlGridLayout</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlLayout〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈gridlayout.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈layout.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">cellPadding</td>
+         <td class="doc"><span default="1" name="cellPadding"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">1</td>
+       </tr>
+       <tr>
+         <td class="name">cellSpacing</td>
+         <td class="doc"><span default="0" name="cellSpacing"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">0</td>
+       </tr>
+       <tr>
+         <td class="name">layout</td>
+         <td class="doc"><span default="null" name="layout"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">layoutHTML</td>
+         <td class="doc"><span default="null" name="layoutHTML"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+      <param default="1" name="cellPadding"></param>
+      <param default="0" name="cellSpacing"></param>
+      <param default="null" name="layout"></param>
+      <param default="null" name="layoutHTML"></param>
+    </span>
+
+     </div>
+   </div>
+    </div>
+
+
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="doLayout:object_method">doLayout ()
+        <div class="overrides">
+             (overrides <a href="api://DlLayout.xml:type=object_method:func=doLayout">doLayout in DlLayout</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getCellElement:object_method">getCellElement (<span class='param'>row</span>, <span class='param'>col</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">row</td>
+         <td class="doc"><span name="row"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">col</td>
+         <td class="doc"><span name="col"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getTableElement:object_method">getTableElement ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="showWidgets:object_method">showWidgets (<span class='param'>show</span>, <span class="varargs">…</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">show</td>
+         <td class="doc"><span name="show"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_appendWidgetElement:object_method">_appendWidgetElement (<span class='param'>w</span>, <span class='param'>pos</span>)
+        <div class="overrides">
+             (overrides <a href="api://DlLayout.xml:type=object_method:func=_appendWidgetElement">_appendWidgetElement in DlLayout</a>)
+        </div>
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">w</td>
+         <td class="doc"><span name="w"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">pos</td>
+         <td class="doc"><span name="pos"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_createElement:object_method">_createElement ()
+        <div class="overrides">
+             (overrides <a href="api://DlContainer.xml:type=object_method:func=_createElement">_createElement in DlContainer</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_removeWidgetElement:object_method">_removeWidgetElement (<span class='param'>w</span>)
+        <div class="overrides">
+             (overrides <a href="api://DlLayout.xml:type=object_method:func=_removeWidgetElement">_removeWidgetElement in DlLayout</a>)
+        </div>
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">w</td>
+         <td class="doc"><span name="w"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+
+
+</sample>
+
+
+
+

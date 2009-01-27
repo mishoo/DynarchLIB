@@ -1,0 +1,132 @@
+@import url("common.css");
+
+.DocCont { border: 1px solid #98c; }
+
+a:link, a:visited { color: #00f; }
+a:hover { color: #c22; }
+
+/* .DocTree { background-color: #eeeaff; } */
+.DocTree .Spacer { height: 10px; }
+.DocTreeItem-Root { font-weight: bold; font-size: 130%; font-family: "trebuchet ms"; letter-spacing: -1px; font-style: italic; }
+
+.DocText { background-color: #fff; font: 15px "Trebuchet MS",Georgia,Verdana,Tahoma,sans-serif; padding: 10px 20px; }
+.DocText h1 { font-size: 180%; font-variant: small-caps; border-bottom: 1px solid #aab; margin: 1em 0; }
+.DocText h2 { font-size: 130%; font-variant: small-caps; margin: 1em 0; }
+.DocText h3 { font-size: 100%; margin: 1em 0; font-weight: bold; }
+.DocText pre { font-size: 0.9em; }
+.DocText .dimnote { margin-left: 3em; margin-right: 3em; color: #777; font-size: 90%; }
+.DocText .NavLinks { width: 100%; border-top: 1px solid #aab; margin-top: 2em; border-collapse: collapse;
+  font: 15px "Trebuchet MS",Georgia,Verdana,Tahoma,sans-serif; margin-bottom: 2em;
+}
+.DocText .NavLinks .Next { float: right; }
+
+.DocText .footnote { position: relative; top: -0.3em; font-size: 0.9em; text-decoration: none; }
+.DocText .Footnotes { font-size: 0.9em; margin-top: 2em; }
+.DocText .Footnotes-Head { width: 10em; border-top: 2px solid #000; padding-bottom: 2px; }
+.DocText .Footnotes footnote { display: block; margin: 0.5em; }
+
+.DocText img.FloatRight { float: right; margin: 0 0 1em 1em; }
+
+/* API */
+
+/*
+.DocText .ObjectSection { }
+.DocText .Object { margin: 1em 2em; }
+
+.DocText .Params { border: 1px solid #000; }
+.DocText .Params td { vertical-align: top; padding: 4px; }
+.DocText .Params thead td { border-bottom: 1px solid #000; }
+.DocText .Params td pre { padding: 0; margin: 0; }
+.DocText .Params td.label { font-weight: bold; white-space: nowrap; text-align: right; }
+.DocText .Params td.doc { color: #383; }
+
+.DocText .ObjectMethod { margin: 0 2em; }
+.DocText .ObjectMethod .params { color: #879; }
+*/
+
+.CodeEditor textarea { font-family: monospace; }
+.CodeSample { border: 1px solid #778; background-color: #dcf; clear: both; }
+.CodeSample-padding { padding: 10px; background-color: #eeeaff; }
+.DlHighlight { margin: 0; padding: 0; background-color: #eeeaff; border-left: none; overflow: visible; width: 100%; }
+.CodeSample .Controls { border-bottom: 1px solid #778; padding: 1px; padding-left: 10px; }
+.CodeOutput { border: 1px solid #aab; background-color: #fff; }
+.CodeInlineCanvas { border: 1px solid red; background-color: #dcf; }
+
+.CodeOutput .PrintLine { padding: 3px; }
+.CodeOutput .PrintLine-even { background-color: #fff; }
+.CodeOutput .Error { color: red; }
+
+.TitlePage .Title { font: 72px Georgia,"Times New Roman",serif; letter-spacing: -2px; }
+.TitlePage .desc { text-align: right; color: #778; font: 15px "Trebuchet MS",Verdana,Tahoma,sans-serif; font-style: italic;
+  margin-top: -0.9em; border-bottom: 2px solid #778; padding-bottom: 2px;
+}
+.TitlePage .tagline { margin-top: 2em;
+  text-align: center;
+  font: 16px Georgia,"Trebuchet MS",Verdana,Tahoma,sans-serif;
+}
+.TitlePage .url { margin-top: 2em; font: 15px "Andale Mono",monospace; text-align: center; }
+.TitlePage .copyright { margin-top: 2em; text-align: center; }
+.TitlePage .version { margin-top: 2em; text-align: center; }
+.TitlePage .acknowledgements { margin-top: 2em; color: #999; text-align: center; }
+.TitlePage .acknowledgements a:link, .TitlePage .acknowledgements a:visited { color: #555; }
+
+/*** icons ***/
+
+.IconTreeRoot { background-image: url("img/ledpurple.png"); }
+.IconBook { background-image: url("img/toggle_log.png"); }
+.IconBooks { background-image: url("img/bookcase.png"); }
+.IconPage { background-image: url("img/knode.png"); }
+.IconReload { background-image: url("img/reload.png"); }
+.IconFileNew { background-image: url("img/filenew.png"); }
+.IconFileOpen { background-image: url("img/fileopen.png"); }
+.IconFileSave { background-image: url("img/filesave.png"); }
+.IconFileSaveAs { background-image: url("img/filesaveas.png"); }
+.IconFilePrint { background-image: url("img/fileprint.png"); }
+.IconEditCopy { background-image: url("img/editcopy.png"); }
+.IconEditCut { background-image: url("img/editcut.png"); }
+.IconEditPaste { background-image: url("img/editpaste.png"); }
+.IconCalendar { background-image: url("img/date.png"); }
+.IconSubscribe { background-image: url("img/news_subscribe.png"); }
+.IconAjaxLoader { background-image: url("img/ajax-loader.gif"); }
+.IconRemove { background-image: url("img/edit_remove.png"); }
+.IconStop { background-image: url("img/stop.png"); }
+.IconBack { background-image: url("img/back.png"); }
+.IconForward { background-image: url("img/forward.png"); }
+.IconHistory { background-image: url("img/history.png"); }
+.IconConfigure { background-image: url("img/configure.png"); }
+
+/* editor */
+
+.IconBold { background-image: url("img/editor/text_bold.png"); }
+.IconItalic { background-image: url("img/editor/text_italic.png"); }
+.IconUnderline { background-image: url("img/editor/text_under.png"); }
+.IconStrike { background-image: url("img/editor/text_strike.png"); }
+.IconFormatBlock { background-image: url("img/editor/text.png"); }
+.IconAlignLeft { background-image: url("img/editor/text_left.png"); }
+.IconAlignRight { background-image: url("img/editor/text_right.png"); }
+.IconAlignCenter { background-image: url("img/editor/text_center.png"); }
+.IconAlignFull { background-image: url("img/editor/text_block.png"); }
+
+
+
+
+/*** samples ***/
+
+/* widgets-creating.xml */
+
+.DlTimeEntry {
+  border: 1px solid;
+  border-color: #98c #659 #659 #98c;
+}
+.DlTimeEntry table {
+  border: 1px solid #fef;
+  background-color: #e8d8ff;
+}
+.DlTimeEntry-sep { padding: 0 1px; }
+.DlTimeEntryPart { padding: 2px 3px; }
+.DlTimeEntryPart-focus {
+  padding: 1px 2px;
+  border: 1px dotted black;
+  background-color: #fff;
+}
+

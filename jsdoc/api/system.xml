@@ -1,0 +1,7 @@
+<api file="system.js">
+  <object base="DlEventProxy" internal="1" name="DlSystem">
+    <constructor></constructor>
+    <static-methods></static-methods>
+    <object-methods></object-methods>
+  </object>
+</api>

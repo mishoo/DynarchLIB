@@ -1,0 +1,140 @@
+<sample>
+
+  <title>DOM Inspector</title>
+
+  <text>
+
+    <img class="FloatRight" src="jsdoc/samples/img/dom-inspector-sample.png" />
+
+    <p>
+      The following sample shows you how to create a simple “DOM
+      inspector”.  It displays direct children of the &lt;body&gt;
+      element; subsequent nodes are created on-demand in order to
+      speed things up.  It makes use of a <a
+      href="sample://widgets-layout.xml">layout manager</a> in order
+      to have the dialog reflow its child widgets when it is resized.
+    </p>
+
+    <p>
+      It's not a complete DOM inspector, but I wanted to catch your
+      attention. ;-) It creates a tree of <em>existing</em> DOM
+      elements (that is, at the time the sample is ran) and if you
+      click on an element, it will highlight it in the DOM (provided
+      it is visible) with a green semiopaque DIV, like in the picture.
+      Elements that are linked to widgets will show the widget name in
+      square brackets.  However, the tree doesn't get updated when the
+      DOM changes and the information you can see about each node is
+      only class name and geometry.
+    </p>
+
+    <div sample="dominspector1" />
+  </text>
+
+  <code id="dominspector1" type="js" canrun="true"><![CDATA[
+    var dlg = new DlDialog({ title: "DOM Inspector", resizable: true, quitBtn: "destroy" });
+
+    // See the “Layout manager” page for documentation on this object
+    var layout = new DlLayout({ parent: dlg });
+
+    var left = new DlContainer({ scroll: true, className: "DocCont DocTree" });
+    var right = new DlContainer({ scroll: true, className: "DocCont DocTree" });
+    var rb = new DlResizeBar({ widget: right, invert: true });
+
+    layout.packWidget(right, { pos: "right", fill: "50%" });
+    layout.packWidget(rb, { pos: "right" });
+    layout.packWidget(left, { pos: "left", fill: "*" });
+
+    var group = DlRadioGroup.get();
+
+    // helper function to create the subitems
+    function createItems(a, cont) {
+            var tree = new DlTree({});
+            a.foreach(function(el) {
+                    var label = el.nodeType == 1
+                                      ? el.tagName.toLowerCase()
+                                      : "[text]";
+                    var w = DlWidget.getFromElement(el);
+                    if (w)
+                            label += " <span style='color:#777'>[" + w._objectType + "]</span>";
+                    var item = new DlTreeItem({ parent        : tree,
+                                                itemClassName : "DlTreeItem-withRadio"
+                                              });
+                    var label = new DlRadioButton({ group  : group,
+                                                    label  : label,
+                                                    parent : item
+                                                  });
+                    label.refNode("element", el);
+                    var children = Array.$(el.childNodes).grep(function(el){
+                            return el.nodeType == 1 || el.nodeType == 3;
+                    });
+                    if (children.length > 0)
+                            item.setTree(createItems.$C(children));
+            });
+            cont(tree);
+    };
+
+    var highlight_div = DynarchDomUtils.createElement(
+            "div",
+            { "position"         : "absolute",
+              "background-color" : "green",
+              "z-index"          : "500"
+            },
+            null,
+            document.body
+    );
+    DynarchDomUtils.setOpacity(highlight_div, 0.3);
+
+    dlg.addEventListener("onDestroy", function() {
+            document.body.removeChild(highlight_div);
+            highlight_div = null;
+    });
+
+    function describeElement(el, pos, size) {
+            var html = String.buffer();
+            if (el.nodeType == 1) {
+                    html("<table cellspacing='5'>");
+                    html("<tr><td align='left' valign='top'>",
+                         "Class: ".bold(), "</td><td align='left' valign='top'>",
+                         el.className, "</td></tr>");
+                    html("<tr><td align='left' valign='top'>",
+                         "Size: ".bold(), "</td><td align='left' valign='top'>",
+                         size.x, " x ", size.y, "</td></tr>");
+                    html("<tr><td align='left' valign='top'>",
+                         "Pos: ".bold(), "</td><td align='left' valign='top'>",
+                         pos.x, " x ", pos.y, "</td></tr>");
+                    html("</table>");
+            } else {
+                    html("<b>Text node:</b><br><br>");
+                    html(el.data);
+            }
+            right.setContent(html.get());
+    };
+
+    group.addEventListener("onChange", function(w){
+            if (w.checked()) {
+                    var el = w.element;
+                    if (el.nodeType == 1) {
+                            var pos = DynarchDomUtils.getPos(el);
+                            var size = DynarchDomUtils.getOuterSize(el);
+                            highlight_div.style.left = pos.x + "px";
+                            highlight_div.style.top = pos.y + "px";
+                            highlight_div.style.width = size.x + "px";
+                            highlight_div.style.height = size.y + "px";
+                    }
+                    describeElement(el, pos, size);
+            }
+    });
+
+    var bodyChildren = Array.$(document.body.childNodes).grep(function(el){
+            return el.nodeType == 1 || el.nodeType == 3;
+    });
+    createItems(bodyChildren, function(tree) {
+            left.appendWidget(tree);
+    });
+
+    layout.setSize({ x: 500, y: 400 });
+    dlg.centerOnParent();
+    dlg.show();
+  ]]></code>
+
+</sample>

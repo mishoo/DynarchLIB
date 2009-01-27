@@ -1,0 +1,367 @@
+<sample>
+
+  <title>DlColor</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlColor</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>— none —</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈color.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+     <div class="doc"><span>
+      This is a namespace for a few color-related utilities.  All
+      functions are static.
+    </span>
+
+     </div>
+   </div>
+    </div>
+
+
+    <div class="static-methods">
+      <h2>Static functions</h2>
+   <div class="method">
+        <h3 id="brighter:static_method">DlColor.brighter (<span class='param'>hsv</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">hsv</td>
+         <td class="doc"><span name="hsv">[ hue, saturation, value ]</span>
+</td>
+         <td class="type">[<b>〈Array〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Array) 
+           <b><span>[ hue, saturation, value ]</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns a new color (as HSV) which tries to maintain the
+          same nuance but will be brighter than the given color.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="color2RGB:static_method">DlColor.color2RGB (<span class='param'>color</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">color</td>
+         <td class="doc"><span name="color">CSS hex color (#XXXXXX)</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Array) 
+           <b><span>[ red, green, blue ] as numbers in 0..1</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Parses the given color and returns the RGB array.  If you
+          need it as HSV you can further call <a href='api://DlColor.xml:type=static_method:func=RGB2HSV'>RGB2HSV()</a>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="darker:static_method">DlColor.darker (<span class='param'>hsv</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">hsv</td>
+         <td class="doc"><span name="hsv">[ hue, saturation, value ]</span>
+</td>
+         <td class="type">[<b>〈Array〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Array) 
+           <b><span>[ hue, saturation, value ]</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns a darker color of the same nuance.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="HSV2RGB:static_method">DlColor.HSV2RGB (<span class='param'>hsv</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">hsv</td>
+         <td class="doc"><span name="hsv">[ hue, saturation, value ]</span>
+</td>
+         <td class="type">[<b>〈Array〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Array) 
+           <b><span>[ red, green, blue ] as numbers in 0..1</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Converts a color from HSV representation to RGB
+          representation.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="RGB2bytes:static_method">DlColor.RGB2bytes (<span class='param'>rgb</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">rgb</td>
+         <td class="doc"><span name="rgb">[ red, green, blue ] as float numbers in 0..1</span>
+</td>
+         <td class="type">[<b>〈Array〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Array) 
+           <b><span>[ red, green, blue ] as bytes (0..255)</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Converts a RGB color to bytes.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="RGB2color:static_method">DlColor.RGB2color (<span class='param'>rgb</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">rgb</td>
+         <td class="doc"><span name="rgb">[ red, green, blue ] as numbers in 0..1</span>
+</td>
+         <td class="type">[<b>〈Array〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: String) 
+           <b><span>CSS color</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Creates a color string suitable for CSS from the given rgb.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="RGB2hex:static_method">DlColor.RGB2hex (<span class='param'>rgb</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">rgb</td>
+         <td class="doc"><span name="rgb">[ red, green, blue ] as float numbers in 0..1</span>
+</td>
+         <td class="type">[<b>〈Array〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: String) 
+           <b><span>HEX representation of the color</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Converts a color in RGB to its HEX notation (<em>note</em>,
+          it doesn't include a “#” prefix).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="RGB2HSV:static_method">DlColor.RGB2HSV (<span class='param'>rgb</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">rgb</td>
+         <td class="doc"><span name="rgb">[ red, green, blue ] as float numbers in 0..1</span>
+</td>
+         <td class="type">[<b>〈Array〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Array) 
+           <b><span>[ hue, saturation, value ]</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          The reverse of <a href='api://DlColor.xml:type=static_method:func=HSV2RGB'>HSV2RGB()</a>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="RGBrightness:static_method">DlColor.RGBrightness (<span class='param'>rgb</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">rgb</td>
+         <td class="doc"><span name="rgb">[ red, green, blue ] as float numbers in 0..1</span>
+</td>
+         <td class="type">[<b>〈Array〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns a brightness indication of the color between 0
+          (absolute black) and 1 (absolute white).
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+
+  </text>
+
+
+</sample>
+
+
+
+

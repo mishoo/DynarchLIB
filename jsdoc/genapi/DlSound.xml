@@ -1,0 +1,376 @@
+<sample>
+
+  <title>DlSound</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlSound</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlEventProxy〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈sound.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈flashutils.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">volume</td>
+         <td class="doc"><span default="null" name="volume">Volume (0 = mute .. 100 = max)</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">pan</td>
+         <td class="doc"><span default="null" name="pan">Panning (-100 = left only .. 0 = balanced .. 100 = right only)</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">stream</td>
+         <td class="doc"><span default="false" name="stream">Start streaming?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">false</td>
+       </tr>
+       <tr>
+         <td class="name">url</td>
+         <td class="doc"><span default="null" name="url">URL to an the file (MP3, WAV or AAC)</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+        You can use this object to add sound support to your
+        application.  This is a Flash utility (see <a href='api://DlFlashUtils.xml'>DlFlashUtils</a>)
+        which wraps the Flash Sound object to provide its
+        functionality in JavaScript.
+<p/>
+        Flash currently supports MP3, WAV and AAC.
+<p/>
+        Example usage:
+<p/>
+        <div sample="DlSound1"></div>
+<p/>
+        The <a href='api://DlSound.xml:type=object_method:func=play'>play()</a> method will call <a href='api://DlSound.xml:type=object_method:func=load'>load()</a> automatically if the
+        sound wasn't yet loaded.  This can take some time, depending
+        on network speed and sound file size.
+<p/>
+        You can play multiple sounds simultaneously by using multiple
+        DlSound objects.  Note that while you can use a single DlSound
+        object to play differend sounds (not simultaneously though) we
+        don't recommend this.  In your application, you might want to
+        create a wrapper that creates and caches DlSound objects as
+        appropriate, here's an example:
+<p/>
+        <div sample="DlSound2"></div>
+      </span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="events">
+      <h2>Events</h2>
+   <div class="method">
+        <h3 id="onComplete:object_event">onComplete ()
+        </h3>
+     <div class="doc"><span>Triggered when the sound finished playing.</span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onLoad:object_event">onLoad (<span class='param'>success</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">success</td>
+         <td class="doc"><span name="success">Will be false if file couldn't be loaded</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>Triggered when the sound file was loaded, or failed loading.</span>
+
+     </div>
+   </div>
+    </div>
+
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="getBytesLoaded:object_method">getBytesLoaded ()
+        </h3>
+     <div class="doc"><span>
+          Returns the number of bytes currently loaded.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getBytesTotal:object_method">getBytesTotal ()
+        </h3>
+     <div class="doc"><span>
+          Returns the total length of the sound file.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getDuration:object_method">getDuration ()
+        </h3>
+     <div class="doc"><span>
+          Returns the sound duration in milliseconds.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getPan:object_method">getPan ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getPosition:object_method">getPosition ()
+        </h3>
+     <div class="doc"><span>
+          Returns the current sound position.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getURL:object_method">getURL ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getVolume:object_method">getVolume ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="load:object_method">load (<span class='param optional'>url</span>, <span class='param optional'>stream</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">url</td>
+         <td class="doc"><span default="null" name="url" optional="1">URL for this sound</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">stream</td>
+         <td class="doc"><span default="false" name="stream" optional="1">Start streaming?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">false</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Loads a sound file.  If <b>url</b> is not passed, the URL
+          passed in the constructor will be used.  If <b>stream</b> is
+          true, it will start playing the file as soon as there is
+          enough data loaded (but without waiting for the file to be
+          fully downloaded).  This is useful to implement a streaming
+          player.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="play:object_method">play (<span class='param optional'>offset</span>, <span class='param optional'>loop</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">offset</td>
+         <td class="doc"><span default="0" name="offset" optional="1">Offset in seconds</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">0</td>
+       </tr>
+       <tr>
+         <td class="name">loop</td>
+         <td class="doc"><span default="0" name="loop" optional="1">How many times to loop this sound?</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">0</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Starts playing this sound immediately, assuming it was
+          already loaded.  Otherwise, calls <a href='api://DlSound.xml:type=object_method:func=load'>load()</a> and starts
+          playing as soon as file is fully loaded (that is, when the
+          “onLoad” event is triggered).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setPan:object_method">setPan (<span class='param'>pan</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">pan</td>
+         <td class="doc"><span name="pan"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setVolume:object_method">setVolume (<span class='param'>volume</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">volume</td>
+         <td class="doc"><span name="volume"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="stop:object_method">stop ()
+        </h3>
+     <div class="doc"><span>
+          Stops playing this sound.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+<code id="DlSound1" type="js">
+          var snd = new DlSound({ url: "/sounds/boom.mp3" });
+          snd.play();
+        </code>
+<code id="DlSound2" type="js">
+          var EVENT_SOUNDS = {
+              newMail : "new-mail.mp3",
+              newChat : "new-chat.mp3",
+              ...
+          };
+          var SOUNDS = {};
+          function playSound(event) {
+              var url = EVENT_SOUNDS[event];
+              var snd_object = SOUNDS[url];
+              if (!snd_object) {
+                  snd_object = SOUNDS[url] = new DlSound({ url: url });
+              }
+              snd_object.play();
+          };
+
+          // ... later
+
+          playSound("newChat");
+        </code>
+
+
+</sample>
+
+
+
+

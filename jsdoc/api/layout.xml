@@ -1,0 +1,142 @@
+<api file="layout.js" show="1">
+  <object base="DlContainer" name="DlLayout">
+    <constructor>
+      <param default="true" name="fillParent" type="boolean">Passed to 〈DlContainer〉</param>
+      <param default="0" name="outerSpace" type="Number">Outer space (padding) for this layout container</param>
+      <doc>
+        This class is useful to implement a fluid layout.  It's best
+        suitable for vertical or horizontal layout, although you can
+        use it to create more complex ones as well (i.e. combine
+        vertical and horizontal containers in the same layout widget).
+        See our <a href="sample://widgets-layout.xml">layout
+        examples</a> for some sample code.
+
+        In order to add widgets to a layout you need to call
+        〈packWidget()|layout.packWidget(widget, args)〉.  Please check
+        our samples and the 〈packWidget()〉 method for more
+        information.
+      </doc>
+    </constructor>
+    <static-methods>
+      <method hash="5b8a48103b5779048e76c7d695bb326b" name="getArgs">
+        <param name="widget" type="DlWidget">Queried widget</param>
+        <return type="Hash">Layout args as passed to 〈packWidget()〉</return>
+        <doc>
+          Returns the layout options for the given widget.  These are
+          the options that were passed to 〈packWidget()〉.
+        </doc>
+      </method>
+      <method hash="3f79fd78af92e67c357b1da25e2f2a55" name="setFill">
+        <param name="widget" type="DlWidget"></param>
+        <param name="fill" type="Number|String">Fill argument</param>
+        <doc>
+          Modifies the <b>fill</b> argument for the given widget.  The
+          widget must be 〈packWidget()|packed〉 in some layout.  This
+          function will modify the fill option and will call
+          〈doLayout()〉 in order to refresh the display.
+        </doc>
+      </method>
+    </static-methods>
+    <object-methods>
+      <method hash="b18b327b28c99e62f03d2a62b48ed6ac" name="doLayout">
+        <doc>
+          Refresh the display (position and size child widgets
+          according to their layout options).
+        </doc>
+      </method>
+      <method XXX="Code has changed!" hash="4745a66523edf3243b735fe85895d5cf" name="packWidget">
+        <param name="w" type="DlWidget">New child widget</param>
+        <param name="args" type="Hash">Layout options</param>
+        <doc>
+          Adds a new widget to the current layout manager.  This is
+          the method you'll use most frequently in a DlLayout object.
+
+          First argument (<b>w</b>) is a widget that you want to add.
+          In order for the layout to be able to do its job, widgets
+          that you add to it must have a working implementation for
+          their 〈DlWidget::setOuterSize()|setOuterSize()〉 method.
+
+          The second argument (<b>args</b>) is an hash that can
+          contain the following properties:
+
+          <ul>
+
+            <li><b>pos</b> (String) — can be "left" or "right"
+            (horizontal stacking), "top" or "bottom" (vertical
+            stacking) and specifies where do you want to stick the new
+            widget.  <em>Required</em>.</li>
+
+            <li><b>before</b> (Number) — specifies the number of
+            pixels to leave blank <em>before</em> packing this
+            widget.</li>
+
+            <li><b>after</b> (Number) — number of pixels to leave
+            blank <em>after</em> packing this widget</li>
+
+            <li><b>min</b> (Number) — minimum size for this widget
+            (can refer to width if it's stacked horizontally, or to
+            the height if it's stacked vertically).</li>
+
+            <li><b>max</b> (Number) — maximum width or height for this
+            widget.</li>
+
+            <li>
+              <b>fill</b> (Number or String) — specifies a fill
+              option for this widget.
+
+              When this option is missing, the layout will use the
+              current size of the given widget.  Note that this is
+              sometimes dangerous—since the widget doesn't have a
+              parent yet, its size is zero.  DlLayout will first add
+              the widget then check its size, but in some cases this
+              won't work either (for example when you pack another
+              layout widget, since a DlLayout has initially the size
+              zero and you have to set a size manually).
+
+              If fill is a number, then the packed widget will
+              occupy exactly that number of pixels in the layout (can
+              refer to width or height depending on the <b>pos</b>
+              argument).
+
+              If fill is a string, it can be one of the
+              following:
+
+              <ul>
+                <li>Percent (i.e. in the form "15%") — the widget will
+                ocuppy that percent of the available space</li>
+
+                <li>An asterisk ("*") — the widget will occupy
+                <em>all</em> the available space.  Don't use this
+                option for two wigets in the same layout.</li>
+              </ul>
+            </li>
+
+          </ul>
+
+
+        </doc>
+      </method>
+      <method hash="122662c0e3fce9d04386a21dd032a411" name="sizeToFit">
+        <doc>
+          XXX Dangerous, doesn't seem to work correctly
+
+          This method is supposed to resize a layout to a minimum size
+          which is big enough so that no child widgets are invisible
+          or truncated.  But <em>don't rely on it for now</em>.
+        </doc>
+      </method>
+      <method hash="7eb6428b725f29e8e18be0699d42f538" internal="1" name="__doLayout" undoc="1">
+        <doc></doc>
+      </method>
+      <method hash="a0e44f7a1e50ab029ad0ae9b158221df" internal="1" name="_appendWidgetElement">
+        <param name="w"></param>
+        <param name="pos"></param>
+        <doc></doc>
+      </method>
+      <method hash="36759034819d7d0c9a358167958b6609" internal="1" name="_removeWidgetElement">
+        <param name="w"></param>
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

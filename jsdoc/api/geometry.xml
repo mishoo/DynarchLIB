@@ -1,0 +1,85 @@
+<api file="geometry.js">
+  <object name="DlPoint">
+    <constructor>
+      <param name="x"></param>
+      <param name="y"></param>
+    </constructor>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="a6fc6bf90528457afc5ec52d12c015ca" name="clone">
+        <doc></doc>
+      </method>
+      <method hash="4846422db80ec0819dc941b74defbb49" name="normalize">
+        <param name="p"></param>
+        <doc></doc>
+      </method>
+    <method hash="06e133d215386989523dc741c80f1c50" name="distanceTo"><param name="p"></param><doc></doc></method></object-methods>
+  </object>
+  <object name="DlRect">
+    <constructor>
+      <param name="x"></param>
+      <param name="y"></param>
+      <param name="w"></param>
+      <param name="h"></param>
+    </constructor>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="6da224f85578aa623e06219033a9f02e" name="area">
+        <doc></doc>
+      </method>
+      <method hash="c831cf3a9bf7f3112cd6ee6867eb05e2" name="containsPoint">
+        <param name="p"></param>
+        <doc></doc>
+      </method>
+      <method hash="16c6a6306cde90dec04c58168700ce6f" name="getBR">
+        <doc></doc>
+      </method>
+      <method hash="f32eb7bea8dce735b90d186d45480ca0" name="getPoints">
+        <doc></doc>
+      </method>
+      <method hash="a6fc6bf90528457afc5ec52d12c015ca" name="getTL">
+        <doc></doc>
+      </method>
+      <method hash="80afb8e32035feacc4931775b6d44fe5" name="height">
+        <param name="h"></param>
+        <doc></doc>
+      </method>
+      <method hash="326c92d0fa70633f5255ecc0caf434ba" name="intersect">
+        <param name="r"></param>
+        <doc></doc>
+      </method>
+      <method hash="cd1dbf098064fa24526767d4176ec758" name="makeDiv">
+        <param name="bw"></param>
+        <param name="bc"></param>
+        <doc></doc>
+      </method>
+      <method hash="dc409e043b01bdeac95a9c9d6c9f5e04" name="positionDiv">
+        <param name="div"></param>
+        <doc></doc>
+      </method>
+      <method hash="458b7115f301ef57d907418cc53737f8" name="setFromPoints">
+        <param name="p1"></param>
+        <param name="p2"></param>
+        <doc></doc>
+      </method>
+      <method hash="23dcf27a2cad2163ee2a0f9820a55f26" name="setFromRect">
+        <param name="r"></param>
+        <doc></doc>
+      </method>
+      <method hash="7e2922ca45b196a66a326b485f03c143" name="setFromValues">
+        <param name="x"></param>
+        <param name="y"></param>
+        <param name="w"></param>
+        <param name="h"></param>
+        <doc></doc>
+      </method>
+      <method hash="b86b19f57502d6f9ecab5ba012a97a59" name="toString">
+        <doc></doc>
+      </method>
+      <method hash="7bcc5690c816fc8b767814a583e0c081" name="width">
+        <param name="w"></param>
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

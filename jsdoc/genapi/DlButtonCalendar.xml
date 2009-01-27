@@ -1,0 +1,172 @@
+<sample>
+
+  <title>DlButtonCalendar</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlButtonCalendar</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlButtonMenu〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈buttoncalendar.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈buttonmenu.js, calendar.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">calendar</td>
+         <td class="doc"><span default="{}" name="calendar">Forwarded to <a href='api://DlCalendar.xml'>DlCalendar</a></span>
+</td>
+         <td class="type">[<b>〈Hash〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">{}</td>
+       </tr>
+       <tr>
+         <td class="name">date</td>
+         <td class="doc"><span default="&#34;Select date...&#34;" name="date">Initial date, or label</span>
+</td>
+         <td class="type">[<b>〈Date,String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">"Select date..."</td>
+       </tr>
+       <tr>
+         <td class="name">dateFormat</td>
+         <td class="doc"><span default="&#34;%Y/%m/%d&#34;" name="dateFormat">Format of the date (see <a href='api://Date.xml:type=object_method:func=print'>Date::print()</a></span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">"%Y/%m/%d"</td>
+       </tr>
+       <tr>
+         <td class="name">iconClass</td>
+         <td class="doc"><span default="&#34;IconCalendar&#34;" name="iconClass">Default icon for this button</span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">"IconCalendar"</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+        This is a specialization of <a href='api://DlButtonMenu.xml'>DlButtonMenu</a> suitable for
+        accepting calendar dates.  The drop-down menu will display a
+        <a href='api://DlCalendar.xml'>DlCalendar</a> widget.  You can customize that widget with the
+        arguments that you pass in <b>calendar</b> (all are forwarded
+        to <a href='api://DlCalendar.xml'>DlCalendar</a>).
+      </span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="events">
+      <h2>Events</h2>
+   <div class="method">
+        <h3 id="onCalendarRendered:object_event">onCalendarRendered ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onSelect:object_event">onSelect (<span class='param'>date</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">date</td>
+         <td class="doc"><span name="date">Selected date</span>
+</td>
+         <td class="type">[<b>〈Date〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Triggered when a date was chosen from the calendar.  The
+          <b>date</b> argument will be a JavaScript <a href='api://Date.xml'>Date</a> object with
+          the selected date.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="getCalendar:object_method">getCalendar ()
+        </h3>
+     <div class="doc"><span>
+          Creates and returns a calendar for this widget.  This method
+          is called internally whenever the calendar must popup.  A
+          reference to this method is actually passed to
+          <a href='api://DlButtonMenu.xml:type=object_method:func=setMenu'>DlButtonMenu::setMenu()</a>, so that the calendar won't be
+          instantiated until it's first needed.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getValue:object_method">getValue ()
+        </h3>
+     <div class="doc"><span>
+          Returns the current date, or null if no date was selected.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="initDOM:object_method">initDOM ()
+        <div class="overrides">
+             (overrides <a href="api://DlButtonMenu.xml:type=object_method:func=initDOM">initDOM in DlButtonMenu</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+
+
+</sample>
+
+
+
+

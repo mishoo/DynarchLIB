@@ -1,0 +1,7 @@
+<api file="regexp.js">
+  <object name="DlRegexp">
+    <constructor></constructor>
+    <static-methods></static-methods>
+    <object-methods></object-methods>
+  </object>
+</api>

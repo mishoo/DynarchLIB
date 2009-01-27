@@ -1,0 +1,253 @@
+<sample>
+
+  <title>DlTree</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlTree</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlContainer〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈tree.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈container.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">args</td>
+         <td class="doc"><span name="args"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+        All arguments are passed to <a href='api://DlContainer.xml'>base class</a>
+        constructor.
+<p/>
+        This is a tree widget, similar to what you can see in this
+        interactive documentation in the left bar.
+<p/>
+        A tree usually contains <a href='api://DlTreeItem.xml'>tree items</a>, but can also
+        contain any kind of widget.
+<p/>
+        See our <a href="sample://widgets-tree.xml">tree samples</a>
+        for some code.
+      </span>
+
+     </div>
+   </div>
+    </div>
+
+
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="addSeparator:object_method">addSeparator (<span class='param optional'>cls</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">cls</td>
+         <td class="doc"><span name="cls" optional="1">CSS class name</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Adds a separator in the tree.  If <b>cls</b> is given, it
+          will have the specified class name, otherwise
+          “DlTree-separator” is used.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="appendWidget:object_method">appendWidget (<span class='param'>w</span>, <span class='param'>pos</span>)
+        <div class="overrides">
+             (overrides <a href="api://DlContainer.xml:type=object_method:func=appendWidget">appendWidget in DlContainer</a>)
+        </div>
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">w</td>
+         <td class="doc"><span name="w"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">pos</td>
+         <td class="doc"><span name="pos"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getItem:object_method">getItem (<span class='param'>idx</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">idx</td>
+         <td class="doc"><span name="idx">Item index</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the <a href='api://DlTreeItem.xml'>item</a> at the specified index.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getItems:object_method">getItems ()
+        </h3>
+     <div class="doc"><span>
+          Returns an array with all items in this tree (note, it
+          doesn't include subtrees).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="removeWidget:object_method">removeWidget (<span class='param'>w</span>)
+        <div class="overrides">
+             (overrides <a href="api://DlContainer.xml:type=object_method:func=removeWidget">removeWidget in DlContainer</a>)
+        </div>
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">w</td>
+         <td class="doc"><span name="w"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_appendWidgetElement:object_method">_appendWidgetElement (<span class='param'>w</span>, <span class='param'>pos</span>)
+        <div class="overrides">
+             (overrides <a href="api://DlContainer.xml:type=object_method:func=_appendWidgetElement">_appendWidgetElement in DlContainer</a>)
+        </div>
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">w</td>
+         <td class="doc"><span name="w"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">pos</td>
+         <td class="doc"><span name="pos"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+
+
+</sample>
+
+
+
+

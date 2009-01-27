@@ -1,0 +1,548 @@
+<sample>
+
+  <title>DlCryptAES</title>
+
+  <text>
+
+    <div class="file-info"><span>
+<p class='warning'> This object is defined in src/extras/cryptaes.js</p>
+<p/>
+    You need to load it separately—it's not included in thelib.js
+    since many applications will not require this functionality.
+  </span>
+
+    </div>
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlCryptAES</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>— none —</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈cryptaes.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">key</td>
+         <td class="doc"><span default="null" name="key">Encryption key as array of bytes (<em>required!</em>)</span>
+</td>
+         <td class="type">[<b>〈Array〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">mode</td>
+         <td class="doc"><span default="&#34;ECB&#34;" name="mode">Operation mode</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">"ECB"</td>
+       </tr>
+       <tr>
+         <td class="name">iv</td>
+         <td class="doc"><span default="null" name="iv">Initialization vector (array of bytes)</span>
+</td>
+         <td class="type">[<b>〈Array〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+<p/>
+        AES (“Advanced Encryption Standard”, also known as “Rijndael”)
+        is a very secure encryption algorithm which replaces DES
+        (“Data Encryption Standard”).  You can <a href="http://en.wikipedia.org/wiki/Rijndael" target="_blank">read about it on Wikipedia</a>.
+<p/>
+        This object is an implementation of it which allows you to
+        encrypt/decrypt arbitrary bytes.  You can use it to secure
+        communication with the server over an unsecured line
+        (i.e. when you can't use SSL).  We developed this object to
+        provide a means of secure communication over a <a href='api://DlSocket.xml'>DlSocket</a>
+        line.
+<p/>
+        Our code implements the following <a href="http://en.wikipedia.org/wiki/Electronic_codebook" target="_blank" title="Block cypher operation at Wikipedia">operation modes</a>:
+<p/>
+        <ul>
+          <li>ECB (electronic codebook) — the default, but the least secure</li>
+          <li>CBC (cypher block chaining)</li>
+          <li>CFB (cypher feedback)</li>
+          <li>OFB (output feedback)</li>
+          <li>CTR (counter) — seems to be the most secure</li>
+        </ul>
+<p/>
+        You can chose the mode of operation by passing the <b>mode</b>
+        argument to constructor (should be one of the acronyms above).
+<p/>
+        Except ECB, all other modes of operation use an “initial
+        vector”, which you can pass in <b>iv</b>.  This must be an
+        array with 16 bytes.  The default is all zeroes.  If you don't
+        pass an initial vector, the security is greatly reduced.
+<p/>
+        The required <b>key</b> argument must be an array of 16, 24 or
+        32 <em>bytes</em> (that is, numbers between 0 and 255).  These
+        are the encryption strengths supported by the AES (128, 192 or
+        256 bits).
+<p class='heading'> Encryption</p>
+<p/>
+        Here's the basic setup to use this object:
+<p/>
+        <div sample="DlCryptAES1"></div>
+<p/>
+        The encryption key must be an array of bytes.  We use
+        <a href='api://String.xml:type=object_method:func=hexToBytes'>String::hexToBytes()</a> to construct one from the hex string
+        representation.  For better security, you can use the MD5 of
+        some password.
+<p/>
+        <blockquote>
+          Also note that we must pass an array of bytes to the
+          encodeBytes function. (there is an <a href='api://DlCryptAES.xml:type=object_method:func=encodeText'>encodeText()</a> method as
+          well but we though it's best to present <a href='api://DlCryptAES.xml:type=object_method:func=encodeBytes'>encodeBytes()</a>
+          first to demonstrate some things).  The size of the array to
+          be encoded must be a multiple of 16 (cypher block length).
+          We transform text to bytes using <a href='api://String.xml:type=object_method:func=toBytes'>String::toBytes()</a>.  The
+          reverse transformation is done with
+          <a href='api://Array.xml:type=object_method:func=bytesToString'>Array::bytesToString()</a>.
+        </blockquote>
+<p/>
+        So as you can see in the above sample, I passed a text
+        containing 32 characters.  It's a 16 byte string that repeats
+        twice.  When you run the sample you will notice that the
+        encrypted data also contains 32 bytes which in fact are one 16
+        byte sequence, repeating twice.  This is the main disadvantage
+        of ECB: <em>an input block will always encode to the same
+        output block</em>.
+<p/>
+        Let's now modify the sample to use the CBC mode:
+<p/>
+        <div sample="DlCryptAES2"></div>
+<p/>
+        Note that now there is no recognizable pattern in the output.
+        There is nothing to tell us that the input was actually a
+        repeated string.  This is a lot better than ECB!
+<p class='heading'> Using an initialization vector</p>
+<p/>
+        If you run the above sample multiple times, you will get the
+        same encrypted output.  This is normal—there is no random
+        factor.
+<p/>
+        All modes except ECB use one additional block called the
+        “initialization vector” (IV).  This helps scramble the
+        encryption even more.  Here is how we can pass one:
+<p/>
+        <div sample="DlCryptAES3"></div>
+<p/>
+        The output is now different from the previous time (where the
+        initial vector was null).  Note that even a minor change in
+        the IV will lead to a drastically different encrypted output.
+        Generating a new vector for each message will therefore
+        produce different output, even for equal messages, which is
+        good because it prevents the same pattern from repeating.
+<p/>
+        If you send such an encrypted message, say from JavaScript to
+        the server, you must be aware that besides the encryption key,
+        the server must know the IV as well in order to decrypt the
+        data.  It's up to you to design the protocol—a simple idea is
+        to concatenate the IV to the encrypted output and have the
+        server take it from there.
+<p/>
+        We provide the <a href='api://DlCryptAES.xml:type=object_method:func=setTimestampIV'>setTimestampIV()</a> method to generate an IV
+        based on the current date/time.  Here is a sample:
+<p/>
+        <div sample="DlCryptAES4"></div>
+<p/>
+        Execute this sample multiple times and note that the output is
+        spectacularly different each time, even though it's the same
+        text and key.  You can retrieve the IV by calling <a href='api://DlCryptAES.xml:type=object_method:func=getIV'>getIV()</a>.
+<p class='heading'> Decryption</p>
+<p/>
+        In order to decrypt AES-encoded data, one needs to know the
+        following:
+<p/>
+        <ul>
+          <li>The operation mode</li>
+          <li>The initialization vector, if mode is not ECB</li>
+          <li>The encryption key</li>
+        </ul>
+<p/>
+        When you design your protocol, you need to make a decision of
+        how to send all this information between browser and server.
+        Of course, in most cases the operation mode will be a constant
+        so you don't need to send it.  You can decide on, say, CTR,
+        and use it on both server and client.  However, both need to
+        know the key and the initialization vector.
+<p class='heading'> Text data encryption</p>
+<p/>
+        Since AES is a block cypher, it operates on blocks of 16 bytes
+        at once.  The <a href='api://DlCryptAES.xml:type=object_method:func=encodeBytes'>encodeBytes()</a> and <a href='api://DlCryptAES.xml:type=object_method:func=decodeBytes'>decodeBytes()</a> methods
+        expect that the input array has a size which is a multiple of
+        16.
+<p/>
+        There are two modes of operation (OFB and CTR) that don't,
+        theoretically, need this restriction, however our
+        implementation still does it.
+<p/>
+        When we encrypt text, we prepend the text length followed by a
+        colon, and add spaces to the resulting text as needed in order
+        to make it have a length which divides by 16.  You need to
+        take this into consideration when decrypting text encoded with
+        <a href='api://DlCryptAES.xml:type=object_method:func=encodeText'>encodeText()</a>.
+<p/>
+        Quick sample:
+<p/>
+        <div sample="DlCryptAES5"></div>
+<p/>
+        In the last few lines we decode as bytes the encrypted data,
+        and print the output, replacing all spaces with a dot.  As you
+        can see, the actual encoding contains the length of the
+        original string and as many trailing spaces as were needed to
+        make it have 48 bytes.
+<p/>
+      </span>
+
+     </div>
+   </div>
+    </div>
+
+
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="decodeBytes:object_method">decodeBytes (<span class='param'>input</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">input</td>
+         <td class="doc"><span name="input">Encrypted input data (array of bytes)</span>
+</td>
+         <td class="type">[<b>〈Array〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Array) 
+           <b><span>Decrypted data (array of bytes)</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="decodeText:object_method">decodeText (<span class='param'>input</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">input</td>
+         <td class="doc"><span name="input">Encrypted input data (array of bytes)</span>
+</td>
+         <td class="type">[<b>〈Array〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: String) 
+           <b><span>Decrypted text</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Decrypts a string.  The expected input is what
+          <a href='api://DlCryptAES.xml:type=object_method:func=encodeText'>encodeText()</a> would output.  After decryption, it will
+          recreate the string by parsing UTF8 (with
+          <a href='api://Array.xml:type=object_method:func=bytesToString'>Array::bytesToString()</a>).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="encodeBytes:object_method">encodeBytes (<span class='param'>input</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">input</td>
+         <td class="doc"><span name="input">Initial (plaintext) data as array of bytes</span>
+</td>
+         <td class="type">[<b>〈Array〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Array) 
+           <b><span>Encrypted data as array of bytes</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="encodeText:object_method">encodeText (<span class='param'>str</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">str</td>
+         <td class="doc"><span name="str">Input text (plaintext)</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Array) 
+           <b><span>Encrypted data as array of bytes</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Encrypts a string.  The text is encoded to UTF8 before
+          encryption via <a href='api://String.xml:type=object_method:func=toBytes'>String::toBytes()</a>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getIV:object_method">getIV ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Array) 
+           <b><span>Initialization vector</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the current initialization vector as array of bytes.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setIV:object_method">setIV (<span class='param'>iv</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">iv</td>
+         <td class="doc"><span name="iv">Initialization vector (array of bytes)</span>
+</td>
+         <td class="type">[<b>〈Array〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Sets the initialization vector to the given value.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setTimestampIV:object_method">setTimestampIV ()
+        </h3>
+     <div class="doc"><span>
+          Creates an initialization vector based on the current
+          timestamp.  This provides enough uniqueness for serious
+          encryption.  You can retrieve it with <a href='api://DlCryptAES.xml:type=object_method:func=getIV'>getIV()</a>.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+<code canrun="true" id="DlCryptAES1" type="js"><![CDATA[
+          // construct encryption key
+          var key = "00112233445566778899aabbccddeeff".hexToBytes();
+          var aes = new DlCryptAES({ key: key });
+
+          // transform text to bytes
+          var text = "foo bar baz boo!foo bar baz boo!";
+          var data = text.toBytes();
+
+          // encrypt bytes
+          var out = aes.encodeBytes(data);
+          print(out.map("hex", 2).join(" "));
+
+          // decrypt bytes
+          var out2 = aes.decodeBytes(out);
+
+          // transform bytes to text
+          var txt = out2.bytesToString();
+          print(txt);
+        ]]></code>
+<code canrun="true" id="DlCryptAES2" type="js"><![CDATA[
+          // construct encryption key
+          var key = "00112233445566778899aabbccddeeff".hexToBytes();
+          var aes = new DlCryptAES({ key: key, mode: "CBC" });
+
+          // transform text to bytes
+          var text = "foo bar baz boo!foo bar baz boo!";
+          var data = text.toBytes();
+
+          // encrypt bytes
+          var out = aes.encodeBytes(data);
+          print(out.map("hex", 2).join(" "));
+
+          // decrypt bytes
+          var out2 = aes.decodeBytes(out);
+
+          // transform bytes to text
+          var txt = out2.bytesToString();
+          print(txt);
+        ]]></code>
+<code canrun="true" id="DlCryptAES3" type="js"><![CDATA[
+          // construct encryption key
+          var key = "00112233445566778899aabbccddeeff".hexToBytes();
+          var aes = new DlCryptAES({ key: key, mode: "CBC" });
+
+          var iv = "000102030405060708090a0b0c0d0e0f".hexToBytes();
+          aes.setIV(iv);
+
+          // transform text to bytes
+          var text = "foo bar baz boo!foo bar baz boo!";
+          var data = text.toBytes();
+
+          // encrypt bytes
+          var out = aes.encodeBytes(data);
+          print(out.map("hex", 2).join(" "));
+
+          // decrypt bytes
+          var out2 = aes.decodeBytes(out);
+
+          // transform bytes to text
+          var txt = out2.bytesToString();
+          print(txt);
+        ]]></code>
+<code canrun="true" id="DlCryptAES4" type="js"><![CDATA[
+          // construct encryption key
+          var key = "00112233445566778899aabbccddeeff".hexToBytes();
+          var aes = new DlCryptAES({ key: key, mode: "CTR" });
+
+          aes.setTimestampIV();
+
+          // transform text to bytes
+          var text = "foo bar baz boo!foo bar baz boo!";
+          var data = text.toBytes();
+
+          // encrypt bytes
+          var out = aes.encodeBytes(data);
+          print(out.map("hex", 2).join(" "));
+
+          // decrypt bytes
+          var out2 = aes.decodeBytes(out);
+
+          // transform bytes to text
+          var txt = out2.bytesToString();
+          print(txt);
+        ]]></code>
+<code canrun="true" id="DlCryptAES5" type="js"><![CDATA[
+          // construct encryption key
+          var key = "00112233445566778899aabbccddeeff".hexToBytes();
+          var aes = new DlCryptAES({ key: key });
+
+          var text = "foo bar baz boo!foo bar baz boo!";
+          var out = aes.encodeText(text);
+          print(out.map("hex", 2).join(" "));
+
+          // decode as text
+          print(aes.decodeText(out));
+
+          // decode as bytes
+          var out2 = aes.decodeBytes(out);
+
+          // transform bytes to text
+          var txt = out2.bytesToString();
+          print(txt.replace(/ /g, '.'));
+        ]]></code>
+
+
+</sample>
+
+
+
+

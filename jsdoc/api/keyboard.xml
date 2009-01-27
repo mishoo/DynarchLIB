@@ -1,0 +1,32 @@
+<api file="keyboard.js">
+  <object name="DlKeyboard">
+    <constructor></constructor>
+    <static-methods>
+      <method hash="d82e0a1451ff2904987d02904b828ff3" name="checkKey">
+        <param name="ev"></param>
+        <param name="k"></param>
+        <doc></doc>
+      </method>
+      <method hash="dcf017e9495e82580702d9a84fca3937" name="parseKey">
+        <param name="str"></param>
+        <doc></doc>
+      </method>
+    </static-methods>
+    <object-methods></object-methods>
+  </object>
+  <object name="DlKeyboard.KEYS_CONTROL">
+    <constructor></constructor>
+    <static-methods></static-methods>
+    <object-methods></object-methods>
+  </object>
+  <object name="DlKeyboard.KEYS_MOVE">
+    <constructor></constructor>
+    <static-methods></static-methods>
+    <object-methods></object-methods>
+  </object>
+  <object name="DlKeyboard.KEYS_MOVE_PREV">
+    <constructor></constructor>
+    <static-methods></static-methods>
+    <object-methods></object-methods>
+  </object>
+</api>

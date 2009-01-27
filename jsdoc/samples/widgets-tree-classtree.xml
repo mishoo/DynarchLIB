@@ -1,0 +1,97 @@
+<sample>
+
+  <title>The DynarchLIB inheritance tree</title>
+
+  <text>
+
+    <p>
+      This is just a sample that displays the DynarchLIB inheritance
+      tree, as setup by calling <b>Function::inherits</b>.
+    </p>
+
+    <div sample="inheritance" />
+
+    <p>
+      Note it is quite slow; it's a pretty big tree and creating large
+      trees is expensive.  We can use deferred instantiation to make
+      it appear a lot faster (with the downside that the tree can't be
+      initially expanded):
+    </p>
+
+    <div sample="inheritance-delayed" />
+
+    <p>
+      It's not complicated, but you have to think recursively.
+    </p>
+
+  </text>
+
+  <code id="inheritance" type="js" canrun="true"><![CDATA[
+var data = Function.getInheritanceGraph();
+var tree = new DlTree({ parent: getDocCanvas() });
+var items = {};
+for (var i in data) {
+    createItem(i);
+}
+
+function createItem(obj) {
+    if (items[obj])
+        return items[obj];
+    var base = data[obj];
+    var parent;
+    if (base) {
+        parent = createItem(base);
+    } else {
+        parent = tree;
+    }
+    return items[obj] = new DlTreeItem({ label: obj, parent: parent });
+};
+  ]]></code>
+
+  <code id="inheritance-delayed" type="js" canrun="true"><![CDATA[
+var data = Function.getInheritanceGraph();
+
+// will map BASE object names to an array of subclasses
+var items = {};
+
+// will contain the root items which need to be created from the start
+var root_items = [];
+
+// this basically reverses the tree: getInheritanceGraph()
+// returns an object which maps object name to base class name,
+// and we need it otherwise
+for (var i in data) {
+    var base = data[i];
+    if (!items[base])
+        items[base] = [];
+    items[base].push(i);
+    if (!data[base])
+        // root item
+        root_items.pushUnique(base);
+}
+
+// this function creates the tree items for the
+// objects named in the array "a", and calls the continuation
+// function passing it the tree.  It's suitable both for creating
+// root items, and for creating the subtrees
+function createItems(a, cont) {
+    var tree = new DlTree({});
+    a.foreach(function(obj) {
+        var item = new DlTreeItem({ parent: tree, label: obj });
+        if (items[obj] && items[obj].length > 0) {
+            // so for subtrees we use the same createItems function
+            // and we bind it to the array of this object's subclasses
+            item.setTree(createItems.$C(items[obj]));
+        }
+    });
+    cont(tree);
+};
+
+// now create the root items and display the tree
+createItems(root_items, function(tree) {
+    getDocCanvas().appendWidget(tree);
+});
+
+  ]]></code>
+
+</sample>

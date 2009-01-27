@@ -1,0 +1,11 @@
+
+      <method name="[% met.name %]"[% ' internal="1"' IF met.internal %] hash="[% met.codehash %]">
+        [% IF met.use_arguments %]
+        <!-- XXX: check for missing parameters!  This method uses the *arguments* array. -->
+        [% END %]
+        [% IF met.params; FOREACH param = met.params %]
+        <param name="[% param %]"></param>
+        [% END; END %]
+        <doc>
+        </doc>
+      </method>

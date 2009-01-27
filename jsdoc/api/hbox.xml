@@ -1,0 +1,72 @@
+<api file="hbox.js" show="1">
+  <object base="DlBox" name="DlHbox">
+    <constructor>
+      <param name="args"></param>
+      <doc>
+        A horizontal box container.  All arguments are passed to
+        〈DlBox〉.
+      </doc>
+    </constructor>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="4615e67f60ad7a51a602d23abf5078f3" name="addFiller">
+        <doc>
+          Adds a cell having maximum width, therefore pushing all
+          content after it to the right.
+        </doc>
+      </method>
+      <method hash="322f8fed0bb1ae425bd576dfd3e6a44d" name="createCellElement">
+        <param default="null" name="pos" optional="1" type="HTMLTableCellElement">Reference cell</param>
+        <return type="HTMLTableCellElement">created cell</return>
+        <doc>
+          Inserts a new cell in the table.  Usually it will be used to
+          hold a new widget, but it can be a separator, spacer or
+          filler cell as well.  If <b>pos</b> (reference cell) is
+          specified, the new cell is inserted <b>before</b> pos.
+        </doc>
+      </method>
+      <method hash="504480f0d9d4f7ce2d35822f3550daf8" name="setAlign">
+        <param default="null" name="left" optional="1" type="String"></param>
+        <param default="null" name="right" optional="1" type="String"></param>
+        <doc>
+          Sets the alignment of the box relative to the parent
+          container.  You can pass 2 kinds of values.  You can omit
+          <b>right</b> and pass "left", "center" or "right" for the
+          first argument (<b>left</b>) — the table will be aligned
+          accordingly.
+
+          Or you can pass values suitable for the margin-left or
+          margin-right CSS properties, like this:
+
+          <js>
+            // the box will be 15 pixels far from
+            // the left edge of the parent
+            box.setAlign("15px")
+          </js>
+        </doc>
+      </method>
+      <method hash="cf646b2f6a347d12aa7788570a916ca6" name="setEqualWidths">
+        <param default="null" name="d" optional="1" type="Number"></param>
+        <doc>
+          Sometimes useful when you only have buttons in the box, this
+          method will set all child widgets to have the same width.
+          This is done in 2 steps; first we find out the maximum
+          width, then we set all widgets to that width.
+
+          If you pass <b>d</b>, it will add that number of pixels to
+          the maximum width.
+        </doc>
+      </method>
+      <method hash="7cd0baaa1f588bf2d857ba28e7b97a29" internal="1" name="_createElement">
+        <doc></doc>
+      </method>
+      <method hash="7c656d7d626a9d49f76c3d08f0fc2fa0" internal="1" name="_removeWidgetElement">
+        <param name="w"></param>
+        <doc>
+          Overrides 〈DlContainer::_removeWidgetElement()〉 in order to
+          remove the parent cells for each widget.
+        </doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

@@ -1,0 +1,259 @@
+<api file="gridmodel.js">
+  <object base="DlEventProxy" name="DlGridCellModel">
+    <constructor>
+      <param default="{}" name="style"></param>
+      <param default="null" name="value"></param>
+    </constructor>
+    <events>
+      <event name="onChange">
+        <doc></doc>
+      </event>
+    </events>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="f10bc527be37ca844d667fc0363557e1" name="compareTo">
+        <param name="cell"></param>
+        <doc></doc>
+      </method>
+      <method hash="8f031b7a0c0e6987dc4e86fc29177563" name="getContent">
+        <doc></doc>
+      </method>
+      <method hash="48d446b49ff4dbf1f6dddd1dda999269" name="getId">
+        <doc></doc>
+      </method>
+      <method hash="bb944159c61d6b36e134d15c686d4e00" name="getIndex">
+        <doc></doc>
+      </method>
+      <method hash="1a3d0b42ec245606ba09f9678e913eff" name="getStyle">
+        <param name="key"></param>
+        <param name="def"></param>
+        <doc></doc>
+      </method>
+      <method hash="8fd0d26f6b2cf4f69776fae50ff57bd4" name="setStyle">
+        <param name="key"></param>
+        <param name="val"></param>
+        <doc></doc>
+      </method>
+      <method hash="97ecd7fb4e3c9b2e6300e90d97e686a1" name="setValue">
+        <param name="val"></param>
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+  <object base="DlEventProxy" name="DlGridColModel">
+    <constructor>
+      <param default=" DlGridCellModel" name="cellType"></param>
+      <param default="false" name="fill"></param>
+      <param default="null" name="iconClass"></param>
+      <param default="null" name="id"></param>
+      <param default="null" name="label"></param>
+      <param default="false" name="resizable"></param>
+      <param default="true" name="scrollable"></param>
+      <param default="true" name="sortable"></param>
+      <param default="{}" name="style"></param>
+      <param default="null" name="tooltip"></param>
+      <param default="null" name="width"></param>
+    </constructor>
+    <events>
+      <event name="onChange">
+        <doc></doc>
+      </event>
+    </events>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="c70640d1b600c01bdfefe47fec1827b3" name="compareRows">
+        <param name="a"></param>
+        <param name="b"></param>
+        <doc></doc>
+      </method>
+      <method hash="eb14171588340998c3ca0fd1dc8a199c" name="createCell">
+        <param name="args"></param>
+        <doc></doc>
+      </method>
+      <method hash="91b0497d47c639b60e0ed28647e08eb4" name="getCellType">
+        <doc></doc>
+      </method>
+      <method hash="480d9492be0de41de13b7bbecdccb8f5" name="getIconClass">
+        <doc></doc>
+      </method>
+      <method hash="81a79d7bb7dfd6a1273c6c48f1c7318d" name="getId">
+        <doc></doc>
+      </method>
+      <method hash="bb944159c61d6b36e134d15c686d4e00" name="getIndex">
+        <doc></doc>
+      </method>
+      <method hash="a1a3e1fd223b9ed8a35f44ec34859941" name="getLabel">
+        <doc></doc>
+      </method>
+      <method hash="1a3d0b42ec245606ba09f9678e913eff" name="getStyle">
+        <param name="key"></param>
+        <param name="def"></param>
+        <doc></doc>
+      </method>
+      <method hash="3325c95d03cfbf8d9c13883bbe598a2b" name="setIconClass">
+        <param name="iconClass"></param>
+        <doc></doc>
+      </method>
+      <method hash="6136a0527ae2338f2a0ccfaf0630e0e4" name="setLabel">
+        <param name="label"></param>
+        <doc></doc>
+      </method>
+      <method hash="8fd0d26f6b2cf4f69776fae50ff57bd4" name="setStyle">
+        <param name="key"></param>
+        <param name="val"></param>
+        <doc></doc>
+      </method>
+      <method hash="d149919aa0ec087c2664802860b8dfa7" name="sort">
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+  <object base="DlEventProxy" name="DlGridRowModel">
+    <constructor>
+      <param default="null" name="cells"></param>
+      <param default="null" name="id"></param>
+      <param default="null" name="model"></param>
+    <param default="null" name="data"></param><param default="null" name="tooltip"></param></constructor>
+    <events>
+      <event name="onChange">
+        <doc></doc>
+      </event>
+    </events>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="882f5bea25a7d38c07a752913845e753" name="foreachCell">
+        <param name="f"></param>
+        <param name="obj"></param>
+        <doc></doc>
+      </method>
+      <method hash="ea2cdea05e9305a983067abc9b033f1f" name="getCellByIndex">
+        <param name="index"></param>
+        <doc></doc>
+      </method>
+      <method hash="cead6ede3d0294f632286ffa37d04778" name="getCells">
+        <doc></doc>
+      </method>
+      <method hash="81a79d7bb7dfd6a1273c6c48f1c7318d" name="getId">
+        <doc></doc>
+      </method>
+      <method hash="bb944159c61d6b36e134d15c686d4e00" name="getIndex">
+        <doc></doc>
+      </method>
+      <method hash="ab08c4bb4782d06744c5c12278d73ef0" internal="1" name="_init">
+        <doc></doc>
+      </method>
+      <method hash="e5097df6bc52c64ceaaf7dedab8cd1c7" internal="1" name="_onCellChange">
+        <param name="cell"></param>
+        <param name="what"></param>
+        <param name="newval"></param>
+        <param name="oldval"></param>
+        <doc></doc>
+      </method>
+    <method hash="5e35321b4fe0bf84b0fed697dab0e8e5" name="reset"><param name="r"></param><doc></doc></method></object-methods>
+  </object>
+  <object base="DlEventProxy" name="DlGridModel">
+    <constructor>
+      <param default="null" name="cols"></param>
+      <param default="[]" name="rows"></param>
+    </constructor>
+    <events>
+      <event name="onInsertRow">
+        <doc></doc>
+      </event>
+      <event name="onDeleteRow">
+        <doc></doc>
+      </event>
+      <event name="onInsertCol">
+        <doc></doc>
+      </event>
+      <event name="onInsertCol">
+        <doc></doc>
+      </event>
+      <event name="onMoveRow">
+        <doc></doc>
+      </event>
+      <event name="onMoveCol">
+        <doc></doc>
+      </event>
+      <event name="onRowChange">
+        <doc></doc>
+      </event>
+      <event name="onColChange">
+        <doc></doc>
+      </event>
+      <event name="onSort">
+        <doc></doc>
+      </event>
+    </events>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="a9533bb60066d9bbd5bd02be0c283ca1" name="deleteRowById">
+        <param name="id"></param>
+        <doc></doc>
+      </method>
+      <method hash="afcdb01661cbfa1f7f3e9faa1a169392" name="deleteRowByIndex">
+        <param name="index"></param>
+        <doc></doc>
+      </method>
+      <method hash="71b3b335bc81c8b4eb9db2531ad5f9d6" name="foreachCol" varargs="1">
+        <!--XXX: uses *arguments*, check for missing params-->
+        <doc></doc>
+      </method>
+      <method hash="f3b0f77c10ec8bcf27bc70dbf348a197" name="foreachRow" varargs="1">
+        <!--XXX: uses *arguments*, check for missing params-->
+        <doc></doc>
+      </method>
+      <method hash="16d26348c910670b26e68cae00196cc9" name="getColById">
+        <param name="id"></param>
+        <doc></doc>
+      </method>
+      <method hash="ba58e78f997eb7a333cc8e7385931881" name="getColByIndex">
+        <param name="i"></param>
+        <doc></doc>
+      </method>
+      <method hash="b47a6aa5cad951cc9b8b5fd63547faea" name="getRowById">
+        <param name="id"></param>
+        <doc></doc>
+      </method>
+      <method hash="07e8ac85bc51ac4fb6829c1c0c3e1bfa" name="getRowByIndex">
+        <param name="i"></param>
+        <doc></doc>
+      </method>
+      <method hash="c69f422d84f89a234b7386e55d3e9f35" name="insertRow">
+        <param name="row"></param>
+        <param name="pos"></param>
+        <doc></doc>
+      </method>
+      <method hash="a323b35585b6e8b0edb7fce209cf9d09" name="setValues">
+        <param name="rows"></param>
+        <doc></doc>
+      </method>
+      <method hash="c4689ce7eb7bdaffbe23f9ccbfa3f97d" name="sort">
+        <param name="col"></param>
+        <doc></doc>
+      </method>
+      <method hash="1a1053f05ebaf0c86cf2e9ee6b51527c" internal="1" name="_getInsertPos">
+        <param name="row"></param>
+        <doc></doc>
+      </method>
+      <method hash="cf4a8ee21303a7f3f502a6b09ae06ab3" internal="1" name="_init">
+        <doc></doc>
+      </method>
+      <method hash="9783007adfc3496403becafd96eacc16" internal="1" name="_onColChange">
+        <param name="col"></param>
+        <param name="what"></param>
+        <param name="newval"></param>
+        <param name="oldval"></param>
+        <doc></doc>
+      </method>
+      <method hash="4d02c2666c01ad11a4fd8070cc463a1e" internal="1" name="_onRowChange">
+        <param name="row"></param>
+        <param name="cell"></param>
+        <param name="what"></param>
+        <param name="newval"></param>
+        <param name="oldval"></param>
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

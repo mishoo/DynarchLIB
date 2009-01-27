@@ -1,0 +1,456 @@
+<sample>
+
+  <title>Creating widgets</title>
+
+  <text>
+
+    <p>
+      So you're looking through these demos and API docs, and you
+      learn with great disappointment that DynarchLIB does not (yet?)
+      provide a time picker widget.  Luckily, it's not too hard to
+      create one.  This sample will walk you step by step through the
+      process of making your own time picker a good citizen for
+      DynarchLIB, following our standard coding practices.
+    </p>
+
+    <p>
+      You need to first decide what widget to inherit from.  Usually
+      you will chose <b>DlWidget</b> as the base class, but more often
+      than never you'll find that by inheriting existing widgets you
+      can get rid of writing half the code you need.  For example if
+      you want to create a customized button widget, in order to
+      allow, say, rounded corners and background images, you will want
+      to inherit <b>DlButton</b> and override the
+      <em>_createElement()</em> function to create the additional DOM
+      that you need.
+    </p>
+
+    <p>
+      In this sample we will create a simple time entry widget that
+      allows you to enter hours, minutes, seconds.  We inherit from
+      <b>DlContainer</b> because each time part (hours, minutes,
+      seconds) will actually be represented through an internal
+      widget.  In this sample you will learn how to:
+    </p>
+
+    <ul>
+      <li>
+        Create your own widget.
+      </li>
+      <li>
+        Declare events.
+      </li>
+      <li>
+        Handle keyboard for focusable widgets.
+      </li>
+      <li>
+        Use CSS to customize the look of your widget.
+      </li>
+    </ul>
+
+    <p>
+      The widget we create is fairly useful, but keep in mind it's
+      only a sample—there are a lot of other features that we could
+      add.
+    </p>
+
+    <h2>First off, let's test it!</h2>
+
+    <p>
+      Here's how we are planning to use this widget.  Run the
+      following listing, then click on a time part to focus it.  Then
+      you can increment/decrement it's value using up/down arrow keys,
+      or you can directly enter a value by typing it.  The widget will
+      automatically restrict you to type allowable values.  Using the
+      left/right arrows you will move the focus to the previous/next
+      time part.
+    </p>
+
+    <p class="dimnote">
+      Note that this listing has to include all the widget code below
+      in order to be functional, since DlTimeEntry is not a part of
+      DynarchLIB.
+    </p>
+
+    <div sample="test-timewidget1" />
+
+    <p>
+      Let's include another test where we pass an initial time.  We
+      also have a checkbox to enable/disable the seconds field.
+    </p>
+
+    <div sample="test-timewidget2" />
+
+    <h2>The code</h2>
+
+    <p>
+      The code is split in two parts.  First off we define the main
+      widget (<b>DlTimeEntry</b>, which displays all three
+      parts—hours, minutes, seconds) and then an utility widget that
+      handles one time part.  We advise you to read <a
+      href="sample://basic-objects.xml">coding style</a> if you
+      haven't already, in order to properly understand this code.
+    </p>
+
+    <h3>Part one: <b>DlTimeEntry</b></h3>
+
+    <div sample="timeentry" />
+
+    <h3>Part two: <b>DlTimeEntryPart</b></h3>
+
+    <div sample="timeentrypart" />
+
+    <h3>CSS</h3>
+
+    <p>
+      To make this widget look as it does, we included the following
+      CSS in our documentation style:
+    </p>
+
+    <div sample="timewidget-css" />
+
+    <p>
+      Note that widgets mostly gain their class names automatically—we
+      did not need to specify them in the code.  For example, a
+      focused time part gets the class name “DlTimeEntryPart-focus”.
+      It's created starting from the object class name + the “-focus”
+      suffix.
+    </p>
+
+  </text>
+
+  <code sample="timewidget" id="timeentry" type="js"><![CDATA[
+    (function(){
+            // remember our good policy to declare each widget in its
+            // own closure, so we don't accidentally create global
+            // variables.
+
+            var BASE = DlTimeEntry.inherits(DlContainer);
+            function DlTimeEntry(args) {
+                    if (args) {
+                            D.setDefaults(this, args);
+                            // declare that this widget can be focused
+                            // and can receive keyboard events
+                            this._focusable = true;
+                            BASE.constructor.call(this, args);
+                    }
+            };
+
+            eval(Dynarch.EXPORT("DlTimeEntry"));
+
+            // remember that after calling EXPORT this way, we get 2
+            // local variables:
+            //
+            //   D - refers to the object contructor; it's now simply
+            //       an alias to DlTimeEntry
+            //
+            //   P - refers to the object prototype; it's thus
+            //       an alias to DlTimeEntry.prototype
+
+            D.DEFAULT_ARGS = {
+                    _initTime    : [ "initTime"    , null ], // initial time
+                    _showSeconds : [ "showSeconds" , true ]  // show seconds?
+            };
+
+            // we chose the easy and fast way -- use a static HTML
+            // skeleton to build our widget.
+            var HTML = ( "<table cellspacing='0' cellpadding='0'><tr>" +
+                         "<td class='DlTimeEntry-hours'></td>" +
+                         "<td class='DlTimeEntry-sep'>:</td>" +
+                         "<td class='DlTimeEntry-minutes'></td>" +
+                         "<td class='DlTimeEntry-sep'>:</td>" +
+                         "<td class='DlTimeEntry-seconds'></td>" +
+                         "</tr></table>" );
+
+            // This is a PRIVATE function; it's not necessary to
+            // export it--in fact, we're better off not exporting it.
+            // We don't want external code to care about our DOM.
+            function _getCells() {
+                    return this.getElement().getElementsByTagName("td");
+            };
+
+            // initDOM is a method that's called by the framework and
+            // does a lot of stuff; after the BASE class' method
+            // executed we can do our own modifications to the DOM.
+            P.initDOM = function() {
+                    // first we need to call BASE class in order to create the widget's element
+                    BASE.initDOM.call(this);
+
+                    // insert our HTML now
+                    this.setContent(HTML);
+
+                    // now we are creating internal widgets (DlTimeEntryPart) that
+                    // will handle each part. this object will be defined in the next code listing.
+                    var cells = _getCells.call(this);
+
+                    this.__hours    = new DlTimeEntryPart({ parent     : this,
+                                                            appendArgs : cells[0],
+                                                            min        : 0,
+                                                            max        : 23 });
+
+                    this.__minutes  = new DlTimeEntryPart({ parent     : this,
+                                                            appendArgs : cells[2],
+                                                            min        : 0,
+                                                            max        : 59 });
+
+                    this.__seconds  = new DlTimeEntryPart({ parent     : this,
+                                                            appendArgs : cells[4],
+                                                            min        : 0,
+                                                            max        : 59 });
+
+                    // note that by using appendArgs we can explicitly state
+                    // where to add the new widget into its parent DOM.
+
+                    // initialize all parts
+                    this.displayTime(this._initTime);
+
+                    this.showSeconds(this._showSeconds); // toggle the visibility of the seconds cell
+            };
+
+            // The keyboard handler goes here.  Basically we only care
+            // if the pressed key is one of LEFT or RIGHT arrows, in
+            // which case we focus the previous / next time part.  If
+            // none of these keys is pressed, we hand it over to the
+            // base class.
+            P._handle_focusKeys = function(ev) {
+                    var f = ev.focusedWidget;
+                    switch (ev.keyCode) {
+
+                        case DlKeyboard.ARROW_LEFT:
+                            // focus the next part in parent...
+                            if (f === this.__seconds)
+                                    this.__minutes.focus();
+                            if (f === this.__minutes)
+                                    this.__hours.focus();
+                            break;
+
+                        case DlKeyboard.ARROW_RIGHT:
+                            // focus the previous part in parent...
+                            if (f === this.__hours)
+                                    this.__minutes.focus();
+                            if (f === this.__minutes && this._showSeconds)
+                                    // note we needed to check if the "seconds" field is visible
+                                    this.__seconds.focus();
+                            break;
+
+                        default:
+                            // call base class for good behavior.
+                            return BASE._handle_focusKeys.call(this, ev);
+
+                    }
+            };
+
+            // set the visibility of the seconds field
+            P.showSeconds = function(visible) {
+                    if (arguments.length == 0)
+                            visible = this._showSeconds;
+                    else
+                            this._showSeconds = visible;
+                    if (!visible) {
+                            // we need to check here if the seconds
+                            // field has focus.  If this is the case,
+                            // we move focus to minutes field--since
+                            // seconds is about to be hidden.
+                            if (DlEvent.focusedWidget() === this.__seconds)
+                                    this.__minutes.focus();
+                    }
+                    var cells = _getCells.call(this);
+                    visible = visible ? "" : "none";
+                    cells[3].style.display = visible; // hide the separator too
+                    cells[4].style.display = visible;
+            };
+
+            // this sets the time in the widget
+            P.displayTime = function(time) {
+                    if (time == null) {
+                            // if null, use the current time
+                            var now = new Date();
+                            time = { h: now.getHours(),
+                                     m: now.getMinutes(),
+                                     s: now.getSeconds()
+                                   };
+                    } else if (typeof time == "string") {
+                            // if a string, determine the values from a format like HH:MM:SS
+                            var a = time.split(/:/);
+                            time = { h: parseInt(a[0], 10),
+                                     m: parseInt(a[1], 10),
+                                     s: parseInt(a[2], 10)
+                                   };
+                    }
+                    this.__hours.setValue(time.h);
+                    this.__minutes.setValue(time.m);
+                    if (time.s != null)
+                            this.__seconds.setValue(time.s);
+            };
+
+            // this returns the time as an object
+            P.getTime = function() {
+                    var time = { h: this.__hours.getValue(),
+                                 m: this.__minutes.getValue() };
+                    if (this._showSeconds)
+                            time.s = this.__seconds.getValue();
+                    return time;
+            };
+
+            // this returns the time as JSON
+            P.save = function() {
+                    return DlJSON.encode(this.getTime());
+            };
+
+            // set value from JSON
+            P.load = function(json) {
+                    this.displayTime(DlJSON.decode(json));
+            };
+
+            // returns the value as HH:MM:SS
+            P.getValue = function() {
+                    var time = this.getTime(), val = time.h;
+                    val += ":";
+                    val += time.m;
+                    val += this._showSeconds ? time.s : "00";
+                    return val;
+            };
+
+    })();
+  ]]></code>
+
+  <code sample="timewidget" id="timeentrypart" type="js"><![CDATA[
+    (function(){
+            var BASE = DlTimeEntryPart.inherits(DlWidget);
+            function DlTimeEntryPart(args) {
+                    if (args) {
+                            D.setDefaults(this, args);
+                            // this one can receive keyboard input as well
+                            this._focusable = true;
+                            BASE.constructor.call(this, args);
+                    }
+            };
+
+            eval(Dynarch.EXPORT("DlTimeEntryPart"));
+
+            D.DEFAULT_ARGS = {
+                    _min : [ "min", 0 ], // minimum value of this field
+                    _max : [ "max", 59 ] // maximum value of this field
+            };
+
+            // Sets the value of the current field.  The value will be
+            // checked and limited against min / max values.
+            P.setValue = function(val) {
+                    val = parseInt(val); // make sure it's a Number
+                    val = Math.limit(val, this._min, this._max);
+                    this.__value = val;
+                    this.getElement().innerHTML = val.zeroPad(2);
+            };
+
+            P.getValue = function(val) {
+                    return this.__value;
+            };
+
+            // this function is called by the framework after all DOM
+            // is created and should define and/or set event handlers
+            P._setListeners = function() {
+                    BASE._setListeners.call(this);
+                    // focus this widget at mousedown
+                    this.addEventListener("onMouseDown", function() {
+                            this.focus();
+                    });
+                    this.addEventListener("onFocus", function() {
+                            this.__keys = "";
+                    });
+            };
+
+            // the keyboard handling code goes into this method.  It
+            // basically increases/decreases the value for UP/DOWN
+            // arrows, or edits the field if 0..9 keys were pressed;
+            // otherwise, it delegates to base class.
+            P._handle_focusKeys = function(ev) {
+                    switch (ev.keyCode) {
+
+                        case DlKeyboard.ARROW_DOWN:
+                            this.setValue(this.__value - 1);
+                            break;
+
+                        case DlKeyboard.ARROW_UP:
+                            this.setValue(this.__value + 1);
+                            break;
+
+                        default:
+                            if (ev.keyStr >= "0" && ev.keyStr <= "9") {
+                                    this.__keys += ev.keyStr;
+                                    var val = this.__keys;
+                                    if (this.__keys.length == 2)
+                                            this.__keys = ""; // reset
+                                    this.setValue(val);
+                            } else {
+                                    return BASE._handle_focusKeys.call(this, ev);
+                            }
+
+                    }
+            };
+
+    })();
+  ]]></code>
+
+  <code id="test-timewidget1" type="js" canrun="true"><![CDATA[
+    //@include timewidget
+    var box = new DlVbox({ parent        : getDocCanvas(),
+                           className     : "DlWidget-3D",
+                           borderSpacing : 10 });
+
+    // we add the time entry in a temporary box, because we don't want
+    // it to expand its width to fill its parent (being a <div>)
+    var tmp = new DlHbox({ parent: box, align: "center" });
+    var timeEntry = new DlTimeEntry({ parent: tmp });
+
+    box.addSeparator();
+
+    var btn = new DlButton({ parent: box, label: "Get JSON" });
+    btn.addEventListener("onClick", function() {
+            print(timeEntry.save());
+    });
+  ]]></code>
+
+  <code id="test-timewidget2" type="js" canrun="true"><![CDATA[
+    //@include timewidget
+    var box = new DlVbox({ parent        : getDocCanvas(),
+                           className     : "DlWidget-3D",
+                           borderSpacing : 10 });
+
+    var tmp = new DlHbox({ parent: box, align: "center" });
+    var timeEntry = new DlTimeEntry({ parent      : tmp,
+                                      initTime    : "11:22:33",
+                                      showSeconds : false
+                                    });
+
+    box.addSeparator();
+
+    var btn = new DlButton({ parent: box, label: "Get JSON" });
+    btn.addEventListener("onClick", function() {
+            print(timeEntry.save());
+    });
+
+    btn = new DlCheckbox({ parent: box, checked: false, label: "Show seconds" });
+    btn.addEventListener("onChange", function() {
+            timeEntry.showSeconds(this.checked());
+    });
+  ]]></code>
+
+  <code id="timewidget-css" type="css"><![CDATA[
+    .DlTimeEntry {
+      border: 1px solid;
+      border-color: #98c #659 #659 #98c;
+    }
+    .DlTimeEntry table {
+      border: 1px solid #fef;
+      background-color: #e8d8ff;
+    }
+    .DlTimeEntry-sep { padding: 0 1px; }
+    .DlTimeEntryPart { padding: 2px 3px; }
+    .DlTimeEntryPart-focus {
+      padding: 1px 2px;
+      border: 1px dotted black;
+      background-color: #fff;
+    }
+  ]]></code>
+
+</sample>

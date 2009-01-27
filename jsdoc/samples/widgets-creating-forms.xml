@@ -1,0 +1,96 @@
+<sample>
+
+  <title>Creating forms</title>
+
+  <text>
+
+    <p>
+      First off, by “form” here we don't mean the standard HTML
+      &lt;form&gt; tag.  This tag is not quite suitable for AJAX
+      applications—it's normally required only for uploading files,
+      since browser security limitations will not allow us to submit
+      files via, say, XMLHttpRequest.
+    </p>
+
+    <p>
+      In order to create forms, you can use a 〈DlFieldGrid〉 container
+      to layout widgets.  Most forms will have multiple rows of
+      widgets, each having a label (usually on the left) and the
+      widget itself, which can be an entry, a button, etc.  A simple
+      example follows.
+    </p>
+
+    <div sample="forms1" />
+
+    <p>
+      So a 〈DlFieldGrid〉 is a pretty simple table that groups widgets
+      and labels.  By default, widgets will be 〈DlEntry〉-s (in which
+      case, arguments passed will be forwarded to the 〈DlEntry〉
+      constructor), but you can overwrite that by creating the widget
+      yourself and passing a reference to it.  Example:
+    </p>
+
+    <div sample="forms2" />
+
+    <h2>Field values</h2>
+
+    <p>
+      A DlFieldGrid provides an easy way to retrieve field values.  It
+      only works for fields that provide a getValue() functions, and
+      you also must pass a “name” argument to your fields.
+    </p>
+
+    <div sample="forms3" />
+
+  </text>
+
+  <code id="forms1" type="js" canrun="true"><![CDATA[
+    var dlg = new DlDialog({ title: "Form example", quitBtn: "destroy" });
+    var fs = new DlFieldGrid({ parent: dlg });
+    fs.addField({ label: "User ID:", value: "root", disabled: true });
+    fs.addField({ label: "First name:" });
+    fs.addField({ label: "Last name:" });
+    fs.addSeparator();
+    fs.addField({ label: "Age:" });
+    dlg.centerOnParent();
+    dlg.show();
+  ]]></code>
+
+  <code id="forms2" type="js" canrun="true"><![CDATA[
+    var dlg = new DlDialog({ title: "Form example", quitBtn: "destroy" });
+    var fs = new DlFieldGrid({ parent: dlg });
+    fs.addField({ label: "User ID:", value: "root", disabled: true });
+    fs.addField({ widget: new DlCheckbox({ label: "Is administrator", checked: true }) });
+    fs.addField({ label: "First name:" });
+    fs.addField({ label: "Last name:" });
+    fs.addSeparator();
+    var calBtn = new DlButtonCalendar({});
+    fs.addField({ label: "Birthday:", widget: calBtn });
+    dlg.centerOnParent();
+    dlg.show();
+  ]]></code>
+
+  <code id="forms3" type="js" canrun="true"><![CDATA[
+    var dlg = new DlDialog({ title: "Form example", quitBtn: "destroy" });
+    var vbox = new DlVbox({ parent: dlg, borderSpacing: 5 });
+    var fs = new DlFieldGrid({ parent: vbox });
+    fs.addField({ name: "user_id", label: "User ID:", value: "root", disabled: true });
+    fs.addField({ name: "is_admin",
+                  widget: new DlCheckbox({ label: "Is administrator", checked: true }) });
+    fs.addField({ name: "first_name", label: "First name:" });
+    fs.addField({ name: "last_name", label: "Last name:" });
+    fs.addSeparator();
+    var calBtn = new DlButtonCalendar({});
+    fs.addField({ name: "birthday", label: "Birthday:", widget: calBtn });
+    vbox.addSeparator();
+    var btn = new DlButton({ parent: vbox, label: "Show values" });
+    btn.addEventListener("onClick", function() {
+            var val = fs.getValue();
+            val = DlJSON.encode(val);
+            alert(val);
+    });
+    dlg.centerOnParent();
+    dlg.show();
+  ]]></code>
+
+</sample>

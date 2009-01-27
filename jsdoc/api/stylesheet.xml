@@ -1,0 +1,139 @@
+<api file="stylesheet.js" show="1">
+  <object base="DlEventProxy" name="DlStyleSheet">
+
+    <constructor>
+      Object to create and manipulate an inline stylesheet.  You can
+      use this object to dynamically insert random CSS rules that
+      apply to all document.
+
+      For example, if I wanted to <em>dynamically</em> decide that all
+      DIV-s with class “foo-style” should have red text, we can do the
+      following (see the text below before you execute the sample):
+
+      <js canrun="1">
+        var style = new DlStyleSheet();
+        style.insertRule(".foo-style", { color: "red", padding: "1em" });
+        print("Now close the dialog and watch the Foo Text");
+      </js>
+
+      <div class="foo-style">
+        Some <b>Foo Text</b> Here.
+      </div>
+
+      Note that these are global styles.  The above defined style will
+      apply, from now on, to all elements in the document that have
+      the "foo-style" class name.
+
+      If you save the value returned by 〈insertRule()〉, you can
+      〈deleteRule()|remove〉 the rule or 〈modifyRule()|modify〉 it
+      later.
+    </constructor>
+
+    <static-methods></static-methods>
+
+    <object-methods>
+
+      <method hash="a06585d096254703907e0ae43bbd1bdb" name="deleteRule">
+        <param name="rule">CSS rule to remove</param>
+        <doc>
+          If you want to completely remove a certain rule, call this
+          function and pass it the value returned by 〈insertRule()〉.
+        </doc>
+      </method>
+
+      <method hash="32a232ebbf7c354f868e5769f7eb30b3" name="disabled">
+        <param default="null" name="dis" optional="1" type="boolean">Disable this style?</param>
+        <doc>
+          Disable or enable this stylesheet, if <b>dis</b> is passed.
+          If <b>dis</b> is null, simply return <b>true</b> if the
+          stylesheet is currently disabled, or false otherwise.
+        </doc>
+      </method>
+
+      <method hash="c5bbc0c92cdc2f52404c5e1ee655c040" name="getRules">
+        <doc>
+          Returns an array with all rules in this stylesheet.  Note
+          that these are actually objects of type <a href="http://www.w3.org/TR/DOM-Level-2-Style/css.html#CSS-CSSStyleRule" target="_blank">CSSStyleRule</a> (as defined by W3C DOM CSS
+          specification), except for IE where they are proprietary.
+
+          You shouldn't find much use for this method.
+        </doc>
+      </method>
+
+      <method hash="a2d056d56396182ea1c1c59cc3d457c8" name="insertRule">
+        <param name="sel" type="String">CSS Selector</param>
+        <param name="style" type="String|Hash">CSS rule definition</param>
+        <param default="null" name="index" optional="1" type="Number">position where to insert this rule in the current stylesheet</param>
+        <return>CSS rule (index or object! see below)</return>
+        <doc>
+          If <b>index</b> is null (default) the rule will be appended
+          (thus, at the end).
+
+          This function inserts a new rule into the current
+          stylesheet.  The selector is a standard CSS selector, i.e.:
+
+          <ul>
+            <li> .someClassName </li>
+            <li> h1 </li>
+            <li> #someID </li>
+            <li> .someClassName, .otherClassName </li>
+          </ul>
+
+          etc.  Any standard CSS selectors should be supported.  Even
+          in IE.
+
+          The <b>style</b> is either a string specifying the CSS text,
+          or an object (which serves the same purpose):
+
+          <ul>
+            <li> "color: red"</li>
+            <li> { color: "red" }</li>
+            <li> "color red; background-color: yellow" </li>
+            <li> { color: "red", "background-color" : "yellow" } </li>
+          </ul>
+
+          The return value is either an object or an index, depending
+          on the browser and the selector form.  IE does not support
+          multiple selectors (separated by commas) so we had to work
+          around this, but in this case we don't return a CSS rule
+          object but an internal ID.
+
+          Either way, you should not worry about the return value—just
+          save it if you intend to call later 〈deleteRule()〉 or
+          〈modifyRule()〉.
+        </doc>
+      </method>
+
+      <method hash="cb94160971ff9bc5542eaa5a16039388" name="modifyRule">
+        <param name="rule">CSS rule as returned by 〈insertRule()〉</param>
+        <param name="changes" type="Hash">What to change?</param>
+        <doc>
+          Modify a rule previously inserted with 〈insertRule()〉.
+          <b>rule</b> is whatever was returned by 〈insertRule()〉 and
+          <b>changes</b> is a hash, i.e.:
+
+          <js>
+            style.modifyRule(rule, { "background-color" : "red",
+                                     "color"            : "white" });
+          </js>
+        </doc>
+      </method>
+
+      <method hash="46da4630bef8ac0f9fcf6b23586ee59c" name="refresh">
+        <doc>
+          In rare situations (that is, never) you will want to try
+          this method to refresh the page after you changed the
+          stylesheet.  It does <em>not</em> reload the page, it just
+          forces a style refresh by calling
+          〈disabled()|disabled(false)〉 and then disabled(true). (an
+          old hack that used to be needed for Gecko).
+        </doc>
+      </method>
+
+      <method hash="bd203fd4e6bf2db71a4ca797db2ac456" internal="1" name="_init">
+        <doc></doc>
+      </method>
+
+    </object-methods>
+  </object>
+</api>

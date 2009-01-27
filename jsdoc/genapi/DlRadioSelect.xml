@@ -1,0 +1,369 @@
+<sample>
+
+  <title>DlRadioSelect</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlRadioSelect</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlButtonMenu〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈radioselect.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈buttonmenu.js, radiobutton.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">connected</td>
+         <td class="doc"><span default="true" name="connected">Changes the <a href='api://DlButtonMenu.xml'>DlButtonMenu</a> default</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">true</td>
+       </tr>
+       <tr>
+         <td class="name">options</td>
+         <td class="doc"><span default="[]" name="options">Array of hashes (one for each option)</span>
+</td>
+         <td class="type">[<b>〈Array〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">[]</td>
+       </tr>
+       <tr>
+         <td class="name">value</td>
+         <td class="doc"><span default="null" name="value">Current value of the select (must match the value of some option)</span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+        This is a replacement for the browser's &lt;select&gt;
+        element.  Pass in an array of options.  Each option looks like
+        this:
+<p/>
+        <div sample="DlRadioSelect1"></div>
+<p/>
+        If pass a <b>value</b> argument in constructor, it must match
+        the value given to some option.  Ideally these values are of
+        some primitive type (String, Number), but you can pass
+        anything you want.
+<p/>
+        Example of how to construct a font drop-down:
+<p/>
+        <div sample="DlRadioSelect2"></div>
+      </span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="events">
+      <h2>Events</h2>
+   <div class="method">
+        <h3 id="onChange:object_event">onChange (<span class='param'>old_val</span>, <span class='param'>new_val</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">old_val</td>
+         <td class="doc"><span name="old_val">Previous value</span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">new_val</td>
+         <td class="doc"><span name="new_val">New (current) value</span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Triggered when the selection has changed.  You'll get the
+          old value and new value as arguments.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="addOption:object_method">addOption (<span class='param'>opt</span>, <span class='param'>index</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">opt</td>
+         <td class="doc"><span name="opt">New option as described in constructor</span>
+</td>
+         <td class="type">[<b>〈Hash〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">index</td>
+         <td class="doc"><span name="index">Index of new option</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Appens a new option to the select.  The <b>opt</b> argument
+          must have the same syntax as described for options in
+          constructor.  The <b>index</b> argument is currently
+          unsupported.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getValue:object_method">getValue ()
+        </h3>
+     <div class="doc"><span>
+          Returns the value of the currently selected option.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getValue:object_method">getValue ()
+        </h3>
+     <div class="doc"><span>
+          Alias to <a href='api://DlRadioSelect.xml:type=object_method:func=value'>value()</a>, this function will return the current
+          value.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="initDOM:object_method">initDOM ()
+        <div class="overrides">
+             (overrides <a href="api://DlButtonMenu.xml:type=object_method:func=initDOM">initDOM in DlButtonMenu</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setOptions:object_method">setOptions (<span class='param'>options</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">options</td>
+         <td class="doc"><span name="options">Array of hashes as described in constructor</span>
+</td>
+         <td class="type">[<b>〈Array〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Changes all options for the select.  The <b>options</b>
+          argument is similar to the one that you can pass in
+          constructor.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setValue:object_method">setValue (<span class='param'>value</span>, <span class='param'>force</span>, <span class='param'>nocalls</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">value</td>
+         <td class="doc"><span name="value"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">force</td>
+         <td class="doc"><span name="force"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">nocalls</td>
+         <td class="doc"><span name="nocalls"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Selects a new option.  This function actually calls
+          <a href='api://DlRadioSelect.xml:type=object_method:func=value'>value()</a>, see it for a description of the arguments.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="value:object_method">value (<span class='param'>value</span>, <span class='param optional'>force</span>, <span class='param optional'>nocalls</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">value</td>
+         <td class="doc"><span name="value">New value for this select</span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">force</td>
+         <td class="doc"><span default="false" name="force" optional="1">Force new value?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">false</td>
+       </tr>
+       <tr>
+         <td class="name">nocalls</td>
+         <td class="doc"><span default="false" name="nocalls" optional="1">Don't call "onChange"?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">false</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Sets or retrieves the current value of the select.  If you
+          pass no arguments, then it simply returns the current value.
+          If you pass <b>value</b>, then an option with that value is
+          selected.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_setListeners:object_method">_setListeners ()
+        <div class="overrides">
+             (overrides <a href="api://DlContainer.xml:type=object_method:func=_setListeners">_setListeners in DlContainer</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_updateLabel:object_method">_updateLabel ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+<code id="DlRadioSelect1" type="js">
+          {
+             label     : "Label for this option",
+             value     : "foo_bar", // whatever you want here
+             className : "CSSClassName" // optional
+          }
+        </code>
+<code canrun="true" id="DlRadioSelect2" type="js">
+          var options = [
+              { label: "Times New Roman", value: "Times,Times New Roman,serif" },
+              { label: "Courier", value: "Courier,Courier New,monospace" },
+              { label: "Verdana", value: "Verdana,sans-serif" },
+              { label: "Tahoma", value: "Tahoma,sans-serif" }
+          ];
+          var sel = new DlRadioSelect({ parent  : getDocCanvas(),
+                                        options : options,
+                                        value   : options[3].value });
+          sel.addEventListener("onChange", function(old_val, new_val) {
+              print("You selected: " + new_val);
+          });
+        </code>
+
+
+</sample>
+
+
+
+

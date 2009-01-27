@@ -1,0 +1,82 @@
+<api file="colorpickerhsv.js" show="1">
+  <object base="DlWidget" name="DlColorPickerHSV">
+    <constructor>
+      <param name="args"></param>
+      <doc>
+        A simple HSV-based color picker.  All <b>args</b> are passed
+        to 〈DlWidget〉.
+      </doc>
+    </constructor>
+    <events>
+      <event name="onSelect">
+        <param name="rgb" type="Array">[red, green, blue] as floating numbers 0..1</param>
+        <param name="hsv" type="Array">
+          [hue, saturation, value].  Hue is integer in 0..360, the
+          others are floating point numbers in 0..1
+        </param>
+        <param name="cssColor" type="String">Color in a format suitable for CSS</param>
+        <param name="brightness" type="Number">
+          Color brightness as a floating number 0..1.  0 means black,
+          1 means white.  This is useful to display contrasting text;
+          for example, if the brightness of the background is &gt;= 0.6,
+          I would use black to contrast.  Otherwise use white.
+        </param>
+        <doc>
+          Triggered when some color was clicked.
+        </doc>
+      </event>
+      <event name="onHover">
+        <param name="rgb" type="Array">[red, green, blue]</param>
+        <param name="hsv" type="Array">[hue, saturation, value]</param>
+        <param name="cssColor" type="String">Color in a format suitable for CSS</param>
+        <param name="brightness" type="Number">Color brightness</param>
+        <doc>
+          Triggered when a color is hovered.  Arguments are the same
+          as for "onSelect".
+        </doc>
+      </event>
+      <event name="onHoverOut">
+        <doc>
+          Triggered when the mouse gets out of some color.
+        </doc>
+      </event>
+      <event name="onHueChange">
+        <param name="hue">Hue (0..360)</param>
+        <doc>
+          Triggered when the hue slider has been changed.
+        </doc>
+      </event>
+    </events>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="8f67b11430c244b29114400d8b098388" name="getHueBarElement">
+        <doc>
+          Returns the small hue slider.
+        </doc>
+      </method>
+      <method hash="d7a73a02797492cca27d8de3b95d5249" name="setHSV">
+        <param name="hsv" type="Array">[ hue, saturation, value ]</param>
+        <doc>
+          Moves the current color picker to the new hue.  Note that
+          the color picker doesn't yet have a way to display the
+          currently selected color, so only hue is used from the
+          arguments.
+        </doc>
+      </method>
+      <method hash="9574f6a9480490deac78954da7d90b6f" internal="1" name="_redraw">
+        <param name="hue"></param>
+        <doc></doc>
+      </method>
+      <method hash="a17f2178ca39b0a31c72a3ac553fd473" internal="1" name="_refresh">
+        <param name="ev"></param>
+        <doc></doc>
+      </method>
+      <method hash="2ec50c40c7ad89ae3a2bc0625bdd6264" name="initDOM">
+        <doc></doc>
+      </method>
+      <method hash="dbd9271b0b765b68482f42ff9516daff" internal="1" name="_createElement">
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

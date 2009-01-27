@@ -1,0 +1,224 @@
+<api file="event.js" show="1">
+  <object name="DlEvent">
+    <constructor>
+      <param name="ev" type="Event">DOM event</param>
+      <doc>
+        A DlEvent object represents a DOM event.  It doesn't actually
+        encapsulate a DOM event, but it tries to be a good copy that
+        provides consistent information no matter what browser is
+        used.
+
+        You shouldn't normally need to construct such an object
+        manually.
+
+        *** Total abstraction over DOM events
+
+        Once loaded, 〈event.js〉 will register a
+        〈._genericEventHandler()|global event handler〉 for all
+        possible DOM events.  This handler checks the event and
+        dispatches appropriate 〈DlEventProxy|DynarchLIB events〉 to
+        various widgets that the event can apply.
+
+        For example, let's say we have a 〈DlWidget|simple widget〉 that
+        it's inside a 〈DlContainer|container〉 which in turn is inside
+        a 〈DlDesktop|desktop〉 widget.  When the mouse enters the
+        widget the browser generates an "onmouseover" event.
+        DynarchLIB catches this event and sees it relates to an
+        widget.  Then it looks for the widget's ancestors and sees
+        it's inside a container which is inside a desktop.  It will
+        generate events as follows: "onMouseEnter" for the widget, and
+        "onMouseOver" for the widget, container and desktop.
+
+        All listeners will be passed a 〈DlEvent〉 object which is
+        initialized from the DOM event.
+
+        Using methods in 〈DlEventProxy〉, which all widgets inherit
+        from, you can assign custom handlers for these events.  This
+        way you can use the DynarchLIB event system without having to
+        care about browser differences and the like.
+
+        *** But you can still use DOM events
+
+        Of course, when you need to, you can resort to plain DOM
+        events.  For example, an "onClick" event is triggered when a
+        widget is clicked.  However, you might want to do something
+        only when the click occurred on some part of the widget
+        (e.g. in a case when your widget is composed of multiple DOM
+        elements, you might want to do something when the click occurs
+        on some specific element in the widget).  For this case you
+        can assign a standard DOM event handler directly to the
+        element using 〈DynarchDomUtils.addEvent()〉.
+      </doc>
+    </constructor>
+
+    <static-methods>
+
+      <method hash="14f23641ed6faeeffad49468bb6c5a69" name="atUnload">
+        <param name="f" type="Function">Callback function</param>
+        <doc>
+          Registers a callback function to be executed at the DOM
+          "unload" event.  We're using this to register various
+          handlers that clean up memory to prevent browser memory
+          leaks.
+        </doc>
+      </method>
+
+      <method hash="3bee460953ccd302706e6cffc7403d22" name="captureGlobal">
+        <param name="type" type="String">DynarchLIB event name</param>
+        <param name="f" type="Function">Callback function</param>
+        <doc>
+          Specifies that all events of the given <b>type</b> are
+          captured by your callback.  This means that your supplied
+          function will be called <em>first</em>, then other handlers
+          are called as usual.  Your function can chose to block the
+          event when you don't want further processing, by throwing an
+          exception:
+
+          <js>
+            throw new DlExStopEventBubbling;
+            // the following is equivalent:
+            DlException.stopEventBubbling();
+          </js>
+
+          This effectively blocks any default handlers that the
+          browser might want to execute, as well as any further
+          handlers assigned by yourself for that event.
+
+          When you're done with whatever was why you were capturing
+          events for, you should call 〈.releaseGlobal()〉 in order to
+          restore normal event processing.
+
+          The <b>type</b> of the event should be one of the following:
+
+          <ul>
+            <li>onMouseEnter</li>
+            <li>onMouseLeave</li>
+            <li>onMouseDown</li>
+            <li>onMouseUp</li>
+            <li>onMouseMove</li>
+            <li>onClick</li>
+            <li>onDblClick</li>
+            <li>onKeyDown</li>
+            <li>onKeyUp</li>
+            <li>onKeyPress</li>
+            <li>onContextMenu</li>
+            <li>on_DOM_Focus</li>
+            <li>on_DOM_Blur</li>
+          </ul>
+        </doc>
+      </method>
+
+      <method hash="ae5072a8422674e4b0edd14221e8daef" name="captureGlobals">
+        <param name="obj" type="Hash">Map event name to handler function</param>
+        <doc>
+          This simply calls 〈.captureGlobal()|captureGlobal(key, val)〉
+          for each (key, value) pair in the given hash.
+        </doc>
+      </method>
+
+      <method hash="22c82266d088ab6c4680dbd6ca0beab7" name="checkDisabled">
+        <param name="w" type="DlWidget">widget reference</param>
+        <doc>
+          This is an internal utility function that checks if the
+          given widget is disabled.  An widget is considered disabled
+          if 〈DlWidget::disabled()|widget.disabled()〉 returns true
+          either for this widget or for any of its parents.
+        </doc>
+      </method>
+
+      <method XXX="Code has changed!" hash="1ff80fa9bd064f0206b511d365620807" name="fakeBlur">
+        <doc>
+          XXX This might change or disappear in future versions.
+
+          Fakes a blur() call.  For some DOM elements (e.g. input, or
+          textarea) I found out that blur() isn't working properly,
+          therefore we have this function that blurs the element by
+          actually focusing an invisible link.
+        </doc>
+      </method>
+
+      <method hash="9feebaf10e7848339009d92ee4f4c58b" name="focusedWidget" varargs="no">
+        <!--XXX: uses *arguments*, check for missing params-->
+        <param name="w" optional="1" type="DlWidget">New focused widget</param>
+        <doc>
+          XXX This might change or disappear in future versions.
+
+          Returns the currently focused widget.  If <b>w</b> is
+          passed, changes the currently focused widget.  You can pass
+          <b>null</b> as well, which means that no widget currently
+          has focus.
+        </doc>
+      </method>
+
+      <method hash="9ab96fda8dd2ded02edd0d154b8d7f2b" name="releaseGlobal">
+        <param name="type" type="String">DynarchLIB event name</param>
+        <param name="f" type="Function">Handler function</param>
+        <doc>
+          Releases an event capture previously set by
+          〈.captureGlobal()〉.  You must pass exactly the same
+          arguments.
+        </doc>
+      </method>
+
+      <method hash="3089c47bfc4a30c2d0a2c881dd0cefd8" name="releaseGlobals">
+        <param name="obj" type="Hash"></param>
+        <doc>
+          Calls 〈.releaseGlobal()〉 for each pair in the hash.
+        </doc>
+      </method>
+
+      <method hash="d7e65dada25472f510d630fac82bc8fb" internal="1" name="_genericEventHandler">
+        <param name="ev"></param>
+        <param name="ev2"></param>
+        <doc></doc>
+      </method>
+
+    </static-methods>
+
+    <object-methods>
+
+      <method XXX="Code has changed!" hash="5c2a182e0e9cabf66947bb9446277b14" name="computePos">
+        <param name="widget" type="DlWidget|HTMLElement">Widget or element</param>
+        <doc>
+          Computes the event's position relative to the position of
+          the given widget or element.
+        </doc>
+      </method>
+
+      <method hash="c83ca4caea8b56bdc8c134c0752e6fc2" name="destroy">
+        <doc>
+          Clears any references that this event might hold to widgets
+          or DOM elements.
+        </doc>
+      </method>
+
+      <method hash="52ea8a12dac2c4d12f08ffa17eb2fac1" name="getObject">
+        <return type="DlWidget"></return>
+        <doc>
+          Returns the widget that the current event is related to.
+          When there is no such widget, this returns <b>null</b>.
+        </doc>
+      </method>
+
+      <method XXX="Code has changed!" hash="a88d58092233ed4911145cb391947358" name="getParentElement">
+        <param name="tag" type="String">Tag name to look up</param>
+        <doc>
+          Returns the closest parent element having the given tag, or
+          <b>null</b> if none was found.  For example if an widget is
+          composed of a table having multiple rows and columns, and
+          you catch the onMouseOver event, it will be triggered
+          whenever the caret enters a new cell (TD).  You can use
+          ev.getParentElement("td") to find out which cell is hovered.
+        </doc>
+      <param name="stop"></param></method>
+
+      <method hash="ecab8208f1a4a508a18994f6a228602e" name="stopDomEvent">
+        <doc>
+          Stops the latest triggered DOM event, preventing bubbling
+          and browser's default handlers.
+        </doc>
+      </method>
+
+    </object-methods>
+  </object>
+</api>

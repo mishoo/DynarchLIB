@@ -1,0 +1,17 @@
+<sample>
+
+  <title>JavaScript Extensions</title>
+
+  <text>
+
+    <p>
+      DynarchLIB extens the standard JavaScript objects with a lot of
+      useful functionality.  Through these pages we discuss the most
+      important extensions and how to use them.
+    </p>
+
+    <div list="true" />
+
+  </text>
+
+</sample>

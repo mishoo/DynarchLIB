@@ -1,0 +1,115 @@
+<api file="radioselect.js" show="1">
+  <object base="DlButtonMenu" name="DlRadioSelect">
+    <constructor>
+      <param default="true" name="connected" type="boolean">Changes the 〈DlButtonMenu〉 default</param>
+      <param default="[]" name="options" type="Array">Array of hashes (one for each option)</param>
+      <param default="null" name="value">Current value of the select (must match the value of some option)</param>
+      <doc>
+        This is a replacement for the browser's &lt;select&gt;
+        element.  Pass in an array of options.  Each option looks like
+        this:
+
+        <js>
+          {
+             label     : "Label for this option",
+             value     : "foo_bar", // whatever you want here
+             className : "CSSClassName" // optional
+          }
+        </js>
+
+        If pass a <b>value</b> argument in constructor, it must match
+        the value given to some option.  Ideally these values are of
+        some primitive type (String, Number), but you can pass
+        anything you want.
+
+        Example of how to construct a font drop-down:
+
+        <js canrun="true">
+          var options = [
+              { label: "Times New Roman", value: "Times,Times New Roman,serif" },
+              { label: "Courier", value: "Courier,Courier New,monospace" },
+              { label: "Verdana", value: "Verdana,sans-serif" },
+              { label: "Tahoma", value: "Tahoma,sans-serif" }
+          ];
+          var sel = new DlRadioSelect({ parent  : getDocCanvas(),
+                                        options : options,
+                                        value   : options[3].value });
+          sel.addEventListener("onChange", function(old_val, new_val) {
+              print("You selected: " + new_val);
+          });
+        </js>
+      </doc>
+    </constructor>
+    <events>
+      <event name="onChange">
+        <param name="old_val">Previous value</param>
+        <param name="new_val">New (current) value</param>
+        <doc>
+          Triggered when the selection has changed.  You'll get the
+          old value and new value as arguments.
+        </doc>
+      </event>
+    </events>
+    <static-methods></static-methods>
+    <object-methods>
+      <method XXX="Code has changed!" hash="07f83dd3e0ad5529cbd2f62e1fb28d2d" name="addOption">
+        <param name="opt" type="Hash">New option as described in constructor</param>
+        <param name="index" type="Number">Index of new option</param>
+        <doc>
+          Appens a new option to the select.  The <b>opt</b> argument
+          must have the same syntax as described for options in
+          constructor.  The <b>index</b> argument is currently
+          unsupported.
+        </doc>
+      </method>
+      <method hash="8b9a26d96f76e3d49a21987d7a1582fa" name="getValue">
+        <doc>
+          Returns the value of the currently selected option.
+        </doc>
+      </method>
+      <method XXX="Code has changed!" hash="ed04d9bd2ae7757ce1b2711f613fe77f" name="setOptions">
+        <param name="options" type="Array">Array of hashes as described in constructor</param>
+        <doc>
+          Changes all options for the select.  The <b>options</b>
+          argument is similar to the one that you can pass in
+          constructor.
+        </doc>
+      </method>
+      <method hash="690cb56e9e9050ca550aa25f998c8ae5" name="value">
+        <param name="value">New value for this select</param>
+        <param default="false" name="force" optional="1" type="boolean">Force new value?</param>
+        <param default="false" name="nocalls" optional="1" type="boolean">Don't call "onChange"?</param>
+        <doc>
+          Sets or retrieves the current value of the select.  If you
+          pass no arguments, then it simply returns the current value.
+          If you pass <b>value</b>, then an option with that value is
+          selected.
+        </doc>
+      </method>
+      <method hash="8b9a26d96f76e3d49a21987d7a1582fa" name="getValue">
+        <doc>
+          Alias to 〈value()〉, this function will return the current
+          value.
+        </doc>
+      </method>
+      <method forced="1" name="setValue">
+        <param name="value"></param>
+        <param name="force"></param>
+        <param name="nocalls"></param>
+        <doc>
+          Selects a new option.  This function actually calls
+          〈value()〉, see it for a description of the arguments.
+        </doc>
+      </method>
+      <method hash="58e41047d98cac323b9c64ad29c884a1" name="initDOM">
+        <doc></doc>
+      </method>
+      <method hash="58c8ee63fce91c9d0b9b73eb70123a11" internal="1" name="_setListeners">
+        <doc></doc>
+      </method>
+      <method hash="3e2f86c8ecef97a2d8430d7578e3b701" internal="1" name="_updateLabel">
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

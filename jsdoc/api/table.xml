@@ -1,0 +1,56 @@
+<api file="table.js">
+  <object base="DlContainer" name="DlTable">
+    <constructor>
+      <param default="null" name="align"></param>
+      <param default="null" name="cellPadding"></param>
+      <param default="null" name="cellSpacing"></param>
+    </constructor>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="41358bd318dbe8fe52c98ddfc1250d7b" name="addCell">
+        <param name="row"></param>
+        <param name="align"></param>
+        <param name="valign"></param>
+        <doc></doc>
+      </method>
+      <method hash="135e81233ada000cf0da0a0e300fd6c2" name="addRow">
+        <doc></doc>
+      </method>
+      <method hash="49dc65bccc871325a658749d96886393" name="addSeparator">
+        <param name="span"></param>
+        <doc></doc>
+      </method>
+      <method hash="85fb4a70d2cc41b53c91cf0aba2bcac2" name="getColSpan">
+        <doc></doc>
+      </method>
+      <method hash="eb0ddd70287919dcc89fdaa81fb13c28" name="getContentElement">
+        <doc></doc>
+      </method>
+      <method hash="0bd6050144ead9849e59c80705b483af" name="getRow">
+        <param name="index"></param>
+        <doc></doc>
+      </method>
+      <method hash="f11a3eee669a6fa56091912ce15a80ff" name="setColSpan">
+        <param name="colSpan"></param>
+        <doc></doc>
+      </method>
+      <method hash="cdb31a17c0e17ccabd6aba835fb68e4b" internal="1" name="_createElement">
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+  <object base="DlContainer" internal="1" name="DlTableRow">
+    <constructor>
+      <param name="args"></param>
+    </constructor>
+    <static-methods></static-methods>
+    <object-methods></object-methods>
+  </object>
+  <object base="DlContainer" internal="1" name="DlTableCell">
+    <constructor>
+      <param name="args"></param>
+    </constructor>
+    <static-methods></static-methods>
+    <object-methods></object-methods>
+  </object>
+</api>

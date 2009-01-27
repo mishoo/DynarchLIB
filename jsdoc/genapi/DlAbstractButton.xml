@@ -1,0 +1,884 @@
+<sample>
+
+  <title>DlAbstractButton</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlAbstractButton</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlWidget〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈abstractbutton.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈container.js, radiogroup.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">alwaysCheck</td>
+         <td class="doc"><span default="false" name="alwaysCheck">Set to <b>true</b> if a click should always check this button</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">false</td>
+       </tr>
+       <tr>
+         <td class="name">checked</td>
+         <td class="doc"><span default="false" name="checked">Initially checked?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">false</td>
+       </tr>
+       <tr>
+         <td class="name">classes</td>
+         <td class="doc"><span default="{}" name="classes">Button class names (see below)</span>
+</td>
+         <td class="type">[<b>〈Hash〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">{}</td>
+       </tr>
+       <tr>
+         <td class="name">group</td>
+         <td class="doc"><span default="null" name="group">Button radio group (see below)</span>
+</td>
+         <td class="type">[<b>〈DlRadioGroup,String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">label</td>
+         <td class="doc"><span default="&#34;&#34;" name="label">Button label</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">""</td>
+       </tr>
+       <tr>
+         <td class="name">noCapture</td>
+         <td class="doc"><span default="false" name="noCapture">Don't capture mouse events?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">false</td>
+       </tr>
+       <tr>
+         <td class="name">type</td>
+         <td class="doc"><span default=" TYPE.STANDARD" name="type">Button type</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default"> TYPE.STANDARD</td>
+       </tr>
+       <tr>
+         <td class="name">value</td>
+         <td class="doc"><span default=" window.undefined" name="value">Value of this button (see below)</span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default"> window.undefined</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+        A DlAbstractButton is the base class for most things that can
+        be clicked.  This include <a href='api://DlButton.xml'>DlButton</a>, <a href='api://DlRadioButton.xml'>DlRadioButton</a>,
+        <a href='api://DlCheckbox.xml'>DlCheckbox</a> and even <a href='api://DlLabel.xml'>DlLabel</a>.
+<p class='heading'> CSS</p>
+<p/>
+        It defines basic functionality that allows your buttons to get
+        a special style when they are hovered, or when they are
+        pressed / depressed / checked / unchecked.  For this you use
+        the <b>classes</b> argument, which should look for example
+        like this:
+<p/>
+        <div sample="DlAbstractButton1"></div>
+<p/>
+        Note that "checked" and "unchecked" styles only make sense for
+        buttons that are of <b>type</b> "TWOSTATE".  "STANDARD" and
+        "TWOSTATE" are the only types available at the time of
+        writing.  For TWOSTATE buttons you might find it easy to work
+        with a <a href='api://DlRadioGroup.xml'>DlRadioGroup</a> object to keep track of what's selected
+        (see also the <a href="sample://widgets-radiobuttons.xml">radio groups sample
+        page</a>).
+<p class='heading'> Mouse capture</p>
+<p/>
+        A button will normally capture mouse events in the following
+        case: you press the button and, without depressing the mouse
+        button, you move the mouse away.  In this case, no other
+        widgets will receive mouse moves until you depress the mouse
+        button.  If you move the mouse back to the <a href='api://DlAbstractButton.xml'>DlAbstractButton</a>
+        widget and depress it, it will get an "onClick" event.  If you
+        depress the mouse somewhere else, the click is "cancelled".
+<p/>
+        In various situations you won't like the capturing behavior,
+        although it's standard and common for most push buttons, check
+        boxes and radio buttons.  When you don't want the framework to
+        capture these events, pass <b>noCapture: true</b>.
+<p class='heading'> Button value</p>
+<p/>
+        Many widgets have a <a href='api://DlAbstractButton.xml:type=object_method:func=value'>value()</a> method.  This includes
+        DlAbstractButton.  For buttons, the value is optional, but
+        it's many times useful.  You set the value calling
+        <a href='api://DlAbstractButton.xml:type=object_method:func=value'>widget.value(some_value)</a> and you retrieve it by
+        calling widget.value() (no arguments).  It's used in a few
+        places to automate data retrieval, such as in <a href='api://DlRadioGroup.xml'>DlRadioGroup</a>
+        (if you have multiple check boxes in a group and want to see
+        what are the values of the selected buttons, you just call
+        group.getValue()).  See the <a href="sample://widgets-radiobuttons.xml">radio groups
+        sample</a>.
+      </span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="events">
+      <h2>Events</h2>
+   <div class="method">
+        <h3 id="onChange:object_event">onChange ()
+        </h3>
+     <div class="doc"><span>
+          Triggered when the button is either checked or unchecked
+          (that is, is changed).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onCheck:object_event">onCheck ()
+        </h3>
+     <div class="doc"><span>Triggered when the button is checked</span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onUncheck:object_event">onUncheck ()
+        </h3>
+     <div class="doc"><span>Triggered when the button is unchecked</span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onUpdateLabel:object_event">onUpdateLabel (<span class='param'>label</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">label</td>
+         <td class="doc"><span name="label">New label</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Triggered when the label of the button has been modified.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="checked:object_method">checked (<span class='param optional'>checked</span>, <span class='param optional'>nohooks</span>, <span class="varargs">…</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">checked</td>
+         <td class="doc"><span default="null" name="checked" optional="1"></span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">nohooks</td>
+         <td class="doc"><span default="false" name="nohooks" optional="1"></span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">false</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the checked (true) or unchecked (false) state of the
+          button.  It only makes sense for buttons of type
+          “DlAbstractButton.TYPE.TWOSTATE”.
+<p/>
+          If you pass the <b>checked</b> argument, it will change the
+          button state.  <b>true</b> means to check the button,
+          <b>false</b> to uncheck it.  It also triggers the “onChange”
+          and “onCheck” or “onUncheck” events, but only if the button
+          changes the state and <em>unless</em> you pass <b>nohooks =
+          true</b>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="disabled:object_method">disabled (<span class='param'>v</span>, <span class='param'>force</span>)
+        <div class="overrides">
+             (overrides <a href="api://DlWidget.xml:type=object_method:func=disabled">disabled in DlWidget</a>)
+        </div>
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">v</td>
+         <td class="doc"><span name="v"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">force</td>
+         <td class="doc"><span name="force"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="group:object_method">group ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: DlButtonGroup) 
+           <b><span></span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the <a href='api://DlRadioGroup.xml'>radio group</a> of this button, if
+          any.  Null if no group has been defined.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="initDOM:object_method">initDOM ()
+        <div class="overrides">
+             (overrides <a href="api://DlWidget.xml:type=object_method:func=initDOM">initDOM in DlWidget</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="keyClicked:object_method">keyClicked (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev">Key event</span>
+</td>
+         <td class="type">[<b>〈DlEvent〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Called automatically when the button is activated by a key
+          press.  This can happen when the button is focused and ENTER
+          or SPACE is pressed, or when the button's access key has
+          been pressed.  The button must be focusable.
+<p/>
+          This method flashes the button shortly and triggers
+          “onClick”.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="label:object_method">label (<span class='param optional'>label</span>, <span class='param optional'>force</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">label</td>
+         <td class="doc"><span default="null" name="label" optional="1">New label</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">force</td>
+         <td class="doc"><span default="false" name="force" optional="1">Force new label?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">false</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns or changes the label of the button.  If you pass no
+          arguments, the existing label is returned.  If you pass
+          <b>label</b>, then a new label is set for the button and
+          “onUpdateLabel” is triggered, but only if the new label is
+          different from the existing label, or if <b>force</b> is
+          true.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="toggle:object_method">toggle (<span class='param optional'>nohooks</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">nohooks</td>
+         <td class="doc"><span default="false" name="nohooks" optional="1">Don't call event listeners?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">false</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Toggle the button, that is, call <a href='api://DlAbstractButton.xml:type=object_method:func=checked'>checked(true)</a>
+          if the current state is unchecked, or checked(false) if the
+          current state is checked.  <b>nohooks</b> is passed to the
+          <a href='api://DlAbstractButton.xml:type=object_method:func=checked'>checked()</a> method.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="value:object_method">value (<span class='param optional'>newval</span>, <span class="varargs">…</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">newval</td>
+         <td class="doc"><span name="newval" optional="1">New value for this button</span>
+</td>
+         <td class="type">[<b>〈Object〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Optionally sets a new value for this button if <b>newval</b>
+          is passed.  Returns the current value.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_cap_onMouseEnter:object_method">_cap_onMouseEnter (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev"></span>
+</td>
+         <td class="type">[<b>〈DlEvent〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          This function is called when we have mouse capture and the
+          cursor enters the button.  Adjusts the button style
+          accordingly by adding the "active" class name.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_cap_onMouseLeave:object_method">_cap_onMouseLeave (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev"></span>
+</td>
+         <td class="type">[<b>〈DlEvent〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Called when we have mouse capture and the cursor leaves the
+          button.  Removes the "active" class name.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_cap_onMouseUp:object_method">_cap_onMouseUp (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev"></span>
+</td>
+         <td class="type">[<b>〈DlEvent〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Called when we have mouse capture and the mouse button is
+          depressed while the cursor is inside the button.  Releases
+          the mouse capture.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_checkTwoState:object_method">_checkTwoState (<span class='param optional'>nothrow</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">nothrow</td>
+         <td class="doc"><span default="false" name="nothrow" optional="1">Don't throw exceptions?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">false</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: boolean) 
+           <b><span>True if the button is TWOSTATE, false otherwise</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Check if the current button is of type
+          DlAbstractButton.TYPE.TWOSTATE and throws an exception if
+          it's not.  If you specify <b>nothrow = true</b>, then no
+          exceptions are thrown and you can use the return value.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_createElement:object_method">_createElement ()
+        <div class="overrides">
+             (overrides <a href="api://DlWidget.xml:type=object_method:func=_createElement">_createElement in DlWidget</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_handle_accessKey:object_method">_handle_accessKey (<span class='param'>ev</span>)
+        <div class="overrides">
+             (overrides <a href="api://DlWidget.xml:type=object_method:func=_handle_accessKey">_handle_accessKey in DlWidget</a>)
+        </div>
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_handle_focusKeys:object_method">_handle_focusKeys (<span class='param'>ev</span>)
+        <div class="overrides">
+             (overrides <a href="api://DlWidget.xml:type=object_method:func=_handle_focusKeys">_handle_focusKeys in DlWidget</a>)
+        </div>
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_onChange:object_method">_onChange ()
+        </h3>
+     <div class="doc"><span>
+          Handles the "onChange" event.  If the button belongs to a
+          <a href='api://DlRadioGroup.xml'>group</a>, calls the group's onChange event
+          passing this button as the argument.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_onClick:object_method">_onClick ()
+        </h3>
+     <div class="doc"><span>
+          Handles the "onClick" event.  If the button is TWOSTATE and
+          alwaysCheck is false (see constructor), it
+          <a href='api://DlAbstractButton.xml:type=object_method:func=toggle'>toggles</a> the button.  If alwaysCheck is true then
+          it calls <a href='api://DlAbstractButton.xml:type=object_method:func=checked'>checked(true)</a>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_onDisabled:object_method">_onDisabled (<span class='param'>v</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">v</td>
+         <td class="doc"><span name="v">Disabled value (true if disabled)</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Handles the "onDisabled" event.  Updates the button styles
+          accordingly (adds the <b>disabled</b> class if disabled or
+          removes it if enabled).  Release mouse capture if the button
+          was currently holding it.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_onMouseDown:object_method">_onMouseDown (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev"></span>
+</td>
+         <td class="type">[<b>〈DlEvent〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Called when a mouse button is pressed on the widget.  If
+          it's the left button, update class names accordingly (add
+          the <b>hover</b> and <b>active</b> classes) and acquire
+          mouse capture.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_onMouseEnter:object_method">_onMouseEnter (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev"></span>
+</td>
+         <td class="type">[<b>〈DlEvent〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Called when the mouse enters the widget.  It's different
+          from <a href='api://DlAbstractButton.xml:type=object_method:func=_cap_onMouseEnter'>_cap_onMouseEnter()</a> because this one is called when we
+          <em>don't</em> have mouse capture.  Adds the <b>hover</b>
+          class.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_onMouseLeave:object_method">_onMouseLeave (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev"></span>
+</td>
+         <td class="type">[<b>〈DlEvent〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Called when the mouse leaves the widget and we're not
+          holding the capture.  Removes the <b>hover</b> and
+          <b>active</b> classes.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_onMouseUp:object_method">_onMouseUp (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev"></span>
+</td>
+         <td class="type">[<b>〈DlEvent〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Called when the mouse button is depressed on the widget and
+          we're not holding capture.  Removes the <b>active</b> class.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_onUpdateLabel:object_method">_onUpdateLabel ()
+        </h3>
+     <div class="doc"><span>
+          Called when the button label is modified.  Checks if the new
+          label is empty and accordingly adds or removes the
+          <b>empty</b> class name.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_setListeners:object_method">_setListeners ()
+        <div class="overrides">
+             (overrides <a href="api://DlWidget.xml:type=object_method:func=_setListeners">_setListeners in DlWidget</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_updateState:object_method">_updateState ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+<code id="DlAbstractButton1" type="js">
+          {
+            active    : "DlButton-active",    // class when button is pressed
+            hover     : "DlButton-hover",     // class when button is hovered
+            checked   : "DlButton-1",         // class when button is "checked"
+            unchecked : "DlButton-0",         // class when button is "unchecked"
+            empty     : "DlButton-empty",     // class when button is empty
+            disabled  : "DlButton-disabled"   // class when button is disabled
+          }
+        </code>
+
+
+</sample>
+
+
+
+

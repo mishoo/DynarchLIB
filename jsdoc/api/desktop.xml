@@ -1,0 +1,66 @@
+<api file="desktop.js" show="1">
+  <object base="DlContainer" name="DlDesktop">
+    <constructor>
+      <param default=" new DlRect(50, 30, 800, 600)" name="bounds" type="DlRect">Desktop bounding box</param>
+      <doc>
+        You will generally use this widget as the top-level container
+        for your application.  Here is for instance how to start your
+        application:
+
+        <html><![CDATA[
+          <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+          <!-- the doctype declaration is important;
+               otherwise IE will make a mess of your application -->
+          <html>
+            <head>
+              <title>Your Great Application</title>
+              <link rel="stylesheet"
+                    type="text/css"
+                    href="/path/to/DynarchLIB/src/css/default.css"
+                    media="all" />
+              <script>
+                // must declare the path to DynarchLIB
+                window.Dynarch_Base_Url = "/path/to/DynarchLIB";
+                // your main entry point
+                function start() {
+                    // create your top-level container
+                    var desktop = new DlDesktop({});
+                    // make it full screen (will automatically resize with the window)
+                    desktop.fullScreen();
+                    // now put your widgets into it, i.e.:
+                    var box = new DlVbox({ parent: desktop });
+                    new DlButton({ label: "Foo", parent: box });
+                }
+              </script>
+              <script src="/path/to/DynarchLIB/src/js/thelib.js"></script>
+            </head>
+            <body onload="start()">
+              <h1>Loading...</h1>
+            </body>
+          </html>
+        ]]></html>
+      </doc>
+    </constructor>
+    <static-methods>
+      <method hash="a1be28484db758f9c37f2e46c27fcee2" name="IEresize">
+        <doc>
+          Internal method necessary for IE to correctly resize the
+          desktop.
+        </doc>
+      </method>
+    </static-methods>
+    <object-methods>
+      <method hash="ddb6f87bd9da553d0a20e7bdc9b341d6" name="fullScreen">
+        <doc>
+          Make this desktop widget “full screen” (that is, occupy the
+          whole browser window and make it resize automatically along
+          with the browser).
+        </doc>
+      </method>
+      <method hash="6ab2fec6f9b972104e02feff3df4e6dd" internal="1" name="_createElement">
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

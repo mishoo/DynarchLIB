@@ -1,0 +1,231 @@
+<api file="entry.js" show="1">
+  <object base="DlContainer" name="DlEntry">
+    <constructor>
+      <param default="null" name="allowEmpty" type="boolean">Validate an empty value?</param>
+      <param default="2" name="focusable" type="boolean">Passed to 〈DlWidget〉, don't change this.</param>
+      <param default="null" name="name" type="boolean">Name of the input field</param>
+      <param default="false" name="noSelect" type="boolean">Don't select contents on focus?</param>
+      <param default="false" name="noWrap" type="boolean">Don't wrap contents? (for textareas)</param>
+      <param default="false" name="readonly" type="boolean">Read only?</param>
+      <param default="null" name="rows" type="Number">Number of rows (for textareas)</param>
+      <param default="null" name="size" type="Number">Input field size (for input)</param>
+      <param default="&#34;text&#34;" name="type" type="String">DOM element type (see below)</param>
+      <param default="[]" name="validators" type="Array">Array of validators</param>
+      <param default="null" name="value" type="String">Initial value</param>
+      <param default="null" name="width" type="String">CSS width of the input field</param>
+      <param default="&#34;&#34;" name="emptyText" type="String">Text to display when the field is empty</param>
+      <doc>
+        A DlEntry is a very functional widget for receiving user
+        input.  It can be an &lt;input&gt; element, or a
+        &lt;textarea&gt;, based on what's passed in the <b>type</b>
+        argument.  Accepted values for <b>type</b> are:
+
+        <ul>
+          <li>"text" — create an ordinary input field (default)</li>
+          <li>"password" — create a password input type</li>
+          <li>"file" — create a file upload entry</li>
+          <li>"hidden" — a hidden field</li>
+          <li>"textarea" — a text area</li>
+        </ul>
+
+        You can pass an array of 〈DlValidator〉 objects in
+        <b>validators</b>.  If you do, whenever the input field value
+        is changed all validators will run in order and if any one
+        fails the input field will get an error CSS class and triggers
+        "onValidationError" event.  You can also force validation at
+        any time by calling 〈validate()〉.
+
+        See our <a href="sample://widgets-entry.xml">input field
+        samples</a> for some detailed examples.
+      </doc>
+    </constructor>
+    <events>
+      <event name="onChange">
+        <doc>
+          Triggered when the value of the input field has changed.
+          Note that in case of user edit, this means when the focus
+          has left the input field—it won't be triggered at each
+          keypress, although the value does change.
+        </doc>
+      </event>
+      <event name="onKey-ENTER">
+        <doc>
+          Triggered when the ENTER key is pressed in the input field.
+        </doc>
+      </event>
+      <event name="onKey-ESCAPE">
+        <doc>
+          Triggered when the ESCAPE key is pressed in the input field.
+        </doc>
+      </event>
+      <event name="onValidationError">
+        <doc>
+          Triggered when the field validation has failed.
+        </doc>
+      </event>
+    <event name="onValidation"><doc></doc></event></events>
+
+    <static-methods></static-methods>
+
+    <object-methods>
+
+      <method hash="63d97212bcf1afc3ac58977d58757157" name="blur">
+        <doc>
+          Removes focus from the input field.
+        </doc>
+      </method>
+
+      <method hash="704b9861cef78022846bb38b1f53f28c" name="clear">
+        <param default="false" name="nocall" optional="1" type="boolean">Don't call hooks?</param>
+        <doc>
+          Clears the input field value.
+        </doc>
+      </method>
+
+      <method hash="ad8c542e7de3c48cd9886fdfa66692f2" name="collapse">
+        <param name="atStart" type="boolean">Collapse at start?</param>
+        <doc>
+          "Collapses" the selection in the input field.  This does
+          nothing when there is no selection.  When there's some text
+          selected, it deselects it leaving the caret at start if
+          <b>atStart</b> is true, or at the end otherwise.
+        </doc>
+      </method>
+
+      <method hash="8bba555f6deef1969d956794c7d052d3" name="disabled">
+        <param name="v"></param>
+        <param name="force"></param>
+        <doc></doc>
+      </method>
+
+      <method hash="04b18a05909a647115ecfdfbac6c9e11" name="focus">
+        <doc>
+          Focuses the input field.
+        </doc>
+      </method>
+
+      <method hash="b871732ad36f6927c7f82e9997013b20" name="getInputElement">
+        <return type="HTMLElement">The input field element</return>
+      </method>
+
+      <method hash="9a0545202147327276a3631e70bc6b4d" name="getSelectionRange">
+        <return type="Hash">{ start: selection_start, end: selection_end }</return>
+        <doc>
+          Returns the selection range.
+        </doc>
+      </method>
+
+      <method hash="e1b626e15f58c4e865004645e040a49e" name="getValue">
+        <doc>
+          Returns the input field's value.  Note that when the field
+          is empty this function returns the empty string (""), even
+          if the DOM element might actually display something (see the
+          <b>emptyText</b> argument in constructor).
+        </doc>
+      </method>
+
+      <method hash="f78efa503d4caf0dbf4225d5ff34b908" name="initDOM">
+        <doc></doc>
+      </method>
+
+      <method hash="074605438dd803eeed4aa082789f573b" name="moveBOF">
+        <doc>
+          Moves the caret at the start of the text.
+        </doc>
+      </method>
+
+      <method hash="5a66186b92cf35fd52de3dc2c85cc8c2" name="moveEOF">
+        <doc>
+          Moves the caret at the end of the text.
+        </doc>
+      </method>
+
+      <method hash="8923974c715b62562e93b41ac465bacb" name="readonly">
+        <param default="null" name="readonly" optional="1" type="boolean">Set read only?</param>
+        <doc>
+          Returns (and optionally sets) the readonly state of the
+          input field.
+        </doc>
+      </method>
+
+      <method hash="5af85bb692b8d5aa38d9722638005613" name="select">
+        <doc>
+          Selects all text.
+        </doc>
+      </method>
+
+      <method hash="799c7292661110108de1d003916c5f47" name="setIfEmpty">
+        <param name="value" type="String">New value</param>
+        <param default="false" name="nocall" optional="1" type="boolean">Don't call hooks?</param>
+        <doc>
+          Sets the field value to <b>value</b> only if the field is
+          currently empty.  <b>nocall</b> is passed to 〈setValue()〉.
+        </doc>
+      </method>
+
+      <method hash="7285ad806c5cd1b1894d1b8be24aef2e" name="setOuterSize">
+        <param name="size"></param>
+        <doc></doc>
+      </method>
+
+      <method hash="49a4ae654221387193e4e563afd22a4b" name="setSelectionRange">
+        <param name="start" type="Number">Index of first char</param>
+        <param name="end" type="Number">Index of last char</param>
+        <doc>
+          Selects the given portion of the text between <b>start</b>
+          and <b>end</b>.
+        </doc>
+      </method>
+
+      <method hash="d6801591f57eaf832aa2e2d0c0814e89" name="setValue">
+        <param name="value" type="String">New field value</param>
+        <param default="false" name="nocall" optional="1" type="boolean">Don't call hooks?</param>
+        <doc>
+          Sets a new field value.  If <b>value</b> is the empty
+          string, this function will check if <b>emptyText</b> was
+          specified in constructor and if so it will use that value
+          (in this case, 〈getValue()〉 will still return the empty
+          string, since <b>emptyText</b> is for display enhancement
+          only).
+
+          If <b>nocall</b> is false (default) it will trigger the
+          "onChange" event.
+        </doc>
+      </method>
+
+      <method hash="ab14544a5b75bae95599c139e29a1c32" name="timerFocus">
+        <param name="timeout" type="Number">Milliseconds</param>
+        <doc>
+          Focuses the input field after the timeout.
+        </doc>
+      </method>
+
+      <method XXX="Code has changed!" hash="924b37ea1fb04e43e05088ca82348b32" name="validate">
+        <param default="null" name="val" optional="1" type="String">Value to validate</param>
+        <return type="boolean"><b>true</b> if validation succeeded, <b>false</b> otherwise</return>
+        <doc>
+          Runs the validators of this entry on the given <b>val</b>ue.
+          Note that if you don't pass an argument, the validators will
+          run on the entry value.  If there is an error, it will
+          trigger "onValidationError", passing the value returned by
+          〈DlValidator::getError()〉.
+        </doc>
+      </method>
+
+      <method hash="1a06092ec4860082bbf98ffa6301d961" internal="1" name="_createElement">
+        <doc></doc>
+      </method>
+
+      <method hash="9147b97946a9475aab4965cff8db752b" internal="1" name="__checkEmpty" undoc="1">
+        <param name="value"></param>
+        <doc></doc>
+      </method>
+
+      <method hash="6fd46341d09f10313c0fcb6d160d9d60" internal="1" name="__setEmpty" undoc="1">
+        <param name="value"></param>
+        <doc></doc>
+      </method>
+
+    <method hash="f75ad53ddcf9c6f022be12987e376229" name="isEmpty"><doc></doc></method></object-methods>
+  </object>
+</api>

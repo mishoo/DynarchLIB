@@ -1,0 +1,4 @@
+[% SET js = sample _ '.js' %]
+<div style="margin-left: 3em"><b><a href="javascript:[% sample %]()">Execute</a></b></div>
+<pre name="code" class="js">[% INSERT $js | html %]</pre>
+<script src="[% sample %].js"></script>

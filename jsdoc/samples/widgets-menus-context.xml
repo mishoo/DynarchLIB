@@ -1,0 +1,191 @@
+<sample>
+
+  <title>Context menus</title>
+
+  <text>
+
+    <p>
+      Most widgets can have a context menu.  Here's how we create one.
+    </p>
+
+    <div sample="context1" />
+
+    <p>
+      If you have multiple widgets that need to share a context menu,
+      you can simply reuse the menu object—no need to create a new
+      one:
+    </p>
+
+    <div sample="context2" />
+
+    <p>
+      Because of this, your handlers might need to know what widget
+      was right-clicked.  Here is how we add listeners:
+    </p>
+
+    <div sample="context3" />
+
+    <h2>onPopup / onHide handlers</h2>
+
+    <p>
+      Sometimes you want to execute some code when the menu shows up,
+      or when it gets hidden.  To do this, you can add some custom
+      properties to the menu object.  Since a menu can be everything,
+      not only a <b>DlVMenu</b>, these handlers are added in a
+      “non-standard” way—we can't use addEventListener for them.
+      Here's a sample that shows how we can highlight a widget while
+      its context menu is displayed.
+    </p>
+
+    <div sample="context4" />
+
+    <h2>Memory issues</h2>
+
+    <p>
+      Because a context menu can belong to multiple widgets, we had to
+      figure out a way to manage their memory.  Context menus are
+      reference counted.  This means, when you first set a context
+      menu for a widget, its reference count will be increased.  When
+      that widget is destroyed, it will call destroy() on the menu.
+      The destroy function—for any widget—will decrease the reference
+      count and will actually destroy the widget if it's zero (or
+      less).  Here's something that shouldn't work; it continues the
+      previous samples and adds a "New widget" button, which will
+      destroy the existing widgets and create a new one, assigning the
+      same menu.
+    </p>
+
+    <div sample="context5" />
+
+    <p>
+      An error should appear in your JavaScript console if you
+      right-click the last widget.  That's because after the first 2
+      widgets get destroyed, the menu's reference count will reach
+      zero—and it will be disposed.  It's hard to provide a proper
+      error, because in JavaScript objects will remain valid, since we
+      still have a reference to the menu.  However, its elements and
+      state are effectively gone.  So, in order to deal with it, the
+      proper solution is to call <b>ref()</b> on a widget that needs
+      to be permanently available.  We can call this anytime, but the
+      best way is right when creating the menu.
+    </p>
+
+    <p>
+      Here's the complete sample that adds this bit:
+    </p>
+
+    <div sample="context6" />
+
+    <p>
+      What happens now is that the menu will never be destroyed, so if
+      you run this sample multiple times, it will create a memory
+      leak.  In an application you don't generally worry about
+      it—menus are small enough and you only create them once, so
+      there won't be any leaks.
+    </p>
+
+  </text>
+
+  <code id="context1" type="js" canrun="true"><![CDATA[
+var widget = new DlWidget({ parent: getDocCanvas(), data: "widget 1" });
+widget.getElement().style.border = "1px solid #f00";
+widget.getElement().style.padding = "1em";
+widget.setContent("<b>right-click me</b>");
+
+var menu = new DlVMenu({});
+new DlMenuItem({ label: "Foo", name: "foo", parent: menu });
+new DlMenuItem({ label: "Bar", name: "bar", parent: menu });
+new DlMenuItem({ label: "Baz", name: "baz", parent: menu });
+
+widget.setContextMenu(menu);
+  ]]></code>
+
+  <code id="context2" type="js" canrun="true"><![CDATA[
+//@include context1
+var w2 = new DlWidget({ parent: getDocCanvas(), data: "widget 2" });
+w2.getElement().style.border = "1px solid #00f";
+w2.getElement().style.padding = "1em";
+w2.setContent("<b>and me too</b>");
+
+w2.setContextMenu(menu);
+  ]]></code>
+
+  <code id="context3" type="js" canrun="true"><![CDATA[
+//@include context2
+menu.addEventListener("onSelect", function(name, item, widget) {
+    print("You clicked " + name + " on " + widget.userData);
+});
+  ]]></code>
+
+  <code id="context4" type="js" canrun="true"><![CDATA[
+//@include context3
+menu.contextMenuOnPopup = function(args) {
+    // set a background color on the widget where the menu popped up
+    args.widget.getElement().style.backgroundColor = "yellow";
+};
+menu.contextMenuOnHide = function(args) {
+    // reset the widget's background color
+    args.widget.getElement().style.backgroundColor = "";
+};
+  ]]></code>
+
+  <code id="context5" type="js" canrun="true"><![CDATA[
+//@include context4
+new DlButton({ parent: getDocCanvas(), label: "New widget" })
+    .addEventListener("onClick", function(){
+        getDocCanvas().destroyChildWidgets();
+        // create a new one and try to assign the menu
+        var w3 = new DlWidget({ parent: getDocCanvas(), data: "the new widget" });
+        w3.getElement().style.padding = "1em";
+        w3.getElement().style.border = "1px solid #f00";
+        w3.setContent("Right-click me<br />should fail");
+        w3.setContextMenu(menu);
+    });
+  ]]></code>
+
+  <code id="context6" type="js" canrun="true"><![CDATA[
+var widget = new DlWidget({ parent: getDocCanvas(), data: "widget 1" });
+widget.getElement().style.border = "1px solid #f00";
+widget.getElement().style.padding = "1em";
+widget.setContent("<b>right-click me</b>");
+
+var menu = new DlVMenu({});
+new DlMenuItem({ label: "Foo", name: "foo", parent: menu });
+new DlMenuItem({ label: "Bar", name: "bar", parent: menu });
+new DlMenuItem({ label: "Baz", name: "baz", parent: menu });
+
+// increment the menu's reference count, to specify
+// that we don't ever want it to be destroyed automatically
+menu.ref();
+
+widget.setContextMenu(menu);
+var w2 = new DlWidget({ parent: getDocCanvas(), data: "widget 2" });
+w2.getElement().style.border = "1px solid #00f";
+w2.getElement().style.padding = "1em";
+w2.setContent("<b>and me too</b>");
+
+w2.setContextMenu(menu);
+menu.addEventListener("onSelect", function(name, item, widget) {
+    print("You clicked " + name + " on " + widget.userData);
+});
+menu.contextMenuOnPopup = function(args) {
+    // set a background color on the widget where the menu popped up
+    args.widget.getElement().style.backgroundColor = "yellow";
+};
+menu.contextMenuOnHide = function(args) {
+    // reset the widget's background color
+    args.widget.getElement().style.backgroundColor = "";
+};
+new DlButton({ parent: getDocCanvas(), label: "New widget" })
+    .addEventListener("onClick", function(){
+        getDocCanvas().destroyChildWidgets();
+        // create a new one and try to assign the menu
+        var w3 = new DlWidget({ parent: getDocCanvas(), data: "the new widget" });
+        w3.getElement().style.padding = "1em";
+        w3.getElement().style.border = "1px solid #f00";
+        w3.setContent("Right-click me<br />should NOT fail now");
+        w3.setContextMenu(menu);
+    });
+  ]]></code>
+
+</sample>

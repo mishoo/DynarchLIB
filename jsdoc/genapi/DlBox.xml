@@ -1,0 +1,231 @@
+<sample>
+
+  <title>DlBox</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlBox</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlContainer〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈box.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈container.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">align</td>
+         <td class="doc"><span default="null" name="align">Table align ("left", "center", "right")</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">borderSpacing</td>
+         <td class="doc"><span default="0" name="borderSpacing">CSS border-spacing for the table</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">0</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+        This is the base class for <a href='api://DlVbox.xml'>vertical</a> and
+        <a href='api://DlHbox.xml'>horizontal</a> box widgets.  A box is represented by a
+        &lt;table&gt; element.  A horizontal box will have only one
+        row, and one cell will be added automatically for each new
+        widget.  A vertical box will have multiple rows, each having
+        exactly one cell where it'll hold one child widget.
+      </span>
+
+     </div>
+   </div>
+    </div>
+
+
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="addSeparator:object_method">addSeparator (<span class='param optional'>cls</span>, <span class='param optional'>td</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">cls</td>
+         <td class="doc"><span name="cls" optional="1">Class name for the TD</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">td</td>
+         <td class="doc"><span name="td" optional="1">TD if already exists</span>
+</td>
+         <td class="type">[<b>〈HTMLTableCellElement〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Adds a separator cell.  It's a TD that gets the class
+          "OBJECT_TYPE-separator" (where OBJECT_TYPE is "DlHbox" for
+          horizontal boxes, or "DlVbox" for vertical boxes), plus any
+          additional class names that you might specify in <b>cls</b>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="addSpace:object_method">addSpace (<span class='param optional'>cls</span>, <span class='param optional'>td</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">cls</td>
+         <td class="doc"><span name="cls" optional="1">Class name for the TD</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">td</td>
+         <td class="doc"><span name="td" optional="1">TD if already exists</span>
+</td>
+         <td class="type">[<b>〈HTMLTableCellElement〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Exactly the same as <a href='api://DlBox.xml:type=object_method:func=addSeparator'>addSeparator()</a>, but it adds a space
+          cell instead.  The idea is the same, only the class name
+          differs (i.e. a horizontal box will get "DlHbox-spacer").
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="createCellElement:object_method">createCellElement ()
+        </h3>
+     <div class="doc"><span>
+          <em>Pure virtual</em> method.  This means, this method
+          doesn't exist, but code in box.js relies on it to create
+          cells for the child widgets.  This method <em>must</em> be
+          implemented by derived classes.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="destroyChildWidgets:object_method">destroyChildWidgets ()
+        <div class="overrides">
+             (overrides <a href="api://DlContainer.xml:type=object_method:func=destroyChildWidgets">destroyChildWidgets in DlContainer</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_appendWidgetElement:object_method">_appendWidgetElement (<span class='param'>widget</span>, <span class='param'>where</span>)
+        <div class="overrides">
+             (overrides <a href="api://DlContainer.xml:type=object_method:func=_appendWidgetElement">_appendWidgetElement in DlContainer</a>)
+        </div>
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">widget</td>
+         <td class="doc"><span name="widget"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">where</td>
+         <td class="doc"><span name="where"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_createElement:object_method">_createElement ()
+        <div class="overrides">
+             (overrides <a href="api://DlContainer.xml:type=object_method:func=_createElement">_createElement in DlContainer</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+
+
+</sample>
+
+
+
+

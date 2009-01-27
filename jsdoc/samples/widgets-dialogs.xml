@@ -1,0 +1,186 @@
+<sample>
+  <title>Dialogs</title>
+
+  <text>
+
+    <p>
+      We present dialogs early because they will be used in samples
+      that require more functionality that can be provided by the
+      <b>getDocCanvas()</b> function which we call in previous
+      samples.
+    </p>
+
+    <p>
+      A dialog is a container, meaning, a widget that can contain
+      other widgets.  It therefore inherits from <b>DlContainer</b>.
+      A dialog is normally displayed directly in the &lt;body&gt;
+      element, therefore you don't usually want to specify a parent.
+      Multiple dialogs can be displayed at the same time, but in every
+      moment only one of them can be active.  DlDialog manages this by
+      implementing a very simplistic window manager.
+    </p>
+
+    <p>
+      Dialogs can be modal—a modal dialog prevents events from being
+      routed to any other widgets below it.  Only one dialog can be
+      modal at a given time.
+    </p>
+
+    <p>
+      Dialogs can be resizable.  If this is selected, a small resize
+      handle will appear in the lower-right corner.  Note that it's
+      the responsibility of the inner widgets to resize themselves
+      upon an "onResize" event that is triggered by the dialog.  You
+      usually don't need to think about this, because we have a
+      powerful <a href="sample://widgets-layout.xml">layout
+      manager</a> that takes care of the dirty details.
+    </p>
+
+    <p>
+      Here is a basic sample which creates a dialog with a button that
+      closes it.
+    </p>
+
+    <div sample="dialog1" />
+
+    <p>
+      Note that this code calls <b>destroy()</b> in order to close the
+      dialog.  This is because we don't want to keep a reference to
+      it, so we prevent memory leaks.  After <b>destroy()</b>, any
+      widget is no longer useable.  As its name implises, this
+      function effectively destroys all DOM elements associated with
+      the widget, breaking any circular references to prevent browser
+      memory leaks.  If we wanted to be able to reuse the dialog
+      widget later, we can close it by calling <b>dlg.hide()</b>.
+    </p>
+
+    <p>
+      Let's make the previous dialog resizable:
+    </p>
+
+    <div sample="dialog2" />
+
+    <p>
+      If we wanted it to be resizable from the start, we can pass
+      <b>resizable: true</b> directly to the constructor.
+    </p>
+
+    <p>
+      A resizable dialog will have, by default, a “maximize” button.
+      If you don't want that, you can pass "maximizeBtn : false" to
+      constructor.
+    </p>
+
+    <h2>Window buttons</h2>
+
+    <p>
+      A dialog by default doesn't have a “close” (X) button.  We can
+      include one button by passing the <b>quitBtn</b> argument to the
+      constructor.  A dialog doesn't do this by default because it's
+      not clear what should happen when it is clicked.  Depending on
+      your particular situation, you might want to <em>destroy</em>
+      the dialog, or you might want to only <em>hide</em> it.  Or, you
+      might want to run some additional code when the button is
+      pressed and take a decision accordingly.  It's easy to do all
+      this.  Here's how we create a close button that destroys the
+      dialog:
+    </p>
+
+    <div sample="dialog3" />
+
+    <p>
+      If you just want to hide the dialog, pass "hide" instead of
+      "destroy".
+    </p>
+
+    <h3>Keyboard</h3>
+
+    <p>
+      If you try to press ESC in the dialog, you'll notice it shortly
+      flashes the quit button and exit.  In short, a dialog that
+      defines a quit button will act upon the ESC key using the
+      defined quit action.
+    </p>
+
+    <h3>Writing your own quit handler</h3>
+
+    <p>
+      We can easily intercept the click on the quit button and do
+      various stuff.  For this, instead of passing a string, we can
+      pass a callback to the <b>quitBtn</b> argument:
+    </p>
+
+    <div sample="dialog4" />
+
+  </text>
+
+  <code id="dialog1" type="js" canrun="true"><![CDATA[
+var dlg = new DlDialog({ title: "Foo" });
+var cont = new DlContainer({ parent: dlg });
+cont.getElement().style.padding = "20px";
+var btn = new DlButton({ parent: cont, label: "Close" });
+btn.addEventListener("onClick", function() {
+    dlg.destroy();
+});
+dlg.centerOnParent();
+dlg.show();
+  ]]></code>
+
+  <code id="dialog2" type="js" canrun="true"><![CDATA[
+//@include dialog1
+dlg.makeResizable();
+  ]]></code>
+
+  <code id="dialog3" type="js" canrun="true"><![CDATA[
+var dlg = new DlDialog({ title: "Foo", quitBtn: "destroy" });
+var cont = new DlContainer({ parent: dlg });
+cont.getElement().style.padding = "20px";
+var btn = new DlButton({ parent: cont, label: "Close" });
+btn.addEventListener("onClick", function() {
+    dlg.destroy();
+});
+dlg.centerOnParent();
+dlg.show();
+  ]]></code>
+
+  <code id="dialog4" type="js" canrun="true"><![CDATA[
+
+function onQuit() {
+    var questionDlg = new DlDialog({ modal: true,
+                                     title: "Exit confirmation" });
+
+    var cont = new DlContainer({ parent: questionDlg });
+    cont.setSize({ x: 400 });
+    cont.setContent("<div style='padding: 20px'><b>Are you sure you want to quit?</b></div>");
+
+    var box = new DlHbox({ parent: cont, borderSpacing: 5 });
+    box.setAlign("center");
+
+    var yes = new DlButton({ parent: box, label: "<div style='width:5em'>Yes</div>" });
+    var no = new DlButton({ parent: box, label: "<div style='width:5em'>No</div>" });
+
+    yes.addEventListener("onClick", function() {
+        // on Yes, close both dialogs
+        questionDlg.destroy();
+        dlg.destroy();
+    });
+
+    no.addEventListener("onClick", function() {
+        // on No, close only the confirm dialog
+        questionDlg.destroy();
+    });
+
+    questionDlg.centerOnParent();
+    questionDlg.show();
+};
+
+var dlg = new DlDialog({ title: "Foo", quitBtn: onQuit });
+var cont = new DlContainer({ parent: dlg });
+cont.getElement().style.padding = "20px";
+var btn = new DlButton({ parent: cont, label: "Close" });
+btn.addEventListener("onClick", onQuit);
+dlg.centerOnParent();
+dlg.show();
+  ]]></code>
+
+</sample>

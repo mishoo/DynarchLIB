@@ -1,0 +1,153 @@
+<api file="popupmenu.js" show="1">
+
+  <object internal="1" name="DlMenuBase">
+    <constructor>
+    </constructor>
+    <static-methods></static-methods>
+    <object-methods></object-methods>
+  </object>
+
+  <object base="DlPopup" name="DlPopupMenu">
+    <constructor>
+      <param name="args" type="Hash">Passed to 〈DlPopup〉</param>
+      <doc>
+        We use this popup class to display popup menus (including
+        context menus).  In essence it behaves like the base class,
+        but has some minor changes that were good for menus.
+      </doc>
+    </constructor>
+    <static-methods>
+      <method hash="3d8abda6a5734253fef45eb71311c0cd" name="onBeforePopup">
+        <param name="args"></param>
+        <doc></doc>
+      </method>
+      <method hash="da1265cf51f2eccbea66506c99854c55" name="onHide">
+        <param name="args"></param>
+        <param name="callback"></param>
+        <doc></doc>
+      </method>
+    </static-methods>
+    <object-methods>
+      <method hash="bf8e2d0dc4eee3a21fa6fda9e9997423" name="correctPos">
+        <param name="p"></param>
+        <doc></doc>
+      </method>
+      <method hash="4f44086f28f26e9ea991f17f1ae34896" name="popup">
+        <param name="args"></param>
+        <doc></doc>
+      </method>
+      <method hash="2152b8e151a49b6b6ed14fba8201a268" internal="1" name="_setListeners">
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+
+  <object base="DlHbox" name="DlHMenu">
+    <constructor>
+      <param name="args" type="Hash">Forwarded to 〈DlHbox〉</param>
+      <doc>
+        A box that is used to display a horizontal menu bar.
+      </doc>
+    </constructor>
+    <events>
+      <event name="onSelect">
+        <param name="name" type="String">Item name</param>
+        <param name="item" type="DlMenuItem">Clicked item</param>
+        <param name="widget" type="DlWidget">Widget that triggered the menu (for context menus)</param>
+        <doc>
+          Triggered when some named item was clicked.
+        </doc>
+      </event>
+      <event name="onPopup">
+        <doc>
+          Triggered when the menu is popped up.
+        </doc>
+      </event>
+    </events>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="9c6f5014ce878d306e80b44ee2deb8bc" name="initDOM">
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+
+  <object base="DlVbox" name="DlVMenu">
+    <constructor>
+      <param name="args" type="Hash">Forwarded to 〈DlVbox〉</param>
+      <doc>
+        A box that is used to display a vertical menu.  This is
+        similar to 〈DlHMenu〉 but it inherits from DlVbox so it's
+        vertical.
+      </doc>
+    </constructor>
+    <events>
+      <event name="onSelect">
+        <doc></doc>
+      </event>
+      <event name="onPopup">
+        <doc></doc>
+      </event>
+    </events>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="9c6f5014ce878d306e80b44ee2deb8bc" name="initDOM">
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+
+  <object base="DlContainer" name="DlMenuItem">
+    <constructor>
+      <param default="null" name="iconClass"></param>
+      <param default="null" name="id"></param>
+      <param default="&#34;DlMenuItem&#34;" name="label"></param>
+      <param default="null" name="menu"></param>
+      <param default="null" name="name"></param>
+      <param default="false" name="noClose"></param>
+    </constructor>
+    <events>
+      <event name="onSelect">
+        <doc></doc>
+      </event>
+    </events>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="5f455d55095db047382404889cdf0b8c" name="activateSubmenu">
+        <param name="act"></param>
+        <doc></doc>
+      </method>
+      <method hash="d137ae598bdc56e77ece410215703620" name="getContentElement">
+        <doc></doc>
+      </method>
+      <method hash="02dff4f82296404257b4408926ec0cfc" name="getMenu">
+        <doc></doc>
+      </method>
+      <method hash="fc1a4520bc8ae08d601db922a060a8bb" name="initDOM">
+        <doc></doc>
+      </method>
+      <method hash="8489ebac77c1f97abc13c7c8427c7af5" name="setMenu">
+        <param name="menu"></param>
+        <param name="onPopup"></param>
+        <param name="onHide"></param>
+        <doc></doc>
+      </method>
+      <method hash="4b4c6ec243836672ad4a19dc6608b7fb" internal="1" name="_createElement">
+        <doc></doc>
+      </method>
+      <method hash="0b690494f609e91f192859bf1e7818c3" internal="1" name="_getDlPopup">
+        <doc></doc>
+      </method>
+      <method hash="2c1d6aeb4c7879387fe0af46f2820029" internal="1" name="_inBaseMenu">
+        <doc></doc>
+      </method>
+      <method hash="d8550b4a21c9f7be7b54b6d026f89720" internal="1" name="_popupMenu">
+        <param name="timeout"></param>
+        <doc></doc>
+      </method>
+      <method hash="421759b745daf509958e224e47e2c3ad" internal="1" name="_setListeners">
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

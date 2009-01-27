@@ -1,0 +1,253 @@
+<sample>
+
+  <title>DlFlashStore</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlFlashStore</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>— none —</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈flashutils.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈singleton.js, eventproxy.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+     <div class="doc"><span>
+        Implements a simple Flash-based local storage.  Using it you
+        can easily store (key, value) pairs on the client machine.
+        You don't need to worry about cookies or server-side, etc.
+        These values are persistent—whatever you put here you'll get
+        after a page refresh or even after the user restarted the
+        browser.  In fact, the Flash storage is so persistent that it
+        survives across browsers (on the same machine and user
+        account).
+<p/>
+        For this reason it might be dangerous to store sensitive
+        information such as passwords or credit card numbers.  The
+        users should be informed about this.
+<p/>
+        This is not an object but rather a namespace for a few static
+        functions that you can use to access the storage.  They all
+        rely on <a href="http://livedocs.adobe.com/flash/8/main/wwhelp/wwhimpl/common/html/wwhelp.htm?context=LiveDocs_Parts&#38;file=00002661.html" target="_blank">Flash's SharedObject</a>.
+      </span>
+
+     </div>
+   </div>
+    </div>
+
+
+    <div class="static-methods">
+      <h2>Static functions</h2>
+   <div class="method">
+        <h3 id="clear:static_method">DlFlashStore.clear ()
+        </h3>
+     <div class="doc"><span>
+          Removes all data from the flash store.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="flush:static_method">DlFlashStore.flush (<span class='param optional'>showUI</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">showUI</td>
+         <td class="doc"><span default="false" name="showUI" optional="1">Show Flash dialog when user intervention is needed?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">false</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">
+           <b><span><b>true</b> on success, <b>false</b> on immediate failure or "pending" when it waits for user intervention</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Flushes the store, forcing all data to be written to disk;
+          unless you call this, the data will be cached in memory and
+          written to disk only when the user closes or refreshes the
+          browser.
+<p/>
+          Note that Flash normally allows upto 100K of data to be
+          saved per domain.  When flush() needs to save a larger
+          object, user is queried by Flash in a dialog (only if you
+          pass <b>true</b> for <em>showUI</em>).  In this case,
+          flush() returns the string "pending" while the user answers
+          the question.  You can catch "onStorageStatus" event in
+          <a href='api://DlFlashUtils.xml'>DlFlashUtils</a> in order to decide what to do next.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="get:static_method">DlFlashStore.get (<span class='param'>key</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">key</td>
+         <td class="doc"><span name="key">Key name</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the value of the given key.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getAllKeys:static_method">DlFlashStore.getAllKeys ()
+        </h3>
+     <div class="doc"><span>
+          Returns an array of all keys currently stored for the
+          current domain.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="remove:static_method">DlFlashStore.remove (<span class='param'>key</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">key</td>
+         <td class="doc"><span name="key">Key name</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Removes the given key from the store.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="set:static_method">DlFlashStore.set (<span class='param'>key</span>, <span class='param'>val</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">key</td>
+         <td class="doc"><span name="key">Key name</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">val</td>
+         <td class="doc"><span name="val">Key value</span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Sets a new value for the given key.  Note that <b>val</b>
+          should be a primitive type (String, Boolean, Number).
+          Passing anything else might or might not do what you expect.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_onStatus:static_method">DlFlashStore._onStatus (<span class='param'>info</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">info</td>
+         <td class="doc"><span name="info"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+
+  </text>
+
+
+</sample>
+
+
+
+

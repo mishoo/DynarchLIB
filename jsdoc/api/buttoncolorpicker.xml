@@ -1,0 +1,58 @@
+<api file="buttoncolorpicker.js" show="1">
+  <object base="DlButtonMenu" name="DlButtonColorPicker">
+    <constructor>
+      <param default="null" name="hsv" type="Array">Initial HSV (hue, saturation, value)</param>
+      <param default="null" name="rgb" type="Array">Initial RGB (red, green, blue)</param>
+      <param default="null" name="color" type="String">Initial color (in #XXXXXX format, where X are hexadecimal digits)</param>
+      <doc>
+        A specialization of 〈DlButtonMenu〉 suitable for selecting a
+        color.  Internally it uses a widget with the same API as
+        〈DlColorPickerHSV〉 (note that it's not required to be of that
+        exact type, as exemplified by our <a href="sample://widgets-compound.xml">compound widgets
+        sample</a>).
+
+        Triggers the "onSelect" event (see 〈DlButtonMenu|base class〉)
+        when a color is selected.
+      </doc>
+    </constructor>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="47f4ca0fa89799919a61f582f1c271a5" name="getColorElement">
+        <return type="HTMLElement">DIV</return>
+        <doc>
+          Returns the DIV element that displays the current color.
+        </doc>
+      </method>
+      <method hash="7d27e60f94b82da7cc95cde0672715f7" name="getLabelElement">
+        <return type="HTMLElement">TD</return>
+        <doc>
+          Returns the element where the label is displayed.
+        </doc>
+      </method>
+      <method hash="f70e32a73d424c7cb450e7862fcd4152" name="setColorPicker">
+        <param name="cp" type="DlWidget">A color picker</param>
+        <doc>
+          Sets the color picker drop-down element for this button.
+          While it is not enforced, this widget should be an instance
+          of 〈DlColorPickerHSV〉, or a widget that sports a similar
+          API.
+        </doc>
+      </method>
+      <method hash="bf77464704bcd6335b5dbc14cc66b495" name="setLabel">
+        <param name="label" type="String">New label</param>
+        <doc>
+          Changes the label of this button.
+        </doc>
+      </method>
+      <method hash="1827ceb17fc1b04d66ce8f41b2aacf41" internal="1" name="_createElement">
+        <doc></doc>
+      </method>
+      <method hash="870926369367f91e008f6a212ecc0fae" internal="1" name="_setListeners">
+        <doc></doc>
+      </method>
+      <method hash="69cc2677f17cdbd7aedcdaae7a0b0bd4" internal="1" name="_updateValues">
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

@@ -1,0 +1,61 @@
+<outline>
+
+  <item label="DynarchLIB overview" src="sample://basics.xml">
+    <item label="Coding style" src="sample://basic-objects.xml" />
+    <item label="The event system" src="sample://basic-events.xml" />
+    <item label="Widget basics" src="sample://basic-widgets.xml" />
+  </item>
+<!--
+  <item label="Sample applications" src="sample://apps.xml">
+    <item label="News reader" src="sample://apps-newsreader.xml" />
+  </item>
+-->
+  <item label="JS Utilities" src="sample://extensions.xml">
+    <item label="Array extensions" src="sample://extensions-array.xml" />
+    <item label="Function extensions" src="sample://extensions-function.xml" />
+    <item label="JSON" src="sample://extensions-json.xml" />
+  </item>
+
+  <item label="Widgets" src="sample://widgets.xml">
+    <item label="Buttons" src="sample://widgets-buttons.xml" />
+    <item label="Radio Groups" src="sample://widgets-radiobuttons.xml" />
+    <item label="Dialogs" src="sample://widgets-dialogs.xml" />
+    <item label="Boxes" src="sample://widgets-boxes.xml" />
+
+    <item label="Text input" src="sample://widgets-entry.xml" />
+    <item label="Completion entry" src="sample://widgets-completionentry.xml" />
+
+    <item label="Progress bar" src="sample://widgets-progress.xml" />
+
+    <item label="Creating forms" src="sample://widgets-creating-forms.xml" />
+
+    <item label="Calendar" src="sample://widgets-calendar.xml" />
+    <item label="Color picker" src="sample://widgets-colorpicker.xml" />
+    <item label="OS-X style icon bar" src="sample://widgets-macbar.xml" />
+    <item label="Notebook" src="sample://widgets-notebook.xml" />
+    <item label="Tabs" src="sample://widgets-tabs.xml" />
+
+    <item label="Tree" src="sample://widgets-tree.xml">
+      <item label="Inheritance demo" src="sample://widgets-tree-classtree.xml" />
+      <item label="DOM Inspector" src="sample://widgets-tree-domtree.xml" />
+    </item>
+    <item label="Menus" src="sample://widgets-menus.xml">
+      <item label="Context menus" src="sample://widgets-menus-context.xml" />
+    </item>
+    <item label="Layout manager" src="sample://widgets-layout.xml">
+      <item label="Resize bar" src="sample://widgets-resizebar.xml" />
+    </item>
+
+    <item label="Grid" src="sample://widgets-grid.xml" />
+    <item label="Rich text editor" src="sample://widgets-rteframe.xml" />
+  </item>
+
+  <item label="Advanced topics" src="sample://advanced.xml">
+    <item label="Drag and drop" src="sample://widgets-dnd.xml" />
+    <item label="Creating widgets" src="sample://widgets-creating.xml" />
+    <item label="Compound widgets" src="sample://widgets-compound.xml" />
+    <item label="Keyboard support" src="sample://advanced-keyboard.xml" />
+    <item label="Writing applications" src="sample://advanced-writing-apps.xml" />
+  </item>
+
+</outline>

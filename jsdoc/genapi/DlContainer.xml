@@ -1,0 +1,493 @@
+<sample>
+
+  <title>DlContainer</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlContainer</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlWidget〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈container.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈widget.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">scroll</td>
+         <td class="doc"><span default="false" name="scroll">Set <b>overflow: auto</b>?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">false</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+        A container is a widget that can contain other widgets.  It
+        adds methods that help manage the <a href='api://DlContainer.xml:type=object_method:func=children'>child widgets</a>.
+      </span>
+
+     </div>
+   </div>
+    </div>
+
+
+    <div class="static-methods">
+      <h2>Static functions</h2>
+   <div class="method">
+        <h3 id="getHiddenContainer:static_method">DlContainer.getHiddenContainer ()
+        </h3>
+     <div class="doc"><span>
+          Returns a container object which is present in the DOM but
+          hidden.  This is useful in certain situations, such as for
+          instance when you want to check the size of an element but
+          don't want to display it.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="appendWidget:object_method">appendWidget (<span class='param'>w</span>, <span class="varargs">…</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">w</td>
+         <td class="doc"><span name="w">Widget to append</span>
+</td>
+         <td class="type">[<b>〈DlWidget〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Appends a new widget inside this container.  Many container
+          widgets will customize (override) either this function, or
+          <a href='api://DlContainer.xml:type=object_method:func=_appendWidgetElement'>_appendWidgetElement()</a>, in order to provide specialized
+          service.
+<p/>
+          Any additional arguments received by this function will be
+          passed to <a href='api://DlContainer.xml:type=object_method:func=_appendWidgetElement'>_appendWidgetElement()</a>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="children:object_method">children (<span class='param optional'>idx</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">idx</td>
+         <td class="doc"><span default="null" name="idx" optional="1"></span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">null</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">
+           <b><span>Array of child widgets, or widget as position <b>idx</b></span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          If <b>idx</b> is <b>null</b>, this function returns the
+          array of child widgets.  Otherwise it returns the child at
+          position <b>idx</b>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="destroyChildWidgets:object_method">destroyChildWidgets ()
+        </h3>
+     <div class="doc"><span>
+          <a href='api://DlWidget.xml:type=object_method:func=destroy'>Destroys</a> all children of this
+          container.  After this step the child widgets are
+          effectively gone and you should not try to access any of
+          them.  Use this method only when you want to radically
+          change the container (for instance, to regenerate the
+          content).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="disabled:object_method">disabled (<span class='param'>v</span>, <span class='param'>force</span>)
+        <div class="overrides">
+             (overrides <a href="api://DlWidget.xml:type=object_method:func=disabled">disabled in DlWidget</a>)
+        </div>
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">v</td>
+         <td class="doc"><span name="v"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">force</td>
+         <td class="doc"><span name="force"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Disables/enables all child widgets and the container itself.
+          See <a href='api://DlWidget.xml:type=object_method:func=disable'>DlWidget::disable()</a>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getFirstFocusWidget:object_method">getFirstFocusWidget ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: DlWidget) 
+           <b><span></span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the first widget that can receive focus in this
+          container.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getLastFocusWidget:object_method">getLastFocusWidget ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: DlWidget) 
+           <b><span></span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the last widget that can receive focus in this
+          container.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getNextFocusWidget:object_method">getNextFocusWidget (<span class='param'>w</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">w</td>
+         <td class="doc"><span name="w">Pointer widget</span>
+</td>
+         <td class="type">[<b>〈DlWidget〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: DlWidget) 
+           <b><span></span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the next (after <b>w</b>) widget to receive focus in
+          this container.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getPrevFocusWidget:object_method">getPrevFocusWidget (<span class='param'>w</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">w</td>
+         <td class="doc"><span name="w">Pointer widget</span>
+</td>
+         <td class="type">[<b>〈DlWidget〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: DlWidget) 
+           <b><span></span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the previous (before <b>w</b>) widget to receive
+          focus in this container.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="removeWidget:object_method">removeWidget (<span class='param'>w</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">w</td>
+         <td class="doc"><span name="w"></span>
+</td>
+         <td class="type">[<b>〈DlWidget〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Removes widget <b>w</b> from the container.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_appendWidgetElement:object_method">_appendWidgetElement (<span class='param'>w</span>, <span class='param optional'>p</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">w</td>
+         <td class="doc"><span name="w">Widget that has been parented to this container</span>
+</td>
+         <td class="type">[<b>〈DlWidget〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">p</td>
+         <td class="doc"><span default="null" name="p" optional="1">Parent element</span>
+</td>
+         <td class="type">[<b>〈Number,String,HTMLElement〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">null</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Appends the <b>w</b>'s <a href='api://DlWidget.xml:type=object_method:func=getElement'>DlWidget::getElement()</a> element into
+          this container DOM tree.  If <b>p</b> is unspecified (null)
+          then this function does:
+<p/>
+          <div sample="DlContainer1"></div>
+<p/>
+          If p is specified, it must translate into a parent element
+          where to append the new child.  If it's a String, then the
+          element is looked up with document.getElementById.  If it's
+          a Number, then the element is looked up into this container
+          element's childNodes.
+<p/>
+          You shouldn't need to call this function directly.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_createElement:object_method">_createElement ()
+        <div class="overrides">
+             (overrides <a href="api://DlWidget.xml:type=object_method:func=_createElement">_createElement in DlWidget</a>)
+        </div>
+        </h3>
+     <div class="doc"><span>
+          This simply calls base class first to create our element,
+          then adds the inline style “overflow: auto” if <b>scroll</b>
+          was specified in constructor.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_handleKeybinding:object_method">_handleKeybinding (<span class='param'>ev</span>, <span class='param'>w</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">w</td>
+         <td class="doc"><span name="w"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_removeWidgetElement:object_method">_removeWidgetElement (<span class='param'>w</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">w</td>
+         <td class="doc"><span name="w"></span>
+</td>
+         <td class="type">[<b>〈DlWidget〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Removes a widget's DOM element from our tree.  You shouldn't
+          need to call this function directly.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_setListeners:object_method">_setListeners ()
+        <div class="overrides">
+             (overrides <a href="api://DlWidget.xml:type=object_method:func=_setListeners">_setListeners in DlWidget</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+<code id="DlContainer1" type="js">
+            this.getElement().appendChild(w.getElement());
+          </code>
+
+
+</sample>
+
+
+
+

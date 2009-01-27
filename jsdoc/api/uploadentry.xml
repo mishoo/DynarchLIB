@@ -1,0 +1,51 @@
+<api file="uploadentry.js">
+  <object base="DlWidget" name="DlUploadEntry">
+    <constructor>
+      <param default="[¶      &#34;file&#34;¶   ]" name="files"></param>
+      <param default="null" name="params"></param>
+      <param default="null" name="url"></param>
+    </constructor>
+    <events>
+      <event name="onUploadStart">
+        <doc></doc>
+      </event>
+      <event name="onUploadEnd">
+        <doc></doc>
+      </event>
+      <event name="onChange">
+        <doc></doc>
+      </event>
+    </events>
+    <static-methods>
+      <method hash="7b6676773982122cbabae11404ec491e" name="finishUpload" varargs="1">
+        <!--XXX: uses *arguments*, check for missing params-->
+        <param name="upload"></param>
+        <doc></doc>
+      </method>
+    </static-methods>
+    <object-methods>
+      <method hash="fe85140376664c8ecedc0d8f84eba728" name="getField">
+        <param name="name"></param>
+        <doc></doc>
+      </method>
+      <method hash="de028f0e990881bfe05b07bae24cde07" name="getParam">
+        <param name="name"></param>
+        <doc></doc>
+      </method>
+      <method hash="71f9dba5319f15c72a76f63e41d24223" name="init">
+        <doc></doc>
+      </method>
+      <method hash="632d43c897bf496ad04aa58cbfb771ca" name="setParam">
+        <param name="name"></param>
+        <param name="val"></param>
+        <doc></doc>
+      </method>
+      <method hash="2507b9b46a85f301bac2f4d12ffcd36a" name="submit">
+        <doc></doc>
+      </method>
+      <method hash="e969ef154450f023188ce5a2f547ca6d" internal="1" name="_createElement">
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

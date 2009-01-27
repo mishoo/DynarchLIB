@@ -1,0 +1,143 @@
+<sample>
+
+  <title>DlDesktop</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlDesktop</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlContainer〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈desktop.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈container.js, geometry.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">bounds</td>
+         <td class="doc"><span default=" new DlRect(50, 30, 800, 600)" name="bounds">Desktop bounding box</span>
+</td>
+         <td class="type">[<b>〈DlRect〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default"> new DlRect(50, 30, 800, 600)</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+        You will generally use this widget as the top-level container
+        for your application.  Here is for instance how to start your
+        application:
+<p/>
+        <div sample="DlDesktop1"></div>
+      </span>
+
+     </div>
+   </div>
+    </div>
+
+
+    <div class="static-methods">
+      <h2>Static functions</h2>
+   <div class="method">
+        <h3 id="IEresize:static_method">DlDesktop.IEresize ()
+        </h3>
+     <div class="doc"><span>
+          Internal method necessary for IE to correctly resize the
+          desktop.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="fullScreen:object_method">fullScreen ()
+        </h3>
+     <div class="doc"><span>
+          Make this desktop widget “full screen” (that is, occupy the
+          whole browser window and make it resize automatically along
+          with the browser).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_createElement:object_method">_createElement ()
+        <div class="overrides">
+             (overrides <a href="api://DlContainer.xml:type=object_method:func=_createElement">_createElement in DlContainer</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+<code id="DlDesktop1" type="html"><![CDATA[
+          <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+          <!-- the doctype declaration is important;
+               otherwise IE will make a mess of your application -->
+          <html>
+            <head>
+              <title>Your Great Application</title>
+              <link rel="stylesheet"
+                    type="text/css"
+                    href="/path/to/DynarchLIB/src/css/default.css"
+                    media="all" />
+              <script>
+                // must declare the path to DynarchLIB
+                window.Dynarch_Base_Url = "/path/to/DynarchLIB";
+                // your main entry point
+                function start() {
+                    // create your top-level container
+                    var desktop = new DlDesktop({});
+                    // make it full screen (will automatically resize with the window)
+                    desktop.fullScreen();
+                    // now put your widgets into it, i.e.:
+                    var box = new DlVbox({ parent: desktop });
+                    new DlButton({ label: "Foo", parent: box });
+                }
+              </script>
+              <script src="/path/to/DynarchLIB/src/js/thelib.js"></script>
+            </head>
+            <body onload="start()">
+              <h1>Loading...</h1>
+            </body>
+          </html>
+        ]]></code>
+
+
+</sample>
+
+
+
+

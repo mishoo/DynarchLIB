@@ -1,0 +1,133 @@
+<api file="sound.js" show="1">
+  <object base="DlEventProxy" name="DlSound">
+    <constructor>
+      <param default="null" name="volume" type="Number">Volume (0 = mute .. 100 = max)</param>
+      <param default="null" name="pan" type="Number">Panning (-100 = left only .. 0 = balanced .. 100 = right only)</param>
+      <param default="false" name="stream" type="boolean">Start streaming?</param>
+      <param default="null" name="url" type="String">URL to an the file (MP3, WAV or AAC)</param>
+      <doc>
+        You can use this object to add sound support to your
+        application.  This is a Flash utility (see 〈DlFlashUtils〉)
+        which wraps the Flash Sound object to provide its
+        functionality in JavaScript.
+
+        Flash currently supports MP3, WAV and AAC.
+
+        Example usage:
+
+        <js>
+          var snd = new DlSound({ url: "/sounds/boom.mp3" });
+          snd.play();
+        </js>
+
+        The 〈play()〉 method will call 〈load()〉 automatically if the
+        sound wasn't yet loaded.  This can take some time, depending
+        on network speed and sound file size.
+
+        You can play multiple sounds simultaneously by using multiple
+        DlSound objects.  Note that while you can use a single DlSound
+        object to play differend sounds (not simultaneously though) we
+        don't recommend this.  In your application, you might want to
+        create a wrapper that creates and caches DlSound objects as
+        appropriate, here's an example:
+
+        <js>
+          var EVENT_SOUNDS = {
+              newMail : "new-mail.mp3",
+              newChat : "new-chat.mp3",
+              ...
+          };
+          var SOUNDS = {};
+          function playSound(event) {
+              var url = EVENT_SOUNDS[event];
+              var snd_object = SOUNDS[url];
+              if (!snd_object) {
+                  snd_object = SOUNDS[url] = new DlSound({ url: url });
+              }
+              snd_object.play();
+          };
+
+          // ... later
+
+          playSound("newChat");
+        </js>
+      </doc>
+    </constructor>
+    <events>
+      <event name="onLoad">
+        <param name="success" type="boolean">Will be false if file couldn't be loaded</param>
+        <doc>Triggered when the sound file was loaded, or failed loading.</doc>
+      </event>
+      <event name="onComplete">
+        <doc>Triggered when the sound finished playing.</doc>
+      </event>
+    </events>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="442ef33ebe60c99737457c230edc729f" name="getBytesLoaded">
+        <doc>
+          Returns the number of bytes currently loaded.
+        </doc>
+      </method>
+      <method hash="2309588658b4a5c155d83b58a775f2e6" name="getBytesTotal">
+        <doc>
+          Returns the total length of the sound file.
+        </doc>
+      </method>
+      <method hash="2a29995ce0c6b57104acc6b55685ffb0" name="getDuration">
+        <doc>
+          Returns the sound duration in milliseconds.
+        </doc>
+      </method>
+      <method hash="93299149886b76cfcedc50b190c645e6" name="getPosition">
+        <doc>
+          Returns the current sound position.
+        </doc>
+      </method>
+      <method hash="275ccc56db60593fe08c8a6a78166ded" name="load">
+        <param default="null" name="url" optional="1" type="String">URL for this sound</param>
+        <param default="false" name="stream" optional="1" type="boolean">Start streaming?</param>
+        <doc>
+          Loads a sound file.  If <b>url</b> is not passed, the URL
+          passed in the constructor will be used.  If <b>stream</b> is
+          true, it will start playing the file as soon as there is
+          enough data loaded (but without waiting for the file to be
+          fully downloaded).  This is useful to implement a streaming
+          player.
+        </doc>
+      </method>
+      <method hash="c91f884b1b64dcb87a0bee7a19d52706" name="play">
+        <param default="0" name="offset" optional="1" type="Number">Offset in seconds</param>
+        <param default="0" name="loop" optional="1" type="Number">How many times to loop this sound?</param>
+        <doc>
+          Starts playing this sound immediately, assuming it was
+          already loaded.  Otherwise, calls 〈load()〉 and starts
+          playing as soon as file is fully loaded (that is, when the
+          “onLoad” event is triggered).
+        </doc>
+      </method>
+      <method hash="6231d05b17847a3a25d1f6aa1514f442" name="getPan">
+        <doc></doc>
+      </method>
+      <method hash="9d80312069ca00186cb920f1e20ccaa2" name="getURL">
+        <doc></doc>
+      </method>
+      <method hash="3489f7d7a84c05dd65cefd59eb242b8d" name="getVolume">
+        <doc></doc>
+      </method>
+      <method hash="dff8551aa314b263a052379b61fe6265" name="setPan">
+        <param name="pan"></param>
+        <doc></doc>
+      </method>
+      <method hash="4727cccef0011f5658cc0286c89ff0a4" name="setVolume">
+        <param name="volume"></param>
+        <doc></doc>
+      </method>
+      <method hash="1be29c669107f20d3529bf9183bc430e" name="stop">
+        <doc>
+          Stops playing this sound.
+        </doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

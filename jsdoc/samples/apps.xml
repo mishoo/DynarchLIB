@@ -1,0 +1,13 @@
+<sample>
+  <title>Complex samples</title>
+
+  <text>
+    <p>
+      To make an idea about the versatility of DynarchLIB, we created
+      some complex examples.  Note that most of them might not work if
+      you downloaded DynarchLIB and are viewing them on your machine.
+      They require support for CGI and a few Perl modules.
+    </p>
+  </text>
+
+</sample>

@@ -1,0 +1,175 @@
+<sample>
+
+  <title>OS-X style icon bar</title>
+
+  <text>
+
+    <p>
+      You can easily create an icon bar similar to the MacOS dock
+      using the <b>DlMacBarIcon</b> widget.  It inherits from the
+      <b>DlAbstractButton</b> class and provides all functionality a
+      button has—i.e., in order to catch click event, you add an
+      "onClick" event listener.  Here is a sample:
+    </p>
+
+    <div sample="macbar1" />
+
+    <p>
+      Here's a second sample that demonstrates that we don't actually
+      have to put these buttons in a bar.  They can be placed anywhere
+      you like, and using the “align” property we can specify which
+      how will it animate.  Experiment! :-)
+    </p>
+
+    <div sample="macbar2" />
+
+  </text>
+
+  <code id="macbar1" type="js" canrun="true"><![CDATA[
+    var dlg = new DlDialog({ title     : "MacBar test",
+                             resizable : true,
+                             quitBtn   : "destroy",
+                             iconClass : "IconConfigure"
+                           });
+
+    // define a container for the "macbar".
+    var box = new DlContainer({ parent: dlg, className: "DlMacHBar" });
+    box.setStyle("textAlign", "center");
+
+    // pack it in a DlLayout widget to keep it anchored at the dialog
+    // bottom side.  Note we need to specify overflow: visible since
+    // the icons will expand vertically.
+
+    var layout = new DlLayout({ parent: dlg });
+    layout.packWidget(box, { pos: "bottom", overflow: "visible" });
+
+    new DlMacBarIcon({ parent: box, align: "bottom",
+                       img: "jsdoc/img/64x64/artsbuilder.png",
+                       tooltip: "Sound properties" });
+
+    new DlMacBarIcon({ parent: box, align: "bottom",
+                       img: "jsdoc/img/64x64/background.png",
+                       tooltip: "Background image" });
+
+    new DlMacBarIcon({ parent: box, align: "bottom",
+                       img: "jsdoc/img/64x64/bell.png",
+                       tooltip: "Alarm" });
+
+    new DlMacBarIcon({ parent: box, align: "bottom",
+                       img: "jsdoc/img/64x64/clock.png",
+                       tooltip: "Date and time" });
+
+    var quit = new DlMacBarIcon({ parent: box, align: "bottom",
+                                  img: "jsdoc/img/64x64/energy.png",
+                                  tooltip: "Close this dialog" });
+
+    quit.addEventListener("onClick", function() {
+            dlg.destroy();
+    });
+
+    layout.setSize({ x: 400, y: 300 });
+
+    dlg.centerOnParent();
+    dlg.show();
+  ]]></code>
+
+  <code id="macbar2" type="js" canrun="true"><![CDATA[
+    var dlg = new DlDialog({ title     : "MacButtons",
+                             resizable : true,
+                             quitBtn   : "destroy" });
+    var cont = new DlContainer({ parent: dlg, fillParent: true });
+    dlg.setSize({ x: 400, y: 400 });
+
+    var icons = [ "artsbuilder.png", "background.png", "bell.png", "clock.png", "energy.png" ];
+    var PI2 = 2 * Math.PI;
+    var step = PI2 / icons.length;
+    for (var i = 0; i < PI2; i += step) {
+            var w = new DlMacBarIcon({ parent: cont,
+                                       align: "center middle",
+                                       img: "jsdoc/img/64x64/" + icons.shift() });
+            w.setStyle({ position   : "absolute",
+                         marginLeft : "-16px",
+                         marginTop  : "-16px",
+                         left       : 50 + 30 * Math.cos(i) + "%",
+                         top        : 50 + 30 * Math.sin(i) + "%" });
+    }
+
+    dlg.centerOnParent();
+    dlg.show();
+  ]]></code>
+
+  <code id="macbarN" type="js" canrun="true"><![CDATA[
+
+// var Q = document.createElement("div");
+// Q.style.position = "absolute";
+// Q.style.left = "50px";
+// Q.style.top = "50px";
+// Q.style.width = "500px";
+// Q.style.height = "500px";
+// document.body.appendChild(Q);
+// var ifr = document.createElement("iframe");
+// ifr.style.width = "100%";
+// ifr.style.height = "100%";
+// ifr.src = "http://www.google.com/";
+// Q.appendChild(ifr);
+
+var dlg = new DlDialog({ title: "MacBar test", resizable: true });
+
+var layout = new DlLayout({ parent: dlg, outerSpace: 2 });
+
+function makeButtons(box, align) {
+	var grp = DlRadioGroup.get();
+	grp._minChecked = 1;
+	new DlMacBarIcon({ group  : grp,
+			   type	  : DlButton.TYPE.TWOSTATE,
+			   parent : box,
+			   align  : align,
+			   img	  : "jsdoc/img/64x64/artsbuilder.png" });
+
+	new DlMacBarIcon({ group  : grp,
+			   type	  : DlButton.TYPE.TWOSTATE,
+			   parent : box,
+			   align  : align,
+			   img	  : "jsdoc/img/64x64/background.png"
+			 });
+
+	new DlMacBarIcon({ group  : grp,
+			   type	  : DlButton.TYPE.TWOSTATE,
+			   parent : box,
+			   align  : align,
+			   img	  : "jsdoc/img/64x64/bell.png"
+			 });
+
+	new DlMacBarIcon({ group  : grp,
+			   type	  : DlButton.TYPE.TWOSTATE,
+			   parent : box,
+			   align  : align,
+			   img	  : "jsdoc/img/64x64/clock.png"
+			 });
+
+	// box.addSeparator();
+	var quit = new DlMacBarIcon({ parent : box,
+				      align  : align,
+				      img    : "jsdoc/img/64x64/energy.png" });
+
+	quit.addEventListener("onClick", function() {
+		dlg.destroy();
+	});
+};
+
+var box = new DlContainer({ className: "DlMacHBar" });
+makeButtons(box, "bottom");
+layout.packWidget(box, { pos: "bottom", zIndex: 10, overflow: "visible" });
+box.getElement().style.textAlign = "center";
+
+var box = new DlContainer({ className: "DlMacHBar" });
+makeButtons(box, "top");
+layout.packWidget(box, { pos: "top", zIndex: 10, overflow: "visible" });
+box.getElement().style.textAlign = "center";
+
+layout.setSize({ x: 500, y: 500 });
+dlg.centerOnParent();
+dlg.show();
+  ]]></code>
+
+</sample>

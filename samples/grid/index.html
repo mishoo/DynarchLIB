@@ -1,0 +1,358 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>Grid sample</title>
+    <link href="../../src/css/default.css" rel="stylesheet" type="text/css" />
+    <link href="../samples.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" media="all" href="../../jsdoc/hl/style.css" />
+    [% IF final %]
+    <script src="../../src/js/thelib.js"></script>
+    <script src="../../jsdoc/hl/hl-all.js"></script>
+    [% ELSE %]
+    <script class="DynarchLIB" src="../../src/js/all-scripts.jsx?crunch=0;path=../../src/js"></script>
+    <script src="../../jsdoc/hl/highlight.js"></script>
+    <script src="../../jsdoc/hl/lang-js.js"></script>
+    <script src="../../jsdoc/hl/lang-dljs.js"></script>
+    <script src="../../jsdoc/hl/lang-css.js"></script>
+    <script src="../../jsdoc/hl/lang-xml.js"></script>
+    <script src="../../jsdoc/hl/lang-html.js"></script>
+    <script src="../../jsdoc/hl/helpers.js"></script>
+    [% END %]
+
+    <script src="test1.js"></script>
+  </head>
+  <body><div class="page"><div class="content">
+
+    <h1>DlDataGrid widget</h1>
+
+    <p>
+      The new grid is made up of the following pieces:
+    </p>
+
+    <ul>
+      <li>
+        DlRecord — an object that keeps data for a single record (grid row)
+      </li>
+      <li>
+        DlRecordCache — an object that maintains multiple records
+      </li>
+      <li>
+        DlDataGrid — the widget itself
+      </li>
+      <li>
+        DlGridCol — defines one column
+      </li>
+      <li>
+        DlSelectionModel — object that handles the grid selection
+      </li>
+    </ul>
+
+    <p>
+      We'll discuss them all but for now only the first 3 are
+      essentials.
+    </p>
+
+    <p>
+      DlRecord and DlRecordCache represent the data model and
+      DlDataGrid is the view.  The grid displays data from a record
+      cache, but it doesn't necessarily display all records or all
+      columns.  It actually displays a subset of the data (and of
+      course, it can happen that this subset is the entire list).
+    </p>
+
+    <p>
+      The new grid widget is centered around the idea that each record
+      has an unique ID; the record cache doesn't maintain the order of
+      the records, the grid is solely responsible about this.  In
+      other words, we work as much as possible with record ID-s
+      instead of row indexes.  This makes it easy to identify records
+      when we communicate with the server irrespective of their actual
+      positions inside the grid (which can be sorted, etc).
+    </p>
+
+    <p>
+      Here's one verbose example:
+    </p>
+
+    [% INCLUDE show_sample.tt sample = 'test1' %]
+
+    <p>
+      You can already notice a few features of the new grid:
+    </p>
+
+    <ul>
+      <li>
+        You can select multiple rows by shift-click / ctrl-click.
+      </li>
+      <li>
+        Once you focused the grid, you can also use the keyboard to
+        navigate and select; this was available in the old grid as
+        well, actually, but some ugly hacks were needed to allow
+        selection of multiple rows.
+      </li>
+      <li>
+        You can drag and drop column headers to reorder columns.
+      </li>
+      <li>
+        Right clicking on the headers allow you to hide/show columns.
+        Note that they even remember their positions ;-)
+      </li>
+      <li>
+        Obviously, clicking the column header sorts the grid.
+      </li>
+    </ul>
+
+    <h2>Paging and virtual scrolling</h2>
+
+    <p>
+      Speed was perhaps the most important factor that determined me
+      to start a new grid widget from scratch (I think it's the fourth
+      time in my life when I write a grid).  So before we move
+      forward, let's compare the speed of the new grid to the speed of
+      the old one.
+    </p>
+
+    <p>
+      Currently you can see the old grid in action <a
+      href="http://www.dynarchlib.com/dl/index.html#sample://widgets-grid.xml">at
+      this address</a>.  Run sample #2.  On my machine (Intel Core
+      Duo, 2GHz) and platform (Firefox 3 / Debian Linux) the sample
+      shows up in 3 seconds.  Next I'll rewrite that sample for the
+      new grid (in fact I'm anxious to see this too :D).
+    </p>
+
+    [% INCLUDE show_sample.tt sample = 'test2' %]
+
+    <p>
+      It takes like half a second for the new grid.  More, the time
+      needed won't increase proportionally with the number of rows,
+      because the grid actually displays only 50 rows.  As you scroll
+      outside this area, the grid adds rows into view (you can notice
+      a very slight flickering in Firefox, unfortunately I couldn't
+      find a way around that).
+    </p>
+
+    <p>
+      Virtual scrolling can be controlled by two parameters to
+      DlDataGrid constructor:
+    </p>
+
+    <ul>
+      <li>
+        <p>
+          <b>rpp</b> — “records per page”.  This defaults to 50.  The
+          grid will keep <em>at most</em> this many records in the
+          DOM.  If more records are to be displayed, they are
+          displayed as the page is scrolled, if
+          <b>virtualScrolling</b> is true.  Otherwise you need to
+          provide a paging mechanism (i.e. "prev page" or "next page"
+          buttons and use the grid's <b>displayPage</b> method).
+        </p>
+        <p>
+          <b>rpp</b> can also be zero or null, in which case the grid
+          displays all records that are available.  This works best
+          for a relatively small number of records (200 records and 10
+          columns work decently fast in my tests).  For anything over
+          200 records you really need <b>rpp</b> to be a small value
+          (50 is best), otherwise the browser slows down to a crawl.
+        </p>
+      </li>
+      <li>
+        <p>
+          <b>virtualScrolling</b> : <b>true</b> | false — default is
+          true; this boolean specifies if we want the grid to use
+          virtual scrolling.
+        </p>
+      </li>
+    </ul>
+
+    <h2>What's with resetIDS()?</h2>
+
+    <p>
+      As I mentioned above, the grid does not necessarily display all
+      records from the data cache.  You need to explicitly tell the
+      grid the ID-s of the rows that it should display.  This is done
+      with resetIDS() which takes an array of ID-s.  This array also
+      defines the initial order of the records in the display.
+    </p>
+
+    <h2>Grid columns</h2>
+
+    <p>
+      The grid internally creates a DlGridCol object for each column
+      passed in the <b>columns</b> argument.  All the properties are
+      passed to the DlGridCol constructor.  This object supports the
+      following properties (showing the defaults):
+    </p>
+
+    <pre class="js" name="code">"id"        : null
+"width"     : null
+"style"     : null
+"label"     : null
+"tooltip"   : null
+"iconClass" : null
+"sortable"  : true
+"resizable" : true
+"visible"   : true</pre>
+
+    <p>
+      For example, if you want a column to be initially hidden, you
+      need to pass visible: false, as shown in the next sample.  Note
+      that it's not currently possible to <em>create</em> columns
+      after the grid was initialized.  One can only hide or show them,
+      therefore all columns must be specified from the start.
+    </p>
+
+    <h2>Selection model</h2>
+
+    <p>
+      When you construct the grid you can specify a selection model.
+      If you don't, the grid creates its own and it's available in
+      <b>grid._selection</b> (really not a public API), but normally
+      you'll roll your own object.  Using it you can find out at any
+      time what records are selected, as an array of record ID-s, or
+      as a hash.  The following sample demonstrates it.
+    </p>
+
+    [% INCLUDE show_sample.tt sample = 'test3' %]
+
+    <p>
+      The selection model accepts a <b>multiple</b> argument (boolean)
+      which defaults to true.  If you pass false there, the grid won't
+      support multiple row selection.
+    </p>
+
+    <h2>Data changes</h2>
+
+    <p>
+      The grid “listens” to data changes in the cache and
+      automatically refreshes the modified records, inserts or removes
+      records, to match with the cache, therefore all you need to do
+      is to modify the data model.  The following sample illustrates
+      that.
+    </p>
+
+    [% INCLUDE show_sample.tt sample = 'test4' %]
+
+    <p>
+      One thing to notice is that upon an "onInsert" event the grid
+      adds that row into the display, although it wasn't mentioned in
+      resetIDS().  In general this is what we want.
+    </p>
+
+    <h2>Under the hood</h2>
+
+    <p>
+      Now that you know all the basics, it's time for some more
+      advanced tips.  For example, what happens if inside some object
+      you have a property which is a Date object?  The grid will
+      display it by converting it to string, but it's hardly what you
+      want to happen.
+    </p>
+
+    <p>
+      Probably the most important trick that's going to be useful in
+      real applications is to inherit the DlRecord or/and
+      DlRecordCache objects.  The following sample shows how we can
+      create a custom DlRecordCache object.
+    </p>
+
+    [% INCLUDE show_sample.tt sample = 'test5' %]
+
+    <p>
+      There are other interesting functions in DlRecordCache which are
+      automatically called by the grid and you can override:
+    </p>
+
+    <ul>
+      <li>getRecClass(rec) { return a CSS class name for the given record }</li>
+      <li>getCellClass(rec, col) { return a CSS class name for the given record and column }</li>
+      <li>getRecords(ids, callback, obj) { see below }</li>
+      <li>getInsertPos(rec) { return the position at which this newly inserted record should be displayed }</li>
+    </ul>
+
+    <p>
+      When your data is huge, <b>getRecords</b> is of particular
+      importance.  The default implementation simply calls
+      cache.get(id) for each ID and returns the collected records, but
+      this won't work when you're loading the data “lazily” from the
+      server.  In such cases you need to override this method and make
+      it request the data from the server.
+    </p>
+
+    <p>
+      I will try to illustrate this in the next sample.  Note that
+      it's a “client-side”-only sample, it doesn't load data from the
+      server; it just generates it randomly after a timeout (to
+      emulate the time spent into the client-server round trip).  The
+      sample is a bit complicated, but I'll explain things below.
+    </p>
+
+    [% INCLUDE show_sample.tt sample = 'test6' %]
+
+    <p>
+      Now here's what happens.  When the grid needs to display data,
+      it calls cache.getRecords().  This method receives a callback;
+      the original idea was that this callback is supposed to be
+      called with an array of full records, only after we retrieve
+      data from server.  However in practice this didn't work because
+      of the asynchronous nature of the AJAX calls — the browser being
+      “free” while a call is active, the user can still scroll while
+      the server is retrieving records for the first call.  Which
+      means that by the time the records get cached in the client and
+      the callback called, the user might view a totally different set
+      of records.  This led to incredibly difficult to debug issues,
+      so I gave up the idea.  SO, the right solution is to have the
+      callback called right away; it will be passed an array that
+      contains DlRecord objects, though some of them might be “fake”
+      (i.e. not fully retrieved from server, which is why I'm using
+      the _loading hack).  In this case, the grid will display "..."
+      (as actually returned by the DlRecord::get() function) and
+      later — when full data is available — we manually trigger the
+      "onChange" event in the cache for those rows, so that the view
+      gets updated.
+    </p>
+
+    <p>
+      As you can see in the code, it has to mess up with some
+      internals of these objects — for instance it sets the recordSet
+      for a created record manually to the cache, and it manually
+      needs to modify the record._data — it would make sense, if we
+      have a single column, to use record.set() in order to modify its
+      value; but in the general case where we have to display a lot of
+      columns, record.set() is not OK because it triggers the onChange
+      event for each column, which is a waste of time since the grid
+      actually re-displays the full row upon onChange.
+    </p>
+
+    <p>
+      One other thing to notice here is that the grid instantly
+      displays the value of “known” columns (in this case, the ID),
+      while it waits for the other columns' value to come.  This is
+      useful in many cases, i.e. when you want to display data from an
+      SQL join.  An example where it's really useful: say you want to
+      display a table of pages; each page contains some specific data
+      (i.e. title, date created, etc) and each one is created by some
+      user (first name, last name, date last seen, etc.; this data
+      comes from a different table in DB).  You can cache these
+      separately on the client.  Then, if you need to display a table
+      that contains user comments, you also have some specific data
+      (subject, date created, comment etc.) but you also have user's
+      data which might have been already cached.  By defining your own
+      cache and record objects you can achieve maximum flexibility
+      needed for your application.
+    </p>
+
+    <h2>That's all for now</h2>
+
+    <p>
+      Until a full API reference for the new grid is available, I
+      think I have covered most use cases so that's the end of this
+      article.  Enjoy!
+    </p>
+
+    <hr />
+    — Copyright © Dynarch.com 2008 — All rights reserved —
+    <script>DlHighlight.HELPERS.highlightByName("code", "pre")</script>
+  </div></div></body>
+</html>

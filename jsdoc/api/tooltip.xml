@@ -1,0 +1,9 @@
+<api file="tooltip.js">
+  <object base="DlPopup" internal="1" name="DlTooltip">
+    <constructor>
+      <param name="args"></param>
+    </constructor>
+    <static-methods></static-methods>
+    <object-methods></object-methods>
+  </object>
+</api>

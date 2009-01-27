@@ -1,0 +1,109 @@
+<sample>
+
+  <title>Object</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>Object</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>— none —</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈jslib.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈texts.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+     <div class="doc"><span>
+        This is a standard JavaScript object.  DynarchLIB adds a few
+        useful extensions.
+      </span>
+
+     </div>
+   </div>
+    </div>
+
+
+    <div class="static-methods">
+      <h2>Static functions</h2>
+   <div class="method">
+        <h3 id="isEmpty:static_method">Object.isEmpty (<span class='param'>o</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">o</td>
+         <td class="doc"><span name="o"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Receives an object (hash) as argument and returns
+          <b>true</b> if that hash doesn't contain any keys (is
+          empty).  Returns false if at least one key has been found.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="makeCopy:static_method">Object.makeCopy ()
+        </h3>
+     <div class="doc"><span>
+          Alias to <a href='api://Dynarch.xml:type=static_method:func=makeCopy'>Dynarch.makeCopy()</a>.  The following 2 are
+          equivalent:
+<p/>
+          <div sample="Object1"></div>
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="makeDeepCopy:static_method">Object.makeDeepCopy ()
+        </h3>
+     <div class="doc"><span>
+          Alias to <a href='api://Dynarch.xml:type=static_method:func=makeDeepCopy'>Dynarch.makeDeepCopy()</a>.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+
+  </text>
+<code id="Object1" type="js">
+            var copy = Object.makeCopy(source);
+            var copy = Dynarch.makeCopy(source);
+          </code>
+
+
+</sample>
+
+
+
+

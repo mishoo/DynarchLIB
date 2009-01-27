@@ -1,0 +1,32 @@
+<api file="console.js">
+  <object name="DlConsole">
+    <constructor></constructor>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="3fe2c09f51d9427db2003ba9fe7b57c1" name="CC">
+        <param name="text"></param>
+        <param name="cn"></param>
+        <doc></doc>
+      </method>
+      <method hash="2b78011ae6e6d4f89a175a4b0876bcf4" name="line">
+        <doc></doc>
+      </method>
+      <method hash="1d7be76fb630194745c5d9860bbdc461" name="log" varargs="1">
+        <!--XXX: uses *arguments*, check for missing params-->
+        <param name="str"></param>
+        <doc></doc>
+      </method>
+      <method hash="6f0fccbd96d0c5240d7d56a1ddb626ac" internal="1" name="_addMsg">
+        <param name="msg"></param>
+        <doc></doc>
+      </method>
+      <method hash="6c6a3c74fb7bcd2c6c35de4fd09b7fb9" internal="1" name="_init">
+        <doc></doc>
+      </method>
+      <method hash="4ce77fd52ee51b5b53909279f9eff261" internal="1" name="_loaded">
+        <param name="win"></param>
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

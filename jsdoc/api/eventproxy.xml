@@ -1,0 +1,274 @@
+<api file="eventproxy.js" show="1">
+  <object name="DlEventProxy">
+    <constructor>
+      <doc>
+        DlEventProxy is the base class of all widgets and of a few
+        more other objects.  It implements a simple event dispatcher.
+        Such an object has a set of events.  Each event can have one
+        or more <em>listeners</em> (or <em>handlers</em>).  A listener
+        is a plain JavaScript function and DlEventProxy will call all
+        listeners for some event whenever that event is triggered.
+
+        Event listeners will receive arguments as passed by the code
+        that triggers the event.  There are no general rules here.
+        Listeners that get called as a consequence of an UI event will
+        generally receive a 〈DlEvent〉 object as argument.  Using it
+        you will be able to tell the event type, mouse coordinates,
+        keys pressed, etc.  However, other custom events will receive
+        various other arguments (or no arguments at all).  We will
+        properly document arguments for all events.
+
+        Event listeners are called in the scope of the current object.
+        If you want to change this, use 〈Function::closure()〉.
+      </doc>
+    </constructor>
+
+    <events>
+      <event name="onDestroy">
+        <doc>
+          This is an event defined by DlEventProxy (so obviously it
+          will be available in all derived objects).  It will be
+          called by the framework when the object is destroyed.
+
+          By default, 〈addEventListener()〉 will insert handlers for
+          this event in reverse order, so it's safe to do anything you
+          want with the object internals during this event.  The
+          object should be effectively destroyed after all handlers
+          have been executed.
+        </doc>
+      </event>
+    </events>
+
+    <static-methods></static-methods>
+
+    <object-methods>
+      <method XXX="Code has changed!" hash="1949184d970271426a22ae111bbcac53" name="addEventListener">
+        <param name="ev" type="String|Array|Hash">Event name</param>
+        <param name="handler" type="Function">Event handler function</param>
+        <param name="phase" optional="1" type="boolean">Add to front?</param>
+        <doc>
+          Adds a new handler for an existing event of this object.  In
+          the simplest form you will call it for example like this:
+
+          <js>
+            function handlerFunction() {
+              // do stuff upon destroy
+            };
+            object.addEventListener("onDestroy", handlerFunction);
+          </js>
+
+          However, as you can see, you can pass an Array or a Hash too
+          as the event name.  If you pass an Array, it will assume
+          that you want to add the same <b>handler</b> to all the
+          events named in the array:
+
+          <js>
+            object.addEventListener([ "onMouseEnter", "onMouseLeave" ],
+                                    mouseHandler);
+          </js>
+
+          If you pass a Hash, you get a nice way to add multiple
+          different listeners for different events in an object:
+
+          <js>
+            object.addEventListener({ onMouseEnter : doMouseEnter,
+                                      onMouseLeave : doMouseLeave,
+                                      onMouseDown  : doMouseDown,
+                                      onDestroy    : doDestroy });
+          </js>
+
+          You can get the same effect by calling addEventListener
+          multiple times, but it's easier to use a Hash.
+
+          If not passed, <b>phase</b> is by default <b>false</b>,
+          except in the situation when the event name is "onDestroy"
+          (then phase defaults <b>true</b>).  If you pass <b>true</b>,
+          then your handler will be registered at the start; therefore
+          when the event occurs, this listener will be called first.
+        </doc>
+      <param name="object"></param></method>
+
+      <method XXX="Code has changed!" hash="56b2edaa97cc2cc9d13f0cf6ea8ce91c" name="removeEventListener">
+        <param name="ev" type="String|Array|Object"></param>
+        <param name="handler" type="Function"></param>
+        <doc>
+          Removes the specified listener(s) from the object.  See
+          〈addEventListener()〉 for syntax of the arguments.
+        </doc>
+      </method>
+
+      <method hash="ab1b6bc3753368adcdc8bfbf3592c6a0" name="condEventListener" varargs="1">
+        <!--XXX: uses *arguments*, check for missing params-->
+        <param name="cond" type="boolean">Condition</param>
+        <doc>
+          This combines 〈addEventListener()〉 and
+          〈removeEventListener()〉.  After <b>cond</b>, pass the same
+          arguments that you would pass to those functions.
+          condEventListener() will <em>add</em> the listeners if
+          condition is <b>true</b>, or remove them if condition is
+          <b>false</b>.
+        </doc>
+      </method>
+
+      <method XXX="Code has changed!" hash="d8c5510d47448a848f3a5882835e06eb" name="removeAllListeners">
+        <param name="ev" type="String">Event name</param>
+        <doc>
+          Removes <em>all</em> listeners associated with an event.
+        </doc>
+      </method>
+
+      <method hash="5d4643bceabad0f4a424a3009b64b785" name="disableHooks">
+        <param name="ev" type="String|Array">Event name(s)</param>
+        <doc>
+          Temporarily disables the listeners for the named event(s).
+          You can restore them later with 〈enableHooks()〉.
+        </doc>
+      </method>
+
+      <method hash="f62f276949901ee65194edadea42de65" name="enableHooks">
+        <param name="ev" type="String|Array">Event name(s)</param>
+        <doc>
+          Restores listeners disabled by 〈disableHooks()〉.
+
+          Note that between a call to disableHooks() and one to
+          enableHooks(), you can add other listeners to the same
+          event.  They will function correctly, but they will be lost
+          after the call to enableHooks().
+
+          Example where this might be useful:
+
+          <js>
+            field.addEventListener("onChange", function() {
+              // do something heavy when field has changed
+            });
+
+            // ... later, "something heavy" is already done for the
+            // value we plan to put into the field, so we don't want
+            // the handler to get called now:
+
+            field.disableHooks("onChange");
+            field.changeTo(new_value);
+            field.enableHooks("onChange");
+          </js>
+
+          (In practice it's better to add an argument to the changeTo
+          function so that it knows it shouldn't call the hooks; we're
+          doing this in few of our widgets).
+        </doc>
+      </method>
+
+      <method hash="d242822d763660a5aff15a87b53f1f26" name="hasHooks">
+        <param name="ev" type="String">Event name</param>
+        <doc>
+          Returns <b>true</b> if at least one listener exists for the
+          named event.
+        </doc>
+      </method>
+
+      <method hash="1f01b9e66df09bfd4d22d09e12d460bd" name="registerEvents">
+        <param name="evs" type="Array">Event names</param>
+        <doc>
+          You will normally call this only once for each object,
+          i.e. in the constructor.  It will register the given events
+          with the current object.
+
+          <js>
+            var evs = new DlEventProxy();
+            evs.registerEvents([ "onFoo", "onBar" ]);
+            // now we can use the new events:
+            evs.addEventListener("onFoo", function(param) {
+               alert("Got: " + param);
+            });
+            evs.callHooks("onFoo", "Hello World");
+          </js>
+        </doc>
+      </method>
+
+      <method hash="1d0e4709ccbbdc47b52d5dcd26eebccb" name="connectEvents">
+        <param name="e1" type="String|Array">Event_1 name(s)</param>
+        <param name="w2" type="DlEventProxy|String|Array">Target object (or Event_2 name(s))</param>
+        <param name="e2" type="String|Array">Event_2 name(s)</param>
+        <doc>
+          I consider this function complicated and dangerous.
+          <b>Don't use it.</b>
+
+          It connects an event (Event_1) from the current object to
+          some event (Event_2) in the target object.  If the target
+          object is the same as the current object, you can omit it
+          and only pass the second event.
+
+          Connected events simply means that when Event_1 is triggered
+          in the current object, Event_2 will be automatically
+          triggered in the target object.
+
+          You can call it in a few ways:
+
+          <js>
+            // if our hypotetical object has "onChange" event for when
+            // the value changes, and "onRefresh" for updating the display
+            // we can connect onRefresh to onChange to have it redisplay
+            // automatically when the value has changed:
+            obj.connectEvents("onChange", "onRefresh");
+
+            // or, suppose that our data is handled by "obj", and the
+            // display of this data is handled by "view", then we do:
+            obj.connectEvents("onChange", view, "onRefresh");
+
+            // if both events have the same name you can omit Event_2:
+            view1.connectEvents("onRefresh", view2); // keep views in sync
+
+            // you can pass an array as well, to connect multiple events:
+            view1.connectEvents([ "onRefresh", "onResize" ], view2);
+          </js>
+        </doc>
+      </method>
+
+      <method XXX="Code has changed!" hash="ab6c9693c470952ef374272ed5c3ee55" name="applyHooks">
+        <param name="ev" type="String">Event name</param>
+        <param name="args" type="Array">Arguments to pass to listeners</param>
+        <doc>
+          Triggers the named event, which effectively means that all
+          the associated listeners will be called in order.  Any
+          arguments in the <b>args</b> Array will be passed to
+          handlers.
+        </doc>
+      </method>
+
+      <method hash="85610b4a974d95f91c51a115eadee3e0" name="callHooks" varargs="1">
+        <!--XXX: uses *arguments*, check for missing params-->
+        <param name="ev" type="String">Event name</param>
+        <doc>
+          Same as 〈applyHooks()〉, but arguments are received normally,
+          rather than in an array.  This function is theoretically
+          slower, since it creates an array of arguments internally
+          then calls 〈applyHooks()〉.
+
+          The following 2 are equivalent:
+
+          <js>
+            obj.callHooks("myEventName", foo, 2, bar);
+            obj.applyHooks("myEventName", [ foo, 2, bar ]);
+          </js>
+        </doc>
+      </method>
+
+      <method hash="fb17e0d572a971f8d77d884a3289fc58" name="destroy">
+        <doc>
+          This is the standard way to destroy objects in DynarchLIB.
+          You might think JavaScript doesn't need this, but in fact it
+          needs it even more badly than “lower level” languages such
+          as C++.
+
+          You should never override this function in derived objects;
+          instead, if you want something to happen upon destruction,
+          add a handler for the "onDestroy" event.
+        </doc>
+      </method>
+
+      <method hash="fd55b766a946be164c56a8c4a4abe429" internal="1" name="__onDestroy" undoc="1">
+        <doc></doc>
+      </method>
+
+    <method hash="ff2c7c3770f1fcb74ff4c670e7f5442c" internal="1" name="__getEventHooks" undoc="1"><param name="ev"></param><doc></doc></method></object-methods>
+  </object>
+</api>

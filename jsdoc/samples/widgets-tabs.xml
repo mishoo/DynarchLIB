@@ -1,0 +1,67 @@
+<sample>
+
+  <title>Tab widget</title>
+
+  <text>
+
+    <p>
+      A tab widget (<b>DlTabs</b>) is a notebook that additionally
+      displays a tab bar.  It's a very common widget these days.
+      Here's how to create one.
+    </p>
+
+    <div sample="sample1" />
+
+    <p>
+      You can specify to display the tab bar at the bottom if you
+      wish:
+    </p>
+
+    <div sample="sample2" />
+
+    <p>
+      The buttons in the tab bar are ordinary buttons and you can
+      retrieve them by calling <b>getTabButton(index)</b>, with
+      <b>index</b> being the zero-based index of the page.  You can
+      use this to assign an icon, for instance:
+    </p>
+
+    <div sample="sample3" />
+
+  </text>
+
+  <code id="sample1" type="js" canrun="true"><![CDATA[
+var tabs = new DlTabs({ parent: getDocCanvas() });
+
+var page1 = new DlContainer({});
+var page2 = new DlContainer({});
+page1.setContent("<b>Page 1</b>");
+page2.setContent("<b>Page 2</b>");
+
+tabs.addTab(page1, "Page 1");
+tabs.addTab(page2, "Page 2");
+tabs.showPane(0);
+tabs.setSize({ x: 200, y: 100 });
+  ]]></code>
+
+  <code id="sample2" type="js" canrun="true"><![CDATA[
+var tabs = new DlTabs({ parent: getDocCanvas(),
+                        tabPos: "bottom" });
+
+var page1 = new DlContainer({});
+var page2 = new DlContainer({});
+page1.setContent("<b>Page 1</b>");
+page2.setContent("<b>Page 2</b>");
+
+tabs.addTab(page1, "Page 1");
+tabs.addTab(page2, "Page 2");
+tabs.showPane(0);
+tabs.setSize({ x: 200, y: 100 });
+  ]]></code>
+
+  <code id="sample3" type="js" canrun="true"><![CDATA[
+//@include sample1
+tabs.getTabButton(0).setIconClass("IconChardev");
+  ]]></code>
+
+</sample>

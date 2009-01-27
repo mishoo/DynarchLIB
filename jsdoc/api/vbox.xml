@@ -1,0 +1,22 @@
+<api file="vbox.js" show="1">
+  <object base="DlBox" name="DlVbox">
+    <constructor>
+      <param name="args"></param>
+      <doc>
+        You use this object similar to a 〈DlHbox|horizontal box〉.  It
+        creates a vertical box.  All constructor arguments are
+        forwarded to 〈DlBox〉.
+      </doc>
+    </constructor>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="0e354f07359d25405dbec4da67661243" name="createCellElement">
+        <doc></doc>
+      </method>
+      <method hash="6746e55dc453fef0f2e6a30b73b86a4e" internal="1" name="_removeWidgetElement">
+        <param name="w"></param>
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

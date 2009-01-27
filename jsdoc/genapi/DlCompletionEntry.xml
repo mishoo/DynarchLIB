@@ -1,0 +1,392 @@
+<sample>
+
+  <title>DlCompletionEntry</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlCompletionEntry</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlEntry〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈completionentry.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈entry.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">noSelect</td>
+         <td class="doc"><span default="true" name="noSelect">Changes the default in <a href='api://DlEntry.xml'>DlEntry</a></span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">true</td>
+       </tr>
+       <tr>
+         <td class="name">noTab</td>
+         <td class="doc"><span default="false" name="noTab">Don't complete at TAB?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">false</td>
+       </tr>
+       <tr>
+         <td class="name">smart</td>
+         <td class="doc"><span default="true" name="smart">Smart completion? (see below)</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">true</td>
+       </tr>
+       <tr>
+         <td class="name">timeout</td>
+         <td class="doc"><span default="500" name="timeout">Timeout before automatic completion begins</span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">500</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+        This object is a specialization of <a href='api://DlEntry.xml'>DlEntry</a> that can display
+        a popup menu showing autocomplete options.  It's entirely up
+        to you what appears in that menu—you populate it in a handler
+        for the "onCompletion" event.
+<p/>
+        For the most cases, you can generate your "onCompletion"
+        handler using the <a href='api://DlCompletionEntry.xml:type=static_method:func=completeFromWords'>completeFromWords</a>
+        utility.
+<p/>
+        See our <a href="sample://widgets-completionentry.xml">completion entry
+        sample</a> for more discussion and code samples.
+<p class='heading'> “Smart” completion</p>
+<p/>
+        When you pass <b>smart: true</b>, the widget will notice cases
+        when the completion menu contains only one item and will
+        automatically complete from that item (won't wait for the user
+        to press ENTER on it).
+      </span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="events">
+      <h2>Events</h2>
+   <div class="method">
+        <h3 id="onCompletion:object_event">onCompletion ()
+        </h3>
+     <div class="doc"><span>
+          Called when the UI requires completion, that is, after
+          <b>timeout</b> (see constructor arguments) has passed.  In
+          order to get any kind of completion, you must supply a
+          handler for this function.
+<p/>
+          Your handler will check the status of the input field
+          (i.e. what's the word at the caret position?) and should try
+          to produce some auto completion results.  If there are any
+          results, it should call <a href='api://DlCompletionEntry.xml:type=object_method:func=completionReady'>completionReady()</a>.  Otherwise,
+          call <a href='api://DlCompletionEntry.xml:type=object_method:func=cancelCompletion'>cancelCompletion()</a>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onSelect:object_event">onSelect ()
+        </h3>
+     <div class="doc"><span>
+          Triggered when an item is selected from the completion menu.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="static-methods">
+      <h2>Static functions</h2>
+   <div class="method">
+        <h3 id="completeFromWords:static_method">DlCompletionEntry.completeFromWords (<span class='param'>entry</span>, <span class='param'>words</span>, <span class='param'>args</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">entry</td>
+         <td class="doc"><span name="entry">Entry field</span>
+</td>
+         <td class="type">[<b>〈DlCompletionEntry〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">words</td>
+         <td class="doc"><span name="words">Word list</span>
+</td>
+         <td class="type">[<b>〈Array〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">args</td>
+         <td class="doc"><span name="args">Additional options</span>
+</td>
+         <td class="type">[<b>〈Hash〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Creates a handler suitable for the "onCompletion" event that
+          would auto-complete from a list of words.  <b>args</b> is a
+          hash that can contain the following options:
+<p/>
+          <ul>
+            <li>sep — separator.  Default is /\s+/g (regexp)</li>
+            <li>noselect — don't select the completed word?</li>
+            <li>addSep — add the separator after successful completion?</li>
+          </ul>
+<p/>
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="cancelCompletion:object_method">cancelCompletion ()
+        </h3>
+     <div class="doc"><span>
+          From your onComplete handler, call this method when there
+          are no possible completions.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="completeFromWords:object_method">completeFromWords (<span class='param'>words</span>, <span class='param'>args</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">words</td>
+         <td class="doc"><span name="words"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">args</td>
+         <td class="doc"><span name="args"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          This is a convenience method that simply calls
+          <a href='api://DlCompletionEntry.xml:type=static_method:func=completeFromWords'>completeFromWords()</a> passing <b>this</b> as first
+          argument.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="completionReady:object_method">completionReady (<span class='param'>data</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">data</td>
+         <td class="doc"><span name="data">Array of hashes; each one describes one completion item</span>
+</td>
+         <td class="type">[<b>〈Array〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Call this function from your onComplete handler when you
+          have some auto-completion data.  The <b>data</b> must be an
+          Array which contains hashes with the following possible
+          properties:
+<p/>
+          <ul>
+            <li>
+              <b>label</b> — the label to display in the menu item
+            </li>
+            <li>
+              <b>nomodify</b> — if <b>true</b> then the entry field
+              won't be modified when this "completion" is selected.
+            </li>
+            <li>
+              <b>completion</b> — if the completion is different from
+              the label, pass completion here.  If not specified, it
+              will assume <b>label</b>.
+            </li>
+            <li>
+              <b>start</b> — position in the input field at which to
+              start modifying text.  If not specified, it will be the
+              caret position.
+            </li>
+            <li>
+              <b>rstart</b> — range start (position at which to leave
+              the left selection edge).  If not specified, it will be
+              the same as <b>start</b>.
+            </li>
+            <li>
+              <b>noselect</b> — pass <b>true</b> here if you don't
+              want the completed text to remain selected.
+            </li>
+          </ul>
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_applyCompletion:object_method">_applyCompletion (<span class='param'>c</span>, <span class='param'>finish</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">c</td>
+         <td class="doc"><span name="c"></span>
+</td>
+         <td class="type">[<b>〈Hash〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">finish</td>
+         <td class="doc"><span name="finish">Enter pressed?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          This is an internal function that applies a completion
+          <b>c</b> from the data received by <a href='api://DlCompletionEntry.xml:type=object_method:func=completionReady'>completionReady()</a>.
+          Don't call this directly.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_handle_focusKeys:object_method">_handle_focusKeys (<span class='param'>ev</span>)
+        <div class="overrides">
+             (overrides <a href="api://DlWidget.xml:type=object_method:func=_handle_focusKeys">_handle_focusKeys in DlWidget</a>)
+        </div>
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_hideMenu:object_method">_hideMenu ()
+        </h3>
+     <div class="doc"><span>
+          Internal function — hides the completion popup menu.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_setListeners:object_method">_setListeners ()
+        <div class="overrides">
+             (overrides <a href="api://DlContainer.xml:type=object_method:func=_setListeners">_setListeners in DlContainer</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+
+
+</sample>
+
+
+
+

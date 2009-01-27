@@ -1,0 +1,80 @@
+<api file="color.js" show="1">
+  <object name="DlColor">
+    <constructor>
+      This is a namespace for a few color-related utilities.  All
+      functions are static.
+    </constructor>
+
+    <static-methods>
+      <method hash="2e3c454bb7435d1e832b3dbf4ab2d027" name="brighter">
+        <param name="hsv" type="Array">[ hue, saturation, value ]</param>
+        <return type="Array">[ hue, saturation, value ]</return>
+        <doc>
+          Returns a new color (as HSV) which tries to maintain the
+          same nuance but will be brighter than the given color.
+        </doc>
+      </method>
+      <method hash="b3b52754d9114da0a967f9960de39a7f" name="darker">
+        <param name="hsv" type="Array">[ hue, saturation, value ]</param>
+        <return type="Array">[ hue, saturation, value ]</return>
+        <doc>
+          Returns a darker color of the same nuance.
+        </doc>
+      </method>
+      <method hash="7975eb77333795229ec076cab7b71f99" name="color2RGB">
+        <param name="color" type="String">CSS hex color (#XXXXXX)</param>
+        <return type="Array">[ red, green, blue ] as numbers in 0..1</return>
+        <doc>
+          Parses the given color and returns the RGB array.  If you
+          need it as HSV you can further call 〈.RGB2HSV()〉.
+        </doc>
+      </method>
+      <method hash="71777b74146db8701a404ead20dcb055" name="RGB2color">
+        <param name="rgb" type="Array">[ red, green, blue ] as numbers in 0..1</param>
+        <return type="String">CSS color</return>
+        <doc>
+          Creates a color string suitable for CSS from the given rgb.
+        </doc>
+      </method>
+      <method hash="b1adc0bcd6e4afd2c974f1df9deaf54a" name="HSV2RGB">
+        <param name="hsv" type="Array">[ hue, saturation, value ]</param>
+        <return type="Array">[ red, green, blue ] as numbers in 0..1</return>
+        <doc>
+          Converts a color from HSV representation to RGB
+          representation.
+        </doc>
+      </method>
+      <method hash="37185635ebd684ac08f864bb867946ef" name="RGB2HSV">
+        <param name="rgb" type="Array">[ red, green, blue ] as float numbers in 0..1</param>
+        <return type="Array">[ hue, saturation, value ]</return>
+        <doc>
+          The reverse of 〈.HSV2RGB()〉.
+        </doc>
+      </method>
+      <method hash="15344dd9c9b40e49164c9f0871d08837" name="RGB2bytes">
+        <param name="rgb" type="Array">[ red, green, blue ] as float numbers in 0..1</param>
+        <return type="Array">[ red, green, blue ] as bytes (0..255)</return>
+        <doc>
+          Converts a RGB color to bytes.
+        </doc>
+      </method>
+      <method hash="faa8f56efc6a143c60e7d954621627b7" name="RGB2hex">
+        <param name="rgb" type="Array">[ red, green, blue ] as float numbers in 0..1</param>
+        <return type="String">HEX representation of the color</return>
+        <doc>
+          Converts a color in RGB to its HEX notation (<em>note</em>,
+          it doesn't include a “#” prefix).
+        </doc>
+      </method>
+      <method hash="674e8fe4a2d69b84fa9bdabf25574159" name="RGBrightness">
+        <param name="rgb" type="Array">[ red, green, blue ] as float numbers in 0..1</param>
+        <doc>
+          Returns a brightness indication of the color between 0
+          (absolute black) and 1 (absolute white).
+        </doc>
+      </method>
+    </static-methods>
+
+    <object-methods></object-methods>
+  </object>
+</api>

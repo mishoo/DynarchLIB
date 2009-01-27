@@ -1,0 +1,181 @@
+<sample>
+  <title>Widgets</title>
+
+  <text>
+    <p>
+      Through these pages you will have a quick introduction to most
+      of our widgets, with easy to understand code samples that you
+      can test and modify.  We consider it's easier to learn this way,
+      rather than present a full API reference.  API reference for
+      widgets is documented in the next chapter.
+    </p>
+
+    <p>
+      All widgets inherit from the <b>DlWidget</b> class.  DlWidget is
+      a base class, but not an abstract one.  You can instantiate a
+      DlWidget directly if you wish and it contains a lot of
+      interesting functionality.
+    </p>
+
+    <p>
+      Widgets that can contain other widgets will inherit from
+      <b>DlContainer</b>.
+    </p>
+
+    <p>
+      All widgets receive exactly one argument in constructor.  This
+      is a hash table that can contain a lot of properties.  Some of
+      the base properties, defined by DlWidget, are:
+    </p>
+
+    <ul>
+      <li>
+        <b>parent</b> — the parent container where this widget should
+        appear.
+      </li>
+      <li>
+        <b>tagName</b> — the HTML tag that should be created for this
+        widget.  You usually don't want to override it.
+      </li>
+      <li>
+        <b>className</b> — a CSS class name to assign this widget.
+      </li>
+      <li>
+        <b>disabled</b> — wether this widget should be disabled or
+        not.
+      </li>
+      <li>
+        <b>data</b> — a widget's data.  You can pass here anything you
+        want and it will be later available as <b>widget.userData</b>.
+      </li>
+      <li>
+        <b>tooltip</b> — a tooltip for this widget.
+      </li>
+      <li>
+        <b>contextMenu</b> — a context menu for this widget.
+      </li>
+    </ul>
+
+    <p>
+      There are cases when you want to go only with defaults.  You
+      can't get away by not passing an argument though.  An inexistent
+      argument is necessary for inheritance to work (JavaScript is a
+      bit weird about this because you have to actually instantiate
+      the base class in order to do inheritance).  Thus, if you want
+      to create a widget, say a <b>DlContainer</b> using only the
+      defaults, the prefered way is to pass an empty object to
+      constructor:
+    </p>
+
+    <pre name="dlhl" class="js">new DlContainer({});</pre>
+
+    <h2>A few standard properties</h2>
+
+    <p>
+      Note that all widgets can have a tooltip or a context menu.  In
+      practice, they will make sense only for certain widgets.  For
+      example, you might want to show a tooltip for a button that only
+      has an icon and no text label, while you don't usually want to
+      set a tooltip for a checkbox that has a label (albeit it is
+      perfectly possible and sometimes it makes sense).
+    </p>
+
+    <p>
+      Here's how to create a widget that displays a tooltip:
+    </p>
+
+    <div sample="sample1" />
+
+    <p>
+      <b>getDocCanvas()</b> is a function defined in the documentation
+      application and returns a container widget where we can put
+      other sample widgets.  For more complex samples, we will use a
+      dialog widget.
+    </p>
+
+    <h2>CSS</h2>
+
+    <p>
+      The toplevel DOM element that an widget creates has multiple CSS
+      classes.  These are automatically created using the name of the
+      widget's class and the inheritance graph.  For example, a
+      <b>DlButton</b> widget's element will have these classes:
+    </p>
+
+    <pre>"DlWidget DlAbstractButton DlButton"</pre>
+
+    <p>
+      because that's the full inheritance graph.  So by customizing
+      the <em>.DlWidget</em> CSS class, your changes will apply to
+      <em>all</em> widgets, because all inherit from DlWidget.
+      However, some of them might be overridden in more "powerful"
+      classes.  For example, <em>.DlWidget</em> specifies a default
+      font of 12px, but it turns out that this is too big for the
+      DlCalendar widget, therefore in the <em>.DlCalendar</em> class
+      we specify a smaller size (11px).
+    </p>
+
+    <p>
+      The great part about CSS is that you don't need to care about it
+      all that much.  You just write your application, and customize
+      the look later—or never, if you like the defaults. ;-) In
+      DynarchLIB, we went way over our heads to make everything
+      customizable through CSS—including spacing, that is, margins and
+      paddings.
+    </p>
+
+    <h2>Icons</h2>
+
+    <p>
+      Many widgets—such as buttons, menu items, tree items—support
+      displaying an icon.  To specify it, just pass an "iconClass"
+      argument to the constructor.  You'll see a sample in the next
+      page, but for now we wanted to point out that all icons
+      everywhere are defined through CSS background-image; there's no
+      &lt;img&gt; tag inserted.  This has a few advantages, the
+      biggest one being that you can change icons globally, or you can
+      include multiple icon themes—and all this is possible by just
+      changing the CSS.
+    </p>
+
+    <p>
+      To define an icon, you need to declare a few CSS lines.  Here's
+      for instance how we define icons in this documentation:
+    </p>
+
+    <pre name="dlhl" class="css">
+.IconTreeRoot { background-image: url("img/ledpurple.png"); }
+.IconBook { background-image: url("img/toggle_log.png"); }
+.IconBooks { background-image: url("img/bookcase.png"); }
+.IconPage { background-image: url("img/knode.png"); }
+.IconReload { background-image: url("img/reload.png"); }
+    </pre>
+
+    <p>
+      The <b>default.css</b> file in DynarchLIB is designed for 16x16
+      icons, but you should be able to change this easily if you
+      require another dimension—by just modifying the CSS.
+    </p>
+
+    <h2>Available samples</h2>
+
+    <div list="true" />
+
+  </text>
+
+  <code id="sample1" type="js" canrun="true"><![CDATA[
+var w = new DlWidget({ parent  : getDocCanvas(),
+                       tooltip : "Here's your tooltip" });
+w.setContent("<b>HOVER ME!!!</b>");
+
+// we can even add some handlers that get called when the
+// tooltip is displayed / hidden
+w.addEventListener("onTooltipShow", function() {
+    this.getElement().style.color = "red";
+});
+w.addEventListener("onTooltipHide", function() {
+    this.getElement().style.color = "";
+});
+  ]]></code>
+
+</sample>

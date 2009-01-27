@@ -1,0 +1,530 @@
+<sample>
+
+  <title>Number</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>Number</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>— none —</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈jslib.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈texts.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+     <div class="doc"><span>
+      This is a standard JavaScript object.  DynarchLIB adds a few
+      useful extensions.
+    </span>
+
+     </div>
+   </div>
+    </div>
+
+
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="bits1Array:object_method">bits1Array ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Array) 
+           <b><span>An array of numbers</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          <fixme>The name of this method is misleading</fixme>
+          <p>
+            This method returns an array of numbers (powers of 2) that
+            sum to the current number.  Example:
+<p/>
+            <div sample="Number1"></div>
+<p/>
+            Obviously, the current number must be a positive integer.
+          </p>
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="formatBytes:object_method">formatBytes (<span class='param optional'>fixed</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">fixed</td>
+         <td class="doc"><span name="fixed" optional="1">Use a fixed number of decimals?</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Assuming the current number is some memory size, i.e. bytes,
+          kilobytes, etc., this method returns a string representation
+          of it.  I.e., if the number is 124, it returns "124B", if
+          the number is 2000 it returns "2K", etc.
+<p/>
+          If the “fixed” argument is passed, then the returned value
+          won't be rounded--instead, “fixed” decimals will be
+          returned, along with the corresponding unit.  Units are “B”
+          for bytes, “K” for kilobytes, “M” for megabytes and “G” for
+          gigabytes.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="formatTime:object_method">formatTime ()
+        </h3>
+     <div class="doc"><span>
+          Assuming the current number is a number of seconds, this
+          method returns the time format as a string -- "hh:mm:ss".
+          For example, if the number is 3600, it will return
+          "01:00:00" (one hour).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="hex:object_method">hex (<span class='param optional'>width</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">width</td>
+         <td class="doc"><span name="width" optional="1">Length of the result</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the hex representation of the current number, as a
+          string, optionally having the specified width (zero-padded
+          if it's smaller).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="limit:object_method">limit (<span class='param'>min</span>, <span class='param'>max</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">min</td>
+         <td class="doc"><span name="min"></span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">max</td>
+         <td class="doc"><span name="max"></span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Number) 
+           <b><span>Bounded number</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns a number within the specified limits.  Example:
+<p/>
+          <div sample="Number2"></div>
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="map:object_method">map (<span class='param'>start</span>, <span class='param'>stop</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">start</td>
+         <td class="doc"><span name="start"></span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">stop</td>
+         <td class="doc"><span name="stop"></span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Number) 
+           <b><span>mapped number</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Translates the current number, which is assumed to be a real
+          number in the interval [0, 1], to a number in the given
+          [<b>start</b>, <b>end</b>] interval.
+<p/>
+          <div sample="Number7"></div>
+<p/>
+          If N is the current number, this function is equivalent to:
+<p/>
+          <div sample="Number8"></div>
+<p/>
+          In other words, N is assumed to be a “percent divided by
+          100”, if you wish, and it'll return a number that is at
+          position (N*100)% in the interval [<b>start</b>,
+          <b>stop</b>].
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="mapInt:object_method">mapInt (<span class='param'>start</span>, <span class='param'>stop</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">start</td>
+         <td class="doc"><span name="start"></span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">stop</td>
+         <td class="doc"><span name="stop"></span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Number) 
+           <b><span>mapped number</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Same as <a href='api://Number.xml:type=object_method:func=map'>map()</a> but it will always round to the nearest
+          integer.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="nullLimit:object_method">nullLimit (<span class='param'>min</span>, <span class='param'>max</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">min</td>
+         <td class="doc"><span name="min"></span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">max</td>
+         <td class="doc"><span name="max"></span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Same as <a href='api://Number.xml:type=object_method:func=limit'>limit()</a>, but if the current number is off limits,
+          return null rather than the closest edge.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="rotateLimit:object_method">rotateLimit (<span class='param'>min</span>, <span class='param'>max</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">min</td>
+         <td class="doc"><span name="min"></span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">max</td>
+         <td class="doc"><span name="max"></span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Similar to <a href='api://Number.xml:type=object_method:func=limit'>limit()</a> but it will “rotate” the number, that
+          is, return <b>max</b> if the number is smaller than
+          <b>min</b>, and <b>min</b> if the number is greater than
+          <b>max</b>.  Returns the number unchanged otherwise.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="times:object_method">times (<span class='param'>f</span>, <span class='param optional'>obj</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">f</td>
+         <td class="doc"><span name="f"></span>
+</td>
+         <td class="type">[<b>〈Function〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">obj</td>
+         <td class="doc"><span name="obj" optional="1"></span>
+</td>
+         <td class="type">[<b>〈Object〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Executes the function that you pass as first argument
+          (<b>f</b>) N times (where N is the current number).  If you
+          pass the optional <b>obj</b> argument, then your function
+          will be executed in the context of the given object.
+<p/>
+          Your function will be passed the current iteration as first
+          argument.
+<p/>
+          For example:
+<p/>
+          <div sample="Number3"></div>
+<p/>
+          What's with the parens around 10, by the way?  An
+          idiosyncrasy of JS is that you can't call a method of the
+          Number object (and there might be other cases too) unless
+          you put it in parens.  That is, 10.times won't work
+          (probably because it expects the dot to be actually a part
+          of the number, i.e. 10.50).  So if you want to call Number
+          methods on literal numbers, you have to say
+          i.e. (10).method.  On the other hand, if your number is in
+          some variable, then this will work:
+<p/>
+          <div sample="Number4"></div>
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="zeroPad:object_method">zeroPad (<span class='param'>width</span>, <span class='param optional'>zero</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">width</td>
+         <td class="doc"><span name="width"></span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">zero</td>
+         <td class="doc"><span default="null" name="zero" optional="1"></span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">null</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: String) 
+           <b><span>padded number as string</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Pads the current number with zeroes until it gets
+          <b>width</b> number of digits.  E.g.
+<p/>
+          <div sample="Number5"></div>
+<p/>
+          will output "005".
+<p/>
+          If the second argument (<b>zero</b>) is passed, then the
+          number will be padded with that string instead of 0.
+<p/>
+          <div sample="Number6"></div>
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+<code canrun="true" id="Number1" type="js">
+              alert((55).bits1Array().join("\n"));
+            </code>
+<code id="Number2" type="js">
+            alert((5).limit(1, 6)) // 5
+            alert((5).limit(1, 3)) // 3
+            alert((5).limit(8, 10)) // 8
+          </code>
+<code id="Number3" type="js">
+            // execute an anonymous function 5 times
+            (5).times(function(i) {
+               alert(i); // displays 0, 1, 2, 3, 4
+            });
+
+            // execute a method (cards.shuffle()) 10 times
+            (10).times(cards.shuffle.$(cards));
+
+            // can also do it like this (should be faster):
+            (10).times(cards.shuffle, cards);
+          </code>
+<code id="Number4" type="js">
+            var n = 10;
+            n.times(cards.shuffle, cards);
+          </code>
+<code id="Number5" type="js">
+            alert((5).zeroPad(3))
+          </code>
+<code id="Number6" type="js">
+            alert((5).zeroPad(3, "-"))
+          </code>
+<code id="Number7" type="js">
+            alert((0.2).map(0, 5)) // 1
+            alert((0.8).map(0, 40)) // 32
+          </code>
+<code id="Number8" type="js">
+            return start + (stop - start) * N;
+          </code>
+
+
+</sample>
+
+
+
+

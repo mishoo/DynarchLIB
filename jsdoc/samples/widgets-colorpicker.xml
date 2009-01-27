@@ -1,0 +1,66 @@
+<sample>
+
+  <title>The color picker widget</title>
+
+  <text>
+
+    <p>
+      DynarchLIB contains a simple HSV-based color picker widget as
+      <b>DlColorPickerHSV</b>.  Here's a quick sample:
+    </p>
+
+    <div sample="colorpicker1" />
+
+    <p>
+      There's not too much to say about it, except that it's useful in
+      conjunction with a popup menu.  Here's how to create a popup
+      color picker button (<b>DlButtonColorPicker</b>):
+    </p>
+
+    <div sample="colorpicker2" />
+
+    <p>
+      A <b>DlButtonColorPicker</b> doesn't emit any events—you should
+      hook event listeners directly on the <b>DlColorPickerHSV</b>
+      widget.  Here's for instance an example that changes the label
+      of the button when a new color was picked:
+    </p>
+
+    <div sample="colorpicker3" />
+
+    <h2>See also</h2>
+
+    <p>
+      This color picker is rather simple, but using it and a few other
+      widgets we can create a quite complex one.  We exemplify this in
+      the <a href="sample://widgets-compound.xml">compound widgets
+      sample</a>.
+    </p>
+
+  </text>
+
+  <code id="colorpicker1" type="js" canrun="true"><![CDATA[
+var cp = new DlColorPickerHSV({ parent: getDocCanvas() });
+cp.addEventListener("onSelect", function(rgb, hsv, cssColor, brightness) {
+    print("Selected color: " + cssColor);
+    print("RGB: " + rgb.join(", "));
+    print("HSV: " + hsv.join(", "));
+    print("Estimated brightness: " + brightness);
+});
+  ]]></code>
+
+  <code id="colorpicker2" type="js" canrun="true"><![CDATA[
+var cp = new DlColorPickerHSV({});
+var btn = new DlButtonColorPicker({ label: "Select color",
+                                    parent: getDocCanvas() });
+btn.setColorPicker(cp);
+  ]]></code>
+
+  <code id="colorpicker3" type="js" canrun="true"><![CDATA[
+//@include colorpicker2
+cp.addEventListener("onSelect", function(rgb) {
+    btn.setLabel(DlColor.RGB2hex(rgb));
+});
+  ]]></code>
+
+</sample>

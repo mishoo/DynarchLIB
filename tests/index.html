@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <title>DL Test :: [% cgi.file | html %]</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../src/css/default.css" />
+    <style type="text/css">
+      .DlDesktop { background-color: #ccc };
+    </style>
+  </head>
+  <body>
+    <script>window.Dynarch_Base_Url = "../src";</script>
+[% IF final %]
+    <script class="DynarchLIB" src="../src/js/thelib.js"></script>
+[% ELSE %]
+    <script src="../src/js/all-scripts.jsx?crunch=0;path=../src/js"></script>
+[% END %]
+    <script>DlFlashUtils().init()</script>
+    <script src="[% cgi.file | html %]"></script>
+    <script src="tests.js"></script>
+  </body>
+</html>

@@ -1,0 +1,639 @@
+<sample>
+
+  <title>DlTreeItem</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlTreeItem</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlContainer〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈tree.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈container.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">iconClass</td>
+         <td class="doc"><span default="null" name="iconClass">Icon for this tree item</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">itemClassName</td>
+         <td class="doc"><span default="null" name="itemClassName">The class name of the item element</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">label</td>
+         <td class="doc"><span default="null" name="label"></span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+        A tree item widget.  This is simply a container which adds
+        helper functions needed for tree items (expand / collapse,
+        code to display tree lines) and can display a label and a
+        icon.  A tree doesn't keep information about selected items
+        and such—you can use radio buttons for this, as described in
+        our <a href="sample://widgets-tree.xml">tree sample</a>.
+      </span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="events">
+      <h2>Events</h2>
+   <div class="method">
+        <h3 id="onCollapse:object_event">onCollapse ()
+        </h3>
+     <div class="doc"><span>Triggered when this item's subtree is collapsed</span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onExpand:object_event">onExpand ()
+        </h3>
+     <div class="doc"><span>Triggered when this item's subtree is expanded</span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onLabelMouseDown:object_event">onLabelMouseDown ()
+        </h3>
+     <div class="doc"><span>Triggered when mouse button is pressed on this item's label</span>
+
+     </div>
+   </div>
+    </div>
+
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="addSubItem:object_method">addSubItem (<span class='param'>item</span>, <span class='param optional'>pos</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">item</td>
+         <td class="doc"><span name="item">Item to append to <b>this</b> item's tree</span>
+</td>
+         <td class="type">[<b>〈DlTreeItem〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">pos</td>
+         <td class="doc"><span name="pos" optional="1">Position of this item (as accepted by DlContainer::_appendWidgetElement</span>
+</td>
+         <td class="type">—</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Adds the given <b>item</b> to this item's subtree.  If no
+          subtree exists, one is created automatically.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="expand:object_method">expand (<span class='param optional'>expand</span>, <span class='param optional'>nohooks</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">expand</td>
+         <td class="doc"><span default="true" name="expand" optional="1">Whether to expand or collapse it (<b>true</b> to expand)</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">true</td>
+       </tr>
+       <tr>
+         <td class="name">nohooks</td>
+         <td class="doc"><span default="false" name="nohooks" optional="1">Don't trigger events?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">false</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Expands or collapses this item (depending on the value of
+          the <b>expand</b> argument, which is by default
+          <b>true</b>).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="expandParents:object_method">expandParents (<span class='param optional'>expand</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">expand</td>
+         <td class="doc"><span default="true" name="expand" optional="1">Expand or collapse?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">true</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Expands or collapses all parents of the current item.  For
+          example, to make sure an item is visible, call
+          item.expandParents(true).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getContentElement:object_method">getContentElement ()
+        <div class="overrides">
+             (overrides <a href="api://DlWidget.xml:type=object_method:func=getContentElement">getContentElement in DlWidget</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getDivElement:object_method">getDivElement ()
+        </h3>
+     <div class="doc"><span>
+          A tree item is split into two DOM parts: one which contains
+          the label, the expander button (if there is a subtree), and
+          the icon (if any).  Another part is a DIV that contains the
+          subtree.
+<p/>
+          This function returns the first DIV.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getExpanderElement:object_method">getExpanderElement ()
+        </h3>
+     <div class="doc"><span>
+          Returns the table cell containing the expander icon.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getIconElement:object_method">getIconElement ()
+        </h3>
+     <div class="doc"><span>
+          Returns the table cell containing the icon.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getIndex:object_method">getIndex ()
+        </h3>
+     <div class="doc"><span>
+          Returns the index of this item in the parent tree.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getParentItem:object_method">getParentItem ()
+        </h3>
+     <div class="doc"><span>
+          Returns the parent item.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getPath:object_method">getPath ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Array) 
+           <b><span>array of <a href='api://DlTreeItem.xml'>DlTreeItem</a>-s</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns all parent items (most nested one first).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getSubtreeDiv:object_method">getSubtreeDiv ()
+        </h3>
+     <div class="doc"><span>
+          Returns the DIV that's holding the item's subtree.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getSubtreeWidget:object_method">getSubtreeWidget ()
+        </h3>
+     <div class="doc"><span>
+          Returns the subtree widget of this item.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getTableElement:object_method">getTableElement ()
+        </h3>
+     <div class="doc"><span>
+          Returns this item's TABLE element.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="initDOM:object_method">initDOM ()
+        <div class="overrides">
+             (overrides <a href="api://DlWidget.xml:type=object_method:func=initDOM">initDOM in DlWidget</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="isExpanded:object_method">isExpanded ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: boolean) 
+           <b><span><b>true</b> if the item is expanded, <b>false</b> otherwise.</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Note, it will also return false if there is no subtree.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setIconClass:object_method">setIconClass (<span class='param'>iconClass</span>)
+        <div class="overrides">
+             (overrides <a href="api://DlWidget.xml:type=object_method:func=setIconClass">setIconClass in DlWidget</a>)
+        </div>
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">iconClass</td>
+         <td class="doc"><span name="iconClass"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setTree:object_method">setTree (<span class='param'>tree</span>, <span class='param optional'>expand</span>, <span class='param optional'>timeout</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">tree</td>
+         <td class="doc"><span name="tree">New subtree for this item</span>
+</td>
+         <td class="type">[<b>〈DlWidget,Function〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">expand</td>
+         <td class="doc"><span default="false" name="expand" optional="1">Automatically expand it?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">false</td>
+       </tr>
+       <tr>
+         <td class="name">timeout</td>
+         <td class="doc"><span default="null" name="timeout" optional="1">Cache timeout</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">null</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Sets the subtree of this item.  You'd normally call this
+          function only once for an item.
+<p/>
+          The <b>tree</b> argument can be any <a href='api://DlWidget.xml'>DlWidget</a> (but it will
+          usually be a <a href='api://DlTree.xml'>DlTree</a>), or it can be a function.  If it's a
+          function, it is called the first time the item is expanded
+          and it must return a <a href='api://DlWidget.xml'>DlWidget</a> (again, usually a <a href='api://DlTree.xml'>DlTree</a>).
+<p/>
+          The result of the function is normally cached so the
+          function won't be called a second time.  But if you want to
+          “expire” the returned widget, and have your function called
+          again after a while, you can pass the <b>timeout</b>
+          argument.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="toggle:object_method">toggle ()
+        </h3>
+     <div class="doc"><span>
+          Toggles the item's subtree (expand if currently collapsed,
+          or the reverse).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="updateExpanderState:object_method">updateExpanderState ()
+        </h3>
+     <div class="doc"><span>
+          Internal function - called to update the state of the
+          expander icon.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_appendWidgetElement:object_method">_appendWidgetElement (<span class='param'>w</span>, <span class='param'>subtree</span>)
+        <div class="overrides">
+             (overrides <a href="api://DlContainer.xml:type=object_method:func=_appendWidgetElement">_appendWidgetElement in DlContainer</a>)
+        </div>
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">w</td>
+         <td class="doc"><span name="w"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">subtree</td>
+         <td class="doc"><span name="subtree"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_createElement:object_method">_createElement ()
+        <div class="overrides">
+             (overrides <a href="api://DlContainer.xml:type=object_method:func=_createElement">_createElement in DlContainer</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_onLabelMouseDown:object_method">_onLabelMouseDown (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_removeWidgetElement:object_method">_removeWidgetElement (<span class='param'>w</span>)
+        <div class="overrides">
+             (overrides <a href="api://DlContainer.xml:type=object_method:func=_removeWidgetElement">_removeWidgetElement in DlContainer</a>)
+        </div>
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">w</td>
+         <td class="doc"><span name="w"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_setFirstLast:object_method">_setFirstLast (<span class='param'>isFirst</span>, <span class='param'>isLast</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">isFirst</td>
+         <td class="doc"><span name="isFirst"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">isLast</td>
+         <td class="doc"><span name="isLast"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_setFocusedStyle:object_method">_setFocusedStyle (<span class='param'>focused</span>)
+        <div class="overrides">
+             (overrides <a href="api://DlWidget.xml:type=object_method:func=_setFocusedStyle">_setFocusedStyle in DlWidget</a>)
+        </div>
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">focused</td>
+         <td class="doc"><span name="focused"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_setListeners:object_method">_setListeners ()
+        <div class="overrides">
+             (overrides <a href="api://DlContainer.xml:type=object_method:func=_setListeners">_setListeners in DlContainer</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+
+
+</sample>
+
+
+
+

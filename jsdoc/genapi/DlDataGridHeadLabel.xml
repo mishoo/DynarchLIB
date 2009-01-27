@@ -1,0 +1,243 @@
+<sample>
+
+  <title>DlDataGridHeadLabel</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlDataGridHeadLabel</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlButton〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈datagrid.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈container.js, drag.js, resizebar.js, dialog.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">classes</td>
+         <td class="doc"><span default="{¶      &#34;checked&#34; : &#34;DlDataGridHeadLabel-1&#34;,¶      &#34;disabled&#34; : &#34;DlDataGridHeadLabel-disabled&#34;,¶      &#34;unchecked&#34; : &#34;DlDataGridHeadLabel-0&#34;,¶      &#34;active&#34; : &#34;DlDataGridHeadLabel-active&#34;,¶      &#34;empty&#34; : &#34;DlDataGridHeadLabel-empty&#34;,¶      &#34;hover&#34; : &#34;DlDataGridHeadLabel-hover&#34;¶}" name="classes"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">{<br/>      "checked" : "DlDataGridHeadLabel-1",<br/>      "disabled" : "DlDataGridHeadLabel-disabled",<br/>      "unchecked" : "DlDataGridHeadLabel-0",<br/>      "active" : "DlDataGridHeadLabel-active",<br/>      "empty" : "DlDataGridHeadLabel-empty",<br/>      "hover" : "DlDataGridHeadLabel-hover"<br/>}</td>
+       </tr>
+       <tr>
+         <td class="name">col</td>
+         <td class="doc"><span default="null" name="col"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">focusable</td>
+         <td class="doc"><span default="false" name="focusable"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">false</td>
+       </tr>
+       <tr>
+         <td class="name">noCapture</td>
+         <td class="doc"><span default="true" name="noCapture"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">true</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+      <param default="{¶      &#34;checked&#34; : &#34;DlDataGridHeadLabel-1&#34;,¶      &#34;disabled&#34; : &#34;DlDataGridHeadLabel-disabled&#34;,¶      &#34;unchecked&#34; : &#34;DlDataGridHeadLabel-0&#34;,¶      &#34;active&#34; : &#34;DlDataGridHeadLabel-active&#34;,¶      &#34;empty&#34; : &#34;DlDataGridHeadLabel-empty&#34;,¶      &#34;hover&#34; : &#34;DlDataGridHeadLabel-hover&#34;¶}" name="classes"></param>
+      <param default="null" name="col"></param>
+      <param default="false" name="focusable"></param>
+      <param default="true" name="noCapture"></param>
+    </span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="events">
+      <h2>Events</h2>
+   <div class="method">
+        <h3 id="onChange:object_event">onChange ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onVisibility:object_event">onVisibility ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="static-methods">
+      <h2>Static functions</h2>
+   <div class="method">
+        <h3 id="_on_headMouseLeave:static_method">DlDataGridHeadLabel._on_headMouseLeave (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_on_headMouseMove:static_method">DlDataGridHeadLabel._on_headMouseMove (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="label:object_method">label (<span class='param'>label</span>, <span class="varargs">…</span>)
+        <div class="overrides">
+             (overrides <a href="api://DlAbstractButton.xml:type=object_method:func=label">label in DlAbstractButton</a>)
+        </div>
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">label</td>
+         <td class="doc"><span name="label"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setWidth:object_method">setWidth (<span class='param'>w</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">w</td>
+         <td class="doc"><span name="w"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_getContextMenu:object_method">_getContextMenu ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_onClick:object_method">_onClick ()
+        <div class="overrides">
+             (overrides <a href="api://DlAbstractButton.xml:type=object_method:func=_onClick">_onClick in DlAbstractButton</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+
+
+</sample>
+
+
+
+

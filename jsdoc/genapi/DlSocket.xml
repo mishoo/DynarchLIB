@@ -1,0 +1,401 @@
+<sample>
+
+  <title>DlSocket</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlSocket</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlEventProxy〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈socket.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈flashutils.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">host</td>
+         <td class="doc"><span default="null" name="host">
+        Host name to connect to.  If this is <b>null</b> (default) it
+        will be assumed its the domain of the document
+        (document.domain).
+      </span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">port</td>
+         <td class="doc"><span default="null" name="port">
+        Port to connect to.
+      </span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">json</td>
+         <td class="doc"><span default="false" name="json">
+        Assume responses from server are JSON? (if <b>true</b>, it
+        decodes incoming data automatically).
+      </span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">false</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+        This is a general purpose object that allows you to connect to
+        an arbitrary server via a TCP/IP connection.  It does not use
+        the HTTP protocol which is actually a great advantage because
+        it allows you to <em>stay connected</em> with the server
+        (while HTTP is a request/response protocol).
+<p/>
+        This functionality is not ordinarily exposed by browsers in
+        JavaScript (and I will never understand why), so we have to
+        use a plugin.  We chose to implement this via Flash, because
+        it's widely available.  Therefore, please note that this
+        object is only usable on browsers where Flash 8 (or newer) is
+        installed.  Call
+        <a href='api://DlFlashUtils.xml:type=object_method:func=isSupported'>DlFlashUtils().isSupported()</a> to
+        check if the browser “speaks” the required version of Flash.
+<p class='heading'> Pros and Cons for using this object</p>
+<p/>
+        <b>Advantages:</b> it allows you to keep a persistent
+        connection with the server.  This means that you can do
+        authentication only once and then send data between browser
+        and server at will.  The server can chose to send data that
+        the client didn't previously request.  This is useful when
+        implementing real-time actions such as a game or a chat.
+        Browser instantly receives data from server when it is
+        available.  You don't need to poll the server or implement
+        “hanging requests” in order to get server notifications—the
+        server knows all clients and will send data whenever it needs.
+<p/>
+        <b>Disadvantages:</b> it requires Flash Player 8.0 or newer.
+        It loads a (very small—around 1K) SWF file (you need to call
+        <a href='api://DlFlashUtils.xml:type=object_method:func=init'>DlFlashUtils().init()</a>).  It doesn't
+        work over SSL since this is not supported by Flash's XMLSocket
+        (but see our <a href='api://DlCryptAES.xml'>DlCryptAES</a> object which enables you to encrypt
+        communication).  It requires a custom server (I'm not sure it
+        can work with Apache, Tomcat, or other HTTP servers, since
+        it's not about HTTP).  See below for some hints.
+<p class='heading'> Usage</p>
+<p/>
+        Here is an example of how to use this object:
+<p/>
+        <div sample="DlSocket1"></div>
+<p class='heading'> Notes</p>
+<p/>
+        <b>Binary data.</b> DlSocket internally uses an XMLSocket
+        Flash object.  One limitation of it is that the null ("\0")
+        character marks the end of data.  Therefore you must be
+        careful when you send binary data—it will actually send upto
+        the first zero byte.  On the server side, you must send a zero
+        byte after each reply, in order for the browser to receive any
+        data.
+<p/>
+        Since it isn't usual to generate truly binary data in
+        JavaScript, this shouldn't be a serious limitation.  But you
+        need to know it.
+<p/>
+        <b>Fully asynchronous.</b> This kind of client-server
+        communication is completely asynchronous.  It is <em>not</em>
+        a request/response protocol.
+<p/>
+        When you use <a href='api://DlSocket.xml:type=object_method:func=send'>send()</a> or <a href='api://DlSocket.xml:type=object_method:func=sendJSON'>sendJSON()</a> you need to be careful
+        that these functions send the data but don't return anything,
+        so don't expect an immediate reply from the server.  They give
+        back control to the calling program immediately—while the
+        server might still process the data.
+<p/>
+        If the server replies, you will get the answer via the
+        "onData" event.
+<p/>
+        It's completely up to you to design a communication protocol
+        suitable for your application.
+<p class='heading'> Hints for the server-side</p>
+<p/>
+        This kind of communication requires some network programming
+        skills for the server-side.  You will need to implement your
+        own server that binds to a port and listens for incoming
+        connections.  For an incoming connection it should
+        authenticate the client and probably spawn a new thread, or
+        process, to handle that connection.  All this isn't very
+        complicated, but it's beyond ordinary “web development”
+        knowledge.
+<p/>
+      </span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="events">
+      <h2>Events</h2>
+   <div class="method">
+        <h3 id="onConnect:object_event">onConnect (<span class='param'>success</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">success</td>
+         <td class="doc"><span name="success">Successful connection?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Triggered when a socket is successfully connected (in which
+          case <b>success</b> will be true) or when connection failed
+          (<b>success</b> is false).  Only after this event was
+          triggered with <b>success = true</b> you can do other calls
+          on the socket.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onData:object_event">onData (<span class='param'>data</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">data</td>
+         <td class="doc"><span name="data">Incoming data from server</span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Triggered when the server has sent data for us.  The
+          <b>data</b> will usually be a String, but it can be an Hash
+          as well if you passed <b>json: true</b> in constructor.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="onRelease:object_event">onRelease (<span class='param'>reason</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">reason</td>
+         <td class="doc"><span name="reason">Reason why this socket was closed</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Triggered when the socket was “released”.  This can happen
+          when the connection is lost because of network outage or
+          server shutdown (reason == 0), or when you called
+          <a href='api://DlSocket.xml:type=object_method:func=disconnect'>disconnect()</a> (reason == 1) or when you called <a href='api://DlSocket.xml:type=object_method:func=destroy'>destroy()</a>
+          (reason == 2).
+<p/>
+          Note that after this event is triggered you cannot use the
+          socket until you <a href='api://DlSocket.xml:type=object_method:func=reconnect'>reconnect()</a> or <a href='api://DlSocket.xml:type=object_method:func=connect'>connect()</a> it again.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="connect:object_method">connect ()
+        </h3>
+     <div class="doc"><span>
+          Call this method to initiate a connection.  It will trigger
+          the "onConnect" event both on a successful connection or
+          when there's some error.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="disconnect:object_method">disconnect ()
+        </h3>
+     <div class="doc"><span>
+          Disconnect the socket.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="reconnect:object_method">reconnect ()
+        </h3>
+     <div class="doc"><span>
+          Reconnect a disconnected socket.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="send:object_method">send (<span class='param'>data</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">data</td>
+         <td class="doc"><span name="data">Data to send to server</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Send the given data to the server-side.  Note that this
+          method is asynchronous and doesn't return anything.  Add
+          your handler to the "onData" event in order to process
+          incoming data from server.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="sendJSON:object_method">sendJSON (<span class='param'>data</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">data</td>
+         <td class="doc"><span name="data">Data to send to server</span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          This function is just like <a href='api://DlSocket.xml:type=object_method:func=send'>send()</a> but it will
+          <a href='api://DlJSON.xml:type=static_method:func=encode'>JSON-encode</a> the data before sending it.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+<code id="DlSocket1" type="js">
+          var socket = new DlSocket({ host: document.domain,
+                                      port: 12345 });
+          socket.addEventListener("onConnect", function(success) {
+              if (success) {
+                  // successful connection, you can begin using the socket here
+              } else {
+                  alert("Could not connect to server");
+              }
+          });
+
+          socket.addEventListener("onData", function(data) {
+              alert("Got data from server: " + data);
+          });
+
+          socket.connect();
+
+          // note that you can call the following only after
+          // you have a successful connection
+          // ("onConnect" event triggered with success = true)
+
+          // send data to server
+          socket.send("Foo bar baz");
+
+          // send object to server (will be JSON-ized)
+          socket.sendJSON({ foo: "foo", bar: "bar" });
+
+          // reconnect after a downtime:
+          socket.reconnect(); // will trigger "onConnect"
+
+          // disconnect from server:
+          socket.disconnect();
+
+          // completely destroy the socket:
+          socket.destroy(); // implies disconnect() first
+        </code>
+
+
+</sample>
+
+
+
+

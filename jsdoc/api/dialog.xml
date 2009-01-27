@@ -1,0 +1,178 @@
+<api file="dialog.js" show="1">
+  <object base="DlContainer" name="DlDialog">
+    <constructor>
+      <param default="false" name="fixed" type="boolean">
+        Is this dialog fixed? (if you pass <b>true</b>, the dialog
+        will have a fixed position and the user won't be able to move
+        it by dragging the title bar)
+      </param>
+      <param default="true" name="focusable" type="boolean">Dialogs should be focusable (psased to 〈DlWidget〉)</param>
+      <param default="null" name="focusDefault" type="DlWidget">
+        Default widget to focus when the dialog pops up.
+      </param>
+      <param default="null" name="iconClass" type="String">
+        Icon class for the dialog.  The icon is displayed in the title
+        bar on the left side.
+      </param>
+      <param default="true" name="maxBtn" type="boolean">
+        Provide a “maximize” button?  Note that this has no effect if
+        the dialog is not resizable.
+      </param>
+      <param default="false" name="quitBtn" type="Function|String">
+        Provide a “quit” button? (see below)
+      </param>
+      <param default="false" name="modal" type="boolean">Make the dialog modal?</param>
+      <param default="5000" name="moveDelay" type="Number">Delay displaying the dialog during drag'n'drop</param>
+      <param default="false" name="noShadows" type="boolean">Don't display shadows?</param>
+      <param default="false" name="resizable" type="boolean">Allow dialog resize?</param>
+      <param default="&#34;DlDialog&#34;" name="title" type="String">Dialog title</param>
+
+      <doc>
+        Use this class to create a dialog.  A dialog is
+        <em>usually</em> a top-level container which allows the user
+        to enter some data, and then disappears.  It's a window, in
+        essence, which can be moved, resized or closed (or hidden —
+        “minimized”).  You've seen many samples of it already—almost
+        all samples that you can run in this interactive demo are
+        creating a dialog to display their widgets.
+
+
+      </doc>
+
+    </constructor>
+    <events>
+      <event name="onShow">
+        <doc></doc>
+      </event>
+      <event name="onHide">
+        <doc></doc>
+      </event>
+      <event name="onQuitBtn">
+        <doc></doc>
+      </event>
+      <event name="onActivate">
+        <doc></doc>
+      </event>
+    </events>
+    <static-methods>
+      <method hash="4946e7be60fd7da8ffe01ea0b55f709f" name="activateEventStopper">
+        <param name="act"></param>
+        <doc></doc>
+      </method>
+      <method hash="fc3e029856ac26f823118ebae2222cbd" name="activateNext">
+        <doc></doc>
+      </method>
+      <method hash="41ed581b9de2e8e72815f67af9ca62f3" name="activatePrev">
+        <doc></doc>
+      </method>
+      <method hash="dfffa25d14e2119441e0ea0b37aec9fe" name="getActive">
+        <doc></doc>
+      </method>
+    </static-methods>
+    <object-methods>
+      <method hash="e0fd43a0f2156d406136608c6e565f35" name="activate">
+        <doc></doc>
+      </method>
+      <method hash="d2f9b7f07a1ed60403e8b592c2b7dc3f" name="centerOnParent">
+        <doc></doc>
+      </method>
+      <method hash="ceea9e04e455f54f04cc92c79cc5db8c" name="deactivate">
+        <doc></doc>
+      </method>
+      <method hash="6342861542d637a0c8197116f2136a73" name="getButtonsElement">
+        <doc></doc>
+      </method>
+      <method hash="82d22e01fca2c75ebe97a94dec7775eb" name="getContentElement">
+        <doc></doc>
+      </method>
+      <method hash="90fd5e435645b60f0de7a0eca98ddc7a" name="getModalStopper">
+        <doc></doc>
+      </method>
+      <method hash="115be189bedac1a06d367526eca9e8e7" name="getTitleElement">
+        <doc></doc>
+      </method>
+      <method hash="4c28a1a514549385bee94cd213e11ce2" name="hide">
+        <doc></doc>
+      </method>
+      <method hash="4ff434a9bf3f22a43256a1bac462fac1" name="initDOM">
+        <doc></doc>
+      </method>
+      <method hash="6d60bc9ce4d3a0f5d04b3f84977850f8" name="makeDraggable">
+        <doc></doc>
+      </method>
+      <method hash="eaf6c51eee474e519f695a74800be160" name="makeResizable">
+        <doc></doc>
+      </method>
+      <method hash="775fdabc3283c3c3f125aaca9dad0a43" name="maximize">
+        <param name="c"></param>
+        <doc></doc>
+      </method>
+      <method hash="dfaaaa7d0e213236754ff06e40cbcfc7" name="setIconClass">
+        <param name="iconClass"></param>
+        <doc></doc>
+      </method>
+      <method hash="a2254c3cbc4f0ed19f734bfba3cd2a9a" name="setInnerSize">
+        <param name="sz"></param>
+        <doc></doc>
+      </method>
+      <method hash="104c0c0974d126db4cae04cd10a6adc3" name="setModal">
+        <param name="modal"></param>
+        <param name="noset"></param>
+        <doc></doc>
+      </method>
+      <method hash="f22cd9451c73d00a198a335f120c52c7" name="setSize">
+        <param name="sz"></param>
+        <doc></doc>
+      </method>
+      <method hash="4148408b419fa9aaaf64308c63e5515d" name="show">
+        <param name="center"></param>
+        <doc></doc>
+      </method>
+      <method hash="18dd501def8aa1aaa5e2b8c4c8af3c43" name="title">
+        <param name="title"></param>
+        <doc></doc>
+      </method>
+      <method hash="2dab19f15fc3b4d230158db84fdd7201" internal="1" name="__doMaximize" undoc="1">
+        <doc></doc>
+      </method>
+      <method hash="c5a65d37ab13769faa7c84f2563b4c09" internal="1" name="__maxCondResizeHandlers" undoc="1">
+        <param name="cond"></param>
+        <doc></doc>
+      </method>
+      <method hash="e0d5e4458810bff86670808f38a125ce" internal="1" name="__maxResizeHandler" undoc="1">
+        <doc></doc>
+      </method>
+      <method hash="5f8a030cfe480a9995f77e6453fc9f2d" internal="1" name="_createElement">
+        <doc></doc>
+      </method>
+      <method hash="215028565cdae1e3d4c27980ac5db34a" internal="1" name="_handle_focusKeys">
+        <param name="ev"></param>
+        <doc></doc>
+      </method>
+      <method hash="e344860fa5418731386c76bd50e8a28a" internal="1" name="_setDragCaptures">
+        <param name="capture"></param>
+        <doc></doc>
+      </method>
+      <method hash="8a8281410db60b8b5f26be81c457f35c" internal="1" name="_setResizeCaptures">
+        <param name="capture"></param>
+        <doc></doc>
+      </method>
+    <method hash="0099bcd2f0856df577ddd51d53e72401" name="getRelElement"><doc></doc></method></object-methods>
+  </object>
+  <object internal="1" name="DlWidget">
+    <constructor></constructor>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="beaf23ffe7af97e1ee4b3874dbda6401" name="getParentDialog">
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+  <object base="DlPopup" internal="1" name="DlDialogPopup">
+    <constructor>
+      <param name="args"></param>
+    </constructor>
+    <static-methods></static-methods>
+    <object-methods></object-methods>
+  </object>
+</api>

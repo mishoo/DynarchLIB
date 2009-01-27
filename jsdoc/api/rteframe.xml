@@ -1,0 +1,245 @@
+<api file="rteframe.js">
+  <object base="DlWidget" name="DlRteFrame">
+    <constructor>
+      <param default="2" name="focusable"></param>
+      <param default="null" name="sections"></param>
+      <param default="&#34;    &#34;" name="tabChar"></param>
+      <param default="true" name="useParagraphs"></param>
+    </constructor>
+    <events>
+      <event name="onUpdate">
+        <doc></doc>
+      </event>
+      <event name="onSectionChange">
+        <doc></doc>
+      </event>
+    </events>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="00be8bb77f4fa9e3444336a6a943af7c" name="addBlockClass">
+        <param name="tagName"></param>
+        <param name="className"></param>
+        <param name="toggle"></param>
+        <doc></doc>
+      </method>
+      <method hash="2718b2eecf9a4661843bfe7dc15ea20e" name="callUpdateHooks">
+        <doc></doc>
+      </method>
+      <method hash="688aeb2facfadcbd14400167ad1b7725" name="canDeleteContent">
+        <param name="el"></param>
+        <doc></doc>
+      </method>
+      <method hash="39556e91b3d0dfeba5cf019619a83c50" name="canDeleteFullNode">
+        <param name="el"></param>
+        <doc></doc>
+      </method>
+      <method hash="40f3416ba5da328ecf92caca7e842020" name="canStripNode">
+        <param name="el"></param>
+        <doc></doc>
+      </method>
+      <method hash="f2bb6efe749f81cc00d1e2a07d094a90" name="clear">
+        <doc></doc>
+      </method>
+      <method hash="05b37c5289b7744f1f0d32625b6c1d4c" name="collapse">
+        <param name="toStart"></param>
+        <doc></doc>
+      </method>
+      <method hash="8782ceb7b1301772ce92aa49b35cefba" name="createAnchor">
+        <param name="name"></param>
+        <doc></doc>
+      </method>
+      <method hash="c604c876a3a5e082cf3fac77b2e89478" name="createLink">
+        <param name="url"></param>
+        <param name="text"></param>
+        <doc></doc>
+      </method>
+      <method hash="444264f5f5cd53559b916c9e55d27265" name="createRange">
+        <doc></doc>
+      </method>
+      <method hash="387b7ac9126114ed70484f973943584e" name="deleteNode">
+        <param name="el"></param>
+        <doc></doc>
+      </method>
+      <method hash="d6a379dc6666af62f557495f6ee4a9e0" name="deleteNodeContents">
+        <param name="el"></param>
+        <doc></doc>
+      </method>
+      <method hash="bae3f2a86b8f83de9ad86b3cdac99d32" name="execCommand">
+        <param name="cmd"></param>
+        <param name="param"></param>
+        <doc></doc>
+      </method>
+      <method hash="79246d5050e557c80db6ae6f8731b5bf" name="focus">
+        <doc></doc>
+      </method>
+      <method hash="9b09e8c03d5144b9298fbc0b05a2cf23" name="getAllAncestors">
+        <doc></doc>
+      </method>
+      <method hash="b967571b848cbdff9db3cc589630cb83" name="getAncestorsHash">
+        <doc></doc>
+      </method>
+      <method hash="665337ae71c2cb00f092012f566465ca" name="getAnchors">
+        <doc></doc>
+      </method>
+      <method hash="973c99b639fe60a2cf61611a2605e9b4" name="getCurrentSection">
+        <doc></doc>
+      </method>
+      <method hash="5867663eea2f2e8983e3c518c6ed716c" name="getHTML">
+        <param name="withMeta"></param>
+        <doc></doc>
+      </method>
+      <method hash="3954aefee519833e4f6158ede89410ed" name="getIframeBody">
+        <doc></doc>
+      </method>
+      <method hash="094361f5494f30804078ab948fe56028" name="getIframeDoc">
+        <doc></doc>
+      </method>
+      <method hash="eb0ddd70287919dcc89fdaa81fb13c28" name="getIframeElement">
+        <doc></doc>
+      </method>
+      <method hash="0df043482b1a7ea5ca5fe4351df49a17" name="getIframeWin">
+        <doc></doc>
+      </method>
+      <method hash="66ed248c52897abe60daeff0d00595fd" name="getInnerHTML">
+        <doc></doc>
+      </method>
+      <method hash="c1414e670595909d175f64c909e0f4f4" name="getInnerText">
+        <doc></doc>
+      </method>
+      <method hash="8a4f0682eb6b26a2053e1b4d05f7ba62" name="getParentElement">
+        <doc></doc>
+      </method>
+      <method hash="faae5e17a9fd80836c0930c06749154f" name="getRange">
+        <param name="sel"></param>
+        <doc></doc>
+      </method>
+      <method hash="8cbca7db6358253dd52ea1af27fe7e39" name="getSection">
+        <param name="name"></param>
+        <param name="noSetContent"></param>
+        <doc></doc>
+      </method>
+      <method hash="9627bd933f2cc37bd1ee2b948fbb5b34" name="getSections">
+        <doc></doc>
+      </method>
+      <method hash="a3f6832a2eec26d8d2c8aad4d7dccca2" name="getSelectedImage">
+        <doc></doc>
+      </method>
+      <method hash="9ecdbb06efdca5c2aea47b3ef29ded3d" name="getSelectedText">
+        <doc></doc>
+      </method>
+      <method hash="1229ac57d0bd821159dd9a15cbbc5728" name="getSelection">
+        <doc></doc>
+      </method>
+      <method hash="e9994de56c42e0657dad9577b6ac4d7f" name="getText">
+        <doc></doc>
+      </method>
+      <method hash="c2984b3df20ccda5cb5c189064c4c968" name="initDesignMode">
+        <param name="callback"></param>
+        <doc></doc>
+      </method>
+      <method hash="0472b801c7eba6456f6ac7f2f5eaef3b" name="insertImage">
+        <param name="params"></param>
+        <doc></doc>
+      </method>
+      <method hash="abdcaa28e6c08427fbd663455c5c6e72" name="insertNode">
+        <param name="node"></param>
+        <param name="select"></param>
+        <doc></doc>
+      </method>
+      <method hash="1c7cc2071da6b7fae48bef8d67f5e1cb" name="insertText">
+        <param name="str"></param>
+        <param name="select"></param>
+        <doc></doc>
+      </method>
+      <method hash="7966b9c185133c758c6345d310a78c9a" name="isCollapsed">
+        <doc></doc>
+      </method>
+      <method hash="46a34e9c0fd626699e96b1f57b9da3ce" name="loadStyle">
+        <param name="css"></param>
+        <doc></doc>
+      </method>
+      <method hash="851710ddbd15a7e15d3d05fb54e84628" name="moveBOF">
+        <param name="pos"></param>
+        <doc></doc>
+      </method>
+      <method hash="c975bf56da7ae72c74718fa17d596689" name="moveEOF">
+        <param name="pos"></param>
+        <doc></doc>
+      </method>
+      <method hash="093b2972ba7fdade7899c206d65bf4ee" name="nextSection">
+        <doc></doc>
+      </method>
+      <method hash="9acca16b15c486cda78a0f282dc84093" name="prevSection">
+        <doc></doc>
+      </method>
+      <method hash="3913b204bcc390868aa9fac1ef344221" name="queryCommandState">
+        <param name="cmd"></param>
+        <doc></doc>
+      </method>
+      <method hash="386a716439c180c645d7e34941a70d42" name="queryCommandValue">
+        <param name="cmd"></param>
+        <doc></doc>
+      </method>
+      <method hash="5eb5e66cf40b42bbe1c3f493f63f9b4a" name="selectNodeContents">
+        <param name="node"></param>
+        <doc></doc>
+      </method>
+      <method hash="849fe2227d0744946c6409911c8d3036" name="selectRange">
+        <param name="range"></param>
+        <doc></doc>
+      </method>
+      <method hash="c946810d1b0a2cce269044332670bb1a" name="setCurrentSection">
+        <param name="name"></param>
+        <doc></doc>
+      </method>
+      <method hash="22a7720b94bfc511bafc12bf40701bc5" name="setCurrentSectionIndex">
+        <param name="idx"></param>
+        <doc></doc>
+      </method>
+      <method hash="760f36863b541043dc637822bc6e40d1" name="setHTML">
+        <param name="html"></param>
+        <doc></doc>
+      </method>
+      <method hash="bf6f770d521371639f8c11bff379887e" name="setParagraphsMode">
+        <param name="mode"></param>
+        <doc></doc>
+      </method>
+      <method hash="46223cf143c02e7666334a0b801b2beb" name="setSectionContent">
+        <param name="name"></param>
+        <param name="html"></param>
+        <doc></doc>
+      </method>
+      <method hash="04c771bf2dd9409b9fcfc00048c5599e" name="setSections">
+        <param name="sec"></param>
+        <doc></doc>
+      </method>
+      <method hash="a8d173c46ff73b2fffc81fb0f34ecd36" name="setSize">
+        <param name="s"></param>
+        <doc></doc>
+      </method>
+      <method hash="2705449b918ff079a204d1eb260d3832" name="stripNode">
+        <param name="el"></param>
+        <doc></doc>
+      </method>
+      <method hash="6e6c1fbd7acebb0cc92b67e59b6016c2" name="unlink">
+        <doc></doc>
+      </method>
+      <method hash="d349a596dd52be6b7e47adb7c09f97ac" name="updateKeymap">
+        <doc></doc>
+      </method>
+      <method hash="fdfe800d0c64539f3f00df98629eaab5" internal="1" name="_createElement">
+        <doc></doc>
+      </method>
+      <method hash="380b5eda3578a11fe2ed829b32df24ef" internal="1" name="_onSetHTML">
+        <doc></doc>
+      </method>
+      <method hash="f73c85aa0bddc7ab9a7d10aaf71c45cf" internal="1" name="_setCurrentSection">
+        <param name="newsec"></param>
+        <doc></doc>
+      </method>
+      <method hash="ee547250862372629888c200251a051f" internal="1" name="_setListeners">
+        <doc></doc>
+      </method>
+    </object-methods>
+  </object>
+</api>

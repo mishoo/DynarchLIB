@@ -1,0 +1,242 @@
+<sample>
+
+  <title>Entry with auto-completion</title>
+
+  <text>
+
+    <p>
+      <b>DlCompletionEntry</b> inherits from <b>DlEntry</b> and
+      provides functionality for creating an input field with
+      auto-complete.  You just need to write a function that returns
+      the list of auto-complete options and optionally the new caret
+      position.
+    </p>
+
+    <h2>The Easy Way</h2>
+
+    <p>
+      If all you wanted to do is to complete from a list of words,
+      <b>DlCompletionEntry</b> gives you a helper function that
+      creates your event handler automatically:
+    </p>
+
+    <div sample="completion-easyway1" />
+
+    <p>
+      Implicitly, words are separated by a space.  You can specify a
+      different separator if you wish:
+    </p>
+
+    <div sample="completion-easyway2" />
+
+    <p>
+      <b>Beware</b> to add the <b>g</b> (global match) flag to your
+      regular expression, otherwise it will freeze the browser.
+    </p>
+
+    <p>
+      Regexps are quite powerful tools to describe the separators.  In
+      the next example, we allow both a semicolon and a comma as
+      separators, and with <b>addSep</b> we specify a separator to be
+      added automatically whenever a completion is chosen from the
+      list.
+    </p>
+
+    <div sample="completion-easyway3" />
+
+    <h2>The Hard but Flexible Way</h2>
+
+    <p>
+      In practice you'll need more than that, so here we describe how
+      the event listener should actually work.
+    </p>
+
+    <div sample="completion1" />
+
+    <p>
+      You'll immediately notice that if you try to type more than one
+      word, the second won't be autocompleted—even if it is on the
+      list.  That's because we're using the whole field value when
+      testing—when we should, in fact, use only what's after the
+      space.  The next example deals with this.
+    </p>
+
+    <div sample="completion2" />
+
+    <p>
+      So, what's with the "start" argument that we're pushing to the
+      completion list?  Well, if you try to remove it, you'll notice
+      that the completion gets entered right at the current caret
+      position, so if you enter i.e. "too", after completion the
+      result will be "tootoolkit".  The "start" argument tells
+      DlCompletionEntry the index where it should start replacing text
+      from.
+    </p>
+
+    <h2>Why is the hard way important?</h2>
+
+    <p>
+      In real-world scenarios, you'll want to retrieve the bit of text
+      that the user entered and match it against some values from a
+      database.  To do this, you'll need to call the server via
+      XMLHttpRequest and pass to it the partial user input.  The
+      server will search the database for matching values and send
+      back some data.  This takes time, so you'll have a handler to
+      your XMLHttpRequest which receives the data <em>later</em>, and
+      calls <em>completionReady</em> on the entry whenever the data
+      got in.
+    </p>
+
+    <p>
+      We'll see examples of this when we get to the <b>DlRPC</b>
+      object, which is our abstraction to XMLHttpRequest.
+    </p>
+
+    <h2>Textarea sample</h2>
+
+    <p>
+      So, since DlCompletionEntry is actually a DlEntry, we can make
+      it a textarea as well.  Just need to pass <b>type</b>:
+      "textarea" to the constructor, the same we do with a plain
+      DlEntry.  The next sample is a textarea that completes with
+      variables and functions from the global object (window).  For
+      example, if you type "Dl", the (huge) completion list that
+      appears will contain all the defined DynarchLIB classes.
+    </p>
+
+    <div sample="completion-textarea" />
+
+  </text>
+
+  <code id="completion-easyway1" type="js" canrun="true"><![CDATA[
+// create an ordered array of words
+var words = ("framework toolkit computer widget function " +
+             "test completion firmware wonder").split(/\s+/).sort();
+var cmp = new DlCompletionEntry({ parent: getDocCanvas(), size: 30 });
+cmp.addEventListener("onCompletion", cmp.completeFromWords(words));
+  ]]></code>
+
+  <code id="completion-easyway2" type="js" canrun="true"><![CDATA[
+var words = [ "foo bar",
+              "foo baz",
+              "check this" ];
+var cmp = new DlCompletionEntry({ parent: getDocCanvas(), size: 30 });
+cmp.addEventListener("onCompletion",
+                     cmp.completeFromWords(words, { sep: /;\s*/g }));
+  ]]></code>
+
+  <code id="completion-easyway3" type="js" canrun="true"><![CDATA[
+var words = [ "foo bar",
+              "foo baz",
+              "check this" ];
+var cmp = new DlCompletionEntry({ parent: getDocCanvas(), size: 30 });
+cmp.addEventListener("onCompletion",
+                     cmp.completeFromWords(words, { sep: /[,;]\s*/g, addSep: "; " }));
+  ]]></code>
+
+  <code id="completion1" type="js" canrun="true"><![CDATA[
+var words = ("framework toolkit computer widget function " +
+             "test completion firmware wonder").split(/\s+/).sort();
+
+// instantiate the widget
+var cmp = new DlCompletionEntry({ parent: getDocCanvas(), size: 20 });
+
+// this listener will get called half a second after the user types
+// in the entry, and it will try to match the entered value against
+// the list of words, collecting any successful matches.
+cmp.addEventListener("onCompletion", function() {
+    var val = this.getValue().toLowerCase();
+    if (!val) {
+        // cancel and stop if val is empty
+        this.cancelCompletion();
+        return;
+    }
+    var comp = [];
+    for (var i = 0; i < words.length; ++i) {
+        if (words[i].indexOf(val) == 0) {
+            // we have a match, save it.  Don't worry about
+            // "start", we'll explain it later.
+            comp.push({ label: words[i], start: 0 });
+        }
+    }
+    if (comp.length > 0) {
+        // we have at least one match, trigger the popup
+        this.completionReady(comp);
+    } else {
+        // no matches, cancel completion state
+        this.cancelCompletion();
+    }
+});
+  ]]></code>
+
+  <code id="completion2" type="js" canrun="true"><![CDATA[
+var words = ("framework toolkit computer widget function " +
+             "test completion firmware wonder").split(/\s+/).sort();
+
+var cmp = new DlCompletionEntry({ parent: getDocCanvas(), size: 30 });
+
+cmp.addEventListener("onCompletion", function(range) {
+    var val = this.getValue().toLowerCase();
+
+    // we can use this helper utility (it's an extension of String).
+    // it will return the position immediately after the last occurrence
+    // of the given regexp, smaller than range.start.
+    var pos = val.lastIndexOfRegexp(/\s+/g, range.start);
+    val = val.substring(pos, range.start);
+
+    // now we have in "val" the last entered word, instead
+    // of the whole field value
+
+    if (!val) {
+        // cancel and stop if val is empty
+        this.cancelCompletion();
+        return;
+    }
+
+    var comp = [];
+    for (var i = 0; i < words.length; ++i) {
+        if (words[i].indexOf(val) == 0) {
+            comp.push({ label: words[i],
+                        start: pos,
+                        after: " " // automatically insert the separator
+                                   // when a completion is chosen
+                     });
+        }
+    }
+    if (comp.length > 0) {
+        this.completionReady(comp);
+    } else {
+        this.cancelCompletion();
+    }
+});
+  ]]></code>
+
+  <code id="completion-textarea" type="js" canrun="true"><![CDATA[
+var cmp = new DlCompletionEntry({ parent: getDocCanvas(), type: "textarea", cols: 30, rows: 10 });
+
+cmp.addEventListener("onCompletion", function(range) {
+    var val = this.getValue();
+    var pos = val.lastIndexOfRegexp(/[.;,()\s]+/g, range.start);
+    val = val.substring(pos, range.start);
+
+    if (!val) {
+        // cancel and stop if val is empty
+        this.cancelCompletion();
+        return;
+    }
+
+    var comp = [];
+    for (var i in window) {
+        if (i.indexOf(val) == 0) {
+            comp.push({ label: i, start: pos });
+        }
+    }
+    if (comp.length > 0) {
+        this.completionReady(comp);
+    } else {
+        this.cancelCompletion();
+    }
+});
+  ]]></code>
+
+</sample>

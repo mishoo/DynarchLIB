@@ -1,0 +1,90 @@
+<sample>
+
+  <title>Keyboard support</title>
+
+  <text>
+
+    <p>
+      You might have noticed that in a few samples we used the
+      “focusable” argument in constructor of various widgets.  By
+      using it you can support keyboard operation in your application.
+    </p>
+
+    <p>
+      There are many widgets that support this, but generally you will
+      have to explicitly pass “focusable: true” to widgets that you
+      want to make accessible.  Currently we have keyboard support for
+      the following widgets:
+    </p>
+
+    <ul>
+      <li>
+        〈DlButton〉, 〈DlCheckbox〉, 〈DlRadioButton〉
+      </li>
+      <li>
+        〈DlEntry〉, 〈DlSpinner〉, 〈DlCompletionEntry〉 (enabled by default)
+      </li>
+      <li>
+        〈DlGrid〉 (enabled by default)
+      </li>
+      <li>
+        〈DlDialog〉, 〈DlPopup〉 (enabled by default)
+      </li>
+    </ul>
+
+    <p>
+      Basically, an widget that has “focusable: true” will get focus
+      upon an “onMouseDown” event.  At any given time, there is at
+      most one focused widget.  The currently focused widget will
+      receive any key events and can react on them, or will call base
+      class handler.  The event system works bottom-to-top, so to say,
+      therefore if an widget doesn't react to key events, parent
+      widgets will get notified as well.  This is the way we can add,
+      for instance, a keyboard shortcut to a dialog—even if the dialog
+      is not directly focused, but some entry inside it, if the entry
+      doesn't react to that shortcut then the dialog will get a chance
+      to.
+    </p>
+
+    <h2>TAB navigation</h2>
+
+    <p>
+      There are currently 2 top-level widgets that will react to TAB
+      (〈DlDialog, DlPopup〉).  The default action is to simply lookup
+      the next focusable widget and move the focus to it.  SHIFT-TAB
+      is similar, but works backwards.
+    </p>
+
+    <p>
+      A focusable widget can have a “tabIndex” property.  The default
+      is zero.  If no “tabIndex” is specified in constructor, then the
+      TAB manager (i.e. 〈DlDialog〉) will lookup widgets in the order
+      they were defined.  This is not always desirable, so for
+      situations where this doesn't stand, specify “tabIndex” to your
+      widgets.  (If you do, you can omit “focusable: true” as it will
+      be assumed by default).
+    </p>
+
+    <h2>Shortcuts</h2>
+
+    <p>
+      Focusable widgets can specify an “accessKey” property.  This is
+      similar to the HTML4 “accesskey” attribute, but you are required
+      to specify the modifier as well (ALT or CTRL).  For most
+      widgets, the access key will just call 〈DlWidget::focus()〉, but
+      there are special cases as well.  For instance, we want the
+      accessKey of a 〈DlEntry〉 to focus the entry, but for a
+      〈DlButton〉 we want it to actually <em>click</em> the button.
+      The defaults are sane.
+    </p>
+
+    <p>
+      Shortcuts work correctly for hidden widgets—or better put, they
+      don't work. :-) For example, you can have a tab control and have
+      on page 1 some widget that reacts to ALT-a; if, however, you're
+      in page 2, then ALT-a won't focus the hidden widget.
+    </p>
+
+  </text>
+
+</sample>

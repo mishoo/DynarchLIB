@@ -1,0 +1,550 @@
+<sample>
+
+  <title>DlRadioGroup</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlRadioGroup</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlEventProxy〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈radiogroup.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈eventproxy.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">id</td>
+         <td class="doc"><span name="id">Radio group ID</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+        A radio group manages a set of <a href='api://DlAbstractButton.xml'>DlAbstractButton</a> widgets that
+        are of type TWOSTATE (that is, can be checked or unchecked at
+        any given time).
+<p/>
+        You don't normally need to call this constructor directly,
+        instead use <a href='api://DlRadioGroup.xml:type=static_method:func=get'>DlRadioGroup.get()</a>.
+      </span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="events">
+      <h2>Events</h2>
+   <div class="method">
+        <h3 id="onChange:object_event">onChange (<span class='param'>button</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">button</td>
+         <td class="doc"><span name="button">The changed button</span>
+</td>
+         <td class="type">[<b>〈DlAbstractButton〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Called when a button in this group changed state.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="static-methods">
+      <h2>Static functions</h2>
+   <div class="method">
+        <h3 id="get:static_method">DlRadioGroup.get (<span class='param optional'>id</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">id</td>
+         <td class="doc"><span default="null" name="id" optional="1">Group ID</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">null</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns an existing radio group if you pass an ID, or
+          returns a new radio group having a randomly generated ID if
+          you don't pass any arguments.  This is the preffered way to
+          construct radio groups.
+<p/>
+          Originally ID-s were used so that you don't need to hold a
+          reference to the DlRadioGroup object—just store the ID and
+          use this function to retrieve the object.  I now think this
+          was a bad idea.  We recommend to store a reference to the
+          DlRadioGroup object and don't ever think about ID-s.
+<p/>
+          Radio group ID-s might be removed in the future.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="addWidget:object_method">addWidget (<span class='param'>w</span>, <span class='param'>pos</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">w</td>
+         <td class="doc"><span name="w">New widget for this group</span>
+</td>
+         <td class="type">[<b>〈DlAbstractButton〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">pos</td>
+         <td class="doc"><span name="pos"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Adds a widget to this group.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="changed:object_method">changed (<span class='param optional'>c</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">c</td>
+         <td class="doc"><span default="null" name="c" optional="1">Set changed?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">null</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns true if the value of this group has been changed,
+          that is, if any buttons changed their state.  Note that if a
+          button changed state to <b>checked</b>, then
+          <b>unchecked</b>, this function will still return true (that
+          is, it's not an exact comparison to the initial value).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="checkAll:object_method">checkAll (<span class='param optional'>val</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">val</td>
+         <td class="doc"><span default="true" name="val" optional="1">Check all?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">true</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Selects (checks) all buttons if <b>val</b> is true, unchecks
+          them if <b>val</b> is false.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getButtons:object_method">getButtons ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Array) 
+           <b><span>array of buttons</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the array of buttons that this radio group currently
+          manages.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getByValue:object_method">getByValue (<span class='param'>val</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">val</td>
+         <td class="doc"><span name="val">Value of the button we're looking for</span>
+</td>
+         <td class="type">[<b>〈primitive〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: DlAbstractButton) 
+           <b><span>Button if found, null otherwise</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Looks up a button by value in this group and returns it if
+          found.  For this to work it's necessary that your buttons
+          have the value of a primitive type which can be a key in a
+          hash, such as a String, Number, or even boolean.  It won't
+          work though if the values are hashes or other types of
+          objects.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getNextButton:object_method">getNextButton (<span class='param'>btn</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">btn</td>
+         <td class="doc"><span name="btn">Pointer button</span>
+</td>
+         <td class="type">[<b>〈DlAbstractButton〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the button after <b>btn</b> in the current group, in
+          the order they were added to the group.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getPrevButton:object_method">getPrevButton (<span class='param'>btn</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">btn</td>
+         <td class="doc"><span name="btn">Pointer button</span>
+</td>
+         <td class="type">[<b>〈DlAbstractButton〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the previous button.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getSelected:object_method">getSelected ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Array) 
+           <b><span>array of selected (checked) buttons</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns an array with the currently checked buttons.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getValue:object_method">getValue ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Array) 
+           <b><span>array of selected button values</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns an array with the values of the selected buttons.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="maxChecked:object_method">maxChecked (<span class='param optional'>maxChecked</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">maxChecked</td>
+         <td class="doc"><span default="null" name="maxChecked" optional="1"></span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">null</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns (and optionally sets) the maximum number of buttons
+          that can be simultaneously checked in the current group.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="minChecked:object_method">minChecked (<span class='param optional'>minChecked</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">minChecked</td>
+         <td class="doc"><span default="null" name="minChecked" optional="1"></span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">null</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns (and optionally sets) the minimum number of buttons
+          that can be simultaneously checked in the current group.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="removeWidget:object_method">removeWidget (<span class='param'>w</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">w</td>
+         <td class="doc"><span name="w">Widget to remove</span>
+</td>
+         <td class="type">[<b>〈DlAbstractButton〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Removes a widget from this group.  But why would you want to
+          do that?
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="reset:object_method">reset ()
+        </h3>
+     <div class="doc"><span>
+          Removes all buttons from the current group and resets all
+          state to initial.  Therefore you can reuse this group for a
+          completely different set of buttons.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setValue:object_method">setValue (<span class='param'>val</span>, <span class='param optional'>hooks</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">val</td>
+         <td class="doc"><span name="val">Group value</span>
+</td>
+         <td class="type">[<b>〈Array〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">hooks</td>
+         <td class="doc"><span default="false" name="hooks" optional="1">Call event hooks?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">false</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          For each item in the <b>val</b> array, locates the button by
+          calling <a href='api://DlRadioGroup.xml:type=object_method:func=getByValue'>getByValue()</a> and checks it by calling
+          <a href='api://DlAbstractButton.xml:type=object_method:func=checked'>checked(true)</a>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="unCheckAll:object_method">unCheckAll ()
+        </h3>
+     <div class="doc"><span>
+          Deselects (unchecks) all buttons.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+
+
+</sample>
+
+
+
+

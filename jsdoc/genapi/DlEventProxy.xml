@@ -1,0 +1,602 @@
+<sample>
+
+  <title>DlEventProxy</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlEventProxy</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>— none —</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈eventproxy.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈jslib.js, exception.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+     <div class="doc"><span>
+        DlEventProxy is the base class of all widgets and of a few
+        more other objects.  It implements a simple event dispatcher.
+        Such an object has a set of events.  Each event can have one
+        or more <em>listeners</em> (or <em>handlers</em>).  A listener
+        is a plain JavaScript function and DlEventProxy will call all
+        listeners for some event whenever that event is triggered.
+<p/>
+        Event listeners will receive arguments as passed by the code
+        that triggers the event.  There are no general rules here.
+        Listeners that get called as a consequence of an UI event will
+        generally receive a <a href='api://DlEvent.xml'>DlEvent</a> object as argument.  Using it
+        you will be able to tell the event type, mouse coordinates,
+        keys pressed, etc.  However, other custom events will receive
+        various other arguments (or no arguments at all).  We will
+        properly document arguments for all events.
+<p/>
+        Event listeners are called in the scope of the current object.
+        If you want to change this, use <a href='api://Function.xml:type=object_method:func=closure'>Function::closure()</a>.
+      </span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="events">
+      <h2>Events</h2>
+   <div class="method">
+        <h3 id="onDestroy:object_event">onDestroy ()
+        </h3>
+     <div class="doc"><span>
+          This is an event defined by DlEventProxy (so obviously it
+          will be available in all derived objects).  It will be
+          called by the framework when the object is destroyed.
+<p/>
+          By default, <a href='api://DlEventProxy.xml:type=object_method:func=addEventListener'>addEventListener()</a> will insert handlers for
+          this event in reverse order, so it's safe to do anything you
+          want with the object internals during this event.  The
+          object should be effectively destroyed after all handlers
+          have been executed.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="addEventListener:object_method">addEventListener (<span class='param'>ev</span>, <span class='param'>handler</span>, <span class='param optional'>phase</span>, <span class='param'>object</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev">Event name</span>
+</td>
+         <td class="type">[<b>〈String,Array,Hash〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">handler</td>
+         <td class="doc"><span name="handler">Event handler function</span>
+</td>
+         <td class="type">[<b>〈Function〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">phase</td>
+         <td class="doc"><span name="phase" optional="1">Add to front?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">object</td>
+         <td class="doc"><span name="object"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Adds a new handler for an existing event of this object.  In
+          the simplest form you will call it for example like this:
+<p/>
+          <div sample="DlEventProxy1"></div>
+<p/>
+          However, as you can see, you can pass an Array or a Hash too
+          as the event name.  If you pass an Array, it will assume
+          that you want to add the same <b>handler</b> to all the
+          events named in the array:
+<p/>
+          <div sample="DlEventProxy2"></div>
+<p/>
+          If you pass a Hash, you get a nice way to add multiple
+          different listeners for different events in an object:
+<p/>
+          <div sample="DlEventProxy3"></div>
+<p/>
+          You can get the same effect by calling addEventListener
+          multiple times, but it's easier to use a Hash.
+<p/>
+          If not passed, <b>phase</b> is by default <b>false</b>,
+          except in the situation when the event name is "onDestroy"
+          (then phase defaults <b>true</b>).  If you pass <b>true</b>,
+          then your handler will be registered at the start; therefore
+          when the event occurs, this listener will be called first.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="applyHooks:object_method">applyHooks (<span class='param'>ev</span>, <span class='param'>args</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev">Event name</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">args</td>
+         <td class="doc"><span name="args">Arguments to pass to listeners</span>
+</td>
+         <td class="type">[<b>〈Array〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Triggers the named event, which effectively means that all
+          the associated listeners will be called in order.  Any
+          arguments in the <b>args</b> Array will be passed to
+          handlers.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="callHooks:object_method">callHooks (<span class='param'>ev</span>, <span class="varargs">…</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev">Event name</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Same as <a href='api://DlEventProxy.xml:type=object_method:func=applyHooks'>applyHooks()</a>, but arguments are received normally,
+          rather than in an array.  This function is theoretically
+          slower, since it creates an array of arguments internally
+          then calls <a href='api://DlEventProxy.xml:type=object_method:func=applyHooks'>applyHooks()</a>.
+<p/>
+          The following 2 are equivalent:
+<p/>
+          <div sample="DlEventProxy7"></div>
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="condEventListener:object_method">condEventListener (<span class='param'>cond</span>, <span class="varargs">…</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">cond</td>
+         <td class="doc"><span name="cond">Condition</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          This combines <a href='api://DlEventProxy.xml:type=object_method:func=addEventListener'>addEventListener()</a> and
+          <a href='api://DlEventProxy.xml:type=object_method:func=removeEventListener'>removeEventListener()</a>.  After <b>cond</b>, pass the same
+          arguments that you would pass to those functions.
+          condEventListener() will <em>add</em> the listeners if
+          condition is <b>true</b>, or remove them if condition is
+          <b>false</b>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="connectEvents:object_method">connectEvents (<span class='param'>e1</span>, <span class='param'>w2</span>, <span class='param'>e2</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">e1</td>
+         <td class="doc"><span name="e1">Event_1 name(s)</span>
+</td>
+         <td class="type">[<b>〈String,Array〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">w2</td>
+         <td class="doc"><span name="w2">Target object (or Event_2 name(s))</span>
+</td>
+         <td class="type">[<b>〈DlEventProxy,String,Array〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">e2</td>
+         <td class="doc"><span name="e2">Event_2 name(s)</span>
+</td>
+         <td class="type">[<b>〈String,Array〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          I consider this function complicated and dangerous.
+          <b>Don't use it.</b>
+<p/>
+          It connects an event (Event_1) from the current object to
+          some event (Event_2) in the target object.  If the target
+          object is the same as the current object, you can omit it
+          and only pass the second event.
+<p/>
+          Connected events simply means that when Event_1 is triggered
+          in the current object, Event_2 will be automatically
+          triggered in the target object.
+<p/>
+          You can call it in a few ways:
+<p/>
+          <div sample="DlEventProxy6"></div>
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="destroy:object_method">destroy ()
+        </h3>
+     <div class="doc"><span>
+          This is the standard way to destroy objects in DynarchLIB.
+          You might think JavaScript doesn't need this, but in fact it
+          needs it even more badly than “lower level” languages such
+          as C++.
+<p/>
+          You should never override this function in derived objects;
+          instead, if you want something to happen upon destruction,
+          add a handler for the "onDestroy" event.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="disableHooks:object_method">disableHooks (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev">Event name(s)</span>
+</td>
+         <td class="type">[<b>〈String,Array〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Temporarily disables the listeners for the named event(s).
+          You can restore them later with <a href='api://DlEventProxy.xml:type=object_method:func=enableHooks'>enableHooks()</a>.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="enableHooks:object_method">enableHooks (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev">Event name(s)</span>
+</td>
+         <td class="type">[<b>〈String,Array〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Restores listeners disabled by <a href='api://DlEventProxy.xml:type=object_method:func=disableHooks'>disableHooks()</a>.
+<p/>
+          Note that between a call to disableHooks() and one to
+          enableHooks(), you can add other listeners to the same
+          event.  They will function correctly, but they will be lost
+          after the call to enableHooks().
+<p/>
+          Example where this might be useful:
+<p/>
+          <div sample="DlEventProxy4"></div>
+<p/>
+          (In practice it's better to add an argument to the changeTo
+          function so that it knows it shouldn't call the hooks; we're
+          doing this in few of our widgets).
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="hasHooks:object_method">hasHooks (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev">Event name</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns <b>true</b> if at least one listener exists for the
+          named event.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="registerEvents:object_method">registerEvents (<span class='param'>evs</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">evs</td>
+         <td class="doc"><span name="evs">Event names</span>
+</td>
+         <td class="type">[<b>〈Array〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          You will normally call this only once for each object,
+          i.e. in the constructor.  It will register the given events
+          with the current object.
+<p/>
+          <div sample="DlEventProxy5"></div>
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="removeAllListeners:object_method">removeAllListeners (<span class='param'>ev</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev">Event name</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Removes <em>all</em> listeners associated with an event.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="removeEventListener:object_method">removeEventListener (<span class='param'>ev</span>, <span class='param'>handler</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ev</td>
+         <td class="doc"><span name="ev"></span>
+</td>
+         <td class="type">[<b>〈String,Array,Object〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">handler</td>
+         <td class="doc"><span name="handler"></span>
+</td>
+         <td class="type">[<b>〈Function〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Removes the specified listener(s) from the object.  See
+          <a href='api://DlEventProxy.xml:type=object_method:func=addEventListener'>addEventListener()</a> for syntax of the arguments.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+<code id="DlEventProxy1" type="js">
+            function handlerFunction() {
+              // do stuff upon destroy
+            };
+            object.addEventListener("onDestroy", handlerFunction);
+          </code>
+<code id="DlEventProxy2" type="js">
+            object.addEventListener([ "onMouseEnter", "onMouseLeave" ],
+                                    mouseHandler);
+          </code>
+<code id="DlEventProxy3" type="js">
+            object.addEventListener({ onMouseEnter : doMouseEnter,
+                                      onMouseLeave : doMouseLeave,
+                                      onMouseDown  : doMouseDown,
+                                      onDestroy    : doDestroy });
+          </code>
+<code id="DlEventProxy4" type="js">
+            field.addEventListener("onChange", function() {
+              // do something heavy when field has changed
+            });
+
+            // ... later, "something heavy" is already done for the
+            // value we plan to put into the field, so we don't want
+            // the handler to get called now:
+
+            field.disableHooks("onChange");
+            field.changeTo(new_value);
+            field.enableHooks("onChange");
+          </code>
+<code id="DlEventProxy5" type="js">
+            var evs = new DlEventProxy();
+            evs.registerEvents([ "onFoo", "onBar" ]);
+            // now we can use the new events:
+            evs.addEventListener("onFoo", function(param) {
+               alert("Got: " + param);
+            });
+            evs.callHooks("onFoo", "Hello World");
+          </code>
+<code id="DlEventProxy6" type="js">
+            // if our hypotetical object has "onChange" event for when
+            // the value changes, and "onRefresh" for updating the display
+            // we can connect onRefresh to onChange to have it redisplay
+            // automatically when the value has changed:
+            obj.connectEvents("onChange", "onRefresh");
+
+            // or, suppose that our data is handled by "obj", and the
+            // display of this data is handled by "view", then we do:
+            obj.connectEvents("onChange", view, "onRefresh");
+
+            // if both events have the same name you can omit Event_2:
+            view1.connectEvents("onRefresh", view2); // keep views in sync
+
+            // you can pass an array as well, to connect multiple events:
+            view1.connectEvents([ "onRefresh", "onResize" ], view2);
+          </code>
+<code id="DlEventProxy7" type="js">
+            obj.callHooks("myEventName", foo, 2, bar);
+            obj.applyHooks("myEventName", [ foo, 2, bar ]);
+          </code>
+
+
+</sample>
+
+
+
+

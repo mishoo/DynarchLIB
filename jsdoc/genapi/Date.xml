@@ -1,0 +1,389 @@
+<sample>
+
+  <title>Date</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>Date</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>— none —</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈jslib.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈texts.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+     <div class="doc"><span>
+      This is a standard JavaScript object.  DynarchLIB adds a few
+      useful extensions.
+    </span>
+
+     </div>
+   </div>
+    </div>
+
+
+    <div class="static-methods">
+      <h2>Static functions</h2>
+   <div class="method">
+        <h3 id="getDayName:static_method">Date.getDayName (<span class='param'>day</span>, <span class='param optional'>sh</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">day</td>
+         <td class="doc"><span name="day">0 (Sunday) to 6 (Saturday)</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">sh</td>
+         <td class="doc"><span default="false" name="sh" optional="1">Short name?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">false</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the name of the <b>day</b> as a string.  The texts
+          are defined in texts.js.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getFirstDayOfWeek:static_method">Date.getFirstDayOfWeek ()
+        </h3>
+     <div class="doc"><span>
+          Returns the “first day of week” according to current locale.
+          This is actually defined in texts.js.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getMonthName:static_method">Date.getMonthName (<span class='param'>mon</span>, <span class='param optional'>sh</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">mon</td>
+         <td class="doc"><span name="mon">0 (January) to 11 (December)</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">sh</td>
+         <td class="doc"><span default="false" name="sh" optional="1"></span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">false</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the name of the <b>mon</b>th.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="isWeekend:static_method">Date.isWeekend (<span class='param'>day</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">day</td>
+         <td class="doc"><span name="day">0 (Sunday) to 6 (Saturday)</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns <b>true</b> if <b>day</b> is a weekend day.
+          Weekends are considered to be Saturday and Sunday.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="parseMySQL:static_method">Date.parseMySQL (<span class='param'>str</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">str</td>
+         <td class="doc"><span name="str">A date string as "YYYY-MM-DD HH:MM:SS"</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Date) 
+           <b><span>Date object</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Parses the given date string and returns a new Date object.
+          We named this function “parseMySQL” since that format is by
+          default used by MySQL to report date/time fields; however,
+          many other tools might use the same format.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="dateEqualsTo:object_method">dateEqualsTo (<span class='param'>date</span>, <span class='param optional'>monthOnly</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">date</td>
+         <td class="doc"><span name="date"></span>
+</td>
+         <td class="type">[<b>〈Date〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">monthOnly</td>
+         <td class="doc"><span default="false" name="monthOnly" optional="1">Check only year and month?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">false</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns true if the current date object equals the given
+          <b>date</b> argument.  If <b>monthOnly</b> is <b>true</b>,
+          then it will check only year and month; otherwise checks the
+          date too.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getDayOfYear:object_method">getDayOfYear ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Number) 
+           <b><span>Day of the year</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the day in the year that the current date
+          represents, i.e. 1 - 365.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getMonthDays:object_method">getMonthDays (<span class='param optional'>m</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">m</td>
+         <td class="doc"><span default="Current month" name="m" optional="1">Month number</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional">optional</td>
+         <td class="default">Current month</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Number) 
+           <b><span>Number of days in month</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the number of days in the given month.  If <b>m</b>
+          is not passed, it's assumed to be the month in the current
+          date object.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getWeekNumber:object_method">getWeekNumber ()
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: Number) 
+           <b><span>Week number</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Returns the week number in the year that the current date
+          object falls into.
+        </span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="print:object_method">print (<span class='param'>str</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">str</td>
+         <td class="doc"><span name="str">format string</span>
+</td>
+         <td class="type">[<b>〈String〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr class="return">
+         <td class="label">Returns:</td>
+         <td class="doc" colspan="6">(type: String) 
+           <b><span>Formatted date</span>
+</b>
+         </td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Formats the current date according to the specified
+          <b>str</b> format.  This supports a subset of the
+          POSIX-style time format strings:
+<p/>
+          <pre>            %a — abbreviated day name
+            %A — full day name
+            %b — abbreviated month name
+            %B — full month name
+            %C — the century number
+            %d — the day of the month (01 .. 31)
+            %e — the day of the month (1 .. 31)
+            %H — hour (00 .. 23)
+            %I — hour (01 .. 12)
+            %j — the day of the year (001 .. 366)
+            %k — hour (0 .. 23)
+            %l — hour (1 .. 12)
+            %m — month (01 .. 12)
+            %M — minute (00 .. 59)
+            %n — a newline character
+            %p — "PM" or "AM"
+            %P — "pm" or "am"
+            %s — seconds since epoch
+            %S — seconds (00 .. 59)
+            %t — a tab character
+            %W — week number
+            %u — the day of the week (1 .. 7, 1 is Monday)
+            %w — the day of the week (0 .. 6, 0 is Sunday)
+            %y — year without the century (00 .. 99)
+            %Y — full year, i.e. 2007
+            %% — a literal '%' character</pre>
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+
+
+</sample>
+
+
+
+

@@ -1,0 +1,120 @@
+<api file="singleton.js" show="1">
+  <object name="DlSingleton">
+    <constructor>
+      <doc>
+        This is a small framework for creating singletons.  A
+        singleton is an useful design pattern.  A singleton class is a
+        class that can be instantiated only once through an
+        application, therefore at most one object of that type will
+        ever exist.  For instance, our 〈DlFlashUtils〉 object is a
+        singleton.
+
+        Here's how to declare your own singleton:
+
+        <js>
+          // @require singleton.js
+          (function(){
+
+              MyPopupMenu.inherits(DlHMenu);
+              function MyPopupMenu() {
+                  DlHMenu.call(this, {});
+                  // do your menu initialization here
+              };
+
+              MyPopupMenu.prototype.myCustomFunc = function() {
+                  // whatever
+              };
+
+              // register the singleton.  The object is NOT
+              // instantiated at this time.
+              DlSingleton.register("myMenu", MyPopupMenu);
+
+          })();
+
+          // Now, note that MyPopupMenu is not EXPORT-ed,
+          // therefore the constructor is not available here.  If we want
+          // to get our menu, we can use the following:
+
+          var menu = DlSingleton.get("myMenu");
+
+          // the above will create the menu and save a reference to it.
+          // Next time DlSingleton.get("myMenu") is called,
+          // it will return a reference to the already created object.
+
+          menu.myCustomFunc();
+        </js>
+
+        This way you can effectively hide the constructor of your
+        objects and therefore make sure that they are created only
+        once by forcing users to go through DlSingleton.
+
+        Note that the constructor of a singleton must not receive any
+        arguments.  This is important for the whole idea to work.
+      </doc>
+    </constructor>
+    <static-methods>
+      <method hash="ef55a8e8936052c47d5f8462b3082a20" name="get">
+        <param name="type" type="String">Object type</param>
+        <param default="false" name="noCreate" optional="1" type="boolean">Don't create?</param>
+        <doc>
+          Checks to see if an object of the given type was already
+          created.  If so, it returns that object.
+
+          Otherwise, if <b>noCreate</b> is false (default) it will
+          instantiate such an object, save it and return it.  If
+          <b>noCreate</b> is true this function simply returns
+          <b>false</b>.
+
+          So you can check if a menu was already created with:
+
+          <js>
+            // supposing you're at a stage when you can do something
+            // useful if the menu was already created, but you don't
+            // want to do anything (not even create it) otherwise.
+            var menu = DlSingleton.get("myMenu", true);
+            if (menu) {
+                // menu exists, do something with it
+            }
+          </js>
+        </doc>
+      </method>
+      <method hash="88a0888c950c2f89484418d296abf352" name="register">
+        <param name="type" type="String">Object type</param>
+        <param name="ctor" type="Function">Reference to constructor</param>
+        <param default="false" name="globalize" optional="1" type="boolean">Globalize?</param>
+        <doc>
+          Registers a new singleton object.  The <b>type</b> must be a
+          name for your object—it can be anything you want, not
+          necessarily the name of the constructor.
+
+          <b>ctor</b> must be a reference to the constructor function.
+
+          If you pass <b>globalize</b> true, then this will create a
+          global function with the name given in <b>type</b>.  You can
+          use this function instead of calling
+          〈DlSingleton.get()|DlSingleton.get(type)〉 when you want to
+          instantiate/retrieve the object.  I.e.:
+
+          <js>
+            DlSingleton.register("MyWickedObject", MyWickedObjectConstructor);
+
+            // later, the following 2 are equivalent:
+            DlSingleton.get("MyWickedObject");
+            MyWickedObject();
+
+            // and also the following 2:
+            DlSingleton.get("MyWickedObject", true);
+            MyWickedObject(true);
+            // (to avoid instantiation)
+          </js>
+
+          It's important to note that <b>globalize</b> doesn't publish
+          the constructor, but a function that is simply a shortcut
+          for calling DlSingleton.get.  Therefore you can still be
+          sure that the object will be instantiated at most once.
+        </doc>
+      </method>
+    </static-methods>
+    <object-methods></object-methods>
+  </object>
+</api>

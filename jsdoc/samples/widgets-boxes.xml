@@ -1,0 +1,154 @@
+<sample>
+
+  <title>Boxes</title>
+
+  <text>
+
+    <p>
+      Boxes are the basic building blocks for widgets layout.  We have
+      a few types of boxes:
+    </p>
+
+    <ul>
+      <li><p>
+        <b>DlHbox</b> — implements a horizontal box which aligns
+        widgets horizontally.  Additionally, these widgets will be
+        vertically centered with respect to each other (but this can
+        be customized).
+      </p></li>
+
+      <li><p>
+        <b>DlVbox</b> — the vertical version of the box.
+      </p></li>
+
+    </ul>
+
+    <h2>Vertical and horizontal boxes</h2>
+
+    <p>
+      We already used some of these in our previous samples.  The API
+      is quite simple.
+    </p>
+
+    <div sample="hbox1" />
+
+    <p>
+      If we wanted to change the layout to be vertical, there's only
+      one character we need to change.  Just use <b>DlVbox</b> instead
+      of <b>DlHbox</b>:
+    </p>
+
+    <div sample="vbox1" />
+
+    <h2>Horizontal box specifics</h2>
+
+    <p>
+      <b>DlHbox</b> has some utility methods to facilitate boxes that
+      contain buttons.  For example, sometimes you might want to put a
+      button on the left, and one on the right sides of a dialog.  For
+      this you use the <em>addFiller()</em> method, which inserts into
+      the box a cell of variable width which will fill all available
+      space.  Here's a sample (resize the dialog to see the effect):
+    </p>
+
+    <div sample="hbox2" />
+
+    <p>
+      It's like the previous sample, only this time the dialog is
+      resizable; to make this work, we had to use a <a
+      href="sample://widgets-layout.xml">layout widget</a>.  The box
+      inside it has a filler cell between the "close" button and the
+      checkbox, so "Close" will stay on the left, while the checkbox
+      and the radio button will be flushed to the right.
+    </p>
+
+    <p>
+      Another useful method for button boxes is
+      <em>setEqualWidths()</em>.  It's useful because buttons usually
+      have different widths (for example, a button with the label "OK"
+      will be smaller than a button with the label "Cancel").  Here's
+      how they look:
+    </p>
+
+    <div sample="hbox3" />
+
+    <p>
+      Now if we call <em>setEqualWidths()</em>, the buttons will be
+      resized so that they have equal widths.
+    </p>
+
+    <div sample="hbox4" />
+
+    <p>
+      You can also optionally include an argument that specifies the
+      number of pixels to add to each button's width (after they have
+      been made equal):
+    </p>
+
+    <div sample="hbox5" />
+
+  </text>
+
+  <code id="hbox1" type="js" canrun="true"><![CDATA[
+    var dlg = new DlDialog({ title: "DlHbox sample" });
+    var box = new DlHbox({ parent: dlg, borderSpacing: 5 });
+    var btn = new DlButton({ parent: box, label: "Close me" });
+    new DlCheckbox({ parent: box, label: "A checkbox" });
+    box.addSeparator();
+    new DlRadioButton({ parent: box, label: "A radio button" });
+    dlg.centerOnParent();
+    dlg.show();
+    btn.addEventListener("onClick", function() {
+            dlg.destroy();
+    });
+  ]]></code>
+
+  <code id="vbox1" type="js" canrun="true"><![CDATA[
+    var dlg = new DlDialog({ title: "DlVbox sample" });
+    var box = new DlVbox({ parent: dlg, borderSpacing: 5 });
+    var btn = new DlButton({ parent: box, label: "Close me" });
+    new DlCheckbox({ parent: box, label: "A checkbox" });
+    box.addSeparator();
+    new DlRadioButton({ parent: box, label: "A radio button" });
+    dlg.centerOnParent();
+    dlg.show();
+    btn.addEventListener("onClick", function() {
+            dlg.destroy();
+    });
+  ]]></code>
+
+  <code id="hbox2" type="js" canrun="true"><![CDATA[
+    var dlg = new DlDialog({ title: "DlHbox sample", resizable: true });
+    var cont = new DlLayout({ parent: dlg });
+    var box = new DlHbox({ borderSpacing: 5 });
+    var btn = new DlButton({ parent: box, label: "Close me" });
+    box.addFiller();
+    new DlCheckbox({ parent: box, label: "A checkbox" });
+    box.addSeparator();
+    new DlRadioButton({ parent: box, label: "A radio button" });
+    cont.packWidget(box, { pos: "top" });
+    cont.setSize({ x: 300, y: 100 });
+    dlg.centerOnParent();
+    dlg.show();
+    btn.addEventListener("onClick", function() {
+            dlg.destroy();
+    });
+  ]]></code>
+
+  <code id="hbox3" type="js" canrun="true"><![CDATA[
+    var box = new DlHbox({ parent: getDocCanvas(), borderSpacing: 3 });
+    new DlButton({ parent: box, label: "OK" });
+    new DlButton({ parent: box, label: "Cancel" });
+  ]]></code>
+
+  <code id="hbox4" type="js" canrun="true"><![CDATA[
+    //@include hbox3
+    box.setEqualWidths();
+  ]]></code>
+
+  <code id="hbox5" type="js" canrun="true"><![CDATA[
+    //@include hbox3
+    box.setEqualWidths(50);
+  ]]></code>
+
+</sample>

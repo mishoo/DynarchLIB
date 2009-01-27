@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>DynarchLIB Documentation</title>
+
+[% IF final %]
+    <script class="DynarchLIB" src="src/js/thelib.js"></script>
+    <script src="jsdoc/hl/hl-all.js"></script>
+[% ELSE %]
+    <script class="DynarchLIB" src="src/js/all-scripts.jsx?crunch=0;path=src/js"></script>
+    <script src="jsdoc/hl/highlight.js"></script>
+    <script src="jsdoc/hl/lang-js.js"></script>
+    <script src="jsdoc/hl/lang-dljs.js"></script>
+    <script src="jsdoc/hl/lang-css.js"></script>
+    <script src="jsdoc/hl/lang-xml.js"></script>
+    <script src="jsdoc/hl/lang-html.js"></script>
+    <script src="jsdoc/hl/helpers.js"></script>
+[% END %]
+    <script src="src/extras/cryptaes.js"></script>
+    <link rel="stylesheet" type="text/css" media="all" href="jsdoc/hl/style.css" />
+
+    <script src="jsdoc/doc.js"></script>
+    <link rel="stylesheet" type="text/css" media="all" href="src/css/default.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="jsdoc/doc.css" />
+  </head>
+  <body onload="App.init()"><div style="display:none">
+    <div id="c-leftLink" style="padding-left: 5px; text-align: center; font-weight: bold;">
+      <a href="http://www.dynarchlib.com/">DynarchLIB</a>
+    </div>
+    <div id="c-statusBar" style="padding: 2px; text-align: center">
+      Copyright © Dynarch.com.  Visit <a href="http://www.dynarchlib.com/licensing">www.dynarchlib.com/licensing</a> for details.
+    </div>
+    <table id="c-initPage" class="TitlePage" style="height: 100%;" align="center" cellspacing="0" cellpadding="0"><tr><td>
+      <div class="Title"> Dynarch<i>LIB</i> </div>
+      <div class="desc">
+        A professional JavaScript framework        
+      </div>
+      <div class="url">
+        <a href="http://www.dynarchlib.com/">www.dynarchlib.com</a>
+      </div>
+      <div class="copyright">
+        <!-- Implementation by <a href="http://mihai.bazon.net/blog">Mihai Bazon</a><br /> -->
+        © <a href="http://www.dynarch.com/">Dynarch.com</a> 2004-2008.  All rights reserved.<br />
+        Licensing information at <a href="http://www.dynarchlib.com/licensing">www.dynarchlib.com/licensing</a>.
+      </div>
+      <div class="version">
+        [ Version: [% dl_version || 'LOCAL' %] |
+        [% USE date; date.format(date.now, '%a, %d %b %Y, %H:%M', 'en_US') %] ]
+      </div>
+      <div class="acknowledgements">
+        <p>
+          This documentation uses icons from the <a target="_blank"
+          href="http://icon-king.com/?p=15">Nuvola Icon Theme</a>.<br
+          />
+          Nuvola Icons are released under the GNU LGPL.  They are not required<br />
+          for running DynarchLIB, they are just used for this documentation.
+        </p>
+        <p>
+          DynarchLIB bundles an implementation of the <a
+          href="http://pajhome.org.uk/crypt/md5/" target="_blank">MD5
+          and SHA1</a><br />
+          cryptographic hashes developed by Paul Johnston.<br />
+          They are distributed under the BSD license.
+        </p>
+      </div>
+    </td></tr></table>
+    <div id="c-runSampleInfo" style="padding: 1px 5px;">
+      <p>
+        In this dialog you can test and/or sample code.  In the left
+        pane there's the sample editor and in this very pane you will
+        see any output that the code prints using "print()" calls.
+      </p>
+    </div>
+  </div></body>
+</html>

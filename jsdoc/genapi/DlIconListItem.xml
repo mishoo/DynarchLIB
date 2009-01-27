@@ -1,0 +1,301 @@
+<sample>
+
+  <title>DlIconListItem</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlIconListItem</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlAbstractButton〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈iconlistview.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈abstractbutton.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">classes</td>
+         <td class="doc"><span default=" CLS" name="classes"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default"> CLS</td>
+       </tr>
+       <tr>
+         <td class="name">iconAbove</td>
+         <td class="doc"><span default="true" name="iconAbove"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">true</td>
+       </tr>
+       <tr>
+         <td class="name">iconClass</td>
+         <td class="doc"><span default="null" name="iconClass"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">iconSize</td>
+         <td class="doc"><span default="{¶      &#34;y&#34; : 40,¶      &#34;x&#34; : 40¶}" name="iconSize"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">{<br/>      "y" : 40,<br/>      "x" : 40<br/>}</td>
+       </tr>
+       <tr>
+         <td class="name">itemSize</td>
+         <td class="doc"><span default="{¶      &#34;y&#34; : null,¶      &#34;x&#34; : 100¶}" name="itemSize"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">{<br/>      "y" : null,<br/>      "x" : 100<br/>}</td>
+       </tr>
+       <tr>
+         <td class="name">itemSpacing</td>
+         <td class="doc"><span default="0" name="itemSpacing"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">0</td>
+       </tr>
+       <tr>
+         <td class="name">spaceEvenly</td>
+         <td class="doc"><span default="false" name="spaceEvenly"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">false</td>
+       </tr>
+       <tr>
+         <td class="name">tagName</td>
+         <td class="doc"><span default="&#34;table&#34;" name="tagName"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">"table"</td>
+       </tr>
+       <tr>
+         <td class="name">type</td>
+         <td class="doc"><span default=" DlAbstractButton.TYPE.TWOSTATE" name="type"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default"> DlAbstractButton.TYPE.TWOSTATE</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+      <param default=" CLS" name="classes"></param>
+      <param default="true" name="iconAbove"></param>
+      <param default="null" name="iconClass"></param>
+      <param default="{¶      &#34;y&#34; : 40,¶      &#34;x&#34; : 40¶}" name="iconSize"></param>
+      <param default="{¶      &#34;y&#34; : null,¶      &#34;x&#34; : 100¶}" name="itemSize"></param>
+      <param default="0" name="itemSpacing"></param>
+      <param default="false" name="spaceEvenly"></param>
+      <param default="&#34;table&#34;" name="tagName"></param>
+      <param default=" DlAbstractButton.TYPE.TWOSTATE" name="type"></param>
+    </span>
+
+     </div>
+   </div>
+    </div>
+
+
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="getIconCell:object_method">getIconCell ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getIconSize:object_method">getIconSize ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="getLabelCell:object_method">getLabelCell ()
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="label:object_method">label (<span class='param'>label</span>, <span class='param'>force</span>)
+        <div class="overrides">
+             (overrides <a href="api://DlAbstractButton.xml:type=object_method:func=label">label in DlAbstractButton</a>)
+        </div>
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">label</td>
+         <td class="doc"><span name="label"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">force</td>
+         <td class="doc"><span name="force"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setIconAbove:object_method">setIconAbove (<span class='param'>ia</span>, <span class='param'>init</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">ia</td>
+         <td class="doc"><span name="ia"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">init</td>
+         <td class="doc"><span name="init"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setIconClass:object_method">setIconClass (<span class='param'>className</span>)
+        <div class="overrides">
+             (overrides <a href="api://DlWidget.xml:type=object_method:func=setIconClass">setIconClass in DlWidget</a>)
+        </div>
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">className</td>
+         <td class="doc"><span name="className"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="setIconSize:object_method">setIconSize (<span class='param'>sz</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">sz</td>
+         <td class="doc"><span name="sz"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_createElement:object_method">_createElement ()
+        <div class="overrides">
+             (overrides <a href="api://DlAbstractButton.xml:type=object_method:func=_createElement">_createElement in DlAbstractButton</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+
+
+</sample>
+
+
+
+

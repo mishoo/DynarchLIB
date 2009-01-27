@@ -1,0 +1,22 @@
+<sample>
+
+  <title>DlButtonMenu</title>
+
+  <text>
+
+    <p>
+      This is a drop-down widget that has a popup menu.  Since we
+      didn't discuss menus yet, we'll show a sample with a calendar.
+    </p>
+
+    <div sample="buttonmenu1" />
+
+  </text>
+
+  <code id="buttonmenu1" type="js" canrun="true"><![CDATA[
+  ]]></code>
+  
+  <code id="buttonmenu2" type="js" canrun="true"><![CDATA[
+  ]]></code>
+
+</sample>

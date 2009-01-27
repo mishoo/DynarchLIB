@@ -1,0 +1,165 @@
+<sample>
+
+  <title>Progress bar</title>
+
+  <text>
+
+    <p>
+      For lengthy operations, you can display a progress bar using the
+      〈DlProgress〉 widget.  It's a very simple widget, the main method
+      you're going to call against it is
+      〈DlProgressBar::setValue()|setValue()〉.
+    </p>
+
+    <div sample="progress1" />
+
+    <p>
+      Here's a new sample that uses a function to generate the label
+      and a different minVal/maxVal interval:
+    </p>
+
+    <div sample="progress2" />
+
+    <h2>Using setTimeout() to have the browser update the display</h2>
+
+    <p>
+      Note that since most JavaScript engines are not multithreaded,
+      in order to see any change in the progress bar the browser needs
+      to have a chance to “breathe”.  So a long computation has to be
+      broken down with setTimeout() calls, so the browser can update
+      the display.  This is not always trivial to do.
+    </p>
+
+    <p>
+      Following there is an implementation of the “quicksort”
+      algorithm designed this way.  Note that the code is
+      substantially more complicated than if we were to write it
+      without progress reporting.  First off, we can only estimate the
+      total number of iterations that quicksort will take.  This is
+      around 2/3 * the length of the array.  Since in some cases it
+      will be faster than that, we need to have a special “finish”
+      function that will update the progress label and value to 100%.
+    </p>
+
+    <div sample="progress3" />
+
+  </text>
+
+  <code id="progress1" type="js" canrun="true"><![CDATA[
+    var dlg = new DlDialog({ title: "Progress bar", quitBtn: "destroy" });
+    var cont = new DlContainer({ parent: dlg });
+    var box = new DlVbox({ parent: cont, borderSpacing: 10 });
+    var progress = new DlProgressBar({ parent: box, min: 0, max: 100, label: "%d% complete" });
+    box.addSeparator();
+    var spinner = new DlSpinner({ parent: box, minVal: 0, maxVal: 100, step: 5, value: 0 });
+    spinner.addEventListener("onChange", function() {
+            progress.setValue(this.getValue());
+    });
+    progress.setSize({ x: 300 });
+    dlg.centerOnParent();
+    dlg.show();
+  ]]></code>
+
+  <code id="progress2" type="js" canrun="true"><![CDATA[
+    function makeLabel(widget, percent, val) {
+            if (percent == 0) {
+                    return "Starting up...";
+            } else if (percent < 50) {
+                    return percent + "% - about 2 min.";
+            } else if (percent < 100) {
+                    return percent + "% - about 1 min.";
+            } else {
+                    return "Done";
+            }
+    };
+    var dlg = new DlDialog({ title: "Progress bar", quitBtn: "destroy" });
+    var cont = new DlContainer({ parent: dlg });
+    var box = new DlVbox({ parent: cont, borderSpacing: 10 });
+    var progress = new DlProgressBar({ parent: box, min: 0, max: 500, label: makeLabel });
+    box.addSeparator();
+    var spinner = new DlSpinner({ parent: box, minVal: 0, maxVal: 500, step: 5, value: 0 });
+    spinner.addEventListener("onChange", function() {
+            progress.setValue(this.getValue());
+    });
+    progress.setSize({ x: 300 });
+    dlg.centerOnParent();
+    dlg.show();
+  ]]></code>
+
+  <code id="progress3" type="js" canrun="true"><![CDATA[
+
+    // qsort with delayed execution
+    // receives the array to sort and 2 functions
+    // progressFunc will update the progress bar
+    // finishFunc is called when the sorting was finished
+    function qsort(a, progressFunc, finishFunc) {
+            var iteration = 0;  // count iterations to update progress
+            var to_run = 1;     // number of iterations left to run
+            var stopped = false; // will be set to true once the algorithm finishes
+            function qs(start, end) {
+                    var j = start, k = end, switch_dir = false;
+                    if (j < k) {
+                            do {
+                                    if (a[j] > a[k]) {
+                                            var tmp = a[j];
+                                            a[j] = a[k];
+                                            a[k] = tmp;
+                                            switch_dir = !switch_dir;
+                                    }
+                                    if (switch_dir)
+                                            k--;
+                                    else
+                                            j++;
+                            } while (j < k);
+                            to_run += 2; // 2 more iterations at this step
+                            progressFunc(++iteration); // update progress bar
+                            // by delaying continuation with setTimeout,
+                            // the browser has a chance to update the display
+                            setTimeout(function() {
+                                    qs(start, j - 1);
+                                    qs(j + 1, end);
+                                    if (to_run == 0 && !stopped) {
+                                            // algorithm ended, but note that
+                                            // some code might still be running
+                                            // (that's why we used the stopped boolean)
+                                            finishFunc();
+                                            stopped = true;
+                                    }
+                            }, 10);
+                    }
+                    to_run--;   // one iteration finished
+            };
+            qs(0, a.length);
+    };
+
+    // create a big array of random numbers
+    var a = [];
+    for (var i = 1000; --i >= 0;) {
+            a[i] = Math.round(Math.random() * 10000);
+    }
+
+    var dlg = new DlDialog({ title: "Progress bar", quitBtn: "destroy" });
+    var cont = new DlContainer({ parent: dlg });
+    var box = new DlVbox({ parent: cont, borderSpacing: 10 });
+    var progress = new DlProgressBar({ parent : box,
+                                       min    : 0,
+                                       max    : Math.round(a.length * 2/3), // qsort takes this many steps
+                                       label  : "Sorting... %d%" });
+    progress.setSize({ x: 300 });
+    dlg.centerOnParent();
+    dlg.show();
+
+    qsort(a,
+          // function to update the progress bar
+          function(iteration) {
+                  progress.setValue(iteration);
+          },
+          // say "finished" and print the sorted numbers
+          function() {
+                  progress.setLabel("Done.");
+                  progress.setValue(progress.getMaxVal());
+                  print(a.join(" "));
+          });
+  ]]></code>
+
+</sample>

@@ -1,0 +1,42 @@
+<api file="progressbar.js">
+  <object base="DlWidget" name="DlProgressBar">
+    <constructor>
+      <param default="null" name="label"></param>
+      <param default="100" name="max"></param>
+      <param default="0" name="min"></param>
+      <param default="0" name="val"></param>
+    </constructor>
+    <static-methods></static-methods>
+    <object-methods>
+      <method hash="68f1b99ff1981eb5bb8bfab10600a06a" name="reset" varargs="1">
+        <!--XXX: uses *arguments*, check for missing params-->
+        <param name="min"></param>
+        <param name="max"></param>
+        <param name="val"></param>
+        <param name="label"></param>
+        <doc></doc>
+      </method>
+      <method hash="a82a3bd72e670f010407670076708581" name="setLabel">
+        <param name="label"></param>
+        <doc></doc>
+      </method>
+      <method hash="e05854ee2f096bf0c4425396ff919664" name="setValue">
+        <param name="val"></param>
+        <doc></doc>
+      </method>
+      <method hash="6f2e486720b79224c763322d9961f223" internal="1" name="_createElement">
+        <doc></doc>
+      </method>
+      <method hash="eb0ddd70287919dcc89fdaa81fb13c28" internal="1" name="_getFillElement">
+        <doc></doc>
+      </method>
+      <method hash="d3c199460df342ba8fc642cdbe375c01" internal="1" name="_getLabelElement">
+        <doc></doc>
+      </method>
+      <method hash="0770086009a0f921a25e1d2d5f3973e5" internal="1" name="_updateLabel">
+        <param name="percent"></param>
+        <doc></doc>
+      </method>
+    <method hash="f6415e6b924dfd352726384676714227" name="getMaxVal"><doc></doc></method><method hash="5d3a3d06dbda39f5fd25baef2200cf1d" name="getMinVal"><doc></doc></method><method hash="9a6e2908eea649f776fe962264f6ebb6" name="getValue"><doc></doc></method></object-methods>
+  </object>
+</api>

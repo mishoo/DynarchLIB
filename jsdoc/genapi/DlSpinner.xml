@@ -1,0 +1,316 @@
+<sample>
+
+  <title>DlSpinner</title>
+
+  <text>
+
+
+    <div class="object-info">
+      <table>
+        <tr>
+          <td class="label">Name:</td>
+          <td>DlSpinner</td>
+        </tr>
+        <tr>
+          <td class="label">Inherits:</td>
+          <td>〈DlEntry〉</td>
+        </tr>
+        <tr>
+          <td class="label">Defined in:</td>
+          <td>〈spinner.js〉</td>
+        </tr>
+        <tr>
+          <td class="label">Requires:</td>
+          <td>〈entry.js, button.js, keyboard.js〉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="constructor">
+      <h2>Constructor</h2>
+   <div class="method">
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">decimals</td>
+         <td class="doc"><span default="null" name="decimals">How many decimals?</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">integer</td>
+         <td class="doc"><span default="false" name="integer">Accept only integer values?</span>
+</td>
+         <td class="type">[<b>〈boolean〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">false</td>
+       </tr>
+       <tr>
+         <td class="name">maxVal</td>
+         <td class="doc"><span default="null" name="maxVal">Minimum value</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">minVal</td>
+         <td class="doc"><span default="null" name="minVal">Maximum value</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">null</td>
+       </tr>
+       <tr>
+         <td class="name">size</td>
+         <td class="doc"><span default="4" name="size">Passed to <a href='api://DlEntry.xml'>DlEntry</a></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">4</td>
+       </tr>
+       <tr>
+         <td class="name">step</td>
+         <td class="doc"><span default="1" name="step">Step for increment/decrement operations</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">1</td>
+       </tr>
+       <tr>
+         <td class="name">value</td>
+         <td class="doc"><span default="0" name="value">Initial value (passed to <a href='api://DlEntry.xml'>DlEntry</a></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">0</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+        DlSpinner is a specialization of <a href='api://DlEntry.xml'>DlEntry</a> specifically
+        designed to enter numeric values.  It looks like a standard
+        spin button—present in many desktop-based user interfaces.  It
+        has 2 small arrow buttons that can be used to
+        increase/decrease the value using the mouse.
+<p/>
+        Obviously, a DlSpinner will automatically use a
+        <a href='api://DlValidator.xml:type=static_method:func=Number'>Number validator</a>.
+<p/>
+        Besides for the minor differences in constructor arguments,
+        you can use this widget the same way you use a <a href='api://DlEntry.xml'>DlEntry</a>.
+<p/>
+        The value can be modified by direct typing, by clicking the
+        up/down arrows or by using the mouse wheel.
+      </span>
+
+     </div>
+   </div>
+    </div>
+
+    <div class="events">
+      <h2>Events</h2>
+   <div class="method">
+        <h3 id="onSpin:object_event">onSpin (<span class='param'>val</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">val</td>
+         <td class="doc"><span name="val">Current value</span>
+</td>
+         <td class="type">[<b>〈Number〉</b>]</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span>
+          Called when the value is updated as a result of a "spinning"
+          event, i.e. user clicked on the up/down arrows, or pressed
+          the UP/DOWN arrow keys.
+        </span>
+
+     </div>
+   </div>
+    </div>
+
+
+    <div class="object-methods">
+      <h2>Instance methods</h2>
+   <div class="method">
+        <h3 id="initDOM:object_method">initDOM ()
+        <div class="overrides">
+             (overrides <a href="api://DlEntry.xml:type=object_method:func=initDOM">initDOM in DlEntry</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_clearTimer:object_method">_clearTimer (<span class='param'>restart</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">restart</td>
+         <td class="doc"><span name="restart"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_createElement:object_method">_createElement ()
+        <div class="overrides">
+             (overrides <a href="api://DlEntry.xml:type=object_method:func=_createElement">_createElement in DlEntry</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_setListeners:object_method">_setListeners ()
+        <div class="overrides">
+             (overrides <a href="api://DlContainer.xml:type=object_method:func=_setListeners">_setListeners in DlContainer</a>)
+        </div>
+        </h3>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_setupSpinnerBtn:object_method">_setupSpinnerBtn (<span class='param'>b</span>, <span class='param'>up</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">b</td>
+         <td class="doc"><span name="b"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">up</td>
+         <td class="doc"><span name="up"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_spinnerUpdateVal:object_method">_spinnerUpdateVal (<span class='param'>dir</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">dir</td>
+         <td class="doc"><span name="dir"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+   <div class="method">
+        <h3 id="_startTimer:object_method">_startTimer (<span class='param'>dir</span>, <span class='param'>timeout</span>)
+        </h3>
+   <div class="params">
+     <table>
+       <tr class="head">
+         <td class="name">Arguments</td>
+         <td class="doc">Notes</td>
+         <td class="type">Type</td>
+         <td class="optional"></td>
+         <td class="default">Default</td>
+       </tr>
+       <tr>
+         <td class="name">dir</td>
+         <td class="doc"><span name="dir"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+       <tr>
+         <td class="name">timeout</td>
+         <td class="doc"><span name="timeout"></span>
+</td>
+         <td class="type">—</td>
+         <td class="optional"></td>
+         <td class="default">—</td>
+       </tr>
+     </table>
+   </div>
+     <div class="doc"><span></span>
+
+     </div>
+   </div>
+    </div>
+
+  </text>
+
+
+</sample>
+
+
+
+

@@ -1,0 +1,322 @@
+<sample>
+
+  <title>Menu widget</title>
+
+  <text>
+
+    <p>
+      Everyone knows what a menu is, so we'll only explain how things
+      go in DynarchLIB.  A menu is an ordinary container that
+      <em>usually</em> contains menu items (<b>DlMenuItem</b>).  We
+      have widgets for a horizontal menu bar (<b>DlHMenu</b>) and for
+      a vertical menu (<b>DlVMenu</b>).  They inherit from
+      <b>DlHbox</b> and <b>DlVbox</b> and the only purpose of
+      specialized classes for menus is the fact that they look
+      different (so they get a different CSS class).
+    </p>
+
+    <p>
+      A menu item is an ordinary widget that can display an icon, a
+      label and can optionally contain a submenu.
+    </p>
+
+    <p>
+      Here is how we create a simple menu.
+    </p>
+
+    <div sample="menu1" />
+
+    <p>
+      It's a menu that does nothing.  Let's add an event listener now.
+      The following sample also shows how to add icons (using the same
+      <b>iconClass</b> method that we've seen in other widgets).
+    </p>
+
+    <div sample="menu2" />
+
+    <p>
+      By naming the items in a menu, we can add a global "onSelect"
+      handler for a whole menu, that gets called whenever a named item
+      was clicked.  Your handler gets passed the name of the item.  It
+      is possible to add a different type of handler—directly to the
+      menu item instead:
+    </p>
+
+    <div sample="menu3" />
+
+    <h2>Icons</h2>
+
+    <p>
+      Let's revisit a bit the menu icons.  Here's a sample where we
+      directly include a vertical menu with some icons.  Note this
+      <em>isn't</em> a popup menu, therefore you can't hide it.
+    </p>
+
+    <div sample="menu4" />
+
+    <p>
+      You might have noticed that the "Exit" item has no icon, and its
+      label is not vertically aligned with the other items.  I think
+      this is a sane default, because it works a lot better for menus
+      that have no icons--but if you wish to align it, it's very easy
+      to do.  Just specify an <b>iconClass</b> that doesn't exist,
+      such as "Blank" ;-) As you can see below, we can also do this
+      after the item is created, using setIconClass():
+    </p>
+
+    <div sample="menu5" />
+
+    <h2>A more complex menu</h2>
+
+    <p>
+      This is a more complex sample that demonstrates the following:
+    </p>
+
+    <ul>
+      <li><p>
+        How you can easily create a helper function to create menus.
+      </p></li>
+      <li><p>
+        Menus can contain almost any widgets (for example, the
+        “Preferences” menu contain plain radio buttons and check
+        boxes).  We don't need to have a special <b>DlMenuItem</b>
+        type for them—we're using the good old <b>DlCheckbox</b> and
+        <b>DlRadioButton</b>.  And of course, radio groups. :)
+      </p></li>
+      <li><p>
+        Menu contents can be mixed.  In the “Edit/Insert date” menu we
+        initially display a calendar, but each time a date is selected
+        we add a new item here to keep a sort of history.
+      </p></li>
+    </ul>
+
+    <div sample="menu6" />
+
+  </text>
+
+  <code id="menu1" type="js" canrun="true"><![CDATA[
+    var bar = new DlHMenu({ parent: getDocCanvas() });
+
+    var file = new DlMenuItem({ parent: bar, label: "File" });
+    var edit = new DlMenuItem({ parent: bar, label: "Edit" });
+
+    var file_menu = new DlVMenu({});
+    file.setMenu(file_menu);
+    new DlMenuItem({ parent: file_menu, label: "Open" });
+    new DlMenuItem({ parent: file_menu, label: "Save" });
+    new DlMenuItem({ parent: file_menu, label: "Save as..." });
+    file_menu.addSeparator();
+    new DlMenuItem({ parent: file_menu, label: "Exit" });
+
+    var edit_menu = new DlVMenu({});
+    edit.setMenu(edit_menu);
+    new DlMenuItem({ parent: edit_menu, label: "Cut" });
+    new DlMenuItem({ parent: edit_menu, label: "Copy" });
+    new DlMenuItem({ parent: edit_menu, label: "Paste" });
+    edit_menu.addSeparator();
+    new DlMenuItem({ parent: edit_menu, label: "Select all" });
+  ]]></code>
+
+  <code id="menu2" type="js" canrun="true"><![CDATA[
+    var bar = new DlHMenu({ parent: getDocCanvas() });
+
+    var file = new DlMenuItem({ parent: bar, label: "File" });
+    var edit = new DlMenuItem({ parent: bar, label: "Edit" });
+
+    var file_menu = new DlVMenu({});
+    file.setMenu(file_menu);
+    new DlMenuItem({ parent: file_menu, label: "Open",
+                     name: "open",
+                     iconClass: "IconFileOpen" });
+    new DlMenuItem({ parent: file_menu, label: "Save",
+                     name: "save",
+                     iconClass: "IconFileSave" });
+    new DlMenuItem({ parent: file_menu, label: "Save as...",
+                     name: "save_as",
+                     iconClass: "IconFileSaveAs" });
+    file_menu.addSeparator();
+    new DlMenuItem({ parent: file_menu, label: "Exit",
+                     name: "exit" });
+
+    var edit_menu = new DlVMenu({});
+    edit.setMenu(edit_menu);
+    new DlMenuItem({ parent: edit_menu, label: "Cut",
+                     name: "cut",
+                     iconClass: "IconEditCut" });
+    new DlMenuItem({ parent: edit_menu, label: "Copy",
+                     name: "copy",
+                     iconClass: "IconEditCopy" });
+    new DlMenuItem({ parent: edit_menu, label: "Paste",
+                     name: "paste",
+                     iconClass: "IconEditPaste" });
+    edit_menu.addSeparator();
+    new DlMenuItem({ parent: edit_menu, label: "Select all", name: "select_all" });
+
+    function handler(name) {
+            print("You selected: " + name);
+    };
+
+    file_menu.addEventListener("onSelect", handler);
+    edit_menu.addEventListener("onSelect", handler);
+  ]]></code>
+
+  <code id="menu3" type="js" canrun="true"><![CDATA[
+    //@include menu2
+    bar.addFiller();
+    var foo = new DlMenuItem({ parent: bar, label: "Foo" });
+    foo.addEventListener("onSelect", function() {
+            alert("Foo clicked");
+    });
+  ]]></code>
+
+  <code id="menu4" type="js" canrun="true"><![CDATA[
+    var file_menu = new DlVMenu({ parent: getDocCanvas() });
+    new DlMenuItem({ parent: file_menu, label: "Open",
+                     name: "open",
+                     iconClass: "IconFileOpen" });
+    new DlMenuItem({ parent: file_menu, label: "Save",
+                     name: "save",
+                     iconClass: "IconFileSave" });
+    new DlMenuItem({ parent: file_menu, label: "Save as...",
+                     name: "save_as",
+                     iconClass: "IconFileSaveAs" });
+    file_menu.addSeparator();
+    new DlMenuItem({ parent: file_menu, label: "Exit",
+                     name: "exit" });
+
+    file_menu.addEventListener("onSelect", function(name) {
+            print(name);
+    });
+  ]]></code>
+
+  <code id="menu5" type="js" canrun="true"><![CDATA[
+    //@include menu4
+    file_menu.getItemByName("exit").setIconClass("Blank");
+  ]]></code>
+
+  <code id="menu6" type="js" canrun="true"><![CDATA[
+    var bar = new DlHMenu({ parent: getDocCanvas() });
+
+    // First, we define a helper function to create a menu,
+    // so that we write less code.  It takes an array of items.
+    // Each element in this array can be a hash that defines the item,
+    // or the string "-" that defines a separator, or a generic DlWidget.
+
+    // See how we're using it below
+
+    function createMenu(items) {
+            var menu = items;
+            if (items instanceof Array) {
+                    menu = new DlVMenu({});
+                    items.foreach(function(el) {
+                            if (el == "-") {
+                                    menu.addSeparator();
+                            } else if (el instanceof DlWidget) {
+                                    menu.appendWidget(el);
+                            } else {
+                                    var id = el.id;
+                                    if (!id) {
+                                            // generate an id for this item, if none given
+                                            id = el.label.replace(/[^a-z0-9_-]/gi, "");
+                                            id = id.toLowerCase();
+                                    }
+                                    var item = new DlMenuItem({ parent    : menu,
+                                                                id        : id,
+                                                                label     : el.label,
+                                                                iconClass : el.iconClass });
+                                    if (el.handler)
+                                            item.addEventListener("onSelect", el.handler);
+                                    if (el.items)
+                                            item.setMenu(createMenu(el.items));
+                            }
+                    });
+            }
+            return menu;
+    };
+
+    function h() {
+            print(this.label);
+    };
+
+    var file_items = [
+            { label: "New", iconClass: "IconFileNew",
+              items: [
+                      { label: "New text document", handler: h },
+                      { label: "New HTML document", handler: h },
+                      { label: "New XML document", handler: h }
+              ]
+            },
+            "-",
+            { label: "Open", iconClass: "IconFileOpen", handler: h },
+            { label: "Save", iconClass: "IconFileSave", handler: h },
+            "-",
+            { label: "Save as...", iconClass: "IconFileSaveAs", handler: h },
+            "-",
+            { label: "Exit", handler: h }
+    ];
+
+    var file = new DlMenuItem({ parent: bar, label: "File" });
+    file.setMenu(createMenu(file_items));
+
+    function selectedDate() {
+            print("Selected date: " + this.date.print("%Y/%m/%d"));
+    };
+
+    var calendar = new DlCalendar({ withMenu: true, navigation: 1 });
+    calendar.addEventListener("onSelect", function(cleared, otherMonth, secondClick) {
+            if (!cleared) {
+                    selectedDate.call(this);
+                    var menu = this.parent;
+                    var item = new DlMenuItem({ label     : this.date.print("%b %d, %Y"),
+                                                parent    : menu,
+                                                iconClass : "IconCalendar"});
+                    item.addEventListener("onSelect", selectedDate);
+                    item.date = new Date(this.date);
+                    DlPopup.clearAllPopups(); // close the menu now
+            }
+    });
+
+    var edit_items = [
+            { label: "Cut", iconClass: "IconEditCut", handler: h },
+            { label: "Copy", iconClass: "IconEditCopy", handler: h },
+            { label: "Paste", iconClass: "IconEditPaste", handler: h },
+            "-",
+            { label: "Insert date", iconClass: "IconCalendar",
+              items: [ calendar ]
+            }
+    ];
+
+    var edit = new DlMenuItem({ parent: bar, label: "Edit" });
+    edit.setMenu(createMenu(edit_items));
+
+    bar.addFiller();
+
+    // just in case you get weird ideas to run this sample more than once,
+    // we need to reset the groups here--otherwise the handlers will run
+    // multiple times.
+
+    DlRadioGroup.get("prefs").reset();
+    DlRadioGroup.get("sweet").reset();
+
+    var prefs_items = [
+            new DlCheckbox({ label: "I want Foo", group: "prefs" }),
+            new DlCheckbox({ label: "And Bar", group: "prefs" }),
+            new DlCheckbox({ label: "But not Baz", group: "prefs" }),
+            '-',
+            new DlRadioButton({ label: "With sugar", group: "sweet" }),
+            new DlRadioButton({ label: "With honey", group: "sweet", checked: true })
+    ];
+    var prefs = new DlMenuItem({ parent: bar, label: "Preferences" });
+    prefs.setMenu(createMenu(prefs_items));
+
+    DlRadioGroup.get("sweet").addEventListener("onChange", function(){
+            print(this.getSelected()[0].label());
+    });
+
+    DlRadioGroup.get("prefs").maxChecked(null);
+    DlRadioGroup.get("prefs").addEventListener("onChange", function(){
+            print(this.getSelected().map("label").join(", "));
+    });
+  ]]></code>
+
+</sample>

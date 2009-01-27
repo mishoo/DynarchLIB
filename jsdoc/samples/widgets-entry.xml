@@ -1,0 +1,209 @@
+<sample>
+
+  <title>Text input widgets</title>
+
+  <text>
+
+    <p>
+      For general text input we have two widgets: <b>DlEntry</b> and
+      <b>DlSpinner</b>.  <b>DlEntry</b> is specialized on text and
+      there are two types.  One uses an HTML &lt;input&gt; tag, and
+      the other uses a &lt;textarea&gt;.  <b>DlSpinner</b> is useful
+      for numerical values and features 2 small arrow buttons to
+      increase/decrease the value.
+    </p>
+
+    <p>
+      Examples:
+    </p>
+
+    <div sample="entry1" />
+
+    <p>
+      Each such widget defines the "setValue()" and "getValue()"
+      functions, which you can call at any moment to set/retrieve the
+      current value.
+    </p>
+
+    <h2>Events</h2>
+
+    <p>
+      Text entry widgets define the <em>onChange</em> event and 2
+      special keyboard events, which you can hook on to catch ENTER
+      and ESCAPE keys: <em>onKey-ENTER</em> and <em>onKey-ESCAPE</em>.
+    </p>
+
+    <p>
+      Here's how we continue the sample above to add a handler that
+      displays the field's value when ENTER is pressed:
+    </p>
+
+    <div sample="entry2" />
+
+    <p class="dimnote">
+      Note that we used the really short version based on
+      Array::map().  We could have wrote
+      e1.addEventListener("onKey-ENTER", displayValue),
+      e2.addEventListener(...), etc — but it's more convenient to use
+      map() for this.
+    </p>
+
+    <h2>Validators</h2>
+
+    <p>
+      <b>DlEntry</b> supports a simple validator mechanism based on
+      <b>DlValidator</b> objects.  You basically need to supply a
+      function that checks the validity of the given string and throws
+      an exception if the value is not valid.  The exception must be
+      an <b>DlValidatorException</b>.  Here is how we create an entry
+      that only accepts a letter between 'a' and 'f'.
+    </p>
+
+    <div sample="validator1" />
+
+    <p><b>Notes:</b></p>
+
+    <ul>
+      <li>
+        The <em>validators</em> argument to DlEntry constructor must
+        be an array.  That's because it supports more than one
+        validator.
+      </li>
+      <li>
+        Your validation function can return a “canonical” value.  In
+        this example, we accept both uppercase and lowercase letters
+        between 'a' and 'f', but we can change it to uppercase
+        automatically upon validation.  This is useful in a lot of
+        cases—for instance, in a price entry field you might want to
+        display “5.00” even if the user entered just “5”.
+      </li>
+      <li>
+        You can use the same <b>DlValidator</b> object for multiple
+        entry widgets—no need to create a <b>new DlValidator</b> all
+        the time, if you need the same validation conditions.
+      </li>
+    </ul>
+
+    <h3>Validator arguments</h3>
+
+    <p>
+      Sometimes you can create a more “generic” validator.  For
+      example, DynarchLIB supplies a simple number validator which
+      supports a minimum/maximum value (that is, the number should
+      fall in a specified range), or supports validating integers
+      only, etc.  So the function looks like this:
+    </p>
+
+    <div sample="numberval1" />
+
+    <p>
+      Based on it, here's how we create an entry that accepts a number
+      between 10 and 50 and adds 2 decimals (when you run it, type a
+      value in the entry and press ENTER):
+    </p>
+
+    <div sample="numberval2" />
+
+    <p>
+      So we can use a generic number validator and have some arguments
+      passed to it at run-time.  Those arguments are specified in
+      <b>DlValidator</b>, which will take care of routing them to your
+      supplied function when some field needs validation.
+    </p>
+
+    <p>
+      One other thing to note in the definition of our Number
+      validator is the way we throw exceptions.  While we do add an
+      informative text message, it won't be very useful in practice
+      because you'll probably want to handle different cases
+      separately—i.e. to display a message in a different language.
+      That's why it adds a second argument to the exceptions thrown,
+      and you can get it later using
+      <em>entry.validationError.code</em>.
+    </p>
+
+  </text>
+
+  <code id="entry1" type="js" canrun="true"><![CDATA[
+var box = new DlVbox({ parent: getDocCanvas(), borderSpacing: 3 });
+var e1 = new DlEntry({ parent: box });
+var e2 = new DlEntry({ parent: box, size: 10 });
+var e3 = new DlEntry({ parent: box, type: "textarea" });
+var e4 = new DlSpinner({ parent: box, minVal: 0, maxVal: 100, step: 5, value: 50 });
+  ]]></code>
+
+  <code id="entry2" type="js" canrun="true"><![CDATA[
+//@include entry1
+function displayValue() {
+    alert(this.getValue());
+};
+[ e1, e2, e3, e4 ].map("addEventListener", "onKey-ENTER", displayValue);
+  ]]></code>
+
+  <code id="validator1" type="js" canrun="true"><![CDATA[
+// first off, define the validator function.  In this function,
+// "data" is the string in the input field, that is, entry.getValue()
+function validateAtoF(data) {
+    // check length
+    if (data.length != 1)
+        throw new DlValidatorException("You must enter exactly one character")
+
+    // check type
+    if (!/[a-f]/i.test(data))
+        throw new DlValidatorException("You must enter a letter beween a and f");
+
+    // if the value is valid, convert it to uppercase
+    return data.toUpperCase();
+};
+
+// create the validator object now by passing it your callback
+var v = new DlValidator(validateAtoF);
+
+// create the entry
+var entry = new DlEntry({ parent: getDocCanvas(), validators: [ v ] });
+
+entry.addEventListener("onKey-ENTER", function() {
+    if (!this.validate()) {
+        print(this.validationError);
+    } else {
+        print("OK");
+    }
+});
+  ]]></code>
+
+  <code id="numberval1" type="js"><![CDATA[
+DlValidator.Number = function(data, minVal, maxVal, integer, decimals) {
+	data = data.replace(/\s/g, "");
+	var n = new Number(data);
+	if (isNaN(n))
+		throw new DlValidatorException("Value must be numeric",
+					       DlValidatorException.MISMATCH);
+	if (integer && n != Math.round(n))
+		throw new DlValidatorException("Value must be an integer",
+					       DlValidatorException.MISMATCH);
+	if (minVal != null && n < minVal)
+		throw new DlValidatorException("Value must be bigger than " + minVal,
+					       DlValidatorException.TOO_SMALL);
+	if (maxVal != null && n > maxVal)
+		throw new DlValidatorException("Value must be smaller than " + maxVal,
+					       DlValidatorException.TOO_BIG);
+	if (decimals)
+		n = n.toFixed(decimals);
+	return n;
+};
+  ]]></code>
+
+  <code id="numberval2" type="js" canrun="true"><![CDATA[
+// create the validator
+var v = new DlValidator(
+    DlValidator.Number,
+    10, // minimum value
+    50, // maximum value
+    false, // can be floating point
+    2 // add 2 decimals
+);
+
+var entry = new DlEntry({ parent: getDocCanvas(), validators: [ v ]});
+  ]]></code>
+
+</sample>

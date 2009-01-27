@@ -1,0 +1,937 @@
+<api file="widget.js" show="1">
+  <object base="DlEventProxy" name="DlWidget">
+    <constructor>
+      <param default="&#34;div&#34;" name="tagName" type="String">Tag name for the widget's DOM element</param>
+      <param default="&#34;&#34;" name="className" type="String">Class name for the widget's DOM element</param>
+      <param default="null" name="data">User data</param>
+      <param default="null" name="contextMenu" type="DlWidget">Context menu for this widget</param>
+      <param default=" window.undefined" name="appendArgs">Special arguments for parent's 〈DlContainer::appendWidget()|appendWidget()〉</param>
+      <param default="false" name="disabled" type="boolean">Initially disabled?</param>
+      <param default="null" name="drag" type="DlDrag">For D'n'D support</param>
+      <param default="null" name="element" type="HTMLElement">Widget's element (will be created if this is null)</param>
+      <param default="null" name="fillParent" type="boolean">Should this widget fill parent's space</param>
+      <param default="false" name="focusable" type="boolean">Is this widget focusable?</param>
+      <param default="null" name="parent" type="DlContainer">Parent widget</param>
+      <param default="null" name="tooltip" type="String|Function">Tooltip for this widget</param>
+      <param default="0" name="tabIndex" type="Number">TAB index (implies focusable = <b>true</b>)</param>
+      <param default="null" name="accessKey" type="String">Widget's access key</param>
+      <param default="650" name="tooltipTimeout" type="Number">Tooltips will be displayed after so many milliseconds</param>
+      <param default="0" internal="1" name="_refCnt" type="Number" undoc="1">Initial reference count for this widget</param>
+      <doc>
+        DlWidget is the base class for all DynarchLIB widgets.  It
+        defines the basic infrastructure, such as standard events,
+        tooltips, context menus and a set of core methods that are
+        generally useful in all widgets.
+
+        *** DOM Elements
+
+        To begin with, each widget has at least one associated DOM
+        element (let's call it the toplevel element).  It is created
+        in the 〈_createElement()〉 method (which is often overridden in
+        derived classes).  You can retrieve this element with
+        〈getElement()〉; in turn, the DOM element keeps a reference to
+        the object it belongs to.  Therefore, having an element, you
+        can always retrieve the object that it's attached to by
+        calling 〈.getFromElement()〉:
+
+        <js>
+          DlWidget.getFromElement(element);
+        </js>
+
+        Most widgets will have many more elements.  An important one
+        is the <em>content element</em>, accessible through
+        〈getContentElement()〉.  For a plain DlWidget,
+        getContentElement() is simply an alias to getElement().  There
+        is an important distinction between them.  When you call
+        〈setContent()〉 on a widget, it will insert the content that
+        you specify inside the <em>content element</em>, therefore
+        keeping the rest of the DOM intact.  For example, a 〈DlDialog〉
+        widget has a complicated DOM, something like this:
+
+        <html><![CDATA[
+          <div class="DlWidget DlContainer DlDialog">
+            <div class="DlDialog-Rel">
+              <div class="DlDialog-WindowButtons"></div>
+              <div class="DlDialog-Title"><div></div></div>
+              <div class="DlDialog-Content">
+                <!-- content goes here -->
+              </div>
+            </div>
+          </div>
+        ]]></html>
+
+        However, by making 〈DlDialog::getContentElement()〉 return the
+        correct content element (where we put the comment above), we
+        can simply call dialog.setContent(HTML) to include something
+        in the dialog, without destroying other DOM.  The content
+        element is also considered instead of the toplevel one when
+        doing inner size operations, such as in 〈getInnerSize()〉 or
+        〈setInnerSize()〉 functions.
+
+        *** CSS Class Inheritance
+
+        The toplevel element of a widget will automatically gain CSS
+        class names that match the widget's inheritance tree.  For
+        example, a 〈DlButton〉 widget inherits from 〈DlAbstractButton〉
+        which in turns inherits from 〈DlWidget〉.  A button's class
+        name will be, by default: "DlWidget DlAbstractButton
+        DlButton", therefore allowing you to easily write CSS that is
+        “inherited” in the same manner as the widget itself.
+
+        For custom CSS, you can specify an <em>additional</em> class
+        name by using the <b>className</b> constructor argument.
+
+        *** Constructor arguments
+
+        All the DynarchLIB widgets receive exactly one argument in
+        constructor.  This is an hash table that maps property names
+        to property values.  Derived objects can modify the default
+        values of these properties, or add new ones, at will.  The
+        syntax of this object looks like this:
+
+        <js>
+          { parent  : someParentObject,
+            tooltip : "Click me!",
+            tagName : "img" }
+        </js>
+
+        Complex widgets will support a lot of properties that allow
+        you to customize their behavior.  Sometimes, though, you might
+        want to use all defaults.  For this you need to pass an empty
+        object.  An artifact of OOP-style programming in JavaScript is
+        that you need to actually instantiate an object of base class
+        type, in order to make inheritance work.  When we do this, we
+        pass no arguments.  Therefore, you can not properly
+        instantiate, say, a 〈DlContainer〉 widget by calling:
+
+        <js>
+          new DlContainer(); // won't do what you expect
+        </js>
+
+        You <em>do</em> need to specify an empty hash as the argument,
+        as in:
+
+        <js>
+          new DlContainer({});
+        </js>
+
+        That's an empty hash table.  You rarely want to construct an
+        widget having all default properties—usually you'll want to at
+        least specify a parent—so this shouldn't be a major problem;
+        but you want to keep it in mind.
+
+        Note that constructor arguments are inherited.  Therefore, if
+        you extend <b>DlWidget</b> and create your own custom widget
+        class, you don't need to define i.e. the <b>parent</b>
+        argument—it's handled when you call the base class'
+        constructor.
+      </doc>
+    </constructor>
+
+    <events>
+
+      <event name="onMouseEnter">
+        <param name="ev" type="DlEvent">Event object</param>
+        <doc>
+          Called by the framework when mouse cursor enters the widget.
+          This is equivalent to the non-standard "onmouseenter" event
+          supported by Internet Explorer, only in DynarchLIB it works
+          for all browsers.
+        </doc>
+      </event>
+
+      <event name="onMouseLeave">
+        <param name="ev" type="DlEvent">Event object</param>
+        <doc>
+          Called when the mouse cursor leaves the widget.  The reverse
+          of onMouseEnter.
+        </doc>
+      </event>
+
+      <event name="onMouseMove">
+        <param name="ev" type="DlEvent">Event object</param>
+        <doc>
+          Called when the mouse moves inside the widget.
+        </doc>
+      </event>
+
+      <event name="onMouseDown">
+        <param name="ev" type="DlEvent">Event object</param>
+        <doc>
+          Called when the mouse button is pressed inside the widget.
+        </doc>
+      </event>
+
+      <event name="onMouseUp">
+        <param name="ev" type="DlEvent">Event object</param>
+        <doc>
+          Called when the mouse button is depressed inside the widget.
+        </doc>
+      </event>
+
+      <event name="onMouseOver">
+        <param name="ev" type="DlEvent">Event object</param>
+        <doc>
+          Called when the mouse cursor enters various sub-elements of
+          the widget.  It's the equivalent of the standard "mouseover"
+          DOM event.
+        </doc>
+      </event>
+
+      <event name="onMouseOut">
+        <param name="ev" type="DlEvent">Event object</param>
+        <doc>
+          Called when the mouse leaves various sub-elements of the
+          widget.  The equivalent of the standard "mouseout" DOM
+          event.
+        </doc>
+      </event>
+
+      <event name="onMouseWheel">
+        <param name="ev" type="DlEvent">Event object</param>
+        <doc>
+          Triggered when upon a mouse wheel event on the current
+          widget.  You can inspect the mouse wheel delta using
+          “ev.wheelDelta”.  It will be a positive integer (usually +1)
+          when the wheel is scrolled up, and negative (i.e. -1) when
+          the wheel is scrolled down.
+        </doc>
+      </event>
+
+      <event name="onClick">
+        <param name="ev" type="DlEvent">Event object</param>
+        <doc>
+          Called when the widget has been clicked, that is, when the
+          mouse button has been pressed inside the widget and then
+          released inside the widget.
+        </doc>
+      </event>
+
+      <event name="onDblClick">
+        <param name="ev" type="DlEvent">Event object</param>
+        <doc>
+          Called when the widget has been double clicked.
+        </doc>
+      </event>
+
+      <event name="onContextMenu">
+        <param name="ev" type="DlEvent">Event object</param>
+        <doc>
+          Called when right button (or more generally, whatever is the
+          context menu button) is pressed on the widget.
+
+          Note that DlWidget actually hooks on this event in order to
+          display the context menu passed in constructor, if there is
+          any.
+        </doc>
+      </event>
+
+      <event name="onKeyDown">
+        <param name="ev" type="DlEvent">Event object</param>
+        <doc>
+          Only the currently focused widget will receive this event.
+          Note that if the widget is not focusable, it will never
+          receive this event unless it captures it globally.  We'll
+          talk about captures in the 〈DlEvent〉 documentation.
+
+          Event gets triggered when a key has been pressed.
+        </doc>
+      </event>
+
+      <event name="onKeyUp">
+        <param name="ev" type="DlEvent">Event object</param>
+        <doc>
+          Called when a key has been depressed.
+        </doc>
+      </event>
+
+      <event name="onKeyPress">
+        <param name="ev" type="DlEvent">Event object</param>
+        <doc>
+          Called when a key has been pressed, then depressed.  This is
+          the standard "keypress" DOM event.  Various browser disagree
+          about when should it be triggered; for instance, IE doesn't
+          trigger this event for arrow keys, so for IE only you want
+          to hook on "onKeyDown" rather than "onKeyPress".
+
+          We will likely “fix” browser disagreements in the future.
+        </doc>
+      </event>
+
+      <event name="onDisabled">
+        <param name="isDisabled" type="boolean">true if the widget is disabled, false otherwise.</param>
+        <doc>
+          Called when an widget is disabled <em>or enabled</em>.  The
+          argument that handlers receive is true if the widget is
+          disabled, and false if it's enabled.
+        </doc>
+      </event>
+
+      <event name="onDisplay">
+        <param name="isVisible" type="boolean">True if the widget is visible</param>
+        <param name="cssValue" type="String">The CSS value</param>
+        <param name="cssProperty" type="String">The CSS property</param>
+        <doc>
+          This event is triggered when a widget changes display state
+          via 〈display()〉 or 〈visibility()〉.  The first argument tells
+          you if the widget is visible (false if it's NOT visible);
+          the cssValue will be i.e. "none" when cssProperty is
+          "display", and "hidden" when cssProperty is "visibility".
+
+          When the widget is visible (isVisible == <b>true</b>) then
+          cssValue is always the empty string.
+        </doc>
+      </event>
+
+      <event name="onFocus">
+        <doc>
+          Called when the widget becomes focused.
+        </doc>
+      </event>
+
+      <event name="onBlur">
+        <doc>
+          Called when the widget lost focus.
+        </doc>
+      </event>
+
+      <event name="on_DOM_Focus" undoc="1"><doc></doc></event>
+      <event name="on_DOM_Blur" undoc="1"><doc></doc></event>
+
+      <event name="onResize">
+        <doc>
+          Called when the widget is resized.
+        </doc>
+      </event>
+
+      <event name="onTooltipShow">
+        <doc>
+          Called when a tooltip is displayed for this widget.
+        </doc>
+      </event>
+
+      <event name="onTooltipHide">
+        <doc>
+          Called when the tooltip for this widget is hidden.
+        </doc>
+      </event>
+    </events>
+
+    <static-methods>
+
+      <method hash="78b24f7ef19d088270f8682fa2343f57" name="getById">
+        <param name="id" type="String">Object ID</param>
+        <doc>
+          Returns an existing object by ID.  All objects have an ID,
+          internally, and they are kept in a private hash table.
+          Therefore, if you wish not to keep widget references in
+          memory, you can only hold their ID, after creation:
+
+          <js>
+            var id = new DlButton({...}).getWidgetId();
+            DlWidget.getById(id).setLabel("New button label");
+          </js>
+
+          Personally I find this style distracting.  Always use
+          references.
+        </doc>
+      </method>
+
+      <method hash="5664319b019df1942088ff716969ece5" name="getFromElement">
+        <param name="el" type="HTMLElement">A DOM element</param>
+        <doc>
+          Returns the DynarchLIB widget associated with the given
+          element, if any.
+        </doc>
+      </method>
+
+      <method hash="b9dde8f391381ee03ec7b4af063a7a9e" name="getResizeRect">
+        <doc>
+          Currently only used in 〈DlDialog〉, this returns a DIV
+          element that is displayed during dialog resizes (i.e. a red
+          border and semiopaque background).
+        </doc>
+      </method>
+
+    </static-methods>
+
+    <object-methods>
+
+      <method hash="2923cb1fa76195d71b03e3350fdd4796" name="addClass">
+        <param name="ac" type="String">Class name to add</param>
+        <param name="dc" type="String">Class name to remove</param>
+        <doc>
+          This function does the same as 〈DynarchDomUtils.addClass()〉
+          but works for the element of the current widget.
+        </doc>
+      </method>
+
+      <method hash="2e1662457279caa1916a85d91b85e3fb" name="condClass">
+        <param name="cond"></param>
+        <param name="clsTrue"></param>
+        <param name="clsFalse"></param>
+        <doc>
+          The same as 〈DynarchDomUtils.condClass()〉 but works for the
+          element of the current widget.
+        </doc>
+      </method>
+
+      <method hash="ec5ece3fa86c8a24feefa3ab2b45c5de" name="delClass">
+        <param name="dc"></param>
+        <param name="ac"></param>
+        <doc>
+          See 〈DynarchDomUtils.delClass()〉, this calls it for the
+          element of the current widget.
+        </doc>
+      </method>
+
+      <method hash="727bcf80fda3ed4a94b996cd883732f3" name="focus">
+        <doc>
+          Focuses the current element.
+        </doc>
+      </method>
+
+      <method hash="4ec439c9990515b13b6fd40af171aca7" name="blur">
+        <doc>
+          Removes focus from the current element.  Note this doesn't
+          make sense for all widgets.
+        </doc>
+      </method>
+
+      <method hash="175c898c148d995f8897169c5b8b8063" name="focusInside">
+        <doc>
+          Return true if the focus is somewhere inside the current
+          widget (that is, if either this widget has the focus, or a
+          child widget).
+        </doc>
+      </method>
+
+      <method hash="4e3a8575ae08d4291ff924e25c8ce566" name="debug_highlight" undoc="1">
+        <param name="color"></param>
+        <doc>
+          Used here for debugging.
+        </doc>
+      </method>
+
+      <method hash="9e1f295aaf2220ce62b8cb1587b7d22b" name="destroy">
+        <doc>
+          Destroys the current widget.  This necessarily overrides
+          〈DlEventProxy::destroy()〉 because widgets can be reference
+          counted, so it won't call base class' destroy() function
+          unless our reference count becomes zero or less.
+        </doc>
+      </method>
+
+      <method hash="df2e9bdf99fcb0c355b8920faf032395" name="disabled">
+        <param default="null" name="v" optional="1" type="boolean">Disable it?</param>
+        <param default="false" name="force" optional="1" type="boolean">Force new value?</param>
+        <return type="boolean">Disabled status</return>
+        <doc>
+          Disable (if <b>v</b> is <b>true</b>) or enable (if <b>v</b>
+          is <b>false</b>) the current widget.  If <b>force</b> is
+          <b>true</b>, it will force this change even if the widget
+          was already in the requested state.
+
+          If you don't pass any arguments, this method simply returns
+          the widget's “disabled status” (<b>true</b> if the widget is
+          currently disabled and <b>false</b> otherwise).
+        </doc>
+      </method>
+
+      <method hash="b8028f6611217a28b6c962b049569a6b" name="enabled">
+        <param name="v"></param>
+        <param name="force"></param>
+        <doc>
+          This is the exact reverse of disabled.  It's defined as
+          follows:
+
+          <js>
+            if (v != null) {
+                this.disabled(!v, force);
+            }
+            return !this.__disabled;
+          </js>
+        </doc>
+      </method>
+
+      <method hash="c1874c2990c47e94a28b724b73165740" name="display">
+        <param default="null" name="v" optional="1" type="boolean"></param>
+        <return type="boolean"></return>
+        <doc>
+          If you don't pass any arguments, this function returns the
+          widget's “display” style state as follows, that is, it
+          returns <b>true</b> if the widget is not hidden with the
+          “display: none” inline style.
+
+          If you pass <b>v</b> it will set “display: none” on the
+          widget's element if <b>v</b> is true (therefore it'll hide
+          the widget), or will clear the “display” style if <b>v</b>
+          is false (so the widget will become visible).
+        </doc>
+      </method>
+
+      <method hash="c006eba65eed14242caa8522bd26f6a1" name="visibility">
+        <param default="null" name="v" optional="1" type="boolean"></param>
+        <doc>
+          If you pass no arguments, it returns <b>true</b> if the
+          “visibility” inline style of the current widget is not
+          "hidden", or false otherwise.
+
+          If you pass <b>v = true</b> then the “visibility” will be
+          reset to the empty string; if you pass <b>v = false</b> then
+          it'll be set to "hidden".
+        </doc>
+      </method>
+
+      <method hash="74e2988228af71bb5ef170249941fe3e" name="flash">
+        <param default="150" name="timeout" optional="1" type="Number">Milliseconds between blinks</param>
+        <param default="3" name="steps" optional="1" type="Number">Blink steps</param>
+        <doc>
+          This will flash the current widget by repeatedly calling
+          visibility(false) and visibility(true) a number of times.
+          It's not very nice, nor very useful...
+        </doc>
+      </method>
+
+      <method hash="bba74688f029f01bd317af62157692f2" name="getBRPos">
+        <return type="Hash">{ x: x_pos, y: y_pos }</return>
+        <doc>
+          Return the absolute position of the bottom-right corner of
+          the current widget element.  It returns the position as a
+          hash that maps “x” to the horizontal coordinate and “y” to
+          the vertical one.  We're using this representation in most
+          other functions that expect position or size as hashes.
+        </doc>
+      </method>
+
+      <method hash="738f1bdf5064bcb4f60b739647f1f073" name="getData">
+        <param name="key" type="String">Key name</param>
+        <doc>
+          Returns the value of the given key in this widget's custom
+          data.  See 〈setData()〉.
+        </doc>
+      </method>
+
+      <method hash="defc3f14e8d36e056f54b77a9b5d9609" name="setData" varargs="1">
+        <param name="key" type="String">Key name</param>
+        <param name="val" optional="1">New value</param>
+        <doc>
+          Sets the value of given <b>key</b> to <b>val</b> in this
+          widget's custom data.  As you can notice, <b>val</b> is
+          optional.  If you don't pass any value, the key will be
+          removed from this widget's custom data.
+        </doc>
+      </method>
+
+      <method hash="2cd1532e02489b1bf7940f0f6475233c" name="getElement">
+        <return type="HTMLElement">DOM element of this widget</return>
+        <doc>
+          Each widget has at least one DOM element associated with it.
+          This function returns it.  For many widgets, we have another
+          similar function: 〈getContentElement()〉.  In DlWidget these
+          2 functions are exactly the same.
+        </doc>
+      </method>
+
+      <method hash="87b1a8120cb87a5efb0b89e8898ccae8" name="getContentElement">
+        <doc>
+          Returns the <me>content</me> element of this widget.  In
+          DlWidget this is an alias to 〈getElement()〉, but other
+          widgets make a good difference between them.
+        </doc>
+      </method>
+
+      <method hash="32cb2c0a12ad80747ae4c84f91f6bbe1" name="getInnerSize">
+        <return type="Hash">{ x: width, y: height }</return>
+        <doc>
+          Returns the <em>inner</em> size of this widget.  In other
+          words, returns the size that a child widget should have in
+          order to fill completely the <em>content element</em> of
+          this widget.
+        </doc>
+      </method>
+
+      <method hash="ae9b901885abb9307566782d47b8e52f" name="getOuterSize">
+        <return type="Hash">{ x: width, y: height }</return>
+        <doc>
+          Returns the <em>outer</em> (full) size of this widget.
+        </doc>
+      </method>
+
+      <method hash="16105e9366ba3eb117199412e90f1804" name="getParent">
+        <param default="null" name="type" optional="1" type="Function">Constructor function</param>
+        <param default="null" name="skipThis" optional="1" type="boolean">Skip testing this widget?</param>
+        <doc>
+          Walks the ancestors of this widget and returns the closest
+          parent which is an instance of <b>type</b>.  Note that
+          <b>type</b> must be a Constructor function, since we do the
+          checking with <b>instanceof type</b>.  Example:
+
+          <js>
+            var dialog = button.getParent(DlDialog);
+          </js>
+
+          So it's not the name of the object (no string that is), it's
+          the constructor function itself.
+
+          If you pass no arguments, this function will simply return
+          the widget's parent.
+        </doc>
+      </method>
+
+      <method hash="2068824230078b284bed576f7764a9e5" name="getPos">
+        <return type="Hash">{ x: horis_pos, y: vert_pos }</return>
+        <doc>
+          Returns the absolute position (relative to the
+          document.body, that is) of the current widget.
+        </doc>
+      </method>
+
+      <method hash="35fcd3276593de8eaf8348086ecd6790" name="getOffsetPos">
+        <return type="Hash">{ x: offsetLeft, y: offsetTop }</return>
+        <doc>
+          Similar to 〈getPos()〉 but returns the position reported by
+          offsetLeft and offsetTop of this widget's element.  Note
+          that this is not necessarily the absolute position in the
+          document.
+        </doc>
+      </method>
+
+      <method hash="b40ba4b7c04e5b261e38e907fc22c9ce" name="getScroll">
+        <return type="Hash">{ x: scrollLeft, y: scrollTop }</return>
+        <doc>
+          Returns the element's scroll position.
+        </doc>
+      </method>
+
+      <method hash="61ccf00e85defc6a2fda31e454fdf49b" name="getQuickPopup">
+        <doc>
+          Helper function called from 〈quickPopup()〉.
+        </doc>
+      </method>
+
+      <method hash="42f7931f4f764da72afac6ee254d80cb" name="quickPopup">
+        <param name="args" type="Hash">Passed to 〈DlPopup::popup()〉</param>
+        <doc>
+          Displays a quick popup above this widget.  See
+          〈DlPopup::popup()〉 for arguments detail.
+        </doc>
+      </method>
+
+      <method hash="81a79d7bb7dfd6a1273c6c48f1c7318d" name="getWidgetId">
+        <doc>
+          Returns the widget's ID.
+        </doc>
+      </method>
+
+      <method hash="2b2ecf26e3dd13654a27e7885adf9674" name="initDOM">
+        <doc>
+          This function is called by the constructor to initialize the
+          DOM.  Internally, it registers the widget's events, calls
+          〈_setListeners()〉 (which derived widgets can override to
+          define any custom events and listeners), then calls
+          〈_createElement()〉.
+
+          After we have an element, if this widget has a parent then
+          it will be appended to it by a call to
+          〈DlContainer::appendWidget()|parent.appendWidget(this, appendArgs)〉.
+
+          Finally, if the widget should be initially disabled then it
+          will be set so at this stage.
+        </doc>
+      </method>
+
+      <method hash="eb35f0d8a616d23a6af5fb55dfe6f352" name="opacity">
+        <param name="o" optional="1" type="Number">Requested opacity (real number in [0..1])</param>
+        <doc>
+          See 〈DynarchDomUtils.setOpacity()〉.
+        </doc>
+      </method>
+
+      <method hash="637bdc6a96476c41fc56319c8ee8bb85" name="position">
+        <param name="p" type="String">CSS “position” value</param>
+        <doc>
+          Set the CSS position to the given value.  Sort of,
+          equivalent to:
+
+          <js>
+            widget.getElement().style.position = p;
+          </js>
+        </doc>
+      </method>
+
+      <method hash="e862686b053d0d97e1e4c2af2a9c9b86" name="ref">
+        <doc>
+          Increases the reference count of this widget.  Returns
+          previous value.
+        </doc>
+      </method>
+
+      <method hash="2ea96779b8b2243b81a07a1921acb7b2" name="unref">
+        <doc>
+          Decreases the reference count of this widget and returns
+          current value.
+        </doc>
+      </method>
+
+      <method hash="95b4bb01e42d5ca5fd753766057369eb" name="refCnt">
+        <doc>
+          Returns the reference count of this widget.
+        </doc>
+      </method>
+
+      <method XXX="Code has changed!" hash="b542e3811f6c4d5026c57d24a28e08de" name="refNode">
+        <param name="name" type="String">Property name</param>
+        <param name="el" type="Object">Property value</param>
+        <doc>
+          This function is the preferred way to store references to
+          DOM elements in widgets.  That's because it maintains,
+          internally, a hash of these values and it will break
+          circular references automatically when the widget is
+          destroyed.  Example:
+
+          <js>
+            widget.refNode("foo", document.getElementById("foo"));
+
+            // now widget.foo is a real reference to the element:
+            widget.foo.innerHTML = "Foo Here";
+
+            widget.destroy();
+            // widget.foo is now undefined, therefore we don't keep
+            // a reference to the DOM element that could potentially leak
+          </js>
+
+          Note that while <b>el</b> will usually be a DOM element, it
+          can be of any type you wish.
+        </doc>
+      </method>
+
+      <method hash="e13a1abf0489ad0f3309426e9e6a199f" name="scrollIntoView">
+        <doc>
+          Brings the current widget in visible area by adjusting any
+          scrollbars on the parent elements.  When I write this, this
+          function relies on browser's <a href="http://www.google.com/search?&#38;q=scrollintoview">scrollIntoView</a>
+          function which, of course, does different things in
+          different browsers, so it's not very reliable.  In the
+          future we will provide a custom implementation.
+        </doc>
+      </method>
+
+      <method hash="875e80b003a83c2e0990d138f0858666" name="setContent">
+        <param name="content" type="String|Function|Array|DlWidget|HTMLElement">New content for this widget</param>
+        <doc>
+          This function sets the content of this widget.  The
+          innerHTML of the <em>content element</em> that is.  Note
+          that <b>content</b> can be of a few types.  Regardless the
+          type, the content element <em>will be cleared first</em>,
+          which means all DOM inside it will be lost.  Then, depending
+          on the type, the following can happen:
+
+          <js>
+            // assuming this is the current widget
+
+            // for String-s:
+            this.getContentElement().innerHTML = content;
+
+            // for Function-s:
+            this.setContent(content.call(this));
+
+               // so note that if it's a function, it will be called in
+               // the scope of the current widget and the returned value
+               // will be sent to setContent again, therefore it can
+               // return any of the supported types, including a function!
+
+            // for Arrays:
+            this.getContentElement().innerHTML = content.join("");
+
+            // for DlWidget (or derived) objects
+            this.appendWidget(content, appendArgs);
+               // see 〈DlContainer.appendWidget()〉
+
+            // for HTML elements:
+            this.getContentElement().appendChild(content);
+          </js>
+        </doc>
+      </method>
+
+      <method hash="d082898273add1a9fcd7bf4604ad145c" name="setContextMenu">
+        <param name="menu" type="DlWidget|Function"></param>
+        <doc>
+          Sets a context menu for the current widget.  The <b>menu</b>
+          argument can actually be of any type supported by
+          〈setContent()〉.  If it's a <b>DlWidget</b>, it will be
+          reference counted (〈ref()〉-ed).  If we already had another
+          context menu for this widget, it will be 〈destroy()〉-ed
+          (note that this doesn't necessarily implies the widget is
+          lost; it's reference count will be decreased and it's only
+          destroyed if it becomes zero).
+
+          If you supply a function, it won't be called until the
+          context menu is actually requested (therefore it will be
+          lazy instantiated; you want to do this, generally, for a
+          responsive UI).
+        </doc>
+      </method>
+
+      <method hash="1ec1f83e8f1fa52bd5d5c7a8d5c530ee" name="setIconClass">
+        <param name="iconClass" type="String"></param>
+        <doc>
+          Sets the “icon class” for the current widget.  This doesn't
+          make sense for all widgets, but we have it in the base class
+          because it's more convenient than duplicating the function
+          in a few other widgets.
+        </doc>
+      </method>
+
+      <method hash="f74f5b2949519588d7d9d5c715a1ba08" name="setInnerSize">
+        <param name="size" type="Hash">{ x: width, y: height }</param>
+        <doc>
+          Sets the inner size of this widget to the requested
+          dimensions.  Triggers "onResize" event.  Note that <b>x</b>
+          or <b>y</b> can be null, in which case the dimension on the
+          respective axis will not be modified.
+        </doc>
+      </method>
+
+      <method hash="21301319d87f4ce11027140590588256" name="setOuterSize">
+        <param name="size" type="Hash">{ x: width, y: height }</param>
+        <doc>
+          Sets the outer size of this widget.  Triggers "onResize".
+        </doc>
+      </method>
+
+      <method XXX="Code has changed!" hash="f247da87bef981ac281ac631649f83dd" name="setPos">
+        <param default="null" name="x" optional="1" type="Number"></param>
+        <param default="null" name="y" optional="1" type="Number"></param>
+        <doc>
+          Sets the position of this widget.
+        </doc>
+      </method>
+
+      <method hash="309a24dcb4ad264735e0d1bd5e2d5251" name="setStyle" varargs="1">
+        <param name="a" type="String|Hash">CSS property name, or hash mapping properties to values</param>
+        <param name="b" optional="1" type="String">CSS property value</param>
+        <doc>
+          Sets one or more inline styles for the current object.
+          Styles are given in the DOM notation (that is, "borderLeft"
+          instead of "border-left").  Examples:
+
+          <js>
+            widget.setStyle("background", "yellow");
+            // or
+            widget.setStyle({ background : "yellow",
+                              color      : "red",
+                              padding    : "10px" });
+          </js>
+        </doc>
+      </method>
+
+      <method hash="93a3842a2e551f74794a652c054ebe39" name="setTooltip">
+        <param name="tt" type="String|Function">New tooltip</param>
+        <doc>
+          Actually, <b>tt</b> can be of any type supported by
+          〈setContent()〉.  This function will (re)set tooltip for the
+          current widget.  If you pass null, then the tooltip will be
+          removed.  If you pass a function, it will be called in the
+          moment the tooltip is displayed.
+        </doc>
+      </method>
+
+      <method hash="66fa48f794b301a79a4f6b95f6b483e6" name="setUnselectable">
+        <param name="el" type="HTMLElement">Element to make (un)selectable</param>
+        <param name="val" type="boolean"></param>
+        <doc>
+          Make a DOM element unselectable if <b>val</b> is true, or
+          selectable if <b>val</b> is false.  If you pass null for
+          <b>el</b>, it will use the toplevel element of the current
+          widget instead.
+        </doc>
+      </method>
+
+      <method hash="04ca85c306eede47ee3e0bf7a6c325b8" name="zIndex">
+        <param default="null" name="zIndex" optional="1" type="Number"></param>
+        <doc>
+          Sets or retrieves the z-index property of the current
+          widget.  If you don't pass an argument, the current z-index
+          is returned.  If you pass an argument it sets a new z-index
+          for the widget and returns it.
+        </doc>
+      </method>
+
+      <method hash="7e547223b8d4f514248aac7539a6c070" internal="1" name="__onTooltipHide" undoc="1">
+        <doc></doc>
+      </method>
+
+      <method hash="1fc0d5843040a94a3ea7b5a90a4a18ae" internal="1" name="__onTooltipShow" undoc="1">
+        <doc></doc>
+      </method>
+
+      <method hash="2618de1bcb719ff939c410eb6fdd6fc7" internal="1" name="__patchSubclassPrototype" undoc="1">
+        <doc>
+          Modifies the prototype of a derived class by adding the
+          hierarchy of CSS class names.  See 〈Function::inherits()〉
+          for more information.
+        </doc>
+      </method>
+
+      <method XXX="Code has changed!" hash="17f9fbfee930d42c32b774ae013decd9" internal="1" name="_createElement">
+        <param name="html">Not used for now</param>
+        <doc>
+          Creates the DOM elements for the current widget and sets the
+          association between the object and the toplevel element.
+        </doc>
+      </method>
+
+      <method hash="91c1b5ed61fae650bc52a1594440a17d" internal="1" name="_getDlPopup" undoc="1">
+        <doc></doc>
+      </method>
+
+      <method hash="99914b932bd37a50b983c5e7c90ae93b" internal="1" name="_handle_focusKeys">
+        <param name="ev" type="DlEvent"></param>
+        <doc>
+          This function handles the "onKeyPress" event (or "onKeyDown"
+          for IE), which is triggered by the framework when the widget
+          is focused and some key is pressed.  This function does
+          nothing but you can override it in derived classes.  For
+          example, 〈DlContainer〉 overrides this in order to forward
+          the event to some child widget that can handle this
+          keybinding.
+        </doc>
+      </method>
+
+      <method hash="fc0e7b37ceaa28b05eb948fe5a2dc72a" internal="1" name="_popupTooltip">
+        <doc>
+          Pops up the tooltip for this widget, if any.  This is called
+          from the "onMouseEnter" handler.
+        </doc>
+      </method>
+
+      <method hash="01dbf4f60ac83283f52ba6d0539fde1b" internal="1" name="_setListeners">
+        <doc>
+          This function is called from 〈initDOM()〉 and you can place
+          your event handlers here, as well as
+          〈DlEventProxy::registerEvents()|registering new events〉.
+          You're not required to do so—you can add your event
+          listeners in any other place, but it's good to stay
+          organized. ;-)
+        </doc>
+      </method>
+
+      <method hash="c476b411da79909d63fd2faa6b1b2d18" internal="1" name="_setFocusedStyle">
+        <param name="focused"></param>
+        <doc></doc>
+      </method>
+
+      <method hash="a3fa7a7c447064cba68cca7ac8ed52f1" internal="1" name="_check_accessKey">
+        <param name="ev"></param>
+        <doc></doc>
+      </method>
+
+      <method hash="bab7bdfbb682f8cc6ca95c505fa7cf31" internal="1" name="_handle_accessKey">
+        <param name="ev"></param>
+        <doc></doc>
+      </method>
+
+    </object-methods>
+  </object>
+</api>

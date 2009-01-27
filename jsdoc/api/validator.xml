@@ -1,0 +1,164 @@
+<api file="validator.js">
+  <object name="DlValidator">
+    <constructor varargs="1">
+      <param name="callback" type="Function">Your validating function</param>
+      <doc>
+        A DlValidator object is used by 〈DlEntry〉 to validate user
+        input.  It's actually a wrapper with a consistent API over a
+        <b>callback</b> function that you need to supply.  Your
+        function should handle validation and throw an appropriate
+        exception if the value is not valid.
+
+        Note that you can pass multiple arguments to the constructor.
+        Any additional arguments that you pass besides <b>callback</b>
+        will be passed untouched to your callback function at
+        run-time.
+
+        Here's a simple example.  Let's say that you want to create a
+        validator that will only accept a word from a given list.
+
+        <js canrun="true">
+          // validate value only if it can be found in the list of words
+          function myListValidator(value, words) {
+              // let's make it case insensitive
+              value = value.toLowerCase();
+              var found = words.foreach(function(w) {
+                  if (w.toLowerCase() == value)
+                      $RETURN(w);
+              });
+              if (found == null)
+                  // value not found
+                  throw new DlValidatorException(value + " not in [" + words.join(", ") + "]");
+              return found; // return the correct-case word
+          };
+
+          // now we have our generic function
+          // let's create the validator object
+
+          var validateFruits = new DlValidator(
+              myListValidator,
+              [ "Apple", "Orange", "Grapefruit" ]
+          );
+
+          // let's test it
+          var entry = new DlEntry({ parent     : getDocCanvas(),
+                                    validators : [ validateFruits ]});
+
+          entry.addEventListener("onKey-ENTER", function() {
+              if (!this.validate()) {
+                  print(this.validationError);
+              } else {
+                  print("OK");
+              }
+          });
+        </js>
+
+        Run this sample and press ENTER in the input field to
+        validate.
+      </doc>
+    </constructor>
+    <static-methods>
+
+      <method hash="7911003505b1303f0f038a0402e1252b" name="Number">
+        <param name="data" type="String">Value to validate</param>
+        <param name="minVal" type="Number">Minimum value</param>
+        <param name="maxVal" type="Number">Maximum value</param>
+        <param name="integer" type="boolean">Accept integers only?</param>
+        <param name="decimals" type="Number">Nr. of decimal digits</param>
+        <doc>
+          This method is actually a validator function that accepts
+          numbers only.  To use it you need to create a DlValidator
+          object for it.  Example:
+
+          <js>
+            var numVal = new DlValidator(
+                DlValidator.Number, // callback
+                0, // min val.
+                10, // max val.
+                false, // accept floats
+                2 // 2 decimal places
+            );
+          </js>
+
+          The above validator will validate numbers between 0 and 10.
+          If the value is valid, it will format it to have 2 decimal
+          places (rounding it if needed).
+        </doc>
+      </method>
+
+      <method hash="ee19acff97833bf61f48bb957fa51473" name="URL">
+        <param name="data" type="String">Value to validate</param>
+        <param name="args">Not used currently</param>
+        <doc>
+          An URL validating callback function.
+        </doc>
+      </method>
+
+    <method hash="1365624f651266c3fb10feec36e5cb9e" name="Date">
+      <param name="data" type="String">Value to validate</param>
+      <param name="format" type="String" optional="1" default="%Y-%m-%d">Canonical date format (see 〈Date::print()〉)</param>
+      <param name="monthFirst" type="boolean" default="false" optional="1"></param>
+      <doc>
+        Date parser/validator.  This validator is actually useful to
+        enable the user to quickly enter a date.  It tries to make up
+        a date from any input, though sometimes this fails.
+
+        Here's an example:
+
+        <js canrun="true">
+          var v = new DlValidator("Date", "%A, %b %e %Y");
+          var entry = new DlEntry({ parent: getDocCanvas(), size: 20, validators: [ v ] });
+          var cal = new DlCalendar({ parent: getDocCanvas() });
+          entry.addEventListener("onValidation", function() {
+              if (v._date)
+                  cal.selectDate(v._date);
+          });
+        </js>
+      </doc>
+    </method>
+
+    <method hash="c70714adb4f64f9643bc2df7503ffcdd" name="Email">
+      <param name="data"></param>
+      <doc>
+        Simple email address validator.
+      </doc>
+    </method>
+
+    </static-methods>
+
+    <object-methods>
+
+      <method hash="9ada570f8226c7ccb30a0ffee955931b" name="getError">
+        <doc>
+          Returns the last exception thrown by this validator.
+        </doc>
+      </method>
+
+      <method hash="4b1874ceb706dbe554539aa1ba2ddc35" name="getLastData">
+        <doc>
+          Returns the last data string that was validated through this
+          validator.
+        </doc>
+      </method>
+
+      <method hash="2b510fddfb8fff5a8997cab30e003ddb" name="getLastVal">
+        <doc>
+          Returns the last value that was returned from a validator
+          callback.
+        </doc>
+      </method>
+
+      <method hash="3ea14343ae16198f5d8ac7942bf50664" name="ok" varargs="1">
+        <!--XXX: uses *arguments*, check for missing params-->
+        <param name="data" type="String">Data to validate</param>
+        <doc>
+          Runs the validator callback for the given <b>data</b>,
+          passing any other arguments that we got in constructor.
+          Returns true if the validation was successful, false
+          otherwise.
+        </doc>
+      </method>
+
+    </object-methods>
+  </object>
+</api>
