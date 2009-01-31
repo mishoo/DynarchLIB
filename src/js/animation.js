@@ -90,6 +90,10 @@
                         return 1 - t*t*t;
                 },
 
+                accel_a : function(t) {
+                        return t * t * t;
+                },
+
                 accel_ab : function(t) {
                         t = 1-t;
                         return 1-sin(t*t*t*PI/2);
