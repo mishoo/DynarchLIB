@@ -5,18 +5,6 @@ try {
         document.execCommand("BackgroundImageCache", false, true);
 } catch(e){};
 
-Object.merge = function(dest, src) {
-        for (var i in src)
-                dest[i] = src[i];
-};
-
-Object.mergeDefined = function(dest, src) {
-        for (var i in src) {
-                if (typeof src[i] != "undefined")
-                        dest[i] = src[i];
-        }
-};
-
 Array.$ = function(obj, start) {
         if (start == null)
                 start = 0;
@@ -30,6 +18,52 @@ Array.$ = function(obj, start) {
         }
         return a;
 };
+
+Object.merge = function(dest, src) {
+        for (var i in src)
+                dest[i] = src[i];
+};
+
+Object.merge(Object, {
+
+        mergeDefined: function(dest, src) {
+                for (var i in src) {
+                        if (typeof src[i] != "undefined")
+                                dest[i] = src[i];
+                }
+        },
+
+        remove: function(from, keys) {
+                for (var i = keys.length; --i >= 0;)
+                        delete from[keys[i]];
+        },
+
+        isEmpty: function(o) {
+                for (var i in o)
+                        return false;
+                return true;
+        },
+
+        makeCopy: function(src) {
+                var i, dest = {};
+                for (i in src)
+                        dest[i] = src[i];
+                return dest;
+        },
+
+        makeDeepCopy: function(src) {
+                if (src instanceof Array)
+                        return src.map(Object.makeDeepCopy);
+                if (typeof src == "object") {
+                        var i, dest = {};
+                        for (i in src)
+                                dest[i] = Object.makeDeepCopy(src[i]);
+                        return dest;
+                }
+                return src;
+        }
+
+});
 
 Object.merge(Function.prototype, {
 
@@ -974,24 +1008,9 @@ function $RETURN(args) { throw new $_RETURN(args); };
                 },
 
                 // return a copy of a given object
-                makeCopy : function(src) {
-                        var i, dest = {};
-                        for (i in src)
-                                dest[i] = src[i];
-                        return dest;
-                },
+                makeCopy : Object.makeCopy,
 
-                makeDeepCopy : function(src) {
-                        if (src instanceof Array) {
-                                return src.map(Dynarch.makeDeepCopy);
-                        } else if (typeof src == "object") {
-                                var i, dest = {};
-                                for (i in src)
-                                        dest[i] = Dynarch.makeDeepCopy(src[i]);
-                                return dest;
-                        } else
-                                return src;
-                },
+                makeDeepCopy : Object.makeDeepCopy,
 
                 // merge src into dest but only those properties that are
                 // undefined in dest
@@ -1074,15 +1093,6 @@ function $RETURN(args) { throw new $_RETURN(args); };
                 makeArray : Array.$,
 
                 noop : Function.noop
-        };
-
-        // FIXME: we're getting verbose here...
-        Object.makeCopy = Dynarch.makeCopy;
-        Object.makeDeepCopy = Dynarch.makeDeepCopy;
-        Object.isEmpty = function(o) {
-                for (var i in o)
-                        return false;
-                return true;
         };
 
         window.DynarchDomUtils = {
