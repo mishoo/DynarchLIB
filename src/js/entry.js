@@ -200,45 +200,11 @@
 	};
 
 	P.getSelectionRange = function() {
-		var input = this.getInputElement(), start, end;
-		if (is_ie) {
-			var range, isCollapsed, b;
-
-			range = document.selection.createRange();
-			isCollapsed = range.compareEndPoints("StartToEnd", range) == 0;
-			if (!isCollapsed)
-				range.collapse(true);
-			b = range.getBookmark();
-			start = b.charCodeAt(2) - 2;
-
-			range = document.selection.createRange();
-			isCollapsed = range.compareEndPoints("StartToEnd", range) == 0;
-			if (!isCollapsed)
-				range.collapse(false);
-			b = range.getBookmark();
-			end = b.charCodeAt(2) - 2;
-		} else {
-			start = input.selectionStart;
-			end = input.selectionEnd;
-		}
-		return { start: start, end: end };
+		return DOM.getSelectionRange(this.getInputElement());
 	};
 
 	P.setSelectionRange = function(start, end) {
-		if (typeof start == "object") {
-			end = start.end;
-			start = start.start;
-		}
-		var input = this.getInputElement();
-		if (is_ie) {
-			var range = input.createTextRange();
-			range.collapse(true);
-			range.moveStart("character", start);
-			range.moveEnd("character", end - start);
-			range.select();
-		} else {
-			input.setSelectionRange(start, end);
-		}
+		DOM.setSelectionRange(this.getInputElement(), start, end);
 	};
 
 	P.moveEOF = function() {

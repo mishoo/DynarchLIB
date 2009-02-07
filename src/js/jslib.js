@@ -1488,6 +1488,47 @@ function $RETURN(args) { throw new $_RETURN(args); };
                         return { x: dx, y: dy };
                 },
 
+                getSelectionRange : function(input) {
+                        var start, end;
+                        if (is_ie) {
+                                var range, isCollapsed, b;
+
+                                range = document.selection.createRange();
+                                isCollapsed = range.compareEndPoints("StartToEnd", range) == 0;
+                                if (!isCollapsed)
+                                        range.collapse(true);
+                                b = range.getBookmark();
+                                start = b.charCodeAt(2) - 2;
+
+                                range = document.selection.createRange();
+                                isCollapsed = range.compareEndPoints("StartToEnd", range) == 0;
+                                if (!isCollapsed)
+                                        range.collapse(false);
+                                b = range.getBookmark();
+                                end = b.charCodeAt(2) - 2;
+                        } else {
+                                start = input.selectionStart;
+                                end = input.selectionEnd;
+                        }
+                        return { start: start, end: end };
+                },
+
+                setSelectionRange : function(input, start, end) {
+                        if (typeof start == "object") {
+                                end = start.end;
+                                start = start.start;
+                        }
+                        if (is_ie) {
+                                var range = input.createTextRange();
+                                range.collapse(true);
+                                range.moveStart("character", start);
+                                range.moveEnd("character", end - start);
+                                range.select();
+                        } else {
+                                input.setSelectionRange(start, end);
+                        }
+                },
+
                 setOuterSize : function(el, x, y) {
                         //var pb = DynarchDomUtils.getBorder(el);
                         var pb = DynarchDomUtils.getPaddingAndBorder(el);
