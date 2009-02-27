@@ -31,7 +31,7 @@
         };
 
         // private stuff
-        P.__getEventHooks = function(ev) {
+        P.__getEventHooks = function(ev, copy) {
                 // FIXME (investigate): this could be bad.  When we
                 // destroy widgets upon, say, an "onClick" event,
                 // there might be events that still trigger *after*
@@ -44,6 +44,8 @@
                 var a = this.__eventHooks[ev.toLowerCase()];
                 if (!a)
                         throw new DlException("Event [" + ev + "] not registered.");
+                if (copy)
+                        a = a.slice(0);
                 return a;
         };
 
@@ -162,7 +164,7 @@
         P.applyHooks = function(ev, args) {
                 var ret = [], a, i = 0, f;
                 try {
-                        a = this.__getEventHooks(ev);
+                        a = this.__getEventHooks(ev, true);
                         while (f = a[i++])
                                 ret.push(f.apply(this, args));
                 } catch(ex) {
