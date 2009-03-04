@@ -33,6 +33,12 @@ Object.merge(Object, {
                 }
         },
 
+        mergeUndefined: function(dest, src) {
+                for (var i in src)
+                        if (!(i in dest))
+                                dest[i] = src[i];
+        },
+
         remove: function(from, keys) {
                 for (var i = keys.length; --i >= 0;)
                         delete from[keys[i]];
@@ -697,7 +703,7 @@ function $RETURN(args) { throw new $_RETURN(args); };
                         n = min;
                 if (n > max)
                         n = max;
-                return n;
+                return n + 0;
         };
 
         Math.rotateLimit = function(n, min, max) {
@@ -705,7 +711,7 @@ function $RETURN(args) { throw new $_RETURN(args); };
                         n = max;
                 if (n > max)
                         n = min;
-                return n;
+                return n + 0;
         };
 
         // see texts.js
@@ -1014,11 +1020,7 @@ function $RETURN(args) { throw new $_RETURN(args); };
 
                 // merge src into dest but only those properties that are
                 // undefined in dest
-                mergeUndefined : function(dest, src) {
-                        for (var i in src)
-                                if (!(i in dest))
-                                        dest[i] = src[i];
-                },
+                mergeUndefined : Object.mergeUndefined,
 
                 // Call this in the context of some object.  Sets the default
                 // properties of "this" according to their description in
@@ -1514,6 +1516,13 @@ function $RETURN(args) { throw new $_RETURN(args); };
                 },
 
                 setSelectionRange : function(input, start, end) {
+                        if (end == null)
+                                end = start;
+                        if (start > end) {
+                                var tmp = start;
+                                start = end;
+                                end = tmp;
+                        }
                         if (typeof start == "object") {
                                 end = start.end;
                                 start = start.start;
