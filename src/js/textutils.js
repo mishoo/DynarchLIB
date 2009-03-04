@@ -1,40 +1,85 @@
 // @require jslib.js
+// @require keyboard.js
 
 DlTextUtils = (function(){
 
-        var D, DOM = DynarchDomUtils, START_REGEXPS = [
+        var D, DOM = DynarchDomUtils, K = DlKeyboard, START_REGEXPS = [
 
                 (/^(\s*[-*]+\s+)/), function(m) {
-                        return [ m[0], " ".x(m[0].length), m[0].length ];
+                        return [ m, " ".x(m[0].length), m[0].length ];
                 },
 
-                (/^(\s*[0-9]+\.\s+)/), function(m) {
-                        return [ m[0], " ".x(m[0].length), m[0].length ];
+                (/^(\s*)([0-9]+)(\.\s+)/), function(m) {
+                        return [ function(){
+                                var n = parseInt(m[2], 10) + 1;
+                                return m[1] + n + m[3];
+                        }, " ".x(m[0].length), m[0].length ];
+                },
+
+                (/^(\s*)([a-z])(\)\s+)/i), function(m) {
+                        return [ function(){
+                                var n = String.fromCharCode(m[2].charCodeAt(0) + 1);
+                                return m[1] + n + m[3];
+                        }, " ".x(m[0].length), m[0].length ];
                 },
 
                 (/^\s*([>|]\s*)*/), function(m) {
-                        return [ m[0], m[0], m[0].length, /\n\s*([>|]\s*)*/g, "\n" ];
+                        return [ m, m[0], m[0].length, /\n\s*([>|]\s*)*/g, "\n" ];
                 },
 
                 (/^\s+/), function(m) {
-                        return [ m[0], m[0], m[0].length ];
+                        return [ m, m[0], m[0].length ];
                 }
 
         ];
+
+        var K_UP_DOWN = [ K.ARROW_UP, K.ARROW_DOWN ].toHash(true);
 
         function taKeyPress(ev) {
                 if (!ev)
                         ev = window.event;
 
-                // M-Q (fill-paragraph)
-                if (ev.altKey && ev.charCode == 113) {
-                        var val = D.fillText(this.value, 72, DOM.getSelectionRange(this).start),
-                                scroll = { x: this.scrollLeft, y: this.scrollTop };
-                        this.value = val.text;
-                        DOM.setSelectionRange(this, val.pos, val.pos);
+                var range = DOM.getSelectionRange(this),
+                        scroll = { x: this.scrollLeft, y: this.scrollTop };
+
+                function end() {
                         this.scrollLeft = scroll.x;
                         this.scrollTop = scroll.y;
-                        return false;
+                        return DOM.stopEvent(ev);
+                };
+
+                // M-Q (fill-paragraph)
+                if (ev.altKey && ev.charCode == 113) {
+                        var val = D.fillText(this.value, 72, range.start);
+                        this.value = val.text;
+                        DOM.setSelectionRange(this, val.pos, val.pos);
+                        return end.call(this);
+                }
+
+                // forward-paragraph / backward-paragraph
+                if (ev.ctrlKey && (ev.keyCode in K_UP_DOWN)) {
+                        var isUp = ev.keyCode == K.ARROW_UP,
+                                p = D.getParagraph(this.value, isUp ? range.start : range.end),
+                                pos;
+                        pos = (isUp ? p.start - 1 : p.end + 1).limit(0, this.length);
+                        DOM.setSelectionRange(this, ev.shiftKey ? (isUp ? range.end : range.start) : pos, pos);
+                        return DOM.stopEvent(ev);
+                }
+
+                // create-similar-paragraph (I made this up :-p)
+                if (ev.altKey && ev.keyCode == K.ENTER) { // M-ENTER
+                        var text = this.value,
+                                p = D.getParagraph(text, range.start),
+                                a = D.getFillPrefix(p.text),
+                                prefix = a[0];
+                        if (typeof prefix == "function")
+                                prefix = prefix(a);
+                        else
+                                prefix = prefix[0];
+                        text = text.substr(0, p.end) + "\n\n" + prefix + text.substr(p.end); // XXX: paragraph separator
+                        this.value = text;
+                        DOM.setSelectionRange(this, p.end + 2 + prefix.length);
+                        return end.call(this);
                 }
         };
 
@@ -89,15 +134,19 @@ DlTextUtils = (function(){
                         var a = D.getFillPrefix(para), prefix = a[1], restPos = a[2];
                         var before = para.substr(0, restPos);
                         para = para.substr(restPos);
-                        var d = 0;
+                        var d = null;
                         if (a[3]) {
                                 para = para.replace(a[3], function(s) {
                                         var r = a[4] || "";
-                                        d = s.length - r.length;
+                                        if (d == null) {
+                                                d = r.length - s.length;
+                                                d = prefix.length + d;
+                                        }
                                         return r;
                                 });
                         }
-                        d = prefix.length - d;
+                        if (d == null)
+                                d = prefix.length;
                         para = para.replace(/\n/g, " ").replace(/([^.])\s\s+/g, "$1 ");
                         var re = new RegExp("(.{0," + (width - prefix.length) + "})(\\s+|$)", "g");
                         var m, buf = [], lastPos = 0, line, posDiff = 0;
