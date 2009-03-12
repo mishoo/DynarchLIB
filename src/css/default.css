@@ -104,7 +104,7 @@ form { padding: 0; margin: 0; }
 .DlButton-1 .DlButton-inner { border-color: #bae #fff #fff #bae; }
 .DlButton-hover { background-color: #dcf; }
 
-.DlButton-withIcon {
+.DlAbstractButton-withIcon, .DlButton-withIcon {
   padding-left: 22px;
   background-repeat: no-repeat !important;
   background-position: 0 50%;

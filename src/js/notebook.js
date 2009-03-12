@@ -49,6 +49,8 @@
 
 	P.getPane = function(index) { return this._panes[index]; };
 
+        P.getAllPanes = function() { return this._panes };
+
 	P.getCurrentPane = function() { return this.getPane(this._currentPane); };
 
 	P.getCurrentPaneIndex = function() { return this._currentPane; };

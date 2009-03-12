@@ -35,6 +35,8 @@ DlTextUtils = (function(){
 
         var K_UP_DOWN = [ K.ARROW_UP, K.ARROW_DOWN ].toHash(true);
 
+        var ZERO = String.fromCharCode(0);
+
         function taKeyPress(ev) {
                 if (!ev)
                         ev = window.event;
@@ -121,6 +123,7 @@ DlTextUtils = (function(){
 
                 getFillPrefix: function(para) {
                         var i = 0, re, f, m;
+                        para = para.replace(/\x00/g, "");
                         while (i < START_REGEXPS.length) {
                                 re = START_REGEXPS[i++];
                                 f = START_REGEXPS[i++];
@@ -131,38 +134,33 @@ DlTextUtils = (function(){
                 },
 
                 fillParagraph: function(para, width, pos) {
+                        para = para.substr(0, pos) + ZERO + para.substr(pos);
                         var a = D.getFillPrefix(para), prefix = a[1], restPos = a[2];
                         var before = para.substr(0, restPos);
                         para = para.substr(restPos);
-                        var d = null;
                         if (a[3]) {
                                 para = para.replace(a[3], function(s) {
-                                        var r = a[4] || "";
-                                        if (d == null) {
-                                                d = r.length - s.length;
-                                                d = prefix.length + d;
-                                        }
-                                        return r;
+                                        return a[4] || "";
                                 });
                         }
-                        if (d == null)
-                                d = prefix.length;
-                        para = para.replace(/\n/g, " ").replace(/([^.])\s\s+/g, "$1 ");
+                        para = para.replace(/\n/g, " ").replace(/([^.?!])\s\s+/g, "$1 ");
                         var re = new RegExp("(.{0," + (width - prefix.length) + "})(\\s+|$)", "g");
-                        var m, buf = [], lastPos = 0, line, posDiff = 0;
+                        var m, buf = [], lastPos = 0, line;
                         while (m = re.exec(para)) {
                                 if (re.index != lastPos)
                                         line = para.substring(lastPos, re.lastIndex);
                                 else
                                         line = m[1];
                                 lastPos = re.lastIndex;
-                                if (lastPos < pos)
-                                        posDiff += d;
                                 if (!/\S/.test(line))
                                         break;
                                 buf.push(line.trim(true));
                         }
-                        return { text: before + buf.join("\n" + prefix), posDiff: posDiff };
+                        para = before + buf.join("\n" + prefix);
+                        pos = para.indexOf(ZERO);
+                        if (pos >= 0)
+                                para = para.substr(0, pos) + para.substr(pos + 1);
+                        return { text: para, pos: pos };
                 },
 
                 fillText: function(text, width, pos) {
@@ -170,7 +168,7 @@ DlTextUtils = (function(){
                         var before = text.substr(0, p.start), after = text.substr(p.end);
                         var posInPara = pos - p.start;
                         var ret = D.fillParagraph(p.text, width, posInPara);
-                        return { text: before + ret.text + after, pos: pos + ret.posDiff };
+                        return { text: before + ret.text + after, pos: p.start + ret.pos };
                 },
 
                 emacsipateTextarea: function(ta) {
