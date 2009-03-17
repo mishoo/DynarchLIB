@@ -29,6 +29,8 @@
 	};
 
 	P._appendWidgetElement = function(w, pos) {
+                if (!pos)
+                        return D.BASE._appendWidgetElement.apply(this, arguments);
 		var div = DynarchDomUtils.createElement("div", null, { className: "DlLayout-positioned" },
 							this.getElement());
 		if (pos.zIndex)
@@ -78,10 +80,10 @@
 		var margins = {};
 		for (var i = 0; i < wa.length; ++i) {
 			var w = wa[i];
-                        if (!w.display())
+                        var args = w._dllayout_args;
+                        if (!args || !w.display())
                                 continue;
 			var div = w.getElement().parentNode;
-			var args = w._dllayout_args;
 			var space_before = args.before = args.before || 0;
 			var space_after = args.after = args.after || 0;
 			var fill = args.fill;
