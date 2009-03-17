@@ -134,7 +134,7 @@
 
         DlContainer.prototype._makeWindowManager = function() {
                 if (!this.__wm)
-                        this.__wm = new DlWM({ parent: this });
+                        (this.__wm = new DlWM({ parent: this })).addEventListener("onDestroy", function(){ this.__wm = null }.$(this));
                 return this.__wm;
         };
 
