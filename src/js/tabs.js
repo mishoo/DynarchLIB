@@ -45,6 +45,7 @@
 					data   : this._tabContent.length() - 1
 				      });
 		w._tab.addEventListener("onClick", onTabClick, true);
+                w.addEventListener("onDestroy", w._tab.destroy.$(w._tab));
 	};
 
 	P.getTabBar = function() { return this._tabBar; };
