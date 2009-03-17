@@ -22,6 +22,7 @@
 	};
 
 	P.appendWidget = function(w, pos) {
+                w.registerEvents([ "onNotebookShow" ]);
 		BASE.appendWidget.call(this, w);
 		var el = w.getElement();
 		var cont = this.getContentElement();
@@ -73,6 +74,7 @@
 		pane.visibility(true);
 		if (index !== old)
 			this.applyHooks("onChange", [ index, old ]);
+                pane.callHooks("onNotebookShow");
 		return this;
 	};
 
