@@ -60,7 +60,11 @@ Object.merge(Object, {
         makeDeepCopy: function(src) {
                 if (src instanceof Array)
                         return src.map(Object.makeDeepCopy);
-                if (typeof src == "object") {
+                if (src === null)
+                        return null;
+                if (src instanceof Date)
+                        return new Date(src);
+                if (src instanceof Object) {
                         var i, dest = {};
                         for (i in src)
                                 dest[i] = Object.makeDeepCopy(src[i]);
@@ -1552,9 +1556,9 @@ function $RETURN(args) { throw new $_RETURN(args); };
                         try {
                                 if (typeof x == "number" && x != NaN) x = Math.abs(x) + "px";
                                 if (typeof y == "number" && y != NaN) y = Math.abs(y) + "px";
-                                if (x != null && x != NaN)
+                                if (x != null && x != NaN && !(is_ie && x <= 0))
                                         el.style.width = x;
-                                if (y != null && y != NaN)
+                                if (y != null && y != NaN && !(is_ie && y <= 0))
                                         el.style.height = y;
                         } catch(ex) {};
                 },
