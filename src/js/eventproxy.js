@@ -90,6 +90,17 @@
                 }
         };
 
+        P.listenOnce = function(ev, handler, times) {
+                if (times == null)
+                        times = 1;
+                var f = function() {
+                        if (--times == 0)
+                                this.removeEventListener(ev, f);
+                        handler.apply(this, arguments);
+                };
+                this.addEventListener(ev, f);
+        };
+
         P.connectEvents = function(e1, w2, e2) {
                 if (typeof w2 == "string") {
                         e2 = w2;
