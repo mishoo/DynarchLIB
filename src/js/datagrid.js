@@ -967,6 +967,24 @@
                 }
         };
 
+        // P._data_onChange = function(rec /*, key, val, old */) {
+        //         this._fetch_data([ rec.id() ], 0, function(rec){
+        //                 rec = rec[0];
+        //                 var el = this.getRowElement(rec.id());
+        //                 if (el) {
+        //                         var buf = String.buffer();
+        //                         this._fetchRowHTML(buf, rec);
+        //                         buf = buf.get();
+        //                         if (is_ie)
+        //                                 el.outerHTML = buf;
+        //                         else {
+        //                                 var div = DOM.createFromHtml(buf);
+        //                                 DOM.trash(el.parentNode.replaceChild(div, el));
+        //                         }
+        //                 }
+        //         }.$(this));
+        // };
+
         P._data_onInsert = function(rec, where) {
                 var a = this._records.array;
                 if (where == null)

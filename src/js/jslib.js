@@ -1681,6 +1681,13 @@ function $RETURN(args) { throw new $_RETURN(args); };
                                 if (steps < 0)
                                         clearInterval(timer);
                         }, timeout || 150);
+                },
+
+                walk: function(el, f) {
+                        if (!f(el))
+                                for (var i = el.firstChild; i; i = i.nextSibling)
+                                        if (i.nodeType == 1)
+                                                DynarchDomUtils.walk(i, f);
                 }
 
         };

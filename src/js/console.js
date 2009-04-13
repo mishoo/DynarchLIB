@@ -1,5 +1,5 @@
 // @if DEBUG
-// @require jslib.js
+// @require ALL
 
 function DlConsole(){
         this._messages = [];
@@ -52,6 +52,22 @@ DlConsole.prototype = {
                 this.log("<b>DynarchLIB Console</b><br />Initialized at %s", new Date());
                 this.line();
                 this._messages.foreach(this._addMsg, this);
+        },
+
+        protect : function(name) {
+                var func = eval(name), f = function() {
+                        try {
+                                var a = [];
+                                for (var i = 0; i < arguments.length; ++i)
+                                        a.push(arguments[i]);
+                                console.log(name + " [" + a.join(", ") + "]");
+                                func.apply(this, arguments);
+                        } catch(ex) {
+                                alert("Exception in " + name + "\n" + ex);
+                                throw ex;
+                        }
+                };
+                eval(name + " = f");
         }
 
 };

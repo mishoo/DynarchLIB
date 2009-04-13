@@ -155,7 +155,8 @@
 			if (typeof val != "undefined")
 				delete this._buttonsByValue[w.value()];
 			this._buttons.remove(w);
-			this._history.remove(w);
+                        if (this._history.length != this._history.remove(w).length)
+                                this.callHooks("onChange");
 		}
 	};
 

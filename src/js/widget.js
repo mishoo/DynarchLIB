@@ -414,9 +414,9 @@
                 el._dynarch_object = this;
         };
 
-        P.getElement = function() {
-                return this._element;
-        };
+        P.getElement = function() { return this._element };
+
+        P.getParentNode = function() { return this._element.parentNode };
 
         P.setStyle = function(a, b) {
                 var s = this.getElement().style;

@@ -36,19 +36,20 @@
         var DEFAULT_EVENTS = [ "onSelect", "onChange", "onRendered" ];
 
 	D.DEFAULT_ARGS = {
-		firstDay       : [ "firstDay"      , Date.getFirstDayOfWeek() ],
-		fixedFirstDay  : [ "fixedFirstDay" , true ],
-		_weekNumbers   : [ "weekNumbers"   , false ],
-		date           : [ "date"          , null ],
-		selected       : [ "selected"      , true ],
-		_navigation    : [ "navigation"    , 2 ],
-		_navDisabled   : [ "navDisabled"   , false ],
-		_omDisabled    : [ "omDisabled"    , false ],
-		_noinit        : [ "noinit"        , false ],
-		_withMenu      : [ "withMenu"      , false ],
-                _cal_tooltip   : [ "dayTooltip"    , null ],
-                _infoDates     : [ "infoDates"     , null ],
-                __tooltip      : [ "tooltip"       , getTooltip ]
+		firstDay        : [ "firstDay"       , Date.getFirstDayOfWeek() ],
+		fixedFirstDay   : [ "fixedFirstDay"  , true ],
+		_weekNumbers    : [ "weekNumbers"    , false ],
+		date            : [ "date"           , null ],
+		selected        : [ "selected"       , true ],
+		_navigation     : [ "navigation"     , 2 ],
+		_navDisabled    : [ "navDisabled"    , false ],
+		_omDisabled     : [ "omDisabled"     , false ],
+		_noinit         : [ "noinit"         , false ],
+		_withMenu       : [ "withMenu"       , false ],
+                _disableHandler : [ "disableHandler" , Function.returnFalse ],
+                _cal_tooltip    : [ "dayTooltip"     , null ],
+                _infoDates      : [ "infoDates"      , null ],
+                __tooltip       : [ "tooltip"        , getTooltip ]
 	};
 
 	P._createElement = function() {
@@ -290,6 +291,7 @@
 				}
 				if (wday == 0 || wday == 6)
 					cn.push("WeekEnd");
+                                cell.disabled = this._disableHandler(date, cn, cell);
 				cell.innerHTML = this.getDayHTML(iday);
                                 cell.className = cn.join(" ");
 			}
@@ -336,6 +338,8 @@
 				return;
 			if ((cell._firstDay != null && this.fixedFirstDay) || cell._week != null)
 				return;
+                        if (cell.disabled)
+                                return;
 			AC(cell, "hover");
 			this._currentHover = cell;
                         if (this.__tooltip)
@@ -433,7 +437,7 @@
 			return;
 		if (ev.button != 0 && (cell._navType != null || cell._otherMonth))
 			return;
-		if (cell._otherMonth && this._omDisabled)
+		if (cell._otherMonth && this._omDisabled || cell.disabled)
 			return;
 		if (cell._navType != null && ev.dl_type == "onMouseDown") {
 			this._navDisabled ||
