@@ -21,7 +21,7 @@
 
         P.initDOM = function() {
                 D.BASE.initDOM.apply(this, arguments);
-                this.getElement().innerHTML = "<div class='DlWM-container'></div><div class='DlWM-modalStopper'></div>";
+                this.getElement().innerHTML = "<div class='DlWM-modalStopper'></div>";
                 this.dialogsVisible = [];
                 this.modalsVisible = 0;
                 this._manageEvents = {
@@ -34,12 +34,8 @@
                 : DOM.addEvent(window, "resize", resize);
         };
 
-        P.getContentElement = function() {
-                return this.getElement().childNodes[0];
-        };
-
         P.getModalStopperElement = function() {
-                return this.getElement().childNodes[1];
+                return this.getElement().childNodes[0];
         };
 
         P.activatePrev = function() {
@@ -548,7 +544,7 @@
                 this.getElement().innerHTML = HTML;
                 var rel = this.getRelElement();
 
-                if (!this.__noShadows && (!is_ie || is_ie7))
+                if (!this.__noShadows && !is_ie6)
                         // IE6 is too stupid to support such advancements
                         rel.insertBefore(DlElementCache.get("SHADOWS"), rel.firstChild);
                 else {
