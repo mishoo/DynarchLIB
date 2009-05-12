@@ -159,6 +159,7 @@ function $RETURN(args) { throw new $_RETURN(args); };
         is_ie5 = is_ie && /msie 5\.[^5]/i.test(UA);
         is_ie6 = is_ie && /msie 6/i.test(UA);
         is_ie7 = is_ie && /msie 7/i.test(UA);
+        is_ie8 = is_ie && /msie 8/i.test(UA);
         ie_box_model = is_ie && document.compatMode && document.compatMode == "BackCompat";
         is_mac_ie = /msie.*mac/i.test(UA);
         is_khtml = /Konqueror|Safari|KHTML/i.test(UA);
@@ -166,6 +167,7 @@ function $RETURN(args) { throw new $_RETURN(args); };
         is_safari3 = is_safari && /Version\/3/i.test(UA);
         is_konqueror = is_khtml && !is_safari3;
         is_gecko = /gecko/i.test(UA) && !is_khtml && !is_opera && !is_ie;
+        is_chrome = /Chrome/i.test(UA);
         // is_w3 = !is_ie || is_ie7; // FIXME: the part about IE7 is to be verified
         is_w3 = !is_ie;
 
