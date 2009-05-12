@@ -838,14 +838,16 @@ table.DlButtonBox .DlButtonBox-spacer { width: 100%; }
 .DlWM {
   position: absolute;
   left: 0; top: 0;
+  width: 0; height: 0;
+  overflow: visible;
   z-index: 300;
 }
 
-.DlWM-container {
-  position: relative;
-  width: 0; height: 0;
-  overflow: visible;
-}
+/* .DlWM-container { */
+/*   position: relative; */
+/*   width: 0; height: 0; */
+/*   overflow: visible; */
+/* } */
 
 .DlWM-modalStopper {
   z-index: 800; cursor: not-allowed;
@@ -857,7 +859,7 @@ table.DlButtonBox .DlButtonBox-spacer { width: 100%; }
   display: none;
 }
 
-.DlDialog .DlWM-modalStopper { 
+.DlDialog .DlWM-modalStopper {
   -moz-border-radius: 0 0 4px 4px;
   -webkit-border-radius: 0 0 4px 4px;
 }
