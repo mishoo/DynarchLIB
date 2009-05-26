@@ -71,6 +71,11 @@ Object.merge(Object, {
                         return dest;
                 }
                 return src;
+        },
+
+        makeShortcuts: function(obj, props) {
+                for (var i in props)
+                        obj[i] = obj[props[i]];
         }
 
 });
@@ -191,12 +196,12 @@ function $RETURN(args) { throw new $_RETURN(args); };
 
         INHERITANCE = {};
 
-        F.inherits = function(base) {
+        F.inherits = function(base, name) {
                 var p = (this.prototype = new base);
                 p.constructor = this;
                 this.BASE = base.prototype;
-                this._objectType = p._objectType = Dynarch.getFunctionName(this);
-                INHERITANCE[this._objectType] = Dynarch.getFunctionName(base);
+                this._objectType = p._objectType = name || Dynarch.getFunctionName(this);
+                INHERITANCE[this._objectType] = name || Dynarch.getFunctionName(base);
                 if (p.__patchSubclassPrototype instanceof Function)
                         p.__patchSubclassPrototype();
                 return this.BASE;
