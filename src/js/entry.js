@@ -290,19 +290,46 @@
 		return isDisabled;
 	};
 
-	P.setSize = P.setOuterSize = function(size) {
-		var input = this.getInputElement(), x = size.x, y = size.y, pb = DOM.getPaddingAndBorder(input);
-		if (x != null)
-			x -= pb.x + 4;
-		if (y != null)
-			y -= pb.y + 4;
-                if (this._domType != "textarea")
-                        y = null;
-                DOM.setInnerSize(input, x, y);
-                if (x != null) {
-                        x += 8;
-                        DOM.setInnerSize(this.getElement(), x);
-                }
+	// P.setSize = P.setOuterSize = function(size) {
+	// 	var input = this.getInputElement(), x = size.x, y = size.y, pb = DOM.getPaddingAndBorder(input);
+	// 	if (x != null)
+	// 		x -= pb.x + 4;
+	// 	if (y != null)
+	// 		y -= pb.y + 4;
+        //         if (this._domType != "textarea")
+        //                 y = null;
+        //         DOM.setInnerSize(input, x, y);
+        //         if (x != null) {
+        //                 x += 8;
+        //                 DOM.setInnerSize(this.getElement(), x);
+        //         }
+	// };
+
+        P.setSize = P.setOuterSize = function(size) {
+                var input = this.getInputElement()
+                , tpb = DOM.getPaddingAndBorder(this.getElement())
+                , ipb = DOM.getPaddingAndBorder(input)
+                , sb = this._btn ? this._btn.getSize().x : 0;
+                DOM.setOuterSize(input, size.x - tpb.x - ipb.x - sb + 2); // XXX: fuzz factor = 2
 	};
+
+        P._makeButton = function(label, iconClass, className, classes) {
+                if (!classes && !className) {
+                        className = "DlEntry-dropDownBtn",
+                        classes = {
+                                hover  : "DlEntry-dropDownBtn-hover",
+                                active : "DlEntry-dropDownBtn-active"
+                        };
+                }
+                var td = CE("td", null, null, this.getElement().rows[0]);
+                return this._btn = new DlAbstractButton({
+                        parent     : this,
+                        appendArgs : td,
+                        label      : label,
+                        iconClass  : iconClass,
+                        className  : className,
+                        classes    : classes
+                });
+        };
 
 })();

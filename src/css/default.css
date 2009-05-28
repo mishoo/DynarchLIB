@@ -180,6 +180,15 @@ div.DlButton-Label { display: inline; }
 .DlEntry-Readonly input, .DlEntry-Readonly textarea { background-color: #dcf; }
 .DlEntry-empty input, .DlEntry-empty textarea { color: #98a; font-style: italic; }
 
+.DlEntry-dropDownBtn {
+  line-height: 20px;
+  border-left: 1px solid #98a;
+  padding-left: 4px; padding-right: 4px;
+}
+
+.DlEntry-dropDownBtn-hover { background-color: #fff; }
+.DlEntry-dropDownBtn-active { background-color: #76c; }
+
 /* CompletionEntry */
 
 .DlCompletionEntry-busy input {

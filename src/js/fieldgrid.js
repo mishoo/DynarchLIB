@@ -70,17 +70,17 @@
 	P.getValue = function() {
 		var val = {};
 		for (var name in this.__fields) {
-			var w = this.getField(name);
-			if (w.getValue instanceof Function) {
+			var w = this.getField(name), f = w.getFormValue || w.getValue;
+			if (f instanceof Function) {
                                 if (w instanceof DlAbstractButton && w._checkTwoState(true)) {
-                                        var v = w.getValue();
+                                        var v = f.call(w);
                                         if (v == null) {
                                                 val[name] = w.checked();
                                         } else if (w.checked()) {
                                                 val[name] = v;
                                         }
                                 } else {
-				        val[name] = w.getValue();
+				        val[name] = f.call(w);
                                 }
                         }
 		}
@@ -91,19 +91,23 @@
 
         P.setValue = function(hash) {
                 for (var name in hash) {
-                        var w = this.getField(name), v = hash[name];
-                        if (w && w.setValue instanceof Function) {
-                                if (w instanceof DlAbstractButton && w._checkTwoState(true)) {
-                                        w.checked(typeof v == "string"
-                                                  ? v != "0"
-                                                  : !!v);
-                                } else {
-                                        w.setValue(v);
+                        var w = this.getField(name), v = hash[name], f;
+                        if (w) {
+                                f = w.setFormValue || w.setValue;
+                                if (f instanceof Function) {
+                                        if (w instanceof DlAbstractButton && w._checkTwoState(true)) {
+                                                w.checked(typeof v == "string"
+                                                          ? v != "0"
+                                                          : !!v);
+                                        } else {
+                                                f.call(w, v);
+                                        }
                                 }
                         }
                 }
         };
 
         P.setValues = P.setValue;
+
 
 })();

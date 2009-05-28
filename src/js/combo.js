@@ -30,9 +30,9 @@
 
         P._createElement = function() {
                 D.BASE._createElement.apply(this, arguments);
-                var td = CE("td", null, null, this.getElement().rows[0]);
-                (this._btn = new DlWidget({ parent: this, className: "DlComboBox-dropDownBtn", appendArgs: td }))
-                .addEventListener("onMouseEnter onMouseLeave onMouseDown".qw(), btnEvent.$(null, this));
+                this._makeButton(null, null, "DlComboBox-dropDownBtn", {
+                        hover: "DlComboBox-dropDownBtn-hover"
+                }).addEventListener("onMouseDown", btnEvent.$(this));
                 this.addEventListener("onCompletion", this.doCompletion);
         };
 
@@ -41,28 +41,10 @@
                 this._btn.delClass("DlComboBox-dropDownBtn-active");
         };
 
-        P.setSize = P.setOuterSize = function(size) {
-                var input = this.getInputElement()
-                , tpb = DOM.getPaddingAndBorder(this.getElement())
-                , ipb = DOM.getPaddingAndBorder(input)
-                , sb = this._btn.getSize().x;
-                DOM.setOuterSize(input, size.x - tpb.x - ipb.x - sb + 2); // XXX: fuzz factor = 2
-	};
-
-        function btnEvent(self, ev) {
-                switch (ev.dl_type) {
-                    case "onMouseEnter":
-                        this.addClass("DlComboBox-dropDownBtn-hover");
-                        break;
-                    case "onMouseLeave":
-                        this.delClass("DlComboBox-dropDownBtn-hover");
-                        break;
-                    case "onMouseDown":
-                        if (ev.button == 0) {
-                                self._forcePopup();
-                                DlException.stopEventBubbling();
-                        }
-                        break;
+        function btnEvent(ev) {
+                if (ev.button == 0) {
+                        this._forcePopup();
+                        DlException.stopEventBubbling();
                 }
         };
 
