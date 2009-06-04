@@ -81,11 +81,14 @@
 
 	P.destroyChildWidgets = function() {
 		var a = Array.$(this._widgets);
+                for (var i = 0; i < a.length; ++i)
+                        if (a[i] instanceof D)
+                                a.push.apply(a, a[i]._widgets);
 		a.r_foreach(function(w) {
-				    try {
-					    w.destroy();
-				    } catch(ex) {};
-			    });
+			try {
+				w.destroy();
+			} catch(ex) {};
+		});
 		var el = this.getContentElement();
 		if (el)
 			el.innerHTML = "";

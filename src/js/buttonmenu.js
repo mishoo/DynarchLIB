@@ -85,10 +85,7 @@
                 this.registerEvents(DEFAULT_EVENTS);
                 BASE.initDOM.call(this);
                 this._menuBtn.addEventListener("onMouseDown", popupMenu.$(this));
-                this.addEventListener("onDestroy", function() {
-                        if (this._menu instanceof DlWidget)
-                                this._menu.destroy();
-                });
+                this.addEventListener("onDestroy", this.setMenu.$(this, null));
         };
 
         P.getMenu = function() {

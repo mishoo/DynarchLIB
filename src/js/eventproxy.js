@@ -88,6 +88,7 @@
                         if (object)
                                 object.addEventListener("onDestroy", this.removeEventListener.$(this, ev, handler));
                 }
+                return this;
         };
 
         P.listenOnce = function(ev, handler, times) {
@@ -98,7 +99,7 @@
                                 this.removeEventListener(ev, f);
                         handler.apply(this, arguments);
                 };
-                this.addEventListener(ev, f);
+                return this.addEventListener(ev, f);
         };
 
         P.connectEvents = function(e1, w2, e2) {
@@ -114,6 +115,7 @@
                 } else {
                         this.addEventListener(e1, _connect_callback.$(null, w2, e2));
                 }
+                return this;
         };
 
         P.removeEventListener = function(ev, handler) {
@@ -127,6 +129,7 @@
                 } else {
                         this.__getEventHooks(ev).remove(handler);
                 }
+                return this;
         };
 
         P.removeAllListeners = function(ev) {
@@ -138,6 +141,7 @@
                 } else {
                         this.__getEventHooks(ev).length = 0;
                 }
+                return this;
         };
 
         P.disableHooks = function(ev) {
@@ -148,6 +152,7 @@
                         this.__disHooks[ev] = this.__eventHooks[ev];
                         this.__eventHooks[ev] = [];
                 }
+                return this;
         };
 
         P.enableHooks = function(ev) {
@@ -158,6 +163,7 @@
                         this.__eventHooks[ev] = this.__disHooks[ev];
                         this.__disHooks[ev] = null;
                 }
+                return this;
         };
 
         P.callHooks = function(ev) {
@@ -183,6 +189,13 @@
                                 throw ex;
                 }
                 return ret;
+        };
+
+        P.debug_countHooks = function() {
+                var a = {}, i;
+                for (i in this.__eventHooks)
+                        a[i] = this.__eventHooks[i].length;
+                return a;
         };
 
 //      // note that both of the following could be dangerous

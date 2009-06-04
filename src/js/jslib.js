@@ -27,10 +27,9 @@ Object.merge = function(dest, src) {
 Object.merge(Object, {
 
         mergeDefined: function(dest, src) {
-                for (var i in src) {
+                for (var i in src)
                         if (typeof src[i] != "undefined")
                                 dest[i] = src[i];
-                }
         },
 
         mergeUndefined: function(dest, src) {
@@ -58,8 +57,12 @@ Object.merge(Object, {
         },
 
         makeDeepCopy: function(src) {
-                if (src instanceof Array)
-                        return src.map(Object.makeDeepCopy);
+                if (src instanceof Array) {
+                        var a = [], i = src.length;
+                        while (--i >= 0)
+                                a[i] = Object.makeDeepCopy(src[i]);
+                        return a;
+                }
                 if (src === null)
                         return null;
                 if (src instanceof Date)

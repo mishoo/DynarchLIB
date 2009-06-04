@@ -448,9 +448,11 @@
         };
 
         P.hide = function() {
-                this.__oldDlgPos = this.getOffsetPos();
-                this.display(false);
-                this.setPos(HIDE_POS);
+                if (this.display()) {
+                        this.__oldDlgPos = this.getOffsetPos();
+                        this.display(false);
+                        this.setPos(HIDE_POS);
+                }
         };
 
         P.show = function(center) {
@@ -515,10 +517,6 @@
                         if (vd.length >= 1)
                                 vd.peek().activate();
                 }
-        };
-
-        function onDestroy() {
-                this.hide();
         };
 
         function onMouseWheel(ev) {
@@ -628,6 +626,8 @@
                         this.setPos(pos.x, pos.y);
                 }
                 this.__maxBtn.checked(c, true);
+                if (this._focusedWidget)
+                        this._focusedWidget.focus();
         };
 
         P.__doMaximize = function() {
@@ -739,7 +739,7 @@
                 this.addEventListener({ onMouseDown   : this.activate,
                                         onMouseWheel  : onMouseWheel,
                                         onDisplay     : onDisplay,
-                                        onDestroy     : onDestroy });
+                                        onDestroy     : this.hide });
         };
 
         function _el(o, p) {

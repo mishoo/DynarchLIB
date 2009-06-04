@@ -753,6 +753,7 @@ table.DlButtonBox .DlButtonBox-spacer { width: 100%; }
 /* RteFrame */
 
 .DlRteFrame { border: 1px solid; border-color: #87b; }
+/* .DlRteFrame-focus { border-color: #659; outline: 1px solid #98b; -moz-outline-radius: 2px; } */
 .DlRteFrame iframe { border: 1px solid; border-color: #cbf #fff #fff #cbf; }
 
 /* Grid */

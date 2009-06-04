@@ -210,7 +210,16 @@
 	};
 
 	P.getHTML = function(withMeta) {
-		return DlHtmlUtils.getHTML(this.getIframeBody(), false, withMeta);
+                if (!is_ie) {
+                        this.collapse(true);
+                        var caret = this.getIframeDoc().createElement("span");
+                        caret.id = "DYNARCHLIB_RTEFRAME_CARET";
+                        this.insertNode(caret);
+                }
+                var html = DlHtmlUtils.getHTML(this.getIframeBody(), false, withMeta);
+                if (!is_ie)
+                        this.deleteNode(caret);
+                return html;
 	};
 
 	P.getInnerText = function() {
@@ -400,6 +409,16 @@
 			var pre = pres[i];
 			pre.innerHTML = pre.innerHTML.replace(/\n/g, "<br>");
 		}
+                if (!is_ie) {
+                        var caret = this.getIframeDoc().getElementById("DYNARCHLIB_RTEFRAME_CARET");
+                        if (caret) (function(caret){
+                                try {
+                                        this.selectNodeContents(caret);
+                                        this.collapse(true);
+                                        this.deleteNode(caret);
+                                } catch(ex) {};
+                        }).delayed(10, this, caret);
+                }
 	};
 
 	P.clear = function() {

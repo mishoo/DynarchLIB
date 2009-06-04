@@ -11,6 +11,9 @@
 			if (this._options.length)
 				this.setOptions(this._options);
 			this.value(this._value, true);
+                        this.addEventListener("onDestroy", function(){
+                                this._radioGroup.reset();
+                        });
 		}
 	};
 

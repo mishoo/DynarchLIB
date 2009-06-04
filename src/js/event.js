@@ -283,7 +283,7 @@
                 D.stopEvent(D.latestDomEvent);
         };
 
-        var GLOBAL_CAPTURES = {};
+        var GLOBAL_CAPTURES = D.GLOBAL_CAPTURES = {};
 
         var KEY_EVENTS = "keydown keyup keypress".hashWords();
 

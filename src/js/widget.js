@@ -77,7 +77,7 @@
                                // "onDrop"
                              ];
 
-        var WIDGETS = {};
+        var WIDGETS = D.WIDGETS = {};
 
         D.getById = function(id) { return WIDGETS[id]; };
         D.getFromElement = function(el) { return el._dynarch_object; };
@@ -108,6 +108,14 @@
                                            innerHTML: "&nbsp;" },
                                          document.body);
                 return RESIZE_RECT;
+        };
+
+        D.debug_countHooks = function() {
+                var ret = {};
+                Array.hashKeys(DlWidget.WIDGETS).foreach(function(id){
+                        ret[id] = DlWidget.WIDGETS[id].debug_countHooks();
+                });
+                return ret;
         };
 
         function onDestroy() {
