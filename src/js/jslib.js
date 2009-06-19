@@ -254,6 +254,18 @@ function $RETURN(args) { throw new $_RETURN(args); };
                 return a;
         };
 
+        A.map_hash = function(f, obj, h) {
+                h || (h = {});
+                this.foreach(f instanceof Function
+                             ? function(el){
+                                     h[el] = f.call(obj, el);
+                             }
+                             : function(el){
+                                     h[el] = f[el];
+                             });
+                return h;
+        };
+
         A.accumulate = function(f, val) {
                 if (arguments.length < 2)
                         val = 0;

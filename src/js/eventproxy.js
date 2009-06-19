@@ -198,6 +198,13 @@
                 return a;
         };
 
+        P.invoke = function(method) {
+                var args = Array.$(arguments, 1);
+                return function(){
+                        this[method].apply(this, args.concat(Array.$(arguments)));
+                }.$(this);
+        };
+
 //      // note that both of the following could be dangerous
 //      // if we traversing the container and destroy()
 //      // objects

@@ -448,7 +448,7 @@
         };
 
         P.hide = function() {
-                if (this.display()) {
+                if (this.display() && DOM.elementIsVisible(this.getElement())) {
                         this.__oldDlgPos = this.getOffsetPos();
                         this.display(false);
                         this.setPos(HIDE_POS);
