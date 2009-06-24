@@ -13,6 +13,7 @@
         eval(Dynarch.EXPORT("DlStyleSheet", true));
 
         function cleanup() {
+                DOM.trash(this._el);
                 this._s = null; // break references
                 this._el = null;
         };
@@ -105,8 +106,7 @@
         P._init = function() {
                 if (is_ie)
                         this._ier = {};
-                this._el = CE("style", null, { type: "text/css" },
-                              document.getElementsByTagName("head")[0]);
+                this._el = CE("style", null, { type: "text/css" }, document.getElementsByTagName("head")[0]);
                 this._s = document.styleSheets[document.styleSheets.length - 1];
                 this.addEventListener("onDestroy", cleanup);
         };

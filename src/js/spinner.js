@@ -57,6 +57,7 @@
 		var c2 = CE("td", null, { className: "DlSpinner-Button DlSpinner-Button-Down" }, r2);
 		this._buttonUp = new DlButton({ parent: this, appendArgs: c1 });
 		this._buttonDown = new DlButton({ parent: this, appendArgs: c2 });
+                this._btn = this._buttonUp;
 	};
 
 	function onFocus() {

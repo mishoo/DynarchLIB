@@ -21,12 +21,12 @@ DlHtmlUtils = {
 	},
 
 	htmlEncode : function(s) {
-		return s.htmlEscape(); // defined in jslib.js
-// 		return s.replace(/&/g, "&amp;")
-// 			.replace(/</g, "&lt;")
-// 			.replace(/>/g, "&gt;")
-// 			.replace(/\x22/g, "&quot;")
-// 			.replace(/\u00A0/g, "&#xa0;");
+ 		return String(s)
+                        .replace(/&/g, "&amp;")
+ 			.replace(/</g, "&lt;")
+ 			.replace(/>/g, "&gt;")
+ 			.replace(/\x22/g, "&quot;")
+ 			.replace(/\u00A0/g, "&#xa0;");
 	},
 
 	getHTML : function(root, outputRoot, withMeta) {
@@ -92,7 +92,7 @@ DlHtmlUtils = {
 							value = root.style.cssText;
 						if (/(_moz|^$)/.test(value))
 							continue;
-						html[hi++] = " " + name + '="' + value + '"';
+						html[hi++] = " " + name + '="' + htmlEncode(value) + '"';
 					}
 					html[hi++] = closed ? " />" : ">";
 				}
@@ -117,7 +117,7 @@ DlHtmlUtils = {
 						html[hi++] = root.data;
 					}
 				} else
-					html[hi++] = htmlEncode(root.data);
+					html[hi++] = root.data.htmlEscape();
 				break;
 
 			    case 4: // CDATA_SECTION_NODE -- WARNING! this is technically a mistake

@@ -942,6 +942,7 @@
 
         P._onDestroy = function() {
                 this.setCache(null);
+                this._ss.destroy();
         };
 
         P.setCache = function(cache) {
