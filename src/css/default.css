@@ -943,6 +943,7 @@ table.DlButtonBox .DlButtonBox-spacer { width: 100%; }
 .DlDialog-Title div { padding-top: 3px; padding-bottom: 3px; }
 .DlDialog-Active .DlDialog-Title { background-color: #7e58c8; color: #fff; border-color: #fff;
   opacity: 1; filter: none;
+  text-shadow: 1px 1px 3px #000;
 }
 
 .DlDialog-Title-withIcon {

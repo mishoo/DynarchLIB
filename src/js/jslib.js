@@ -704,6 +704,10 @@ function $RETURN(args) { throw new $_RETURN(args); };
                 return [h, m, s].map("zeroPad", 2).join(":");
         };
 
+        N.toDate = function(hh, mm, ss, ms) {
+                return Date.intToDate(this, hh, mm, ss, ms);
+        };
+
         N.limit = function(min, max) {
                 return Math.limit(this, min, max);
         };
@@ -754,6 +758,30 @@ function $RETURN(args) { throw new $_RETURN(args); };
         Date.parseMySQL = function(str) {
                 var a = str.split(/\s+/), d = a[0].split(/-/), t = a[1].split(/:/);
                 return new Date(d[0], d[1] - 1, d[2], t[0] || null, t[1] || null, t[2] || null);
+        };
+
+        Date.dateToInt = function(date) {
+                if (date instanceof Date)
+                        return 10000 * date.getFullYear() + 100 * (date.getMonth() + 1) + date.getDate();
+                if (typeof date == "string")
+                        return parseInt(date, 10);
+                return date;
+        };
+
+        Date.intToDate = function(date, hh, mm, ss, ms) {
+                if (!(date instanceof Date)) {
+                        date = parseInt(date, 10);
+                        var y = Math.floor(date / 10000);
+                        date = date % 10000;
+                        var m = Math.floor(date / 100);
+                        date = date % 100;
+                        date = new Date(y, m - 1, date, hh || 12, mm || 0, ss || 0, ms || 0);
+                }
+                return date;
+        };
+
+        D.toInt = function() {
+                return Date.dateToInt(this);
         };
 
         D.getMonthDays = function(m) {

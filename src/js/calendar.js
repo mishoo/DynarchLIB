@@ -285,8 +285,10 @@
 				} else {
 					if (month == TM && iday == TD && TY == tmp.y)
 						cn.push("Today");
-					if (this._selectedDate == iday)
+					if (this._selectedDate == iday) {
 						this._selectCell(cell);
+                                                cn.push("Selected");
+                                        }
 					cells[iday] = cell;
 				}
 				if (wday == 0 || wday == 6)
