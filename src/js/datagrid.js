@@ -83,19 +83,9 @@
                 callback.call(obj, ids.map(this.get, this));
         };
 
-        P.getAllIds = function() {
-                var a = [], i;
-                for (i in this._data)
-                        a.push(i);
-                return a;
-        };
+        P.getAllIds = function() { return Array.hashKeys(this._data) };
 
-        P.getAllRecords = function() {
-                var a = [], i;
-                for (i in this._data)
-                        a.push(this._data[i]);
-                return a;
-        };
+        P.getAllRecords = function() { return Array.hashValues(this._data) };
 
         P.getHash = function() {
                 return this._data;
@@ -526,14 +516,15 @@
                 sel      : [ "sel"     , null ]
         };
 
-        P.reset = function(ids) {
+        P.reset = function(ids, noHooks) {
                 var old = this.sel;
                 this.sel = ids.toHash(true);
-                this.applyHooks("onReset", [ old, this.sel ]);
+                if (!noHooks)
+                        this.applyHooks("onReset", [ old, this.sel ]);
         };
 
-        P.clear = function() {
-                this.reset([]);
+        P.clear = function(noHooks) {
+                this.reset([], noHooks);
         };
 
         P.get = function() {
@@ -542,6 +533,11 @@
 
         P.getArray = function() {
                 return Array.hashKeys(this.sel);
+        };
+
+        P.getFirst = function() {
+                for (var i in this.sel)
+                        return i;
         };
 
         P.isSelected = function(id) {
@@ -563,7 +559,7 @@
                 this.unselect(unsel);
         };
 
-        P.select = function(id) {
+        P.select = function(id, noHooks) {
                 var s = this.sel, ret = null, tmp;
                 if (id instanceof Array) {
                         // go through onReset, should be faster
@@ -574,19 +570,20 @@
                                         ret = true;
                                 }
                         }, this);
-                        if (ret != null)
+                        if (!noHooks && ret != null)
                                 this.applyHooks("onReset", [ {}, tmp ]);
                 } else {
                         if (!s[id]) {
                                 s[id] = true;
-                                this.applyHooks("onChange", [ id, true ]);
+                                if (!noHooks)
+                                        this.applyHooks("onChange", [ id, true ]);
                                 ret = true;
                         }
                 }
                 return ret;
         };
 
-        P.unselect = function(id) {
+        P.unselect = function(id, noHooks) {
                 var s = this.sel, ret = null, tmp;
                 if (id instanceof Array) {
                         // go through onReset, should be faster
@@ -598,20 +595,21 @@
                                         ret = false;
                                 }
                         }, this);
-                        if (ret != null)
+                        if (!noHooks && ret != null)
                                 this.applyHooks("onReset", [ tmp, {} ]);
                 } else {
                         if (s[id]) {
                                 delete s[id];
-                                this.applyHooks("onChange", [ id, false ]);
+                                if (!noHooks)
+                                        this.applyHooks("onChange", [ id, false ]);
                                 ret = false;
                         }
                 }
                 return ret;
         };
 
-        P.toggle = function(id) {
-                return this.sel[id] ? this.unselect(id) : this.select(id);
+        P.toggle = function(id, noHooks) {
+                return this.sel[id] ? this.unselect(id, noHooks) : this.select(id, noHooks);
         };
 
 })();

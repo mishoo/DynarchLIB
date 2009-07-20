@@ -426,6 +426,14 @@
 
         P.getParentNode = function() { return this._element.parentNode };
 
+        P.getDOMChildren = function() {
+                return Array.$(this.getContentElement().childNodes);
+        };
+
+        P.getContentElement = function() {
+                return this.getElement();
+        };
+
         P.setStyle = function(a, b) {
                 var s = this.getElement().style;
                 if (arguments.length > 1) {
@@ -442,10 +450,6 @@
 //                              s[a] = b;
 //                      });
 //              }
-        };
-
-        P.getContentElement = function() {
-                return this.getElement();
         };
 
         P.setContent = function(content) {
@@ -578,8 +582,8 @@
         P.setPos = function(x, y) {
                 var el = this.getElement();
                 if (x != null && typeof x == "object") {
-                        x = x.x;
                         y = x.y;
+                        x = x.x;
                 }
                 if (x != null)
                         el.style.left = x + "px";

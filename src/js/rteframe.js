@@ -93,9 +93,9 @@
 		"strike"        : true
 	};
 
-	P.callUpdateHooks = function() {
+	P.callUpdateHooks = function(dev, ev) {
 		if (!this.destroyed)
-			this.callHooks("onUpdate");
+			this.applyHooks("onUpdate", [ dev, ev ]);
 	};
 
 	P.execCommand = function(cmd, param) {
@@ -593,6 +593,15 @@
 			: r.moveToElementText(node);
 		this.selectRange(r);
 	};
+
+        P.selectNode = function(node) {
+                if (is_w3) {
+                        var r = this.createRange();
+                        r.selectNode(node);
+                        this.selectRange(r);
+                } else
+                        this.selectNodeContents(node);
+        };
 
 	P.createLink = function(url, text) {
 		var tmp, as, link, i;

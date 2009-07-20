@@ -1,2 +1,2 @@
 rm -f ../swf/flash.swf
-~/mtasc/mtasc -version 8 -main -header 215:138:1 -v *.as -swf ../swf/flash.swf > /dev/null
+mtasc -version 8 -main -header 215:138:1 -v *.as -swf ../swf/flash.swf > /dev/null

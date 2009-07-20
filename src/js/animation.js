@@ -33,6 +33,10 @@
                 this._timer = setInterval(this._update, this._speed);
 	};
 
+        P.running = function() {
+                return this._timer;
+        };
+
 	P.stop = function(finished) {
 		if (this._timer) {
 			clearInterval(this._timer);

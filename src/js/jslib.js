@@ -79,6 +79,17 @@ Object.merge(Object, {
         makeShortcuts: function(obj, props) {
                 for (var i in props)
                         obj[i] = obj[props[i]];
+        },
+
+        foreach: function(hash, f, obj) {
+                for (var i in hash) try {
+                        f.call(obj, hash[i], i);
+                } catch(ex) {
+                        if (ex === $_BREAK) break;
+                        if (ex === $_CONTINUE) continue;
+                        if (ex instanceof $_RETURN) return ex.args;
+                        throw ex;
+                }
         }
 
 });
@@ -619,8 +630,16 @@ function $RETURN(args) { throw new $_RETURN(args); };
                 return start + (stop - start) * this;
         };
 
+        N.reduce = function(start, stop) {
+                return (this - start) / (stop - start);
+        };
+
         N.mapInt = function(start, stop) {
                 return Math.round(this.map(start, stop));
+        };
+
+        N.reduceInt = function(start, stop) {
+                return Math.round((this - start) / (stop - start));
         };
 
         N.bits1Array = function() {
@@ -755,9 +774,20 @@ function $RETURN(args) { throw new $_RETURN(args); };
                 return day == 0 || day == 6;
         };
 
-        Date.parseMySQL = function(str) {
-                var a = str.split(/\s+/), d = a[0].split(/-/), t = a[1].split(/:/);
-                return new Date(d[0], d[1] - 1, d[2], t[0] || null, t[1] || null, t[2] || null);
+        Date.parseMySQL = function(str, gmt) {
+                var a = str.split(/\s+/), d = a[0].split(/-/), t = a[1].split(/:/), date;
+                date = new Date(d[0], d[1] - 1, d[2], t[0] || null, t[1] || null, t[2] || null);
+                if (gmt) with (date) {
+                        setUTCMilliseconds(0);
+                        setUTCSeconds(t[2] || 0);
+                        setUTCMinutes(t[1] || 0);
+                        setUTCHours(t[0] || 0);
+                        setUTCDate(1);
+                        setUTCMonth(d[1] - 1);
+                        setUTCDate(d[2]);
+                        setUTCFullYear(d[0]);
+                }
+                return date;
         };
 
         Date.dateToInt = function(date) {
@@ -968,6 +998,15 @@ function $RETURN(args) { throw new $_RETURN(args); };
         } : function() {
                 CE_CACHE.HTML_ESCAPE_TEXT.data = this;
                 return CE_CACHE.HTML_ESCAPE_DIV.innerHTML;
+        };
+
+        S.htmlEscapeFull = function() {
+                return this.replace(/&/g, "&amp;")
+                        .replace(/\x22/g, "&quot;")
+                        .replace(/\x27/g, "&#x27;")
+                        .replace(/</g, "&lt;")
+                        .replace(/>/g, "&gt;")
+                        .replace(/\u00A0/g, "&#xa0;");
         };
 
         S.decodeJSON = function(safe) {
