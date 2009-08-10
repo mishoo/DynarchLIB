@@ -208,7 +208,7 @@ function $RETURN(args) { throw new $_RETURN(args); };
 
         // Object inheritance
 
-        INHERITANCE = {};
+        var INHERITANCE = {};
 
         F.inherits = function(base, name) {
                 var p = (this.prototype = new base);
@@ -572,6 +572,20 @@ function $RETURN(args) { throw new $_RETURN(args); };
                 return Math.min.apply(Math, this);
         };
 
+        A.minElement = function(f, obj, remove) {
+                if (this.length == 0)
+                        return null;
+                var i = 0, minEl = this[0], minValue = f.call(obj, minEl), minIndex = 0, tmp;
+                while (++i < this.length) if ((tmp = f.call(obj, this[i])) < minValue) {
+                        minValue = tmp;
+                        minIndex = i;
+                        minEl = this[i];
+                }
+                if (remove)
+                        this.splice(minIndex, 1);
+                return minEl;
+        };
+
         A.max = function(f, obj) {
                 if (this.length == 0)
                         return null;
@@ -587,6 +601,20 @@ function $RETURN(args) { throw new $_RETURN(args); };
                         return max;
                 }
                 return Math.max.apply(Math, this);
+        };
+
+        A.maxElement = function(f, obj, remove) {
+                if (this.length == 0)
+                        return null;
+                var i = 0, maxEl = this[0], maxValue = f.call(obj, maxEl), maxIndex = 0, tmp;
+                while (++i < this.length) if ((tmp = f.call(obj, this[i])) > maxValue) {
+                        maxValue = tmp;
+                        maxIndex = i;
+                        maxEl = this[i];
+                }
+                if (remove)
+                        this.splice(maxIndex, 1);
+                return maxEl;
         };
 
         A.rotateIndex = function(idx) {

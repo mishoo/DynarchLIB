@@ -262,9 +262,9 @@
                 function dragContextMenu(da, ev) {
                         DlException.stopEventBubbling();
                 };
-
-                var DRAGGING = false;
         }
+
+        var DRAGGING = false;
 
         function onMouseDown(ev) {
                 getTooltip().cancel();
@@ -341,12 +341,13 @@
 
         P._getContextMenuPopup = P._getDlPopup;
 
-        var LISTENERS = { onDestroy     : onDestroy,
-                          onMouseEnter  : onMouseEnter,
-                          onMouseLeave  : onMouseLeave,
-                          onMouseDown   : onMouseDown,
-                          onContextMenu : onContextMenu
-                        };
+        var LISTENERS = {
+                onDestroy     : onDestroy,
+                onMouseEnter  : onMouseEnter,
+                onMouseLeave  : onMouseLeave,
+                onMouseDown   : onMouseDown,
+                onContextMenu : onContextMenu
+        };
 
         P._setListeners = function() {
                 this.addEventListener(LISTENERS);

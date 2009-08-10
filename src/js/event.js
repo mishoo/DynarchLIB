@@ -92,7 +92,7 @@
                                      };
         };
 
-        P.getObject = function() {
+        P.getObject = function(type) {
                 var el = this.target;
                 var obj = this.object;
                 if (!obj) {
@@ -105,6 +105,8 @@
                         }
                         this.object = obj;
                 }
+                if (type)
+                        obj = obj.getParent(type);
                 return obj;
         };
 

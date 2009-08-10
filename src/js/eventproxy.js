@@ -57,8 +57,8 @@
 
         P.registerEvents = function(evs) {
                 var h = this.__eventHooks, i = 0, e;
-                while (e = evs[i++]) {
-                        var e = e.toLowerCase();
+                while ((e = evs[i++])) {
+                        e = e.toLowerCase();
                         if (!h[e])
                                 h[e] = [];
                 }
@@ -72,7 +72,7 @@
         P.addEventListener = function(ev, handler, phase, object) {
                 if (ev instanceof Array) {
                         var i = 0, e;
-                        while (e = ev[i++])
+                        while ((e = ev[i++]))
                                 this.addEventListener(e, handler, phase, object);
                 } else if (typeof ev == "object") {
                         for (var i in ev)
@@ -121,7 +121,7 @@
         P.removeEventListener = function(ev, handler) {
                 if (ev instanceof Array) {
                         var i = 0, e;
-                        while (e = ev[i++])
+                        while ((e = ev[i++]))
                                 this.removeEventListener(e, handler);
                 } else if (typeof ev == "object") {
                         for (var i in ev)
@@ -182,7 +182,7 @@
                 var ret = [], a, i = 0, f;
                 try {
                         a = this.__getEventHooks(ev, true);
-                        while (f = a[i++])
+                        while ((f = a[i++]))
                                 ret.push(f.apply(this, args));
                 } catch(ex) {
                         if (!(ex instanceof DlExStopEventProcessing))
