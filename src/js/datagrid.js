@@ -1069,6 +1069,10 @@
                 }, this);
         };
 
+        P.findRowFromEvent = function(ev) {
+                return ev_find_row(ev);
+        };
+
         function ev_find_row(ev) {
                 var p = ev.target, row, col, row_id, col_id, tn;
                 try {
