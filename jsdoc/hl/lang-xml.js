@@ -41,7 +41,7 @@
 					index	: nl + 3,
 					type	: "comment",
 					style	: "comment"
-				}
+				};
 			}
 		},
 

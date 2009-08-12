@@ -54,8 +54,8 @@
 		"window"
 	];
 
-	var BUILTINS = {};
-	for (var i = builtins.length; --i >= 0;)
+	var BUILTINS = {}, i;
+	for (i = builtins.length; --i >= 0;)
 		BUILTINS[builtins[i]] = true;
 
 	var keywords = [
@@ -121,7 +121,7 @@
 	];
 
 	var KEYWORDS = {};
-	for (var i = keywords.length; --i >= 0;)
+	for (i = keywords.length; --i >= 0;)
 		KEYWORDS[keywords[i]] = true;
 
 	var end_q_mark = {
