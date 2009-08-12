@@ -210,12 +210,12 @@ function $RETURN(args) { throw new $_RETURN(args); };
 
         var INHERITANCE = {};
 
-        F.inherits = function(base, name) {
+        F.inherits = function(base, thisName) {
                 var p = (this.prototype = new base);
                 p.constructor = this;
                 this.BASE = base.prototype;
-                this._objectType = p._objectType = name || Dynarch.getFunctionName(this);
-                INHERITANCE[this._objectType] = name || Dynarch.getFunctionName(base);
+                INHERITANCE[this.name = this._objectType = p._objectType = thisName || Dynarch.getFunctionName(this)]
+                        = Dynarch.getFunctionName(base);
                 if (p.__patchSubclassPrototype instanceof Function)
                         p.__patchSubclassPrototype();
                 return this.BASE;
@@ -1884,6 +1884,10 @@ if ((is_safari && !is_safari3) || is_ie5) {
 }
 
 function DEFINE_CLASS(name, base, definition, hidden) {
+        if (name)
+                D.name = name;
+        if (hidden)
+                D.hidden = true;
         if (base)
                 D.inherits(base, name);
         function D(args) {
