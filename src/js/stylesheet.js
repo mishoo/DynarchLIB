@@ -1,16 +1,12 @@
 // @require eventproxy.js
 
-(function(){
+DEFINE_CLASS("DlStyleSheet", DlEventProxy, function(D, P, DOM) {
 
         // var DEFAULT_EVENTS = [ "onChange", "onInsert", "onRemove" ];
 
-        DlStyleSheet.inherits(DlEventProxy);
-        function DlStyleSheet() {
-                DlEventProxy.call(this);
+        D.CONSTRUCT_NOARGS = function() {
                 this._init();
         };
-
-        eval(Dynarch.EXPORT("DlStyleSheet", true));
 
         function cleanup() {
                 DOM.trash(this._el);
@@ -35,7 +31,7 @@
                         if (sel.length == 1) {
                                 s.addRule(sel, style, index);
                         } else {
-                                var rule_id = ID();
+                                var rule_id = DOM.ID();
                                 var a = this._ier[rule_id] = [];
                                 for (var i = 0; i < sel.length; ++i) {
                                         s.addRule(sel[i], style, index + i);
@@ -106,9 +102,9 @@
         P._init = function() {
                 if (is_ie)
                         this._ier = {};
-                this._el = CE("style", null, { type: "text/css" }, document.getElementsByTagName("head")[0]);
+                this._el = DOM.createElement("style", null, { type: "text/css" }, document.getElementsByTagName("head")[0]);
                 this._s = document.styleSheets[document.styleSheets.length - 1];
                 this.addEventListener("onDestroy", cleanup);
         };
 
-})();
+});

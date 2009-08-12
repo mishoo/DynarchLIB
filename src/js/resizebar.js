@@ -1,18 +1,13 @@
 // @require widget.js
 // @require layout.js
 
-(function() {
+DEFINE_CLASS("DlResizeBar", DlWidget, function(D, P, DOM){
 
-	var BASE = DlResizeBar.inherits(DlWidget);
-	function DlResizeBar(args) {
-		if (args) {
-			D.setDefaults(this, args);
-			this._invert = this._invert ? -1 : 1;
-			DlWidget.call(this, args);
-		}
+        var CC = DOM.condClass;
+
+	D.FIXARGS = function(args) {
+		args.invert = args.invert ? -1 : 1;
 	};
-
-	eval(Dynarch.EXPORT("DlResizeBar", true));
 
 	D.DEFAULT_ARGS = {
 		_isHoriz : [ "horiz"	    , null ],
@@ -29,7 +24,7 @@
 	};
 
 	P.initDOM = function() {
-		BASE.initDOM.call(this);
+		D.BASE.initDOM.call(this);
 		this.condClass(this.isHoriz(), "DlResizeBar-Horizontal", "DlResizeBar-Vertical");
 		this.setUnselectable(null, true);
 	};
@@ -44,7 +39,7 @@
 	};
 
 	P._setListeners = function() {
-		BASE._setListeners.call(this);
+		D.BASE._setListeners.call(this);
 		this._resizeHandlers = {
 			onMouseMove  : mouseMove.$(this),
 			onMouseUp    : stopResize.$(this),
@@ -158,4 +153,4 @@
 			this._doResize(ev);
 	};
 
-})();
+});

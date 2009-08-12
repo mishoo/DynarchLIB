@@ -1,12 +1,9 @@
 // @require eventproxy.js
 
-(function() {
+DEFINE_CLASS("DlRadioGroup", DlEventProxy, function(D, P){
 
-	var BASE = DlRadioGroup.inherits(DlEventProxy);
-	function DlRadioGroup(id) {
+	D.CONSTRUCT = function(id) {
 		if (id != null) {
-			DlEventProxy.call(this);
-
 			this._maxChecked = 1;
 			this._minChecked = null;
 			this.id = id;
@@ -18,8 +15,6 @@
 	};
 
 	var GROUPS = {};
-
-	eval(Dynarch.EXPORT("DlRadioGroup"));
 
         var DEFAULT_EVENTS = [ "onChange" ];
 
@@ -189,4 +184,4 @@
 		this._history.r_foreach(function(w) { w.checked(false); });
 	};
 
-})();
+});

@@ -1,35 +1,23 @@
 // @require container.js
 
-(function() {
-
-	var BASE = DlBox.inherits(DlContainer);
-	function DlBox(args) {
-		if (args) {
-			DlBox.setDefaults(this, args);
-			args.tagName = "table";
-			DlContainer.call(this, args);
-		}
-	};
-
-	eval(Dynarch.EXPORT("DlBox", true));
+DEFINE_CLASS("DlBox", DlContainer, function(D, P, DOM) {
 
 	D.DEFAULT_ARGS = {
 		_borderSpacing  : [ "borderSpacing"  , 0 ],
-		_align          : [ "align"          , null ]
+		_align          : [ "align"          , null ],
+
+                // override in DlWidget
+                _tagName        : [ "tagName"        , "table" ]
 	};
 
 	P._createElement = function() {
-		// this.BASE_call("_createElement");
-		BASE._createElement.call(this);
-		//var div = this.getElement();
-		//var table = CE("table", null, { className : div.className }, div);
-		//div.className = "";
+		D.BASE._createElement.call(this);
 		var table = this.getElement();
 		table.cellSpacing = this._borderSpacing;
 		table.cellPadding = 0;
 		if (this._align)
 			table.align = this._align;
-		this.refNode("_tbody", CE("tbody", null, null, table));
+		this.refNode("_tbody", DOM.createElement("tbody", null, null, table));
 	};
 
 	//P.getTableElement = function() { return this.getElement().firstChild; };
@@ -77,4 +65,4 @@
 		return this.__addSep("spacer", cls, td);
 	};
 
-})();
+});

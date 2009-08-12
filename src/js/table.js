@@ -2,19 +2,14 @@
 
 // @deprecate?
 
-(function(){
+DEFINE_CLASS("DlTable", DlContainer, function(D, P, DOM){
 
-	var BASE = DlTable.inherits(DlContainer);
-	function DlTable(args) {
-		if (args) {
-			D.setDefaults(this, args);
-			args.tagName = "table";
-			this._colSpan = 0;
-			DlContainer.call(this, args);
-		}
+        var CE = DOM.createElement;
+
+	D.FIXARGS = function(args) {
+		args.tagName = "table";
+		this._colSpan = 0;
 	};
-
-	eval(Dynarch.EXPORT("DlTable", true));
 
 	D.DEFAULT_ARGS = {
 		__cellSpacing : [ "cellSpacing", null ],
@@ -23,7 +18,7 @@
 	};
 
 	P._createElement = function() {
-		BASE._createElement.call(this);
+		D.BASE._createElement.call(this);
 		var el = this.getElement();
 		if (this.__cellPadding != null)
 			el.cellPadding = this.__cellPadding;
@@ -77,19 +72,18 @@
 			 this.getContentElement())));
 	};
 
-})();
+});
 
-DlTableRow.inherits(DlContainer);
-function DlTableRow(args) {
-	if (args) {
-		args.tagName = "tr";
-		DlContainer.call(this, args);
-	}
-};
-DlTableCell.inherits(DlContainer);
-function DlTableCell(args) {
-	if (args) {
-		args.tagName = "td";
-		DlContainer.call(this, args);
-	}
-};
+DEFINE_CLASS("DlTableRow", DlContainer, function(D, P){
+        D.DEFAULT_ARGS = {
+                // override in DlWidget
+                _tagName: [ "tagName", "tr" ]
+        };
+});
+
+DEFINE_CLASS("DlTableCell", DlContainer, function(D, P){
+        D.DEFAULT_ARGS = {
+                // override in DlWidget
+                _tagName: [ "tagName", "td" ]
+        };
+});

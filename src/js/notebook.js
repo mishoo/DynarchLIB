@@ -1,29 +1,24 @@
 // @require container.js
 // @require button.js
 
-(function(){
+DEFINE_CLASS("DlNotebook", DlContainer, function(D, P) {
 
-	var BASE = DlNotebook.inherits(DlContainer);
-	function DlNotebook(args) {
-		if (args) {
-			DlContainer.call(this, args);
-			this._panes = [];
-			this._currentPane = null;
-		}
+	D.CONSTRUCT = function() {
+		this._panes = [];
+		this._currentPane = null;
 	};
 
-	eval(Dynarch.EXPORT("DlNotebook"));
-
+        // XXX: can we use D.DEFAULT_EVENTS?
         var DEFAULT_EVENTS = [ "onChange" ];
 
 	P._createElement = function() {
-		BASE._createElement.call(this);
+		D.BASE._createElement.call(this);
 		this.getElement().innerHTML = "<div class='TabContent-inner'></div>";
 	};
 
 	P.appendWidget = function(w, pos) {
                 w.registerEvents([ "onNotebookShow" ]);
-		BASE.appendWidget.call(this, w);
+		D.BASE.appendWidget.call(this, w);
 		var el = w.getElement();
 		var cont = this.getContentElement();
 
@@ -45,7 +40,7 @@
 
 	P.initDOM = function() {
 		this.registerEvents(DEFAULT_EVENTS);
-		BASE.initDOM.call(this);
+		D.BASE.initDOM.call(this);
 	};
 
 	P.getPane = function(index) { return this._panes[index]; };
@@ -110,7 +105,7 @@
 	};
 
 	P.setSize = P.setOuterSize = function(size) {
-		BASE.setOuterSize.call(this, size);
+		D.BASE.setOuterSize.call(this, size);
 		var el = this.getElement();
 		size = DynarchDomUtils.getInnerSize(el);
 		DynarchDomUtils.setOuterSize(this.getContentElement(), size.x, size.y);
@@ -137,4 +132,4 @@
 		// this.getPane(this._currentPane).display(true);
 	};
 
-})();
+});

@@ -2,28 +2,27 @@
 // @require button.js
 // @require keyboard.js
 
-(function(){
+DEFINE_CLASS("DlSpinner", DlEntry, function(D, P, DOM) {
 
-	DlSpinner.inherits(DlEntry);
-	function DlSpinner(args) {
-		if (args) {
-			args.validators = [ new DlValidator(DlValidator.Number,
-							    args.minVal,
-							    args.maxVal,
-							    args.integer,
-							    args.decimals) ];
-			D.setDefaults(this, args);
-			args.type = "text";
-			DlEntry.call(this, args);
-			this._timer = null;
-			this._timerStep = null;
-			this._timerState = null;
-			this._timerPos = null;
-		}
-	};
+        var CE = DOM.createElement;
 
-	eval(Dynarch.EXPORT("DlSpinner", true));
+        D.FIXARGS = function(args) {
+                args.validators = [ new DlValidator(DlValidator.Number,
+						    args.minVal,
+						    args.maxVal,
+						    args.integer,
+						    args.decimals) ];
+                args.type = "text";
+        };
 
+        D.CONSTRUCT = function() {
+		this._timer = null;
+		this._timerStep = null;
+		this._timerState = null;
+		this._timerPos = null;
+        };
+
+        // XXX: can we use D.DEFAULT_EVENTS?
         var DEFAULT_EVENTS = [ "onSpin" ];
 
 	D.DEFAULT_ARGS = {
@@ -194,4 +193,4 @@
 		// this.addEventListener("onMouseUp", mouseUp);
 	};
 
-})();
+});

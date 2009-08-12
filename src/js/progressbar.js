@@ -1,15 +1,8 @@
 // @require widget.js
 
-(function(){
-	var BASE = DlProgressBar.inherits(DlWidget);
-	function DlProgressBar(args) {
-		if (args) {
-			D.setDefaults(this, args);
-			DlWidget.call(this, args);
-		}
-	};
+DEFINE_CLASS("DlProgressBar", DlWidget, function(D, P){
 
-	eval(Dynarch.EXPORT("DlProgressBar"));
+        var CE = DynarchDomUtils.createElement;
 
 	D.DEFAULT_ARGS = {
 		__progress_minVal : [ "min", 0 ],
@@ -19,8 +12,7 @@
 	};
 
 	P._createElement = function() {
-		BASE._createElement.call(this);
-		var CE = DynarchDomUtils.createElement;
+		D.BASE._createElement.call(this);
 		var el = this.getElement();
 		CE("div", null, { className: "DlProgressBar-fill" }, el);
 		CE("div", null, { className: "DlProgressBar-label", innerHTML: "&nbsp;" }, el);
@@ -94,4 +86,4 @@
 		this.setValue(val);
 	};
 
-})();
+});

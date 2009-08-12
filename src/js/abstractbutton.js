@@ -1,7 +1,7 @@
 // @require container.js
 // @require radiogroup.js
 
-(function() {
+DEFINE_CLASS("DlAbstractButton", DlWidget, function(D, P) {
 
 	var DEFAULT_LISTENERS = [ "onMouseEnter",
 				  "onMouseLeave",
@@ -14,46 +14,12 @@
 				  "onDisabled"
 				];
 
-	var BASE = DlAbstractButton.inherits(DlWidget);
-	function DlAbstractButton(args) {
-		if (args) {
-			D.setDefaults(this, args);
-			DlWidget.call(this, args);
-			var gid = this.__groupId;
-			if (gid != null) {
-				var g;
-				if (typeof gid == "object") {
-					g = gid;
-					this.__groupId = g.id;
-				} else
-					g = DlRadioGroup.get(gid);
-				this.__group = g;
-				// this.refNode("__group");
-				g.addWidget(this, typeof args.appendArgs == "number" ? args.appendArgs : null);
-			}
-			if (!this._noCapture) {
-				this._btnpressCapture = {
-					onMouseMove  : DlException.stopEventBubbling,
-					onMouseUp    : this._cap_onMouseUp.$(this),
-					onMouseOver  : DlException.stopEventBubbling,
-					onMouseOut   : DlException.stopEventBubbling,
-					onMouseEnter : this._cap_onMouseEnter.$(this),
-					onMouseLeave : this._cap_onMouseLeave.$(this)
-				};
-			}
-		}
-	};
-
-	eval(Dynarch.EXPORT("DlAbstractButton", true));
-
-        var DEFAULT_EVENTS = [ "onCheck", "onUncheck", "onChange", "onUpdateLabel" ];
-
 	var TYPE = {
 		STANDARD : 1,
 		TWOSTATE : 2
 	};
 
-	D.DEFAULT_ARGS = {
+        D.DEFAULT_ARGS = {
 		_label	     : [ "label"       , "" ],
 		_classes     : [ "classes"     , {} ],
 		_checked     : [ "checked"     , false ],
@@ -63,6 +29,34 @@
 		_noCapture   : [ "noCapture"   , false ],
 		_alwaysCheck : [ "alwaysCheck" , false ]
 	};
+
+	D.CONSTRUCT = function(args) {
+		var gid = this.__groupId;
+		if (gid != null) {
+			var g;
+			if (typeof gid == "object") {
+				g = gid;
+				this.__groupId = g.id;
+			} else
+				g = DlRadioGroup.get(gid);
+			this.__group = g;
+			// this.refNode("__group");
+			g.addWidget(this, typeof args.appendArgs == "number" ? args.appendArgs : null);
+		}
+		if (!this._noCapture) {
+			this._btnpressCapture = {
+				onMouseMove  : DlException.stopEventBubbling,
+				onMouseUp    : this._cap_onMouseUp.$(this),
+				onMouseOver  : DlException.stopEventBubbling,
+				onMouseOut   : DlException.stopEventBubbling,
+				onMouseEnter : this._cap_onMouseEnter.$(this),
+				onMouseLeave : this._cap_onMouseLeave.$(this)
+			};
+		}
+	};
+
+        // XXX: can we use D.DEFAULT_EVENTS?
+        var DEFAULT_EVENTS = [ "onCheck", "onUncheck", "onChange", "onUpdateLabel" ];
 
 	P._cap_onMouseUp = function(ev) {
 		var obj = ev.getObject();
@@ -130,8 +124,7 @@
 	};
 
 	P._onUpdateLabel = function() {
-		var el = this.getElement();
-		CC(el, !this._label || !/\S/.test(this._label), this._classes.empty);
+		this.condClass(!this._label || !/\S/.test(this._label), this._classes.empty);
 	};
 
 	P._onClick = function() {
@@ -173,7 +166,7 @@
                                 DlException.stopEventBubbling();
                         }
 		}
-                BASE._handle_focusKeys.call(this, ev);
+                D.BASE._handle_focusKeys.call(this, ev);
 	};
 
         P._handle_accessKey = function(ev) {
@@ -183,10 +176,10 @@
 
 	P.disabled = function(v, force) {
 		if (v != null && v) {
-			DC(this.getElement(), this._classes.hover);
-			DC(this.getElement(), this._classes.active);
+			this.delClass(this._classes.hover);
+			this.delClass(this._classes.active);
 		}
-		return BASE.disabled.call(this, v, force);
+		return D.BASE.disabled.call(this, v, force);
 	};
 
 	P._onChange = function() {
@@ -197,7 +190,7 @@
 	P._onCheck = Dynarch.noop;
 
 	P._onDisabled = function(v) {
-		CC(this.getElement(), v, this._classes.disabled);
+		this.condClass(v, this._classes.disabled);
 		if (v && this._capture) {
 			DlEvent.releaseCapture(this._capture);
 			this._capture = null;
@@ -206,19 +199,19 @@
 
 	P.initDOM = function() {
 		this.registerEvents(DEFAULT_EVENTS);
-		BASE.initDOM.call(this);
+		D.BASE.initDOM.call(this);
 		this.setUnselectable();
 	};
 
 	P._createElement = function() {
-		BASE._createElement.call(this);
+		D.BASE._createElement.call(this);
 		this._createLabelElement();
 		this.label(this._label, true);
 		this._updateState();
 	};
 
 	P._setListeners = function() {
-		BASE._setListeners.call(this);
+		D.BASE._setListeners.call(this);
 		DEFAULT_LISTENERS.r_foreach(function(ev) {
 			this.addEventListener(ev, this["_"+ev]);
 		}, this);
@@ -258,7 +251,7 @@
 	P._updateState = function() {
 		if (this._checkTwoState(true)) {
 			var c = this._classes;
-			CC(this.getElement(), this._checked, c.checked, c.unchecked);
+			this.condClass(this._checked, c.checked, c.unchecked);
 		}
 	};
 
@@ -292,4 +285,4 @@
 	P.setValue = P.value;
         P.getValue = P.value;
 
-})();
+});

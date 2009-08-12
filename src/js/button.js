@@ -1,18 +1,11 @@
 // @require abstractbutton.js
 
-(function() {
+DEFINE_CLASS("DlButton", DlAbstractButton, function(D, P, DOM){
 
-	var BASE = DlButton.inherits(DlAbstractButton);
-	function DlButton(args) {
-		if (args) {
-			D.setDefaults(this, args);
-			DlAbstractButton.call(this, args);
-			this.setIconClass(this._iconClass);
-			this._iconClass = null;
-		}
+	D.CONSTRUCT = function() {
+		this.setIconClass(this._iconClass);
+		this._iconClass = null;
 	};
-
-	eval(Dynarch.EXPORT("DlButton", true));
 
 	D.TYPE = DlAbstractButton.TYPE;
 
@@ -29,7 +22,7 @@
 	};
 
 	P._createElement = function() {
-		BASE._createElement.call(this);
+		D.BASE._createElement.call(this);
 		this.addClass("DlWidget-3D");
 	};
 
@@ -54,7 +47,7 @@
 			size.y -= d1.y;
 		DOM.setOuterSize(this.getContentElement(), size.x, size.y);
 
-// 		BASE.setOuterSize.call(this, size);
+// 		D.BASE.setOuterSize.call(this, size);
 // 		var el = this.getElement();
 // 		size = DOM.getInnerSize(el);
 // 		//size.x -= 8;
@@ -63,4 +56,4 @@
 // 		el.style.width = el.style.height = "";
 	};
 
-})();
+});

@@ -1,7 +1,12 @@
 // @require widget.js
 // @require elementcache.js
 
-(function(){
+DEFINE_CLASS("DlCalendar", DlWidget, function(D, P, DOM) {
+
+        var CE = DOM.createElement,
+            AC = DOM.addClass,
+            DC = DOM.delClass,
+            CC = DOM.condClass;
 
 	/**
 	 * EVENT DOCS:
@@ -17,23 +22,18 @@
 	 *
 	 */
 
-	var BASE = DlCalendar.inherits(DlWidget);
-	function DlCalendar(args) {
-		if (args) {
-			args.tagName = "table";
-			D.setDefaults(this, args);
-			this._dayNamesOn = -1;
-			this._selectedDate = (this.date && this.selected)
-				? this.date.getDate() : 0;
-			DlWidget.call(this, args);
-			if (!this._noinit)
-				this.init();
-		}
-	};
+        D.FIXARGS = function(args) {
+                args.tagName = "table";
+                this._dayNamesOn = -1;
+                this._selectedDate = args.date && args.selected ? args.date.getDate() : 0;
+        };
 
-	eval(Dynarch.EXPORT("DlCalendar", true));
+        D.CONSTRUCT = function() {
+                if (!this._noinit)
+			this.init();
+        };
 
-        var DEFAULT_EVENTS = [ "onSelect", "onChange", "onRendered" ];
+        D.DEFAULT_EVENTS = [ "onSelect", "onChange", "onRendered" ];
 
 	D.DEFAULT_ARGS = {
 		firstDay        : [ "firstDay"       , Date.getFirstDayOfWeek() ],
@@ -53,7 +53,7 @@
 	};
 
 	P._createElement = function() {
-		BASE._createElement.call(this);
+		D.BASE._createElement.call(this);
 		var trs, i, tr, td,
 			table = this.getElement(),
                 	tbody = DlElementCache.get("CAL_BODY");
@@ -480,16 +480,11 @@
 	};
 
 	P._setListeners = function() {
-		BASE._setListeners.call(this);
+		D.BASE._setListeners.call(this);
 		this.addEventListener({ onMouseOver  : onMouseOver,
 					onMouseLeave : onMouseLeave,
 					onMouseUp    : onClick,
 					onMouseDown  : onClick });
-	};
-
-	P.initDOM = function() {
-		BASE.initDOM.call(this);
-		this.registerEvents(DEFAULT_EVENTS);
 	};
 
         P.setInfoDates = function(a) {
@@ -519,4 +514,4 @@
                 this._initialized = true;
 	};
 
-})();
+});

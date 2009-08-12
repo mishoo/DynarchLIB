@@ -1,20 +1,19 @@
 // @require widget.js
 
-(function(){
+DEFINE_CLASS("DlEntry", DlContainer, function(D, P, DOM) {
 
-        var BASE = DlEntry.inherits(DlContainer);
-        function DlEntry(args) {
-                if (args) {
-                        args.tagName = "table";
-                        D.setDefaults(this, args);
-                        this._isTextArea = args.type == "textarea";
-                        DlContainer.call(this, args);
-                }
+        var CE = DOM.createElement;
+
+        D.FIXARGS = function(args) {
+                args.tagName = "table";
+                this._isTextArea = args.type == "textarea";
         };
 
-        eval(Dynarch.EXPORT("DlEntry", true));
-
-        var DEFAULT_EVENTS = [ "onChange", "onKey-ENTER", "onKey-ESCAPE", "onValidationError", "onValidation" ];
+        var DEFAULT_EVENTS = [ "onChange",
+                               "onKey-ENTER",
+                               "onKey-ESCAPE",
+                               "onValidationError",
+                               "onValidation" ];
 
         D.DEFAULT_ARGS = {
                 _domType    : [ "type"       , "text" ],
@@ -90,7 +89,7 @@
         function element_focus() {
                 this.addClass("DlEntry-Focus");
                 this._focused = true;
-                BASE.focus.call(this);
+                D.BASE.focus.call(this);
                 if (this._isEmpty) {
                         this.getInputElement().value = "";
                         this.delClass("DlEntry-empty");
@@ -101,7 +100,7 @@
         function element_blur() {
                 this.delClass("DlEntry-Focus");
                 this._focused = false;
-                BASE.blur.call(this);
+                D.BASE.blur.call(this);
                 this.__setEmpty();
         };
 
@@ -136,7 +135,7 @@
         };
 
         P._createElement = function() {
-                BASE._createElement.apply(this, arguments);
+                D.BASE._createElement.apply(this, arguments);
                 var el = this.getElement();
                 el.appendChild(DlElementCache.get("TBODY_RC"));
                 el.cellSpacing = el.cellPadding = el.border = 0;
@@ -247,7 +246,7 @@
 
         P.initDOM = function() {
                 this.registerEvents(DEFAULT_EVENTS);
-                BASE.initDOM.call(this);
+                D.BASE.initDOM.call(this);
                 var input = this.getInputElement();
                 DOM.addEvent(input, { focus   : this._on_element_focus = element_focus.$(this),
                                       blur    : this._on_element_blur = element_blur.$(this),
@@ -284,7 +283,7 @@
         };
 
         P.disabled = function(v, force) {
-                var isDisabled = BASE.disabled.call(this, v, force);
+                var isDisabled = D.BASE.disabled.call(this, v, force);
                 if (v != null)
                         this.getInputElement().disabled = !!v;
                 return isDisabled;
@@ -332,4 +331,4 @@
                 });
         };
 
-})();
+});

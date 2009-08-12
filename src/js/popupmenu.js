@@ -102,17 +102,11 @@ function DlMenuBase() {
 // 	};
 };
 
-(function() {
+DEFINE_CLASS("DlPopupMenu", DlPopup, function(D, P) {
 
-	var BASE = DlPopupMenu.inherits(DlPopup);
-	function DlPopupMenu(args) {
-		if (args) {
-			DlPopup.call(this, args);
-			this._mouseDiff = { x: 2, y: 1 }; // for context menus
-		}
-	};
-
-	eval(Dynarch.EXPORT("DlPopupMenu"));
+        D.CONSTRUCT = function() {
+                this._mouseDiff = { x: 2, y: 1 }; // for context menus
+        };
 
 	function onMouseEnter() {
 		this.cancel();
@@ -170,11 +164,11 @@ function DlMenuBase() {
 			args.onHide = D.onHide;
  		else
  			args.onHide = D.onHide.$(this, args, args.onHide);
-		BASE.popup.call(this, args);
+		D.BASE.popup.call(this, args);
 	};
 
 	P._setListeners = function() {
-		BASE._setListeners.call(this);
+		D.BASE._setListeners.call(this);
 		// tricky, note that we add 2 listeners for onHide
 		this.addEventListener({ onMouseEnter  : onMouseEnter
 //					onMouseLeave  : onMouseLeave
@@ -210,22 +204,15 @@ function DlMenuBase() {
 		} catch(ex) {};
 	};
 
-})();
+});
 
 /* DlHMenu */
 
-(function(){
+DEFINE_CLASS("DlHMenu", DlHbox, function(D, P) {
 
-        DlHMenu.inherits(DlHbox);
-        function DlHMenu(args) {
-	        if (args) {
-		        DlHbox.call(this, args);
-		        DlMenuBase.call(this, args);
-	        }
-        };
+        D.CONSTRUCT = DlMenuBase;
 
-        eval(Dynarch.EXPORT("DlHMenu"));
-
+        // XXX: is it possible to use D.DEFAULT_EVENTS?
         var DEFAULT_EVENTS = [ "onSelect", "onPopup" ];
 
         P.initDOM = function() {
@@ -233,22 +220,15 @@ function DlMenuBase() {
 	        D.BASE.initDOM.call(this);
         };
 
-})();
+});
 
 /* DlVMenu */
 
-(function(){
+DEFINE_CLASS("DlVMenu", DlVbox, function(D, P) {
 
-        DlVMenu.inherits(DlVbox);
-        function DlVMenu(args) {
-	        if (args) {
-		        DlVbox.call(this, args);
-		        DlMenuBase.call(this, args);
-	        }
-        };
+        D.CONSTRUCT = DlMenuBase;
 
-        eval(Dynarch.EXPORT("DlVMenu"));
-
+        // XXX: is it possible to use D.DEFAULT_EVENTS?
         var DEFAULT_EVENTS = [ "onSelect", "onPopup" ];
 
         P.initDOM = function() {
@@ -256,22 +236,16 @@ function DlMenuBase() {
 	        D.BASE.initDOM.call(this);
         };
 
-})();
+});
 
-(function() {
+DEFINE_CLASS("DlMenuItem", DlContainer, function(D, P, DOM) {
 
-	var BASE = DlMenuItem.inherits(DlContainer);
-	function DlMenuItem(args) {
-		if (args) {
-			DlMenuItem.setDefaults(this, args);
-			DlContainer.call(this, args);
-			if (!this.parentMenu)
-				this.parentMenu = this.parent;
-		}
-	};
+        D.CONSTRUCT = function() {
+                if (!this.parentMenu)
+			this.parentMenu = this.parent;
+        };
 
-	eval(Dynarch.EXPORT("DlMenuItem", true));
-
+        // XXX: is it possible to use D.DEFAULT_EVENTS?
         var DEFAULT_EVENTS = [ "onSelect" ];
 
 	D.DEFAULT_ARGS = {
@@ -289,11 +263,11 @@ function DlMenuBase() {
 
 	P.initDOM = function() {
 		this.registerEvents(DEFAULT_EVENTS);
-		BASE.initDOM.call(this);
+		D.BASE.initDOM.call(this);
 	};
 
 	P._createElement = function() {
-		BASE._createElement.call(this);
+		D.BASE._createElement.call(this);
 		var el = this.getElement();
 		el.innerHTML = '<div class="div1"><div class="div2"></div></div>';
 		this.setIconClass(this._iconClass);
@@ -376,7 +350,7 @@ function DlMenuBase() {
 	};
 
 	P._setListeners = function() {
-		BASE._setListeners.call(this);
+		D.BASE._setListeners.call(this);
 		this.addEventListener({ onMouseEnter  : onMouseEnter,
 					onMouseLeave  : onMouseLeave,
 					onMouseDown   : onMouseDown,
@@ -401,7 +375,7 @@ function DlMenuBase() {
 		this._menu = menu;
 		this._onPopup = onPopup;
 		this._onHide = onHide;
-		CC(this.getElement().firstChild, menu, "DlMenuItem-withPopup");
+		DOM.condClass(this.getElement().firstChild, menu, "DlMenuItem-withPopup");
 	};
 
 	P.activateSubmenu = function(act) {
@@ -409,4 +383,4 @@ function DlMenuBase() {
 		//this.condClass(act, "DlMenuItem-hover");
 	};
 
-})();
+});

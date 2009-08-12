@@ -5,20 +5,9 @@
 
 // data model
 
-(function(){
+DEFINE_CLASS("DlRecord", DlEventProxy, function(D, P) {
 
-        var DEFAULT_EVENTS = [ "onChange" ];
-
-        DlRecord.inherits(DlEventProxy);
-        function DlRecord(args) {
-                if (args) {
-                        D.setDefaults(this, args);
-                        DlEventProxy.call(this);
-                        this.registerEvents(DEFAULT_EVENTS);
-                }
-        };
-
-        eval(Dynarch.EXPORT("DlRecord"));
+        D.DEFAULT_EVENTS = [ "onChange" ];
 
         D.DEFAULT_ARGS = {
                 _data : [ "data"      , null ],
@@ -48,26 +37,18 @@
                 return a < b ? -1 : a == b ? 0 : 1;
         };
 
-})();
+});
 
-(function(){
+DEFINE_CLASS("DlRecordCache", DlEventProxy, function(D, P) {
 
-        var DEFAULT_EVENTS = [ "onChange", "onInsert", "onDelete", "onRefresh" ];
-
-        DlRecordCache.inherits(DlEventProxy);
-        function DlRecordCache(args) {
-                if (args) {
-                        D.setDefaults(this, args);
-                        DlEventProxy.call(this);
-                        this.registerEvents(DEFAULT_EVENTS);
-                        this._init();
-                }
-        };
-
-        eval(Dynarch.EXPORT("DlRecordCache"));
+        D.DEFAULT_EVENTS = [ "onChange", "onInsert", "onDelete", "onRefresh" ];
 
         D.DEFAULT_ARGS = {
                 _data  : [ "data"  , null ]
+        };
+
+        D.CONSTRUCT = function() {
+                this._init();
         };
 
         P.get = function(id) {
@@ -147,22 +128,19 @@
                 }
         };
 
-})();
+});
 
-(function(){
-        var BASE = DlDataGridHeadLabel.inherits(DlButton);
-        function DlDataGridHeadLabel(args) {
-                if (args) {
-                        D.setDefaults(this, args);
-                        this.__withIconClass = "DlButton-withIcon";
-                        DlButton.call(this, args);
-                        if (!this.col.isSortable())
-                                this.__disabled = true;
-                        this.setContextMenu(this._getContextMenu);
-                }
+DEFINE_CLASS("DlDataGridHeadLabel", DlButton, function(D, P, DOM) {
+
+        D.BEFORE_BASE = function() {
+                this.__withIconClass = "DlButton-withIcon";
         };
 
-        eval(Dynarch.EXPORT("DlDataGridHeadLabel", true));
+        D.CONSTRUCT = function() {
+                if (!this.col.isSortable())
+                        this.__disabled = true;
+                this.setContextMenu(this._getContextMenu);
+        };
 
         var MIN_COL_WID = 20;
 
@@ -329,22 +307,11 @@
                 EX();
         };
 
-})();
+});
 
-(function(){
+DEFINE_CLASS("DlGridCol", DlEventProxy, function(D, P) {
 
-        var DEFAULT_EVENTS = [ "onChange", "onVisibility" ];
-
-        DlGridCol.inherits(DlEventProxy);
-        function DlGridCol(args) {
-                if (args) {
-                        D.setDefaults(this, args);
-                        DlEventProxy.call(this);
-                        this.registerEvents(DEFAULT_EVENTS);
-                }
-        };
-
-        eval(Dynarch.EXPORT("DlGridCol"));
+        D.DEFAULT_EVENTS = [ "onChange", "onVisibility" ];
 
         D.DEFAULT_ARGS = {
                 _field_id    : [ "id"         , null ],
@@ -414,23 +381,16 @@
 
         P.sort = function() {}; // override
 
-})();
+});
 
-(function(){
+DEFINE_CLASS("DlGridDragCol", DlDrag, function(D, P, DOM) {
 
-        DlGridDragCol.inherits(DlDrag);
-        function DlGridDragCol(args) {
-                if (args) {
-                        // D.setDefaults(this, args);
-                        DlDrag.call(this, args);
-                        this.addEventListener("onStartDrag", function(w) {
-                                this.grid_pos = w.parent.getPos();
-                                w._onMouseLeave();
-                        });
-                }
+        D.CONSTRUCT = function() {
+                this.addEventListener("onStartDrag", function(w) {
+                        this.grid_pos = w.parent.getPos();
+                        w._onMouseLeave();
+                });
         };
-
-        eval(Dynarch.EXPORT("DlGridDragCol", true));
 
         // D.DEFAULT_ARGS = {};
 
@@ -454,7 +414,7 @@
         function getDropIndicator() {
                 var d = DROP_INDICATOR;
                 if (!d)
-                        d = DROP_INDICATOR = CE("div", { display: "none" }, { className: "DlDataGrid-drop-col" }, document.body);
+                        d = DROP_INDICATOR = DOM.createElement("div", { display: "none" }, { className: "DlDataGrid-drop-col" }, document.body);
                 return d;
         };
 
@@ -492,24 +452,16 @@
                 D.BASE.reset.apply(this, arguments);
         };
 
-})();
+});
 
-(function(){
+DEFINE_CLASS("DlSelectionModel", DlEventProxy, function(D, P) {
 
-        var DEFAULT_EVENTS = [ "onChange", "onReset" ];
+        D.DEFAULT_EVENTS = [ "onChange", "onReset" ];
 
-        DlSelectionModel.inherits(DlEventProxy);
-        function DlSelectionModel(args) {
-                if (args) {
-                        D.setDefaults(this, args);
-                        DlEventProxy.call(this);
-                        this.registerEvents(DEFAULT_EVENTS);
-                        if (!this.sel)
-                                this.sel = {};
-                }
+        D.CONSTRUCT = function() {
+                if (!this.sel)
+                        this.sel = {};
         };
-
-        eval(Dynarch.EXPORT("DlSelectionModel"));
 
         D.DEFAULT_ARGS = {
                 multiple : [ "multiple", true ],
@@ -612,23 +564,19 @@
                 return this.sel[id] ? this.unselect(id, noHooks) : this.select(id, noHooks);
         };
 
-})();
+});
 
-(function(){
+DEFINE_CLASS("DlDataGrid", DlContainer, function(D, P, DOM) {
 
-        var DEFAULT_EVENTS = [ "onBodyDblClick", "onBodyScroll" ];
+        var AC = DOM.addClass,
+            DC = DOM.delClass,
+            CC = DOM.condClass;
 
-        var BASE = DlDataGrid.inherits(DlContainer);
-        function DlDataGrid(args) {
-                if (args) {
-                        D.setDefaults(this, args);
-                        DlContainer.call(this, args);
-                        this.registerEvents(DEFAULT_EVENTS);
-                        this.__scrollConts = 0;
-                }
+        D.DEFAULT_EVENTS = [ "onBodyDblClick", "onBodyScroll" ];
+
+        D.CONSTRUCT = function() {
+                this.__scrollConts = 0;
         };
-
-        eval(Dynarch.EXPORT("DlDataGrid", true));
 
         var EX = DlException.stopEventBubbling;
 
@@ -893,7 +841,7 @@
         };
 
         P._createElement = function() {
-                BASE._createElement.call(this);
+                D.BASE._createElement.call(this);
                 this.getElement().id = this.id; // assign ID for unique CSS rules
                 this._ss = new DlStyleSheet();
                 this._cssPrefix = "#" + this.id;
@@ -1302,7 +1250,7 @@
                         break;
                 }
 
-                BASE._handle_focusKeys.call(this, ev);
+                D.BASE._handle_focusKeys.call(this, ev);
         };
 
         P._makeHeadLabel = function(args) {
@@ -1622,17 +1570,9 @@
                 this._processing_scroll = false;
         };
 
-})();
+});
 
-(function(){
-
-        DlDragDataGrid.inherits(DlDrag);
-        function DlDragDataGrid(args) {
-                if (args) {
-                        DlDrag.call(this, args);
-                }
-        };
-        eval(Dynarch.EXPORT("DlDragDataGrid"));
+DEFINE_CLASS("DlDragDataGrid", DlDrag, function(D, P) {
 
         P.startOK = function(body, ev) {
                 var grid = body.parent, found = false, el = ev.target;
@@ -1655,4 +1595,4 @@
                 D.BASE.reset.apply(this, arguments);
         };
 
-})();
+});

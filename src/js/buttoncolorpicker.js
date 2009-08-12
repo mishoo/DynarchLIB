@@ -1,23 +1,16 @@
 // @require buttonmenu.js
 
-(function() {
+DEFINE_CLASS("DlButtonColorPicker", DlButtonMenu, function(D, P, DOM) {
 
-	var BASE = DlButtonColorPicker.inherits(DlButtonMenu);
-	function DlButtonColorPicker(args) {
-		if (args) {
-			D.setDefaults(this, args);
-			DlButtonMenu.call(this, args);
-			this._events_cp = {
-				onSelect     : onSelect.$(null, this),
-				onHueChange  : onHueChange.$(null, this),
-				onHover      : onHover.$(null, this),
-				onHoverOut   : onLeave.$(null, this)
-			};
-			this._updateValues();
-		}
+	D.CONSTRUCT = function() {
+		this._events_cp = {
+			onSelect     : onSelect.$(null, this),
+			onHueChange  : onHueChange.$(null, this),
+			onHover      : onHover.$(null, this),
+			onHoverOut   : onLeave.$(null, this)
+		};
+		this._updateValues();
 	};
-
-	eval(Dynarch.EXPORT("DlButtonColorPicker", true));
 
 	D.DEFAULT_ARGS = {
 		rgb   : [ "rgb", null ],
@@ -91,17 +84,19 @@
 	};
 
 	P._createElement = function() {
-		BASE._createElement.call(this);
-		var el = this.getButton().setContent([ "<table cellspacing='0' cellpadding='0'><tr><td>",
-						       "<div unselectable='on' class='ColorPart'>&nbsp;</div>",
-						       "</td><td></td></tr></table>" ].join(""));
+		D.BASE._createElement.call(this);
+		var el = this.getButton().setContent([
+                        "<table cellspacing='0' cellpadding='0'><tr><td>",
+			"<div unselectable='on' class='ColorPart'>&nbsp;</div>",
+			"</td><td></td></tr></table>"
+                ].join(""));
 		this.setLabel(this.label);
 	};
 
 	P.setLabel = function(label) {
 		var div = this.getLabelElement();
 		div.innerHTML = label || "";
-		CC(div, label, "Label", "EmptyLabel");
+		DOM.condClass(div, label, "Label", "EmptyLabel");
 	};
 
 	P.getColorElement = function() {
@@ -113,10 +108,11 @@
 	};
 
 	P._setListeners = function() {
-		BASE._setListeners.call(this);
-		this.addEventListener({ onPopup : _popupCP,
-					onHide  : _hideCP
-				      });
+		D.BASE._setListeners.call(this);
+		this.addEventListener({
+                        onPopup : _popupCP,
+			onHide  : _hideCP
+		});
 	};
 
-})();
+});

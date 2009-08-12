@@ -1,15 +1,6 @@
 // @require completionentry.js
 
-(function(){
-
-        DlComboBox.inherits(DlCompletionEntry);
-        function DlComboBox(args) {
-                if (args) {
-                        D.setDefaults(this, args);
-                        DlCompletionEntry.call(this, args);
-                }
-        };
-        eval(Dynarch.EXPORT("DlComboBox", true));
+DEFINE_CLASS("DlComboBox", DlCompletionEntry, function(D, P){
 
         D.DEFAULT_ARGS = {
                 _noSelect  : [ "noSelect"  , false  ],
@@ -81,4 +72,4 @@
                         this.cancelCompletion();
         };
 
-})();
+});

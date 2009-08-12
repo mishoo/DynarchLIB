@@ -1,14 +1,8 @@
 // @require box.js
 
-(function() {
+DEFINE_CLASS("DlHbox", DlBox, function(D, P, DOM) {
 
-	DlHbox.inherits(DlBox);
-	function DlHbox(args) {
-		if (args)
-			DlBox.call(this, args);
-	};
-
-	eval(Dynarch.EXPORT("DlHbox", true));
+        var CE = DOM.createElement;
 
 	P._createElement = function() {
 		D.BASE._createElement.call(this);
@@ -68,4 +62,4 @@
 		});
 	};
 
-})();
+});

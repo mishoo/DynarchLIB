@@ -16,21 +16,16 @@ DlException.prototype.toString = function() {
 	return str;
 };
 
-DlException.defineException = function(className, base) {
-	if (base == null)
-		base = "DlException";
-	// the power of eval: write less code.
-	return eval([ "window.", className, "=function ", className, "(message){",
-		      base, ".call(this, message);};",
-		      className, ".inherits(", base, ");" ].join(""));
+function DEFINE_EXCEPTION(className, base) {
+        return DEFINE_CLASS(className, base || DlException);
 };
 
-DlException.defineException("DlExInvalidOperation");
-DlException.defineException("DlExAbstractBaseClass");
-DlException.defineException("DlExStopEventProcessing");
-DlException.defineException("DlExStopFrameEvent");
-DlException.defineException("DlExStopEventBubbling");
-DlException.defineException("DlDataException");
-DlException.defineException("DlSecurityException");
+DEFINE_EXCEPTION("DlExInvalidOperation");
+DEFINE_EXCEPTION("DlExAbstractBaseClass");
+DEFINE_EXCEPTION("DlExStopEventProcessing");
+DEFINE_EXCEPTION("DlExStopFrameEvent");
+DEFINE_EXCEPTION("DlExStopEventBubbling");
+DEFINE_EXCEPTION("DlDataException");
+DEFINE_EXCEPTION("DlSecurityException");
 
-DlException.stopEventBubbling   = function() { throw new DlExStopEventBubbling; };
+DlException.stopEventBubbling = function() { throw new DlExStopEventBubbling; };

@@ -1,14 +1,8 @@
 // @require box.js
 
-(function() {
+DEFINE_CLASS("DlVbox", DlBox, function(D, P, DOM){
 
-	DlVbox.inherits(DlBox);
-	function DlVbox(args) {
-		if (args)
-			DlBox.call(this, args);
-	};
-
-	eval(Dynarch.EXPORT("DlVbox", true));
+        var CE = DOM.createElement;
 
 	P.createCellElement = function() {
 		return CE("td", null, { className : "cell" },
@@ -22,4 +16,4 @@
 		}
 	};
 
-})();
+});

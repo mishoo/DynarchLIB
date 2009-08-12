@@ -1,17 +1,10 @@
 // @require container.js
 
-(function() {
+DEFINE_CLASS("DlTree", DlContainer, function(D, P, DOM) {
 
-	var BASE = DlTree.inherits(DlContainer);
-	function DlTree(args) {
-		if (args) {
-			// args.className = "DlTree-withLines";
-			DlContainer.call(this, args);
-			this.__treeItems = [];
-		}
-	};
-
-	eval(Dynarch.EXPORT("DlTree", true));
+        D.CONSTRUCT = function() {
+                this.__treeItems = [];
+        };
 
 	P.getItem = function(idx) {
 		return this.__treeItems[idx];
@@ -27,11 +20,11 @@
 		    pos > w.getIndex()) {
 			--pos;
 		}
-		BASE.appendWidget.call(this, w, pos);
+		D.BASE.appendWidget.call(this, w, pos);
 	};
 
 	P.removeWidget = function(w) {
-		BASE.removeWidget.call(this, w);
+		D.BASE.removeWidget.call(this, w);
 		if (w instanceof DlTreeItem) {
 			var i = this.__treeItems.find(w);
 			this.__treeItems.splice(i, 1);
@@ -75,27 +68,25 @@
 	};
 
 	P.addSeparator = function(cls) {
-		CE("div", null,
-		   { className: cls || "DlTree-separator",
-		     innerHTML: "&nbsp;" },
-		   this.getElement());
+		DOM.createElement("div", null,
+		                  { className: cls || "DlTree-separator",
+		                    innerHTML: "&nbsp;" },
+		                  this.getElement());
 	};
 
-})();
+});
 
-(function() {
+DEFINE_CLASS("DlTreeItem", DlContainer, function(D, P, DOM) {
 
-	var BASE = DlTreeItem.inherits(DlContainer);
-	function DlTreeItem(args) {
-		if (args) {
-			DlTreeItem.setDefaults(this, args);
-			DlContainer.call(this, args);
-			this.setIconClass(this.__iconClass);
-			this.__iconClass = null;
-		}
-	};
+        var CE = DOM.createElement,
+            AC = DOM.addClass,
+            DC = DOM.delClass,
+            CC = DOM.condClass;
 
-	eval(Dynarch.EXPORT("DlTreeItem", true));
+        D.CONSTRUCT = function() {
+		this.setIconClass(this.__iconClass);
+		this.__iconClass = null;
+        };
 
 	D.DEFAULT_ARGS = {
 		__label     : [ "label"		 , null ],
@@ -103,7 +94,7 @@
 		__itemClass : [ "itemClassName"	 , null ]
 	};
 
-	var DEFAULT_EVENTS = [ "onExpand", "onCollapse", "onLabelMouseDown" ];
+	D.DEFAULT_EVENTS = [ "onExpand", "onCollapse", "onLabelMouseDown" ];
 
         var HTML = ( "<div class='DlTreeItem-div'>" +
                      "<table cellspacing='0' cellpadding='0' class='DlTreeItem-Table'>" +
@@ -152,20 +143,15 @@
 		}
 	};
 
-	P.initDOM = function() {
-		this.registerEvents(DEFAULT_EVENTS);
-		BASE.initDOM.call(this);
-	};
-
 	P._setListeners = function() {
-		BASE._setListeners.call(this);
+		D.BASE._setListeners.call(this);
 		this.addEventListener({ onMouseDown : onClick,
 					onDestroy   : onDestroy
                                       });
 	};
 
 	P._createElement = function() {
-		BASE._createElement.call(this);
+		D.BASE._createElement.call(this);
 		this.getElement().innerHTML = HTML;
 		if (this.__label)
 			this.setContent(this.__label);
@@ -399,7 +385,7 @@
 	};
 
 	P._removeWidgetElement = function(w) {
-		BASE._removeWidgetElement.call(this, w);
+		D.BASE._removeWidgetElement.call(this, w);
 		if (!this.getSubtreeDiv().firstChild) {
 			this._tree = null;
 			this._subtree = null;
@@ -411,4 +397,4 @@
                 CC(this.getDivElement(), focused, "DlTreeItem-div-focus");
         };
 
-})();
+});

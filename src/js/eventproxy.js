@@ -1,18 +1,18 @@
 // @require jslib.js
 // @require exception.js
 
-(function() {
+DEFINE_CLASS("DlEventProxy", null, function(D, P) {
 
-        function DlEventProxy() {
+        D.FIXARGS = function() {
                 this.__eventHooks = {};
                 this.__disHooks = {};
-                this.registerEvents(DEFAULT_EVENTS);
+        };
+
+        D.CONSTRUCT_NOARGS = function() {
                 this.addEventListener("onDestroy", this.__onDestroy);
         };
 
-        eval(Dynarch.EXPORT("DlEventProxy"));
-
-        var DEFAULT_EVENTS = [ "onDestroy" ];
+        D.DEFAULT_EVENTS = [ "onDestroy" ];
 
         // FIXME: not sure this is of any use to prevent leaks
         P.__onDestroy = function() {
@@ -235,4 +235,4 @@
                 }
         };
 
-})();
+});

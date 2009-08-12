@@ -1,21 +1,8 @@
 // @require widget.js
 
-(function(){
+DEFINE_CLASS("DlUploadEntry", DlWidget, function(D, P, DOM) {
 
-        var BASE = DlUploadEntry.inherits(DlWidget);
-        function DlUploadEntry(args) {
-                if (args) {
-                        D.setDefaults(this, args);
-                        if (!(this._files instanceof Array))
-                                this._files = [ this._files ];
-                        DlWidget.call(this, args);
-                        this.registerEvents(DEFAULT_EVENTS);
-                }
-        };
-
-        eval(Dynarch.EXPORT("DlUploadEntry", true));
-
-        var DEFAULT_EVENTS = [ "onUploadStart", "onUploadEnd", "onChange" ];
+        D.DEFAULT_EVENTS = [ "onUploadStart", "onUploadEnd", "onChange" ];
 
         D.DEFAULT_ARGS = {
                 _url    : [ "url", null ],
@@ -23,9 +10,14 @@
                 _params : [ "params", null ]
         };
 
+        D.BEFORE_BASE = function() {
+                if (!(this._files instanceof Array))
+                        this._files = [ this._files ];
+        };
+
         P._createElement = function() {
-                BASE._createElement.call(this);
-                var iframe = CE("iframe", null, {
+                D.BASE._createElement.call(this);
+                var iframe = DOM.createElement("iframe", null, {
                         frameBorder       : 0,
                         marginHeight      : 0,
                         marginWidth       : 0,
@@ -129,4 +121,4 @@
                 this.firstChild.style.right = 30 - ev.clientX + "px";
         };
 
-})();
+});

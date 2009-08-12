@@ -1,23 +1,16 @@
 // @require buttonmenu.js
 // @require radiobutton.js
 
-(function(){
+DEFINE_CLASS("DlRadioSelect", DlButtonMenu, function(D, P){
 
-	var BASE = DlRadioSelect.inherits(DlButtonMenu);
-	function DlRadioSelect(args) {
-		if (args) {
-			D.setDefaults(this, args);
-			DlButtonMenu.call(this, args);
-			if (this._options.length)
-				this.setOptions(this._options);
-			this.value(this._value, true);
-                        this.addEventListener("onDestroy", function(){
-                                this._radioGroup.reset();
-                        });
-		}
+	D.CONSTRUCT = function() {
+		if (this._options.length)
+			this.setOptions(this._options);
+		this.value(this._value, true);
+                this.addEventListener("onDestroy", function(){
+                        this._radioGroup.reset();
+                });
 	};
-
-	eval(Dynarch.EXPORT("DlRadioSelect"));
 
         var DEFAULT_EVENTS = [ "onChange" ];
 
@@ -67,7 +60,7 @@
 
 	P._setListeners = function() {
 		this.registerEvents(DEFAULT_EVENTS);
-		BASE._setListeners.call(this);
+		D.BASE._setListeners.call(this);
 		this._radioGroup = new DlRadioGroup(this.id);
 	};
 
@@ -126,7 +119,7 @@
 	};
 
 	P.initDOM = function() {
-		BASE.initDOM.call(this);
+		D.BASE.initDOM.call(this);
 	};
 
-})();
+});

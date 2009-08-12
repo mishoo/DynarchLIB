@@ -2,7 +2,13 @@
 // @require htmlutils.js
 // @require keyboard.js
 
-(function(){
+DEFINE_CLASS("DlRteFrame", DlWidget, function(D, P, DOM) {
+
+        var CE = DOM.createElement,
+            AC = DOM.addClass,
+            DC = DOM.delClass,
+            CC = DOM.condClass,
+            ID = DOM.ID;
 
 	var FORWARD_EVENTS = [ "mouseover", "mouseout", "mousemove", "mousedown", "mouseup", "click",
 			       "keydown", "keyup", "keypress", "contextmenu" ];
@@ -15,19 +21,15 @@
 			  '<head><title>DynarchLIB Rich Text Editor</title></head>' +
 			  '<body class="DlRteFrame-Body"><p>' + BR + '</p></body></html>' );
 
-	var BASE = DlRteFrame.inherits(DlWidget);
-	function DlRteFrame(args) {
-		if (args) {
-			D.setDefaults(this, args);
-			this.__eventProxy = eventProxy.$(this);
-			this.callUpdateHooks = this.callUpdateHooks.clearingTimeout(40, this);
-			DlWidget.call(this, args);
-			if (this.__sections)
-				this.setSections(this.__sections);
-		}
-	};
+        D.BEFORE_BASE = function() {
+                this.__eventProxy = eventProxy.$(this);
+		this.callUpdateHooks = this.callUpdateHooks.clearingTimeout(40, this);
+        };
 
-	eval(Dynarch.EXPORT("DlRteFrame", true));
+        D.CONSTRUCT = function() {
+                if (this.__sections)
+			this.setSections(this.__sections);
+        };
 
         var DEFAULT_EVENTS = [ "onUpdate", "onSectionChange" ];
 
@@ -319,7 +321,7 @@
 
 	P._setListeners = function() {
 		this.registerEvents(DEFAULT_EVENTS);
-		BASE._setListeners.call(this);
+		D.BASE._setListeners.call(this);
 		this.addEventListener(is_ie ? "onKeyDown" : "onKeyPress", function(ev) {
                         this._onKeypress(ev)
                 });
@@ -328,7 +330,7 @@
 	};
 
 	P._createElement = function() {
-		BASE._createElement.call(this);
+		D.BASE._createElement.call(this);
 		var iframe = CE("iframe",
                                 { display: 'block' },
 			        { frameBorder: 0, marginHeight: 0, marginWidth: 0,
@@ -427,7 +429,7 @@
 
 	P.focus = function() {
 		this.getIframeWin().focus();
-                BASE.focus.call(this);
+                D.BASE.focus.call(this);
 	};
 
         // causes problems in both IE and Opera
@@ -1170,12 +1172,12 @@
 
 	function onFocus() {
 		AC(this.getIframeDoc().documentElement, "DlRteFrame-Focused");
-		BASE.focus.call(this);
+		D.BASE.focus.call(this);
 	};
 
 	function onBlur() {
 		DC(this.getIframeDoc().documentElement, "DlRteFrame-Focused");
-		BASE.blur.call(this, true);
+		D.BASE.blur.call(this, true);
 	};
 
-})();
+});

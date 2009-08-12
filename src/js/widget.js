@@ -1,30 +1,31 @@
 // @require eventproxy.js
 // @require event.js
 
-(function() {
+DEFINE_CLASS("DlWidget", DlEventProxy, function(D, P, DOM) {
 
-        var BASE = DlWidget.inherits(DlEventProxy);
-        function DlWidget(args) {
-                if (args) {
-                        DlEventProxy.call(this);
-                        if (args.focusable == null && args.tabIndex)
-                                args.focusable = true;
-                        D.setDefaults(this, args);
+        var CE = DOM.createElement,
+            AC = DOM.addClass,
+            DC = DOM.delClass,
+            CC = DOM.condClass,
+            ID = Dynarch.ID;
 
-                        this.__propsUserData = {};
-                        this.__refNodes = [];
-
-                        if (!(this._parent == null || this._parent instanceof DlContainer))
-                                throw new DlException("Parent must be an instance of DlContainer");
-
-                        this.id = ID(this._objectType || "DlWidget");
-                        WIDGETS[this.id] = this;
-
-                        this.initDOM();
-                }
+        D.FIXARGS = function(args) {
+                if (args.focusable == null && args.tabIndex)
+                        args.focusable = true;
         };
 
-        eval(Dynarch.EXPORT("DlWidget", true));
+        D.CONSTRUCT = function() {
+                this.__propsUserData = {};
+                this.__refNodes = [];
+
+                if (!(this._parent == null || this._parent instanceof DlContainer))
+                        throw new DlException("Parent must be an instance of DlContainer");
+
+                this.id = ID(this._objectType || "DlWidget");
+                WIDGETS[this.id] = this;
+
+                this.initDOM();
+        };
 
         D.DEFAULT_ARGS = {
                 userData         : [ "data"             , null ],
@@ -153,7 +154,7 @@
 
         P.destroy = function() {
                 if (this.unref() <= 0)
-                        BASE.destroy.call(this);
+                        D.BASE.destroy.call(this);
         };
 
         P.__onTooltipShow = function() {
@@ -733,4 +734,4 @@
                 WIDGETS = null;
         });
 
-})();
+});

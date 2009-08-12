@@ -1,6 +1,6 @@
 // @require entry.js
 
-(function() {
+DEFINE_CLASS("DlCompletionEntry", DlEntry, function(D, P, DOM) {
 
 	// It doesn't make too much sense to export this class.
 	DlCompletionPopup.inherits(DlPopup);
@@ -12,16 +12,7 @@
 		}
 	};
 
-	var BASE = DlCompletionEntry.inherits(DlEntry);
-	function DlCompletionEntry(args) {
-		if (args) {
-			DlCompletionEntry.setDefaults(this, args);
-			DlEntry.call(this, args);
-		}
-	};
-
-	eval(Dynarch.EXPORT("DlCompletionEntry", true));
-
+        // XXX: can we use D.DEFAULT_EVENTS?
         var DEFAULT_EVENTS = [ "onCompletion", "onSelect" ];
 
 	D.DEFAULT_ARGS = {
@@ -45,12 +36,13 @@
 	P._setListeners = function() {
 		this.__on_itemHover = on_itemHover.$(null, this);
 		this.__on_itemSelect = on_itemSelect.$(null, this);
-		BASE._setListeners.call(this);
+		D.BASE._setListeners.call(this);
 		this.registerEvents(DEFAULT_EVENTS);
-		this.addEventListener({ onKeyDown  : onKeyDown,
-					onBlur     : onBlur,
-					onDestroy  : this.__clearTimer // XXX: not working fine.
-				      });
+		this.addEventListener({
+                        onKeyDown  : onKeyDown,
+			onBlur     : onBlur,
+			onDestroy  : this.__clearTimer // XXX: not working fine.
+		});
 	};
 
 	P._hideMenu = function() {
@@ -251,7 +243,7 @@
 				return handleMenuKey.call(this, ev);
                         }
 		}
-                return BASE._handle_focusKeys.call(this, ev);
+                return D.BASE._handle_focusKeys.call(this, ev);
 	};
 
 	function onBlur() {
@@ -287,4 +279,4 @@
 		};
 	};
 
-})();
+});

@@ -1,17 +1,10 @@
 // @require widget.js
 
-(function() {
+DEFINE_CLASS("DlContainer", DlWidget, function(D, P) {
 
-	var BASE = DlContainer.inherits(DlWidget);
-	function DlContainer(args) {
-		if (args) {
-			DlContainer.setDefaults(this, args);
-			this._widgets = [];
-			DlWidget.call(this, args);
-		}
-	};
-
-	eval(Dynarch.EXPORT("DlContainer"));
+        D.BEFORE_BASE = function() {
+                this._widgets = [];
+        };
 
 	D.DEFAULT_ARGS = {
 		_scrollBars           : [ "scroll"     , false ],
@@ -19,7 +12,7 @@
 	};
 
 	P._createElement = function() {
-		BASE._createElement.apply(this, arguments);
+		D.BASE._createElement.apply(this, arguments);
 		if (this._scrollBars)
 			this.setStyle("overflow", "auto");
 	};
@@ -29,7 +22,7 @@
 
 // 	P.setContent = function() {
 // 		this.destroyChildWidgets();
-// 		BASE.setContent.apply(this, Array.$(arguments));
+// 		D.BASE.setContent.apply(this, Array.$(arguments));
 // 	};
 
 	P.appendWidget = function(w) {
@@ -96,13 +89,13 @@
 	};
 
 	P._setListeners = function() {
-		BASE._setListeners.call(this);
+		D.BASE._setListeners.call(this);
 		this.addEventListener("onDestroy", this.destroyChildWidgets);
 		this.addEventListener("onResize", this.__doLayout);
 	};
 
 	P.disabled = function(v, force) {
-		var isDisabled = BASE.disabled.call(this, v, force);
+		var isDisabled = D.BASE.disabled.call(this, v, force);
 		if (v != null)
 			this._widgets.r_foreach(function(w) {
 				w.disabled(v, force);
@@ -188,4 +181,4 @@
 		return HIDDEN;
 	};
 
-})();
+});

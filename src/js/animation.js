@@ -1,9 +1,10 @@
-(function() {
+// @require eventproxy.js
 
-	DlAnimation.inherits(DlEventProxy);
-	function DlAnimation(length, fps) {
-		DlEventProxy.call(this);
-		this.registerEvents(DEFAULT_EVENTS);
+DEFINE_CLASS("DlAnimation", DlEventProxy, function(D, P){
+
+        D.DEFAULT_EVENTS = [ "onStart", "onStop", "onPause", "onUpdate" ];
+
+	D.CONSTRUCT_NOARGS = function(length, fps) {
                 this.addEventListener("onDestroy", this.stop.$(this));
                 if (length != null)
                         this.length = length;
@@ -11,10 +12,6 @@
                         this._speed = 1000 / fps;
                 this._update = update.$(this);
 	};
-
-	eval(Dynarch.EXPORT("DlAnimation"));
-
-        var DEFAULT_EVENTS = [ "onStart", "onStop", "onPause", "onUpdate" ];
 
 	P.start = function(length, fps, func) {
                 this.stop();
@@ -63,8 +60,7 @@
                 }
 	};
 
-	var
-            PI     = Math.PI,
+	var PI     = Math.PI,
             abs    = Math.abs,
             asin   = Math.asin,
             pow    = Math.pow,
@@ -121,4 +117,4 @@
 
 	};
 
-})();
+});

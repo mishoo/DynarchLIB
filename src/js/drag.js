@@ -1,19 +1,8 @@
 // @require jslib.js
 
-(function() {
+DEFINE_CLASS("DlDrag", DlEventProxy, function(D, P, DOM){
 
-	DlDrag.inherits(DlEventProxy);
-	function DlDrag(args) {
-		if (args) {
-			DlEventProxy.call(this);
-			this.registerEvents(DEFAULT_EVENTS);
-			D.setDefaults(this, args);
-		}
-	};
-
-	eval(Dynarch.EXPORT("DlDrag"));
-
-        var DEFAULT_EVENTS = [ "onDrop", "onStartDrag" ];
+        D.DEFAULT_EVENTS = [ "onDrop", "onStartDrag" ];
 
 	D.DEFAULT_ARGS = {
 		delta	       : [ "delta"	   , 3 ],
@@ -49,17 +38,17 @@
 			if (wasCancel && this._animArgs) {
 				var anim = new DlAnimation(this._animArgs.length, this._animArgs.fps);
 				var pos = this.startElPos || this.startPos;
-				var cpos = DynarchDomUtils.getPos(el);
+				var cpos = DOM.getPos(el);
 				anim.addEventListener(
 					{
 						onUpdate : function() {
                                                         var y = this.getPos();
 							el.style.left = y.mapInt(cpos.x, pos.x) + "px";
 							el.style.top = y.mapInt(cpos.y, pos.y) + "px";
-							DynarchDomUtils.setOpacity(el, this.t.map(1, 0.2));
+							DOM.setOpacity(el, this.t.map(1, 0.2));
 						},
 						onStop : function() {
-                                                        DynarchDomUtils.trash(el);
+                                                        DOM.trash(el);
 							el = null;
 						}
 					}
@@ -80,7 +69,7 @@
 		var el = this.elementCopy;
 		if (!el) {
 			el = this.elementCopy = widget.getElement().cloneNode(true);
-			DynarchDomUtils.addClass(el, "DlWidget-dragged-clone");
+			DOM.addClass(el, "DlWidget-dragged-clone");
 			el.style.top = ev.pos.y + "px";
 			el.style.left = ev.pos.x + "px";
 			document.body.appendChild(el);
@@ -90,30 +79,19 @@
 		return el;
 	};
 
-})();
+});
 
-
-(function() {
-
-	var BASE = DlDragTreeItem.inherits(DlDrag);
-	function DlDragTreeItem(args) {
-		if (args) {
-			DlDrag.call(this, args);
-			DlDragTreeItem.setDefaults(this, args);
-		}
-	};
-
-	eval(Dynarch.EXPORT("DlDragTreeItem"));
+DEFINE_CLASS("DlDragTreeItem", DlDrag, function(D, P){
 
 	D.DEFAULT_ARGS = {
 		_noReparent : [ "noReparent", false ]
 	};
 
-	var CLASS = "DlTreeItem-dropTarget";
-	var CLASS_UPPER = "DlTreeItem-dropTarget-upper";
-	var CLASS_LOWER = "DlTreeItem-dropTarget-lower";
-	var CLASS_ALL_RE = /DlTreeItem-dropTarget[^\s]*/g;
-	var CLASS_POS_RE = /DlTreeItem-dropTarget-[^\s]*/g;
+	var CLASS        = "DlTreeItem-dropTarget",
+            CLASS_UPPER  = "DlTreeItem-dropTarget-upper",
+            CLASS_LOWER  = "DlTreeItem-dropTarget-lower",
+            CLASS_ALL_RE = /DlTreeItem-dropTarget[^\s]*/g,
+            CLASS_POS_RE = /DlTreeItem-dropTarget-[^\s]*/g;
 
 	function onExpander(ev) {
 		return /DlTree-IconWidth/.test(ev.target.className);
@@ -177,8 +155,8 @@
 			this.target.delClass(CLASS_ALL_RE);
 		if (this.oldTarget)
 			this.oldTarget.delClass(CLASS_ALL_RE);
-		BASE.reset.apply(this, arguments);
+		D.BASE.reset.apply(this, arguments);
 		this.oldTarget = null;
 	};
 
-})();
+});

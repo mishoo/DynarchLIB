@@ -1,6 +1,6 @@
-// @require eventproxy.js
+DEFINE_CLASS("DlEvent", null, function(D, P, DOM){
 
-(function() {
+        var CE = DOM.createElement;
 
         var EVENT_MAP = {
                 "mouseover"       : "onMouseEnter",
@@ -20,7 +20,7 @@
                 "DOMMouseScroll"  : "onMouseWheel"
         };
 
-        function DlEvent(ev) {
+        D.CONSTRUCT = function(ev) {
                 this.type = ev.type;
                 this.dl_type = EVENT_MAP[this.type] || this.type;
                 this.ctrlKey = ev.ctrlKey;
@@ -74,8 +74,6 @@
                                 // this._failed = true;
                 }
         };
-
-        eval(Dynarch.EXPORT("DlEvent", true));
 
         P.computePos = function(widget) {
                 var el = widget
@@ -219,9 +217,9 @@
         D.fakeBlur = function() {
                 if (is_safari && focusedWidget.blur)
                         return focusedWidget.blur();
-                var a = DynarchDomUtils.CE_CACHE.FAKE_FOCUS;
+                var a = DOM.CE_CACHE.FAKE_FOCUS;
                 if (!a) {
-                        a = DynarchDomUtils.CE_CACHE.FAKE_FOCUS =
+                        a = DOM.CE_CACHE.FAKE_FOCUS =
                                 CE("a", null, {
                                            // href      : "#",
                                            // innerHTML : "test",
@@ -390,4 +388,4 @@
 
         DOM.addEvent(window, "unload", _unloadHandler);
 
-})();
+});

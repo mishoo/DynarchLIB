@@ -1,16 +1,11 @@
 // @require container.js
 
-(function(){
+DEFINE_CLASS("DlColorPickerHSV", DlWidget, function(D, P, DOM){
 
-	var BASE = DlColorPickerHSV.inherits(DlWidget);
-	function DlColorPickerHSV(args) {
-		if (args)
-			DlWidget.call(this, args);
-	};
+        var DC = DOM.delClass,
+            CC = DOM.condClass;
 
-	eval(Dynarch.EXPORT("DlColorPickerHSV", true));
-
-        var DEFAULT_EVENTS = [ "onSelect", "onHover", "onHoverOut", "onHueChange" ];
+        D.DEFAULT_EVENTS = [ "onSelect", "onHover", "onHoverOut", "onHueChange" ];
 
         var HTML = String.buffer(
                 "<table cellspacing='1' cellpadding='0' border='0'>",
@@ -31,7 +26,7 @@
 	};
 
 	P._createElement = function() {
-		BASE._createElement.call(this, HTML);
+		D.BASE._createElement.call(this, HTML);
 		this.setUnselectable();
 	};
 
@@ -121,8 +116,7 @@
 	};
 
 	P.initDOM = function() {
-		this.registerEvents(DEFAULT_EVENTS);
-		BASE.initDOM.call(this);
+		D.BASE.initDOM.call(this);
 		this.addEventListener({ onMouseUp     : onMouseUp,
 					onMouseDown   : onMouseDown,
 					onMouseOver   : onMouseOver,
@@ -173,4 +167,4 @@
 		return hue;
 	};
 
-})();
+});

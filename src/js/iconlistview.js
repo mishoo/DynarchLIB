@@ -1,30 +1,10 @@
 // @require abstractbutton.js
 
-DlIconListView.inherits(DlContainer);
-function DlIconListView(args) {
-	if (args)
-		DlContainer.call(this, args);
-};
+// @deprecate?
 
-(function() {
+DEFINE_CLASS("DlIconListView", DlContainer);
 
-	var CLS = { active    : "DlIconListItem-active",
-		    hover     : "DlIconListItem-hover",
-		    checked   : "DlIconListItem-1",
-		    unchecked : "DlIconListItem-0",
-		    empty     : "DlIconListItem-empty",
-		    disabled  : "DlIconListItem-disabled"
-		  };
-
-	var BASE = DlIconListItem.inherits(DlAbstractButton);
-	function DlIconListItem(args) {
-		if (args) {
-			DlIconListItem.setDefaults(this, args);
-			DlAbstractButton.call(this, args);
-		}
-	};
-
-	eval(Dynarch.EXPORT("DlIconListItem"));
+DEFINE_CLASS("DlIconListItem", DlAbstractButton, function(D, P) {
 
 	D.DEFAULT_ARGS = {
 		__itemSize     : [ "itemSize"    , { x: 100, y: null } ],
@@ -34,14 +14,23 @@ function DlIconListView(args) {
 		__iconAbove    : [ "iconAbove"	 , true ],
 		_btnType       : [ "type"        , DlAbstractButton.TYPE.TWOSTATE ],
 		_tagName       : [ "tagName"	 , "table" ],
-		_classes       : [ "classes"	 , CLS ],
+		_classes       : [ "classes"	 , { active    : "DlIconListItem-active",
+		                                     hover     : "DlIconListItem-hover",
+		                                     checked   : "DlIconListItem-1",
+		                                     unchecked : "DlIconListItem-0",
+		                                     empty     : "DlIconListItem-empty",
+		                                     disabled  : "DlIconListItem-disabled"
+		                                   } ],
 		_iconClass     : [ "iconClass"   , null ]
 	};
 
         var ICON_LABEL_CLASSES = [ "DlIconListItem-iconCell", "DlIconListItem-labelCell" ];
 
 	P._createElement = function() {
-		DlWidget.prototype._createElement.call(this); // DlAbstractButton's createElement is not suitable
+
+                // DlAbstractButton's createElement is not suitable!
+		DlWidget.prototype._createElement.call(this);
+
 		var table = this.getElement();
 		table.cellSpacing = table.cellPadding = 0;
 		if (this.__spaceEvenly)
@@ -103,4 +92,4 @@ function DlIconListView(args) {
 		return this._label;
 	};
 
-})();
+});

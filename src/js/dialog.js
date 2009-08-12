@@ -1,17 +1,6 @@
 // @require container.js
 
-(function(){
-
-        DlWM.inherits(DlContainer);
-        function DlWM(args) {
-                if (args) {
-                        // D.setDefaults(this, args);
-                        DlContainer.call(this, args);
-                }
-        };
-        eval(Dynarch.EXPORT("DlWM", true));
-
-        // D.DEFAULT_ARGS = {};
+DEFINE_CLASS("DlWM", DlContainer, function(D, P, DOM){
 
         P.getInnerSize = P.getOuterSize = P.getSize = function() {
                 return ( this.parent
@@ -30,8 +19,8 @@
                 };
                 var resize = this.on_parentResize.$(this);
                 this.parent
-                ? this.parent.addEventListener("onResize", resize)
-                : DOM.addEvent(window, "resize", resize);
+                        ? this.parent.addEventListener("onResize", resize)
+                        : DOM.addEvent(window, "resize", resize);
         };
 
         P.getModalStopperElement = function() {
@@ -130,7 +119,8 @@
 
         DlContainer.prototype._makeWindowManager = function() {
                 if (!this.__wm)
-                        (this.__wm = new DlWM({ parent: this })).addEventListener("onDestroy", function(){ this.__wm = null }.$(this));
+                        (this.__wm = new DlWM({ parent: this })).addEventListener(
+                                "onDestroy", function(){ this.__wm = null }.$(this));
                 return this.__wm;
         };
 
@@ -165,30 +155,15 @@
                 });
         };
 
-})();
+});
 
-(function(){
+DEFINE_CLASS("DlDialog", DlContainer, function(D, P, DOM){
 
-        var BASE = DlDialog.inherits(DlContainer);
-        function DlDialog(args) {
-                if (args) {
-                        if (!args.parent)
-                                args.parent = D.getTopWM();
-                        if (!(args.parent instanceof DlWM)) {
-                                if (args.parent instanceof DlDialog)
-                                        args.noShadows = true;
-                                args.parent = args.parent._makeWindowManager();
-                        }
-                        D.setDefaults(this, args);
-                        this.__doDrag = this.__moveDelay != null
-                                ? __doDrag.clearingTimeout(this.__moveDelay, this)
-                                : __doDrag.$(this);
-                        DlContainer.call(this, args);
-                        this.active = false;
-                }
-        };
-        eval(Dynarch.EXPORT("DlDialog", true));
-        var EX = DlException.stopEventBubbling;
+        var EX = DlException.stopEventBubbling,
+            AC = DOM.addClass,
+            DC = DOM.delClass,
+            CC = DOM.condClass,
+            CE = DOM.createElement;
 
         var DEFAULT_EVENTS = [ "onShow", "onHide", "onActivate", "onQuitBtn" ];
 
@@ -204,6 +179,23 @@
                 __maxBtn       : [ "maxBtn"       , true ],
                 __modal        : [ "modal"        , false ],
                 __moveDelay    : [ "moveDelay"    , 5000 ]
+        };
+
+        D.FIXARGS = function(args) {
+                if (!args.parent)
+                        args.parent = D.getTopWM();
+                if (!(args.parent instanceof DlWM)) {
+                        if (args.parent instanceof DlDialog)
+                                args.noShadows = true;
+                        args.parent = args.parent._makeWindowManager();
+                }
+        };
+
+        D.CONSTRUCT = function() {
+                this.__doDrag = this.__moveDelay != null
+                        ? __doDrag.clearingTimeout(this.__moveDelay, this)
+                        : __doDrag.$(this);
+                this.active = false;
         };
 
         var TOP_WM;
@@ -405,7 +397,7 @@
                         this.setOuterSize({ x: sz.x, y: sz.y });
                         if (is_gecko)
                                 // FIXME: wicked!
-                                BASE.setOuterSize.call(this, { x: "auto", y: "auto" });
+                                D.BASE.setOuterSize.call(this, { x: "auto", y: "auto" });
                         this.resizing = false;
                         this._setResizeCaptures(false);
                         this.getElement().style.overflow = "";
@@ -535,7 +527,7 @@
         };
 
         P._createElement = function() {
-                BASE._createElement.call(this);
+                D.BASE._createElement.call(this);
                 this.setPos(HIDE_POS);
                 //this.display(false);
                 this.setStyle({ visibility: "hidden" }); // bypass DlWidget::visibility so we don't call handlers
@@ -733,7 +725,7 @@
 
         P.initDOM = function() {
                 this.registerEvents(DEFAULT_EVENTS);
-                BASE.initDOM.call(this);
+                D.BASE.initDOM.call(this);
                 if (!this._fixed)
                         this.makeDraggable();
                 this.addEventListener({ onMouseDown   : this.activate,
@@ -777,7 +769,7 @@
                 return d;
         };
 
-})();
+});
 
 DlDialogPopup.inherits(DlPopup);
 function DlDialogPopup(args) {

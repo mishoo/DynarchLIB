@@ -2,23 +2,15 @@
 // @require singleton.js
 // @require system.js
 
-(function() {
+DEFINE_CLASS("DlRPC", DlEventProxy, function(D, P) {
 
-	var BASE = DlRPC.inherits(DlEventProxy);
-	function DlRPC(args) {
-		if (args) {
-			DlEventProxy.call(this);
-			DlRPC.setDefaults(this, args);
-			this.registerEvents(DEFAULT_EVENTS);
-			if (this.method == null)
-				this.method = this.data != null ? "POST" : "GET";
-			this._timeoutID = 0;
-		}
+	D.CONSTRUCT = function() {
+		if (this.method == null)
+			this.method = this.data != null ? "POST" : "GET";
+		this._timeoutID = 0;
 	};
 
-	eval(Dynarch.EXPORT("DlRPC"));
-
-        var DEFAULT_EVENTS = [ "onStart", "onStop", "onTimeout" ];
+        D.DEFAULT_EVENTS = [ "onStart", "onStop", "onTimeout" ];
 
 	D.DEFAULT_ARGS = {
 		url      : [ "url"      , null ],
@@ -129,4 +121,4 @@
 		this._request.send(data);
 	};
 
-})();
+});

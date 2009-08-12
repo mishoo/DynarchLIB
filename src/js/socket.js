@@ -1,30 +1,10 @@
 // @require flashutils.js
 
-(function(){
+DEFINE_CLASS("DlSocket", DlEventProxy, function(D, P){
 
-        DlSocket.inherits(DlEventProxy);
-        function DlSocket(args) {
-                if (args) {
-                        if (!args.host)
-                                args.host = document.domain;
-                        D.setDefaults(this, args);
-                        DlEventProxy.call(this);
-                        this.registerEvents(DEFAULT_EVENTS);
-                        this.addEventListener("onDestroy", onDestroy);
-                        DlEvent.atUnload(this.destroy.$(this));
-                }
-        };
+        function FLASH() { return DlFlashUtils().getObject(); };
 
-        eval(Dynarch.EXPORT("DlSocket"));
-
-        var DEFAULT_EVENTS = [ "onConnect", "onRelease", "onData" ];
-
-        var SOCKETS = {};
-
-        function onDestroy() {
-                DlFlashUtils().getObject().DlSocket_destroy(this.id);
-                delete SOCKETS[this.id];
-        };
+        D.DEFAULT_EVENTS = [ "onConnect", "onRelease", "onData" ];
 
         D.DEFAULT_ARGS = {
                 _host : [ "host", null ],
@@ -32,25 +12,42 @@
                 _json : [ "json", false ]
         };
 
+        D.FIXARGS = function(args) {
+                if (!args.host)
+                        args.host = document.domain;
+        };
+
+        D.CONSTRUCT = function(args) {
+                this.addEventListener("onDestroy", onDestroy);
+                DlEvent.atUnload(this.destroy.$(this));
+        };
+
+        var SOCKETS = {};
+
+        function onDestroy() {
+                FLASH().DlSocket_destroy(this.id);
+                delete SOCKETS[this.id];
+        };
+
         P.send = function(data) {
-                DlFlashUtils().getObject().DlSocket_send(this.id, data);
+                FLASH().DlSocket_send(this.id, data);
         };
 
         P.sendJSON = function(data) {
-                DlFlashUtils().getObject().DlSocket_send(this.id, DlJSON.encode(data));
+                FLASH().DlSocket_send(this.id, DlJSON.encode(data));
         };
 
         P.connect = function() {
-                this.id = DlFlashUtils().getObject().DlSocket_connect(this._host, this._port);
+                this.id = FLASH().DlSocket_connect(this._host, this._port);
                 SOCKETS[this.id] = this;
         };
 
         P.reconnect = function() {
-                DlFlashUtils().getObject().DlSocket_reconnect(this.id);
+                FLASH().DlSocket_reconnect(this.id);
         };
 
         P.disconnect = function() {
-                DlFlashUtils().getObject().DlSocket_disconnect(this.id);
+                FLASH().DlSocket_disconnect(this.id);
         };
 
         window.DlSocket_onConnect = function(id, status) {
@@ -69,4 +66,4 @@
                 SOCKETS[id].applyHooks("onRelease", [ reason ]);
         };
 
-})();
+});

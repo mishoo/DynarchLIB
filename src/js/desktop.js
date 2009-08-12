@@ -1,44 +1,35 @@
 // @require container.js
 // @require geometry.js
 
-(function(){
-
-	var BASE = DlDesktop.inherits(DlContainer);
-	function DlDesktop(args) {
-		if (args) {
-			D.setDefaults(this, args);
-			DlContainer.call(this, args);
-		}
-	};
-
-	eval(Dynarch.EXPORT("DlDesktop"));
+DEFINE_CLASS("DlDesktop", DlContainer, function(D, P){
 
 	D.DEFAULT_ARGS = {
 		_bounds : [ "bounds", new DlRect(50, 30, 800, 600) ]
 	};
 
 	P._createElement = function() {
-		BASE._createElement.call(this);
+		D.BASE._createElement.call(this);
 		var div = this.getElement();
 		this._bounds.positionDiv(div);
 		document.body.appendChild(div);
 	};
 
-	var resizeDivID = Dynarch.ID("IEsux");
-	IEresize = function() {
-		var tmp = document.getElementById(resizeDivID);
-		if (!tmp) {
-			tmp = document.createElement("div");
-			tmp.style.position = "absolute";
-			tmp.style.right =
-				tmp.style.bottom =
-				tmp.style.width =
-				tmp.style.height = "0px";
-			tmp.style.zIndex = "-100";
-			document.body.appendChild(tmp);
-		}
-		this.setSize({ x: tmp.offsetLeft, y: tmp.offsetTop + tmp.offsetHeight });
-	};
+        if (is_ie)
+                var resizeDivID = Dynarch.ID("IEsux"), IEresize = function() {
+		        var tmp = document.getElementById(resizeDivID);
+		        if (!tmp) {
+			        tmp = document.createElement("div");
+			        tmp.style.position = "absolute";
+			        tmp.style.right =
+				        tmp.style.bottom =
+				        tmp.style.width =
+				        tmp.style.height = "0px";
+			        tmp.style.zIndex = "-100";
+			        document.body.appendChild(tmp);
+		        }
+		        this.setSize({ x: tmp.offsetLeft,
+                                       y: tmp.offsetTop + tmp.offsetHeight });
+	        };
 
 	P.fullScreen = function() {
 		var s = this.getElement().style;
@@ -54,4 +45,4 @@
 		DynarchDomUtils.addEvent(window, "resize", handler.clearingTimeout(25));
 	};
 
-})();
+});

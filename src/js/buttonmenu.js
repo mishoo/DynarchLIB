@@ -2,19 +2,11 @@
 // @require button.js
 // @require popupmenu.js
 
-(function() {
+DEFINE_CLASS("DlButtonMenu", DlHbox, function(D, P) {
 
-        var BASE = DlButtonMenu.inherits(DlHbox);
-        function DlButtonMenu(args) {
-                if (args) {
-                        D.setDefaults(this, args);
-                        DlMenuBase.call(this, args);
-                        DlHbox.call(this, args);
-                }
-        };
+        D.CONSTRUCT = DlMenuBase;
 
-        eval(Dynarch.EXPORT("DlButtonMenu"));
-
+        // XXX: can we use D.DEFAULT_EVENTS?
         var DEFAULT_EVENTS = [ "onSelect", "onPopup", "onHide", "onClick" ];
 
         D.DEFAULT_ARGS = {
@@ -38,7 +30,7 @@
         };
 
         P._createElement = function() {
-                BASE._createElement.call(this);
+                D.BASE._createElement.call(this);
                 this._mainBtn = new DlButton({ parent    : this,
                                                focusable : false,
                                                label     : this.label,
@@ -83,7 +75,7 @@
 
         P.initDOM = function() {
                 this.registerEvents(DEFAULT_EVENTS);
-                BASE.initDOM.call(this);
+                D.BASE.initDOM.call(this);
                 this._menuBtn.addEventListener("onMouseDown", popupMenu.$(this));
                 this.addEventListener("onDestroy", this.setMenu.$(this, null));
         };
@@ -103,4 +95,4 @@
                 this._menu = menu;
         };
 
-})();
+});

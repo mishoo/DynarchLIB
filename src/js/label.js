@@ -1,20 +1,12 @@
 // @require abstractbutton.js
 
-(function(){
-
-	var BASE = DlLabel.inherits(DlAbstractButton);
-	function DlLabel(args) {
-		if (args) {
-			args.tagName = args.tagName || "span";
-			D.setDefaults(this, args);
-			DlAbstractButton.call(this, args);
-		}
-	};
-
-	eval(Dynarch.EXPORT("DlLabel"));
+DEFINE_CLASS("DlLabel", DlAbstractButton, function(D, P){
 
         D.DEFAULT_ARGS = {
-		_activateWidget : [ "widget", null ]
+		_activateWidget  : [ "widget"  , null ],
+
+                // override in DlWidget
+                _tagName         : [ "tagName" , "span" ]
 	};
 
 	P._onMouseDown = function(ev) {
@@ -38,4 +30,4 @@
                 this._onMouseDown(ev);
         };
 
-})();
+});

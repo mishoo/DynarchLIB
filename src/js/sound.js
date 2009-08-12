@@ -1,31 +1,29 @@
 // @require flashutils.js
 
-(function(){
+DEFINE_CLASS("DlSound", DlEventProxy, function(D, P){
 
-        DlSound.inherits(DlEventProxy);
-        function DlSound(args) {
-                if (args) {
-                        D.setDefaults(this, args);
-                        DlEventProxy.call(this);
-                        this.registerEvents(DEFAULT_EVENTS);
-                        this.addEventListener({ onDestroy : onDestroy,
-                                                onLoad    : onLoad });
-                        this.id = DlFlashUtils().getObject().DlSound_create();
-                        if (this._volume != null)
-                                this.setVolume(this._volume);
-                        if (this._pan != null)
-                                this.setPan(this._pan);
-                        SOUNDS[this.id] = this;
-                }
-        };
+        var SOUNDS = {};
 
-        eval(Dynarch.EXPORT("DlSound"));
+        function FLASH() { return DlFlashUtils().getObject(); };
+
+        D.DEFAULT_EVENTS = [ "onLoad", "onComplete" ];
 
         D.DEFAULT_ARGS = {
                 _volume : [ "volume" , null ],
                 _pan    : [ "pan"    , null ],
                 _url    : [ "url"    , null ],
                 _stream : [ "stream" , false ]
+        };
+
+        D.CONSTRUCT = function(args) {
+                this.addEventListener({ onDestroy : onDestroy,
+                                        onLoad    : onLoad });
+                this.id = FLASH().DlSound_create();
+                if (this._volume != null)
+                        this.setVolume(this._volume);
+                if (this._pan != null)
+                        this.setPan(this._pan);
+                SOUNDS[this.id] = this;
         };
 
         P.load = function(url, stream) {
@@ -35,12 +33,12 @@
                         stream = this._stream;
                 this.__fileLoaded = false;
                 this.__loadCalled = true;
-                DlFlashUtils().getObject().DlSound_load(this.id, this._url = url, this._stream = stream);
+                FLASH().DlSound_load(this.id, this._url = url, this._stream = stream);
         };
 
         P.play = function(offset, loop) {
                 if (this.__fileLoaded) {
-                        DlFlashUtils().getObject().DlSound_play(this.id, offset, loop);
+                        FLASH().DlSound_play(this.id, offset, loop);
                 } else if (!this.__loadCalled) {
                         this.__shouldPlay = [ offset, loop ];
                         this.load();
@@ -48,31 +46,31 @@
         };
 
         P.stop = function() {
-                DlFlashUtils().getObject().DlSound_stop(this.id);
+                FLASH().DlSound_stop(this.id);
         };
 
         P.getBytesLoaded = function() {
-                return DlFlashUtils().getObject().DlSound_getBytesLoaded(this.id);
+                return FLASH().DlSound_getBytesLoaded(this.id);
         };
 
         P.getBytesTotal = function() {
-                return DlFlashUtils().getObject().DlSound_getBytesTotal(this.id);
+                return FLASH().DlSound_getBytesTotal(this.id);
         };
 
         P.getDuration = function() {
-                return DlFlashUtils().getObject().DlSound_getDuration(this.id);
+                return FLASH().DlSound_getDuration(this.id);
         };
 
         P.getPosition = function() {
-                return DlFlashUtils().getObject().DlSound_getPosition(this.id);
+                return FLASH().DlSound_getPosition(this.id);
         };
 
         P.setPan = function(pan) {
-                DlFlashUtils().getObject().DlSound_setPan(this.id, this._pan = pan);
+                FLASH().DlSound_setPan(this.id, this._pan = pan);
         };
 
         P.setVolume = function(volume) {
-                DlFlashUtils().getObject().DlSound_setVolume(this.id, this._volume = volume);
+                FLASH().DlSound_setVolume(this.id, this._volume = volume);
         };
 
         P.getPan = function() {
@@ -86,10 +84,6 @@
         P.getURL = function() {
                 return this._url;
         };
-
-        var DEFAULT_EVENTS = [ "onLoad", "onComplete" ];
-
-        var SOUNDS = {};
 
         function onDestroy() {
                 delete SOUNDS[this.id];
@@ -111,4 +105,4 @@
                 SOUNDS[id].callHooks("onComplete");
         };
 
-})();
+});

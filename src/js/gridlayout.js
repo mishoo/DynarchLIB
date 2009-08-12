@@ -3,17 +3,10 @@
 // @deprecate! I should remove this file; the API is confusing, the name is
 //             confusing, not to mention it only works well with FF.
 
-(function() {
+DEFINE_CLASS("DlGridLayout", DlLayout, function(D, P, DOM){
 
-	var BASE = DlGridLayout.inherits(DlLayout);
-	function DlGridLayout(args) {
-		if (args) {
-			D.setDefaults(this, args);
-			DlLayout.call(this, args);
-		}
-	};
-
-	eval(Dynarch.EXPORT("DlGridLayout", true));
+        var CE = DOM.createElement,
+            AC = DOM.addClass;
 
 	D.DEFAULT_ARGS = {
 		__layout      : [ "layout", null ],
@@ -64,7 +57,7 @@ Each cell:
 	];
 
 	P._createElement = function() {
-		BASE._createElement.call(this);
+		D.BASE._createElement.call(this);
 		var table;
 		if (!this.__layoutHTML) {
 			table = CE("table", null, { cellSpacing: this.__cellSpacing,
@@ -121,13 +114,13 @@ Each cell:
 			td.appendChild(w.getElement());
 			w._dllayout_args = pos;
 		} else
-			BASE._appendWidgetElement.call(this, w, pos);
+			D.BASE._appendWidgetElement.call(this, w, pos);
 	};
 
 	P._removeWidgetElement = function(w) {
 		if (this._widgets.contains(w)) {
 			if (!w._dllayout_args.inCell)
-				BASE._removeWidgetElement.call(this, w);
+				D.BASE._removeWidgetElement.call(this, w);
 			else {
 				var el = w.getElement();
 				el.parentNode.removeChild(el);
@@ -176,4 +169,4 @@ Each cell:
 		});
 	};
 
-})();
+});

@@ -1,16 +1,6 @@
 // @require container.js
 
-(function() {
-
-	var BASE = DlLayout.inherits(DlContainer);
-	function DlLayout(args) {
-		if (args) {
-			D.setDefaults(this, args);
-			DlContainer.call(this, args);
-		}
-	};
-
-	eval(Dynarch.EXPORT("DlLayout"));
+DEFINE_CLASS("DlLayout", DlContainer, function(D, P, DOM) {
 
 	D.DEFAULT_ARGS = {
 		_outerSpace : [ "outerSpace", 0 ],
@@ -31,8 +21,9 @@
 	P._appendWidgetElement = function(w, pos) {
                 if (!pos)
                         return D.BASE._appendWidgetElement.apply(this, arguments);
-		var div = DynarchDomUtils.createElement("div", null, { className: "DlLayout-positioned" },
-							this.getElement());
+		var div = DOM.createElement("div", null, {
+                        className: "DlLayout-positioned"
+                }, this.getElement());
 		if (pos.zIndex)
 			div.style.zIndex = pos.zIndex;
 		if (pos.overflow)
@@ -276,4 +267,4 @@
 		this.setOuterSize({ x: width, y: height });
 	};
 
-})();
+});

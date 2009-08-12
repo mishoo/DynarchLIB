@@ -3,7 +3,13 @@
 
 // HAIRY STUFF, try not to touch it. ;-)
 
-(function(){
+DEFINE_CLASS("DlPopup", DlContainer, function(D, P, DOM) {
+
+        var CE = DOM.createElement,
+            AC = DOM.addClass,
+            DC = DOM.delClass,
+            CC = DOM.condClass;
+
         var POPUPS = {};
         var ALL_POPUPS = {};
         var POPUPS_BY_ID = {};
@@ -12,18 +18,12 @@
 
         var RE_REMOVE_SCROLL = /DlPopup-scroll(Up|Down)?-hover/g;
 
-        var BASE = DlPopup.inherits(DlContainer);
-        function DlPopup(args) {
-                if (args) {
-                        D.setDefaults(this, args);
-                        this._hasScrolling = false;
-                        DlContainer.call(this, args);
-                        this.visible = false;
-                }
+        D.BEFORE_BASE = function() {
+                this._hasScrolling = false;
+                this.visible = false;
         };
 
-        eval(Dynarch.EXPORT("DlPopup", true));
-
+        // XXX: can we use D.DEFAULT_EVENTS?
         var DEFAULT_EVENTS = [ "onPopup", "onHide" ];
 
         D.DEFAULT_ARGS = {
@@ -76,7 +76,7 @@
         };
 
         P.__patchSubclassPrototype = function() {
-                BASE.__patchSubclassPrototype.call(this);
+                D.BASE.__patchSubclassPrototype.call(this);
                 this.constructor.get = D.get;
                 this.constructor.clearAll = D.clearAll;
                 POPUPS[this._objectType] = [];
@@ -85,13 +85,13 @@
 
         P.initDOM = function() {
                 this.registerEvents(DEFAULT_EVENTS);
-                BASE.initDOM.call(this);
+                D.BASE.initDOM.call(this);
         };
 
         P._createElement = function() {
                 var parent = this._parent;
                 this._parent = null;
-                BASE._createElement.call(this);
+                D.BASE._createElement.call(this);
                 var div = this.getElement();
                 this.parent = parent;
                 this.display(false);
@@ -242,7 +242,7 @@
         };
 
         P._setListeners = function() {
-                BASE._setListeners.call(this);
+                D.BASE._setListeners.call(this);
                 this.addEventListener({ onPopup      : onPopup,
                                         onMouseWheel : onMouseWheel,
                                         onHide       : onHide });
@@ -522,4 +522,4 @@
                 this._handleKeybinding(ev);
         };
 
-})();
+});

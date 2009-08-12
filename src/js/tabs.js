@@ -2,19 +2,9 @@
 // @require button.js
 // @require hbox.js
 
-(function(){
+DEFINE_CLASS("DlTabs", DlContainer, function(D, P, DOM){
 
-	var BASE = DlTabs.inherits(DlContainer);
-	function DlTabs(args) {
-		if (args) {
-			D.setDefaults(this, args);
-			DlContainer.call(this, args);
-		}
-	};
-
-	eval(Dynarch.EXPORT("DlTabs", true));
-
-        var DEFAULT_EVENTS = [ "onChange" ];
+        D.DEFAULT_EVENTS = [ "onChange" ];
 
 	D.DEFAULT_ARGS = {
 		_tabPos       : [ "tabPos"        , "top" ]
@@ -54,7 +44,7 @@
 	P.getTabContent = P.getNotebook;
 
 	P.initDOM = function() {
-		BASE.initDOM.call(this);
+		D.BASE.initDOM.call(this);
 		this._tabGroup = DlRadioGroup.get(this.id);
 		this._tabBar = new DlHbox({ className: "TabBar" });
 		this._tabContent = new DlNotebook({ className: "TabContent" });
@@ -70,11 +60,10 @@
 			this.appendWidget(this._tabBar);
 			break;
 		}
-		// CE("div", { clear: "both" }, null, this._tabBar.getElement());
-		this.registerEvents(DEFAULT_EVENTS);
+		// DOM.createElement("div", { clear: "both" }, null, this._tabBar.getElement());
 		this._tabContent.addEventListener("onChange", onNotebookChange.$(this._tabContent, this));
 		this._tabGroup.addEventListener("onChange", onTabChange.$(this));
-		AC(this.getElement(), "DlTabs-" + this._tabPos);
+                this.addClass("DlTabs-" + this._tabPos);
 	};
 
 	P.setTabPos = function(tabPos) {
@@ -86,7 +75,7 @@
 			? pos = content
 			: null;
 		content.parentNode.insertBefore(bar, pos);
-		AC(this.getElement(), "DlTabs-" + tabPos, "DlTabs-" + this._tabPos);
+		this.addClass("DlTabs-" + tabPos, "DlTabs-" + this._tabPos);
 		this._tabPos = tabPos;
 	};
 
@@ -95,7 +84,7 @@
 	};
 
 	P.setOuterSize = P.setSize = function(size) {
-		BASE.setSize.call(this, size);
+		D.BASE.setSize.call(this, size);
 		size = this.getInnerSize();
 		var bar = this._tabBar.getSize();
 		// alert(size.x + "x" + size.y + " - " + bar.x + "x" + bar.y);
@@ -140,4 +129,4 @@
                 }
         };
 
-})();
+});

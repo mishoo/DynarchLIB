@@ -1,16 +1,10 @@
 // @require table.js
 
-(function(){
+DEFINE_CLASS("DlFieldGrid", DlTable, function(D, P) {
 
-	var BASE = DlFieldGrid.inherits(DlTable);
-	function DlFieldGrid(args) {
-		if (args) {
-			DlTable.call(this, args);
-			this.__fields = {};
-		}
-	};
-
-	eval(Dynarch.EXPORT("DlFieldGrid"));
+        D.CONSTRUCT = function() {
+                this.__fields = {};
+        };
 
 	P.addField = function(args, opts, ret) {
 		var entry = args.widget || new DlEntry(args);
@@ -109,5 +103,4 @@
 
         P.setValues = P.setValue;
 
-
-})();
+});

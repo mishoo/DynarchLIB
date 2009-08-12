@@ -1,17 +1,7 @@
 // @require buttonmenu.js
 // @require calendar.js
 
-(function() {
-
-	var BASE = DlButtonCalendar.inherits(DlButtonMenu);
-	function DlButtonCalendar(args) {
-		if (args) {
-			D.setDefaults(this, args);
-			DlButtonMenu.call(this, args);
-		}
-	};
-
-	eval(Dynarch.EXPORT("DlButtonCalendar"));
+DEFINE_CLASS("DlButtonCalendar", DlButtonMenu, function(D, P){
 
 	D.DEFAULT_ARGS = {
 		dateFormat     : [ "dateFormat"   , "%Y/%m/%d" ],
@@ -60,7 +50,7 @@
 
 	P.initDOM = function() {
 		this.registerEvents(DEFAULT_EVENTS);
-		BASE.initDOM.call(this);
+		D.BASE.initDOM.call(this);
 		var b = this.getButton();
 		if (this.date instanceof Date)
 			b.setContent(this.date.print(this.dateFormat));
@@ -74,4 +64,4 @@
                 return this.date instanceof Date ? this.date : null;
         };
 
-})();
+});

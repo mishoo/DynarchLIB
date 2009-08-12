@@ -91,7 +91,7 @@ DlTextUtils = (function(){
                 re.lastIndex = 0;
                 re.global = true;
                 var last_post = -1;
-                while (m = re.exec(str)) {
+                while ((m = re.exec(str))) {
                         if (re.lastIndex >= caret)
                                 break;
                         pos = re.lastIndex;
@@ -128,7 +128,7 @@ DlTextUtils = (function(){
                                 re = START_REGEXPS[i++];
                                 f = START_REGEXPS[i++];
                                 re.lastIndex = 0;
-                                if (m = re.exec(para))
+                                if ((m = re.exec(para)))
                                         return f(m);
                         }
                 },
@@ -146,7 +146,7 @@ DlTextUtils = (function(){
                         para = para.replace(/\n/g, " ").replace(/([^.?!])\s\s+/g, "$1 ");
                         var re = new RegExp("(.{0," + (width - prefix.length) + "})(\\s+|$)", "g");
                         var m, buf = [], lastPos = 0, line;
-                        while (m = re.exec(para)) {
+                        while ((m = re.exec(para))) {
                                 if (re.index != lastPos)
                                         line = para.substring(lastPos, re.lastIndex);
                                 else
@@ -175,6 +175,6 @@ DlTextUtils = (function(){
                         DOM.addEvent(ta, is_ie ? "keydown" : "keypress", taKeyPress);
                 }
 
-        }
+        };
 
 })();

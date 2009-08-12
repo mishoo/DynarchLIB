@@ -1,14 +1,14 @@
 // @require exception.js
 
-DlException.defineException("DlValidatorException");
+DEFINE_EXCEPTION("DlValidatorException");
 
 DlValidatorException.MISMATCH = 1;
 DlValidatorException.TOO_SMALL = 2;
 DlValidatorException.TOO_BIG = 3;
 
-(function(){
+DEFINE_CLASS("DlValidator", null, function(D, P){
 
-        function DlValidator(callback) {
+        D.CONSTRUCT = function(callback) {
 	        if (callback) {
                         if (typeof callback == "string")
                                 callback = D[callback];
@@ -18,8 +18,6 @@ DlValidatorException.TOO_BIG = 3;
 			        : null;
 	        }
         };
-
-        eval(Dynarch.EXPORT("DlValidator"));
 
 	P.ok = function(data) {
 		if (typeof this._lastData != "undefined" && this._lastData === data)
@@ -191,4 +189,4 @@ DlValidatorException.TOO_BIG = 3;
                 return this._date.print(format);
         };
 
-})();
+});

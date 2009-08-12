@@ -115,7 +115,7 @@ Object.merge(Function.prototype, {
 
         $C : function() {
                 var args = Array.$(arguments), f = this;
-                return function() { return f.apply(null, args.concat(Array.$(arguments))) }
+                return function() { return f.apply(null, args.concat(Array.$(arguments))) };
         },
 
         inverse : function() {
@@ -985,7 +985,7 @@ function $RETURN(args) { throw new $_RETURN(args); };
                 var m, pos = 0;
                 re.lastIndex = 0;
                 re.global = true;
-                while (m = re.exec(this)) {
+                while ((m = re.exec(this))) {
                         if (re.lastIndex >= caret)
                                 break;
                         pos = re.lastIndex;
@@ -1195,7 +1195,7 @@ function $RETURN(args) { throw new $_RETURN(args); };
                         var u = window.Dynarch_Base_Url;
                         if (!u) {
                                 var scripts = document.getElementsByTagName("script"), i = 0, s;
-                                while (s = scripts[i++])
+                                while ((s = scripts[i++]))
                                         if (s.className == "DynarchLIB") {
                                                 u = s.src;
                                                 if (/^(.*)\x2fjs\x2f/.test(u)) {
@@ -1219,6 +1219,9 @@ function $RETURN(args) { throw new $_RETURN(args); };
         };
 
         window.DynarchDomUtils = {
+
+                ID : Dynarch.ID,
+
                 related : function(element, ev) {
                         var related, type;
                         if (is_ie) {
@@ -1336,12 +1339,10 @@ function $RETURN(args) { throw new $_RETURN(args); };
                 },
 
                 callHandler : function(obj, method) {
-                        if (!obj[method])
-                                return;
                         if (obj[method] instanceof Function)
-                                obj[method].call(obj);
+                                return obj[method].call(obj);
                         else if (typeof obj[method] == "string")
-                                eval(obj[method]);
+                                return eval(obj[method]);
                 },
                 setStyleProperty : function(el, prop, val) {
                         switch (prop) {
@@ -1868,7 +1869,7 @@ if ((is_safari && !is_safari3) || is_ie5) {
                                 return this.__old_replace(re, val);
                         else {
                                 var str = this.slice(0), v, l, a;
-                                while (a = re.exec(str)) {
+                                while ((a = re.exec(str))) {
                                         v = val.apply(null, a);
                                         l = a[0].length;
                                         re.lastIndex -= l - v.length;
@@ -1881,3 +1882,37 @@ if ((is_safari && !is_safari3) || is_ie5) {
                 };
         }
 }
+
+function DEFINE_CLASS(name, base, definition, hidden) {
+        if (base)
+                D.inherits(base, name);
+        function D(args) {
+                if (this === window)
+                        return alert("FIXME: Constructor called without new in " + name);
+                if (arguments.length > 0 || D.CONSTRUCT_NOARGS) {
+                        if (D.FIXARGS)
+                                D.FIXARGS.apply(this, arguments);
+                        if (D.DEFAULT_ARGS)
+                                D.setDefaults(this, args);
+                        if (D.BEFORE_BASE)
+                                D.BEFORE_BASE.apply(this, arguments);
+                        if (base)
+                                base.apply(this, arguments);
+                        if (D.DEFAULT_EVENTS)
+                                this.registerEvents(D.DEFAULT_EVENTS);
+                        if (D.CONSTRUCT)
+                                D.CONSTRUCT.apply(this, arguments);
+                }
+                if (D.CONSTRUCT_NOARGS instanceof Function)
+                        D.CONSTRUCT_NOARGS.call(this);
+        };
+        if (name && !hidden)
+                window[name] = D;
+        if (definition)
+                definition(D, D.prototype, DynarchDomUtils);
+        return D;
+};
+
+function DEFINE_HIDDEN_CLASS(name, base, definition) {
+        return DEFINE_CLASS.call(this, name, base, definition, true);
+};

@@ -1,19 +1,12 @@
 // @require widget.js
 
-(function(){
+DEFINE_CLASS("DlMacBarIcon", DlAbstractButton, function(D, P) {
 
-	var BASE = DlMacBarIcon.inherits(DlAbstractButton);
-	function DlMacBarIcon(args) {
-		if (args) {
-			DlMacBarIcon.setDefaults(this, args);
-			this.__currentWidth = this.__minWidth;
-			this.__currentHeight = this.__minHeight;
-                        this.__align = this.__align.split(/\s+/).toHash();
-			DlAbstractButton.call(this, args);
-		}
-	};
-
-	eval(Dynarch.EXPORT("DlMacBarIcon"));
+        D.BEFORE_BASE = function() {
+                this.__currentWidth = this.__minWidth;
+		this.__currentHeight = this.__minHeight;
+                this.__align = this.__align.split(/\s+/).toHash();
+        };
 
 	var CLS = { active    : "DlMacBarIcon-active",
 		    hover     : "DlMacBarIcon-hover",
@@ -53,7 +46,7 @@
         };
 
 	P.initDOM = function() {
-		BASE.initDOM.call(this);
+		D.BASE.initDOM.call(this);
 		this.addEventListener({ onDestroy : onDestroy });
 		this.__anim = new DlAnimation(25, 40);
 		this.__anim.addEventListener({ onUpdate : onAnimationUpdate.$(this),
@@ -66,7 +59,7 @@
 	};
 
 	P._onMouseEnter = function() {
-		BASE._onMouseEnter.apply(this, arguments);
+		D.BASE._onMouseEnter.apply(this, arguments);
 		var a = this.__anim;
 		a.ew = this.__maxWidth;
 		a.eh = this.__maxHeight;
@@ -74,7 +67,7 @@
 	};
 
 	P._onMouseLeave = function() {
-		BASE._onMouseLeave.apply(this, arguments);
+		D.BASE._onMouseLeave.apply(this, arguments);
 		var a = this.__anim;
 		a.ew = this.__minWidth;
 		a.eh = this.__minHeight;
@@ -110,4 +103,4 @@
 			img.style.marginTop = mt + "px";
 	};
 
-})();
+});
