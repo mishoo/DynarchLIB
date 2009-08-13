@@ -307,7 +307,7 @@ DEFINE_CLASS("DlPopup", DlContainer, function(D, P, DOM) {
                 }
         };
 
-        P.correctPos = Dynarch.noop;
+        P.correctPos = Function.noop;
 
         P.showAt = function(anchor, align, mousePos, shift, fluid) {
                 var origpos, p, sa, div = this.getScrollDiv();
@@ -315,7 +315,7 @@ DEFINE_CLASS("DlPopup", DlContainer, function(D, P, DOM) {
                         align = this._align;
                 if (align == "mouse") {
                         if (mousePos == null)
-                                mousePos = Dynarch.makeCopy(DlEvent.latestMouseEvent.pos);
+                                mousePos = Object.makeCopy(DlEvent.latestMouseEvent.pos);
                         origpos = mousePos;
                         if (this._mouseDiff) {
                                 origpos.x += this._mouseDiff.x;
@@ -338,7 +338,7 @@ DEFINE_CLASS("DlPopup", DlContainer, function(D, P, DOM) {
                         }
                 }
                 sa = DOM.getOuterSize(anchor);
-                p = Dynarch.makeCopy(origpos);
+                p = Object.makeCopy(origpos);
                 this.visibility(false);
                 div.style.height = "";
                 this._scroll_visibile(false);

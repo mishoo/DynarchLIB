@@ -699,10 +699,11 @@ DEFINE_CLASS("DlWidget", DlEventProxy, function(D, P, DOM) {
 
         P.quickPopup = function(args) {
                 var p = this.getQuickPopup();
-                args = Dynarch.makeCopy(args);
-                Dynarch.mergeUndefined(args, { anchor    : this.getElement(),
-                                               align     : { prefer: "CC" }
-                                             });
+                args = Object.makeCopy(args);
+                Object.mergeUndefined(args, {
+                        anchor    : this.getElement(),
+                        align     : { prefer: "CC" }
+                });
                 p.popup(args);
         };
 

@@ -258,7 +258,7 @@ DEFINE_CLASS("DlRteFrame", DlWidget, function(D, P, DOM) {
 
 	P.getSections = function() {
 		var tmp = this.getHTML(true);
-		Dynarch.merge(this.getCurrentSection(), tmp);
+		Object.merge(this.getCurrentSection(), tmp);
 		return this.__sectionsHash;
 	};
 
@@ -266,7 +266,7 @@ DEFINE_CLASS("DlRteFrame", DlWidget, function(D, P, DOM) {
 		var sec = this.__sectionsHash[name];
 		if (sec.index == this.__currentSection && !noSetContent) {
 			var tmp = this.getHTML(true);
-			Dynarch.merge(sec, tmp);
+			Object.merge(sec, tmp);
 		}
 		return sec;
 	};
@@ -279,7 +279,7 @@ DEFINE_CLASS("DlRteFrame", DlWidget, function(D, P, DOM) {
 		var oldsec = this.getCurrentSection();
 		if (oldsec !== newsec) {
 			var tmp = this.getHTML(true);
-			Dynarch.merge(oldsec, tmp);
+			Object.merge(oldsec, tmp);
 			this.__currentSection = newsec.index;
 			this.setHTML(newsec.content);
 			this.applyHooks("onSectionChange", [ oldsec, newsec ]);

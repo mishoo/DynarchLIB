@@ -21,7 +21,7 @@ DEFINE_CLASS("DlButtonColorPicker", DlButtonMenu, function(D, P, DOM) {
 	function onSelect(btn, rgb, hsv, color, brightness) {
 		var div = btn.getColorElement();
 		div.style.backgroundColor = color;
-		btn.hsv = Dynarch.makeArray(hsv);
+		btn.hsv = Array.$(hsv);
 		btn._updateValues();
 		DlPopup.clearAllPopups();
 // 		var dark = DlColor.RGB2color(DlColor.HSV2RGB(DlColor.darker(hsv)));

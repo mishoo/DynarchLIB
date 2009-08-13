@@ -1,20 +1,24 @@
 // @require jslib.js
 
-function DlException(message, code) {
-	this.error = this.constructor.name;
-	if (!message)
-		message = "*** no error message given ***";
-	this.message = this.constructor.name + ": " + message;
-	if (code != null)
-		this.code = code;
-};
+DEFINE_CLASS("DlException", null, function(D, P) {
 
-DlException.prototype.toString = function() {
-	var str = this.message;
-	if (this.code)
-		str += " / code: " + this.code;
-	return str;
-};
+        D.CONSTRUCT_NOARGS = function(message, code) {
+	        this.error = this.constructor.name;
+	        if (!message)
+		        message = "*** no error message given ***";
+	        this.message = this.constructor.name + ": " + message;
+	        if (code != null)
+		        this.code = code;
+        };
+
+        P.toString = function() {
+	        var str = this.message;
+	        if (this.code)
+		        str += " / code: " + this.code;
+	        return str;
+        };
+
+});
 
 function DEFINE_EXCEPTION(className, base) {
         return DEFINE_CLASS(className, base || DlException);

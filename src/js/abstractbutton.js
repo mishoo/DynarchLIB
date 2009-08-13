@@ -187,7 +187,7 @@ DEFINE_CLASS("DlAbstractButton", DlWidget, function(D, P) {
 			this.__group.applyHooks("onChange", [ this ]);
 	};
 
-	P._onCheck = Dynarch.noop;
+	P._onCheck = Function.noop;
 
 	P._onDisabled = function(v) {
 		this.condClass(v, this._classes.disabled);
@@ -217,7 +217,7 @@ DEFINE_CLASS("DlAbstractButton", DlWidget, function(D, P) {
 		}, this);
 	};
 
-	P._createLabelElement = Dynarch.noop;
+	P._createLabelElement = Function.noop;
 
 	P.label = function(label, force) {
 		if (force || arguments.length > 0 && label !== this._label) {

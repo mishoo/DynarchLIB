@@ -62,7 +62,7 @@ DEFINE_CLASS("DlRPC", DlEventProxy, function(D, P) {
 
 	P.call = function(newArgs) {
 		if (newArgs != null)
-			Dynarch.merge(this, newArgs);
+			Object.merge(this, newArgs);
 		var req, urlargs = false, i;
 		if (window.XMLHttpRequest) {
 			req = new XMLHttpRequest();

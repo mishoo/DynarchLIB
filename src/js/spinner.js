@@ -153,7 +153,7 @@ DEFINE_CLASS("DlSpinner", DlEntry, function(D, P, DOM) {
 
 	function spinnerAct(b) {
 		this._spinnerUpdateVal(b._direction);
-		(this._timerState = Dynarch.makeArray(this.intervals))
+		(this._timerState = Array.$(this.intervals))
 			.r_foreach(function(e){
 				e.step *= this.step;
 			}, this);
