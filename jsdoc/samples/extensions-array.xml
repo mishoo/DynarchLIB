@@ -47,7 +47,7 @@ for (var i = 0; i &lt; a.length; i++)
     </p>
 
     <p>
-      Here's the complete definition:
+      Here's the declaration:
     </p>
 
     <pre name="dlhl" class="js">Array.prototype.foreach = function(f, obj)</pre>

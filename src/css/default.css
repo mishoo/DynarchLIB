@@ -821,7 +821,7 @@ table.DlButtonBox .DlButtonBox-spacer { width: 100%; }
   position: absolute;
   background: url("img/grid-drop-col.gif") no-repeat 0 0;
   width: 11px; height: 11px;
-  margin-left: -6px; margin-top: -12px;
+  margin-left: -5px;
   z-index: 10000;
 }
 

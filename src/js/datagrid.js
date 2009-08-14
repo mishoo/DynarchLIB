@@ -136,16 +136,26 @@ DEFINE_CLASS("DlDataGridHeadLabel", DlButton, function(D, P, DOM) {
                 this.__withIconClass = "DlButton-withIcon";
         };
 
+        D.FIXARGS = function(args) {
+                if (!("contextMenu" in args))
+                        args.contextMenu = this._getContextMenu;
+        };
+
         D.CONSTRUCT = function() {
-                if (!this.col.isSortable())
-                        this.__disabled = true;
-                this.setContextMenu(this._getContextMenu);
+                if (!this.isSortable()) {
+                        var c = this._classes = Object.makeCopy(this._classes);
+                        c.active = c.hover = null;
+                }
         };
 
         var MIN_COL_WID = 20;
 
         P.setWidth = function(w) {
                 this.setOuterSize({ x: w });
+        };
+
+        P.isSortable = function() {
+                return this.col.isSortable();
         };
 
         // P.label = function(label) {
@@ -155,7 +165,8 @@ DEFINE_CLASS("DlDataGridHeadLabel", DlButton, function(D, P, DOM) {
         // };
 
         P._onClick = function() {
-                this.parent._onHeadClick(this.col, this);
+                if (this.isSortable())
+                        this.parent._onHeadClick(this.col, this);
         };
 
         P._getContextMenu = function() {
