@@ -1913,3 +1913,10 @@ function DEFINE_CLASS(name, base, definition, hidden) {
 function DEFINE_HIDDEN_CLASS(name, base, definition) {
         return DEFINE_CLASS.call(this, name, base, definition, true);
 };
+
+function DEFINE_SINGLETON(name, base, definition) {
+        var D = DEFINE_HIDDEN_CLASS(name, base, definition);
+        D.CONSTRUCT_NOARGS = true;
+        DlSingleton.register(name, D, true);
+        return D;
+};

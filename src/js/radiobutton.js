@@ -1,25 +1,24 @@
 // @require checkbox.js
 
-DlRadioButton.inherits(DlCheckbox);
-function DlRadioButton(args) {
-	if (args) {
-		args.alwaysCheck = true;
-		DlRadioButton.setDefaults(this, args);
-		DlCheckbox.call(this, args);
-	}
-};
+DEFINE_CLASS("DlRadioButton", DlCheckbox, function(D, P) {
 
-DlRadioButton.DEFAULT_ARGS = {
-	_groupId   : [ "group"     , 0 ],
-	_classes   : [ "classes"   , {
-			       active    : "DlRadioButton-active",
-			       hover     : "DlRadioButton-hover",
-			       checked   : "DlRadioButton-1",
-			       unchecked : "DlRadioButton-0",
-			       empty     : "DlRadioButton-empty",
-			       disabled  : "DlRadioButton-disabled"
-		       }
-		     ]
-};
+        D.FIXARGS = function(args) {
+                args.alwaysCheck = true;
+        };
 
-DlRadioButton.prototype._className.remove("DlCheckbox");
+        D.DEFAULT_ARGS = {
+	        _groupId   : [ "group"     , 0 ],
+	        _classes   : [ "classes"   , {
+			active    : "DlRadioButton-active",
+			hover     : "DlRadioButton-hover",
+			checked   : "DlRadioButton-1",
+			unchecked : "DlRadioButton-0",
+			empty     : "DlRadioButton-empty",
+			disabled  : "DlRadioButton-disabled"
+		}
+		             ]
+        };
+
+        P._className.remove("DlCheckbox");
+
+});

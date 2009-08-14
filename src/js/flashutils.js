@@ -1,17 +1,9 @@
 // @require singleton.js
 // @require eventproxy.js
 
-(function(){
+DEFINE_SINGLETON("DlFlashUtils", DlEventProxy, function(D, P) {
 
-        var DEFAULT_EVENTS = [ "onLoad", "onStorageStatus" ];
-
-        DlFlashUtils.inherits(DlEventProxy);
-        function DlFlashUtils() {
-                DlEventProxy.call(this);
-                this.registerEvents(DEFAULT_EVENTS);
-        };
-
-        var P = DlFlashUtils.prototype;
+        D.DEFAULT_EVENTS = [ "onLoad", "onStorageStatus" ];
 
         var HTML = is_ie
                 ? String.template(
@@ -29,7 +21,7 @@
         var OBJ = null;
 
         window.DlFlashUtils_init = function(o) {
-                DlSingleton.get("DlFlashUtils").callHooks("onLoad");
+                DlFlashUtils().callHooks("onLoad");
         };
 
         P.init = function() {
@@ -101,8 +93,6 @@
                 return this.getObject().DlSocket_loadPolicyFile(addr);
         };
 
-        DlSingleton.register("DlFlashUtils", DlFlashUtils, true);
-
         // we need the following because Flash developers
         // were unbelievably stupid.
 
@@ -128,7 +118,7 @@
                 return obj;
         };
 
-})();
+});
 
 DlFlashStore = {
 

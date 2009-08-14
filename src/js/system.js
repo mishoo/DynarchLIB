@@ -33,25 +33,17 @@ handlers in DlSystem.
 
 DESCRIPTION*/
 
-(function(){
+DEFINE_SINGLETON("DlSystem", DlEventProxy, function(D, P) {
 
-	DlSystem.inherits(DlEventProxy);
-	function DlSystem() {
-		DlEventProxy.call(this);
-		this.registerEvents(DEFAULT_EVENTS);
-	};
+        D.DEFAULT_EVENTS = [
+                "on-dialog-create",
+		"on-dialog-show",
+		"on-dialog-hide",
+		"on-dialog-minimize",
+		"on-dialog-restore",
+		"on-rpc-start",
+		"on-rpc-stop",
+		"on-rpc-timeout"
+	];
 
-        var DEFAULT_EVENTS = [ "on-dialog-create",
-			       "on-dialog-show",
-			       "on-dialog-hide",
-			       "on-dialog-minimize",
-			       "on-dialog-restore",
-
-			       "on-rpc-start",
-			       "on-rpc-stop",
-			       "on-rpc-timeout"
-			     ];
-
-	DlSingleton.register("DlSystem", DlSystem, true);
-
-})();
+});

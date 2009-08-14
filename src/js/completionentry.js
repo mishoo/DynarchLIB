@@ -2,15 +2,13 @@
 
 DEFINE_CLASS("DlCompletionEntry", DlEntry, function(D, P, DOM) {
 
-	// It doesn't make too much sense to export this class.
-	DlCompletionPopup.inherits(DlPopup);
-	function DlCompletionPopup(args) {
-		if (args) {
-			args.zIndex = 1000;
+        // It doesn't make too much sense to export this class.
+        var DlCompletionPopup = DEFINE_HIDDEN_CLASS("DlCompletionPopup", DlPopup, function(D, P) {
+                D.FIXARGS = function(args) {
+                        args.zIndex = 1000;
                         args.focusable = false;
-			DlPopup.call(this, args);
-		}
-	};
+                };
+        });
 
         // XXX: can we use D.DEFAULT_EVENTS?
         var DEFAULT_EVENTS = [ "onCompletion", "onSelect" ];

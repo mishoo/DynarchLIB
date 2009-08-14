@@ -9,6 +9,7 @@ DEFINE_CLASS("DlEventProxy", null, function(D, P) {
         };
 
         D.CONSTRUCT_NOARGS = function() {
+                // this.registerEvents(this.DEFAULT_EVENTS);
                 this.addEventListener("onDestroy", this.__onDestroy);
         };
 

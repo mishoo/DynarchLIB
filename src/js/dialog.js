@@ -771,11 +771,9 @@ DEFINE_CLASS("DlDialog", DlContainer, function(D, P, DOM){
 
 });
 
-DlDialogPopup.inherits(DlPopup);
-function DlDialogPopup(args) {
-        if (args) {
+DEFINE_CLASS("DlDialogPopup", DlPopup, function(D, P) {
+        D.FIXARGS = function(args) {
                 args.autolink = false;
                 args.zIndex = 5000;
-                DlPopup.call(this, args);
-        }
-};
+        };
+});
