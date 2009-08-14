@@ -9,11 +9,17 @@ DEFINE_CLASS("DlEventProxy", null, function(D, P) {
         };
 
         D.CONSTRUCT_NOARGS = function() {
-                // this.registerEvents(this.DEFAULT_EVENTS);
+                this.registerEvents(this.DEFAULT_EVENTS);
                 this.addEventListener("onDestroy", this.__onDestroy);
         };
 
-        D.DEFAULT_EVENTS = [ "onDestroy" ];
+        P.DEFAULT_EVENTS = [ "onDestroy" ];
+
+        P.FINISH_OBJECT_DEF = function() {
+                var moreEvents = this.constructor.DEFAULT_EVENTS;
+                if (moreEvents)
+                        this.DEFAULT_EVENTS = this.DEFAULT_EVENTS.concat(moreEvents);
+        };
 
         // FIXME: not sure this is of any use to prevent leaks
         P.__onDestroy = function() {

@@ -75,8 +75,8 @@ DEFINE_CLASS("DlPopup", DlContainer, function(D, P, DOM) {
                 }
         };
 
-        P.__patchSubclassPrototype = function() {
-                D.BASE.__patchSubclassPrototype.call(this);
+        P.FINISH_OBJECT_DEF = function() {
+                D.BASE.FINISH_OBJECT_DEF.call(this);
                 this.constructor.get = D.get;
                 this.constructor.clearAll = D.clearAll;
                 POPUPS[this._objectType] = [];

@@ -138,8 +138,6 @@ Object.merge(Function.prototype, {
                                      this._objectType =
                                      p._objectType =
                                      thisName || Dynarch.getFunctionName(this)] = Dynarch.getFunctionName(base);
-                if (p.__patchSubclassPrototype instanceof Function)
-                        p.__patchSubclassPrototype();
                 return this.BASE;
         },
 
@@ -1895,8 +1893,6 @@ function DEFINE_CLASS(name, base, definition, hidden) {
                                 D.BEFORE_BASE.apply(this, arguments);
                         if (base)
                                 base.apply(this, arguments);
-                        if (D.DEFAULT_EVENTS)
-                                this.registerEvents(D.DEFAULT_EVENTS);
                         if (D.CONSTRUCT)
                                 D.CONSTRUCT.apply(this, arguments);
                 }
@@ -1907,6 +1903,8 @@ function DEFINE_CLASS(name, base, definition, hidden) {
                 window[name] = D;
         if (definition)
                 definition(D, D.prototype, DynarchDomUtils);
+        if (D.prototype.FINISH_OBJECT_DEF instanceof Function)
+                D.prototype.FINISH_OBJECT_DEF();
         return D;
 };
 
