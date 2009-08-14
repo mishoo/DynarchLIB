@@ -98,8 +98,7 @@ DEFINE_CLASS("DlWidget", DlEventProxy, function(D, P, DOM) {
 
         P._className = [ "DlWidget" ];
 
-        P.FINISH_OBJECT_DEF = function() {
-                D.BASE.FINISH_OBJECT_DEF.call(this);
+        P.__patchSubclassPrototype = function() {
                 (this._className = Array.$(this._className)).push(this._objectType);
         };
 

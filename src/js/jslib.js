@@ -138,6 +138,8 @@ Object.merge(Function.prototype, {
                                      this._objectType =
                                      p._objectType =
                                      thisName || Dynarch.getFunctionName(this)] = Dynarch.getFunctionName(base);
+                if (p.__patchSubclassPrototype instanceof Function)
+                        p.__patchSubclassPrototype();
                 return this.BASE;
         },
 
