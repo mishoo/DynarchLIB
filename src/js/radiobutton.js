@@ -19,6 +19,8 @@ DEFINE_CLASS("DlRadioButton", DlCheckbox, function(D, P) {
 		             ]
         };
 
-        P._className.remove("DlCheckbox");
+        D.FINISH_OBJECT_DEF = function() {
+                this._className.remove("DlCheckbox");
+        };
 
 });
