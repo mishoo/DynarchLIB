@@ -7,8 +7,6 @@ DEFINE_CLASS("DlRadioGroup", DlEventProxy, function(D, P){
 			this._maxChecked = 1;
 			this._minChecked = null;
 			this.id = id;
-
-			this.registerEvents(DEFAULT_EVENTS);
 			this.reset();
 			this.addEventListener("onDestroy", onDestroy);
 		}
@@ -16,7 +14,7 @@ DEFINE_CLASS("DlRadioGroup", DlEventProxy, function(D, P){
 
 	var GROUPS = {};
 
-        var DEFAULT_EVENTS = [ "onChange" ];
+        D.DEFAULT_EVENTS = [ "onChange" ];
 
 	D.getById = D.get = function(id) {
 		if (!id)

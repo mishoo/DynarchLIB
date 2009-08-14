@@ -6,8 +6,7 @@ DEFINE_CLASS("DlButtonMenu", DlHbox, function(D, P) {
 
         D.CONSTRUCT = DlMenuBase;
 
-        // XXX: can we use D.DEFAULT_EVENTS?
-        var DEFAULT_EVENTS = [ "onSelect", "onPopup", "onHide", "onClick" ];
+        D.DEFAULT_EVENTS = [ "onSelect", "onPopup", "onHide", "onClick" ];
 
         D.DEFAULT_ARGS = {
                 label      : [ "label", null ],
@@ -54,6 +53,9 @@ DEFINE_CLASS("DlButtonMenu", DlHbox, function(D, P) {
 //                      this._menuBtn.getElement().style.overflow = "hidden";
 //              }
                 this._mainBtn.connectEvents([ "onMouseEnter", "onMouseLeave" ], this._menuBtn);
+
+                this._menuBtn.addEventListener("onMouseDown", popupMenu.$(this));
+                this.addEventListener("onDestroy", this.setMenu.$(this, null));
         };
 
         function popupMenu(ev) {
@@ -71,13 +73,6 @@ DEFINE_CLASS("DlButtonMenu", DlHbox, function(D, P) {
                         ev._justFocusedWidget = p;
                         this.callHooks("onPopup");
                 }
-        };
-
-        P.initDOM = function() {
-                this.registerEvents(DEFAULT_EVENTS);
-                D.BASE.initDOM.call(this);
-                this._menuBtn.addEventListener("onMouseDown", popupMenu.$(this));
-                this.addEventListener("onDestroy", this.setMenu.$(this, null));
         };
 
         P.getMenu = function() {

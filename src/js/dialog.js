@@ -165,7 +165,7 @@ DEFINE_CLASS("DlDialog", DlContainer, function(D, P, DOM){
             CC = DOM.condClass,
             CE = DOM.createElement;
 
-        var DEFAULT_EVENTS = [ "onShow", "onHide", "onActivate", "onQuitBtn" ];
+        D.DEFAULT_EVENTS = [ "onShow", "onHide", "onActivate", "onQuitBtn" ];
 
         D.DEFAULT_ARGS = {
                 _title         : [ "title"        , "DlDialog" ],
@@ -572,6 +572,14 @@ DEFINE_CLASS("DlDialog", DlContainer, function(D, P, DOM){
                         this.makeResizable();
 
                 this.setIconClass(this._iconClass);
+
+                if (!this._fixed)
+                        this.makeDraggable();
+
+                this.addEventListener({ onMouseDown   : this.activate,
+                                        onMouseWheel  : onMouseWheel,
+                                        onDisplay     : onDisplay,
+                                        onDestroy     : this.hide });
         };
 
         P.setIconClass = function(iconClass) {
@@ -721,17 +729,6 @@ DEFINE_CLASS("DlDialog", DlContainer, function(D, P, DOM){
                         }
                 }
                 this._handleKeybinding(ev);
-        };
-
-        P.initDOM = function() {
-                this.registerEvents(DEFAULT_EVENTS);
-                D.BASE.initDOM.call(this);
-                if (!this._fixed)
-                        this.makeDraggable();
-                this.addEventListener({ onMouseDown   : this.activate,
-                                        onMouseWheel  : onMouseWheel,
-                                        onDisplay     : onDisplay,
-                                        onDestroy     : this.hide });
         };
 
         function _el(o, p) {

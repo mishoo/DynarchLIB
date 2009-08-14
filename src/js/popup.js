@@ -23,8 +23,7 @@ DEFINE_CLASS("DlPopup", DlContainer, function(D, P, DOM) {
                 this.visible = false;
         };
 
-        // XXX: can we use D.DEFAULT_EVENTS?
-        var DEFAULT_EVENTS = [ "onPopup", "onHide" ];
+        D.DEFAULT_EVENTS = [ "onPopup", "onHide" ];
 
         D.DEFAULT_ARGS = {
                 _level     : [ "level"      , 0 ],
@@ -81,11 +80,6 @@ DEFINE_CLASS("DlPopup", DlContainer, function(D, P, DOM) {
                 this.constructor.clearAll = D.clearAll;
                 POPUPS[this._objectType] = [];
                 ALL_POPUPS[this._objectType] = {};
-        };
-
-        P.initDOM = function() {
-                this.registerEvents(DEFAULT_EVENTS);
-                D.BASE.initDOM.call(this);
         };
 
         P._createElement = function() {

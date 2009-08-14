@@ -22,8 +22,7 @@ DEFINE_CLASS("DlSpinner", DlEntry, function(D, P, DOM) {
 		this._timerPos = null;
         };
 
-        // XXX: can we use D.DEFAULT_EVENTS?
-        var DEFAULT_EVENTS = [ "onSpin" ];
+        D.DEFAULT_EVENTS = [ "onSpin" ];
 
 	D.DEFAULT_ARGS = {
 		_step        : [ "step"      , 1 ],
@@ -101,7 +100,6 @@ DEFINE_CLASS("DlSpinner", DlEntry, function(D, P, DOM) {
 
 	P._setListeners = function() {
 		D.BASE._setListeners.call(this);
-		this.registerEvents(DEFAULT_EVENTS);
 		this.addEventListener({ onFocus       : onFocus,
 					onBlur        : onBlur,
                                         onMouseWheel  : onMouseWheel,

@@ -212,13 +212,7 @@ DEFINE_CLASS("DlHMenu", DlHbox, function(D, P) {
 
         D.CONSTRUCT = DlMenuBase;
 
-        // XXX: is it possible to use D.DEFAULT_EVENTS?
-        var DEFAULT_EVENTS = [ "onSelect", "onPopup" ];
-
-        P.initDOM = function() {
-	        this.registerEvents(DEFAULT_EVENTS);
-	        D.BASE.initDOM.call(this);
-        };
+        D.DEFAULT_EVENTS = [ "onSelect", "onPopup" ];
 
 });
 
@@ -228,13 +222,7 @@ DEFINE_CLASS("DlVMenu", DlVbox, function(D, P) {
 
         D.CONSTRUCT = DlMenuBase;
 
-        // XXX: is it possible to use D.DEFAULT_EVENTS?
-        var DEFAULT_EVENTS = [ "onSelect", "onPopup" ];
-
-        P.initDOM = function() {
-	        this.registerEvents(DEFAULT_EVENTS);
-	        D.BASE.initDOM.call(this);
-        };
+        D.DEFAULT_EVENTS = [ "onSelect", "onPopup" ];
 
 });
 
@@ -245,8 +233,7 @@ DEFINE_CLASS("DlMenuItem", DlContainer, function(D, P, DOM) {
 			this.parentMenu = this.parent;
         };
 
-        // XXX: is it possible to use D.DEFAULT_EVENTS?
-        var DEFAULT_EVENTS = [ "onSelect" ];
+        D.DEFAULT_EVENTS = [ "onSelect" ];
 
 	D.DEFAULT_ARGS = {
 		label      : [ "label"	   , "DlMenuItem" ],
@@ -259,11 +246,6 @@ DEFINE_CLASS("DlMenuItem", DlContainer, function(D, P, DOM) {
 
 	P._inBaseMenu = function() {
 		return !this.parentMenu.parentMenu;
-	};
-
-	P.initDOM = function() {
-		this.registerEvents(DEFAULT_EVENTS);
-		D.BASE.initDOM.call(this);
 	};
 
 	P._createElement = function() {

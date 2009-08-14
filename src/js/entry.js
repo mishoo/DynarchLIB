@@ -9,11 +9,11 @@ DEFINE_CLASS("DlEntry", DlContainer, function(D, P, DOM) {
                 this._isTextArea = args.type == "textarea";
         };
 
-        var DEFAULT_EVENTS = [ "onChange",
-                               "onKey-ENTER",
-                               "onKey-ESCAPE",
-                               "onValidationError",
-                               "onValidation" ];
+        D.DEFAULT_EVENTS = [ "onChange",
+                             "onKey-ENTER",
+                             "onKey-ESCAPE",
+                             "onValidationError",
+                             "onValidation" ];
 
         D.DEFAULT_ARGS = {
                 _domType    : [ "type"       , "text" ],
@@ -245,7 +245,6 @@ DEFINE_CLASS("DlEntry", DlContainer, function(D, P, DOM) {
         };
 
         P.initDOM = function() {
-                this.registerEvents(DEFAULT_EVENTS);
                 D.BASE.initDOM.call(this);
                 var input = this.getInputElement();
                 DOM.addEvent(input, { focus   : this._on_element_focus = element_focus.$(this),

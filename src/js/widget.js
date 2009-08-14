@@ -47,36 +47,37 @@ DEFINE_CLASS("DlWidget", DlEventProxy, function(D, P, DOM) {
                 __noPropEvents   : [ "dontBubbleEvents" , null ]
         };
 
-        var DEFAULT_EVENTS = [ "onMouseEnter",
-                               "onMouseLeave",
-                               "onMouseMove",
-                               "onMouseDown",
-                               "onMouseUp",
-                               "onMouseOver",
-                               "onMouseOut",
-                               "onMouseWheel",
-                               "onClick",
-                               "onDblClick",
-                               "onDisabled",
-                               "onDisplay",
-                               "onFocus",
-                               "on_DOM_Focus",
-                               "onBlur",
-                               "on_DOM_Blur",
-                               "onKeyDown",
-                               "onKeyUp",
-                               "onKeyPress",
-                               "onResize",
-                               "onContextMenu",
-                               "onTooltipShow",
-                               "onTooltipHide"
+        D.DEFAULT_EVENTS = [
+                "onMouseEnter",
+                "onMouseLeave",
+                "onMouseMove",
+                "onMouseDown",
+                "onMouseUp",
+                "onMouseOver",
+                "onMouseOut",
+                "onMouseWheel",
+                "onClick",
+                "onDblClick",
+                "onDisabled",
+                "onDisplay",
+                "onFocus",
+                "on_DOM_Focus",
+                "onBlur",
+                "on_DOM_Blur",
+                "onKeyDown",
+                "onKeyUp",
+                "onKeyPress",
+                "onResize",
+                "onContextMenu",
+                "onTooltipShow",
+                "onTooltipHide"
 
-                               // DnD events -- not yet used
-                               // "onDragStart",
-                               // "onDragAvailable",
-                               // "onDragCancel",
-                               // "onDrop"
-                             ];
+                // DnD events -- not yet used
+                // "onDragStart",
+                // "onDragAvailable",
+                // "onDragCancel",
+                // "onDrop"
+        ];
 
         var WIDGETS = D.WIDGETS = {};
 
@@ -497,7 +498,6 @@ DEFINE_CLASS("DlWidget", DlEventProxy, function(D, P, DOM) {
         };
 
         P.initDOM = function() {
-                this.registerEvents(DEFAULT_EVENTS);
                 this._setListeners();
                 this._createElement();
                 if (this._parent) {

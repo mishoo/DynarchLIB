@@ -55,8 +55,7 @@ DEFINE_CLASS("DlAbstractButton", DlWidget, function(D, P) {
 		}
 	};
 
-        // XXX: can we use D.DEFAULT_EVENTS?
-        var DEFAULT_EVENTS = [ "onCheck", "onUncheck", "onChange", "onUpdateLabel" ];
+        D.DEFAULT_EVENTS = [ "onCheck", "onUncheck", "onChange", "onUpdateLabel" ];
 
 	P._cap_onMouseUp = function(ev) {
 		var obj = ev.getObject();
@@ -197,17 +196,12 @@ DEFINE_CLASS("DlAbstractButton", DlWidget, function(D, P) {
 		}
 	};
 
-	P.initDOM = function() {
-		this.registerEvents(DEFAULT_EVENTS);
-		D.BASE.initDOM.call(this);
-		this.setUnselectable();
-	};
-
 	P._createElement = function() {
 		D.BASE._createElement.call(this);
 		this._createLabelElement();
 		this.label(this._label, true);
 		this._updateState();
+                this.setUnselectable();
 	};
 
 	P._setListeners = function() {

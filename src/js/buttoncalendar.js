@@ -10,7 +10,7 @@ DEFINE_CLASS("DlButtonCalendar", DlButtonMenu, function(D, P){
 		date           : [ "date"         , "Select date..." ]
 	};
 
-        var DEFAULT_EVENTS = [ "onSelect", "onCalendarRendered" ];
+        D.DEFAULT_EVENTS = [ "onSelect", "onCalendarRendered" ];
 
 	function calendar_onSelect(cal, cleared, otherMonth) {
 		if (!cleared) {
@@ -49,13 +49,12 @@ DEFINE_CLASS("DlButtonCalendar", DlButtonMenu, function(D, P){
 	};
 
 	P.initDOM = function() {
-		this.registerEvents(DEFAULT_EVENTS);
 		D.BASE.initDOM.call(this);
 		var b = this.getButton();
 		if (this.date instanceof Date)
-			b.setContent(this.date.print(this.dateFormat));
+			b.label(this.date.print(this.dateFormat));
 		else
-			b.setContent(this.date);
+			b.label(this.date);
 		this.setMenu(this.getCalendar.$(this));
 		b.addEventListener("onClick", button_onClick.$(this));
 	};

@@ -3,21 +3,22 @@
 
 DEFINE_CLASS("DlRadioSelect", DlButtonMenu, function(D, P){
 
+	D.DEFAULT_ARGS = {
+		_options    : [ "options"   , [] ],
+		_value	    : [ "value"	    , null ],
+		_connected  : [ "connected" , true ]
+	};
+
+        D.DEFAULT_EVENTS = [ "onChange" ];
+
 	D.CONSTRUCT = function() {
+                this._radioGroup = DlRadioGroup.get();
 		if (this._options.length)
 			this.setOptions(this._options);
 		this.value(this._value, true);
                 this.addEventListener("onDestroy", function(){
                         this._radioGroup.reset();
                 });
-	};
-
-        var DEFAULT_EVENTS = [ "onChange" ];
-
-	D.DEFAULT_ARGS = {
-		_options    : [ "options"   , [] ],
-		_value	    : [ "value"	    , null ],
-		_connected  : [ "connected" , true ]
 	};
 
 	// TODO: get rid of the value() function, use set* and get* methods
@@ -56,12 +57,6 @@ DEFINE_CLASS("DlRadioSelect", DlButtonMenu, function(D, P){
 				o.widget.checked(true);
 			}
 		}
-	};
-
-	P._setListeners = function() {
-		this.registerEvents(DEFAULT_EVENTS);
-		D.BASE._setListeners.call(this);
-		this._radioGroup = new DlRadioGroup(this.id);
 	};
 
 	P.setOptions = function(options) {
@@ -116,10 +111,6 @@ DEFINE_CLASS("DlRadioSelect", DlButtonMenu, function(D, P){
 		item.connectEvents("onMouseUp", "onClick");
                 this._options.splice(index, 0, opt);
 		return item;
-	};
-
-	P.initDOM = function() {
-		D.BASE.initDOM.call(this);
 	};
 
 });

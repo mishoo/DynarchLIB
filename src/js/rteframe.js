@@ -31,7 +31,7 @@ DEFINE_CLASS("DlRteFrame", DlWidget, function(D, P, DOM) {
 			this.setSections(this.__sections);
         };
 
-        var DEFAULT_EVENTS = [ "onUpdate", "onSectionChange" ];
+        D.DEFAULT_EVENTS = [ "onUpdate", "onSectionChange" ];
 
 	D.DEFAULT_ARGS = {
 		__paragraphsMode : [ "useParagraphs" , true ],
@@ -320,7 +320,6 @@ DEFINE_CLASS("DlRteFrame", DlWidget, function(D, P, DOM) {
 // 	};
 
 	P._setListeners = function() {
-		this.registerEvents(DEFAULT_EVENTS);
 		D.BASE._setListeners.call(this);
 		this.addEventListener(is_ie ? "onKeyDown" : "onKeyPress", function(ev) {
                         this._onKeypress(ev)

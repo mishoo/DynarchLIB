@@ -10,8 +10,7 @@ DEFINE_CLASS("DlCompletionEntry", DlEntry, function(D, P, DOM) {
                 };
         });
 
-        // XXX: can we use D.DEFAULT_EVENTS?
-        var DEFAULT_EVENTS = [ "onCompletion", "onSelect" ];
+        D.DEFAULT_EVENTS = [ "onCompletion", "onSelect" ];
 
 	D.DEFAULT_ARGS = {
                 __timeout  : [ "timeout"   , 500    ],
@@ -35,7 +34,6 @@ DEFINE_CLASS("DlCompletionEntry", DlEntry, function(D, P, DOM) {
 		this.__on_itemHover = on_itemHover.$(null, this);
 		this.__on_itemSelect = on_itemSelect.$(null, this);
 		D.BASE._setListeners.call(this);
-		this.registerEvents(DEFAULT_EVENTS);
 		this.addEventListener({
                         onKeyDown  : onKeyDown,
 			onBlur     : onBlur,
