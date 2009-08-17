@@ -18,7 +18,7 @@ DEFINE_CLASS("DlException", null, function(D, P) {
 	        return str;
         };
 
-});
+}).stopEventBubbling = function() { throw new DlExStopEventBubbling; };
 
 function DEFINE_EXCEPTION(className, base) {
         return DEFINE_CLASS(className, base || DlException);
@@ -31,5 +31,3 @@ DEFINE_EXCEPTION("DlExStopFrameEvent");
 DEFINE_EXCEPTION("DlExStopEventBubbling");
 DEFINE_EXCEPTION("DlDataException");
 DEFINE_EXCEPTION("DlSecurityException");
-
-DlException.stopEventBubbling = function() { throw new DlExStopEventBubbling; };

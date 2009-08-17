@@ -164,7 +164,7 @@ DEFINE_CLASS("DlContainer", DlWidget, function(D, P) {
                                 if (w._check_accessKey(ev)) {
                                         w._handle_accessKey(ev);
                                         ev.domStop = true;
-                                        DlExStopEventBubbling();
+                                        throw new DlExStopEventBubbling;
                                 }
                         });
                         if (this.parent && !this.__noParentKeyBindings)
