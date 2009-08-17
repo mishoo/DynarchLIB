@@ -15,11 +15,11 @@ DEFINE_CLASS("DlRadioButton", DlCheckbox, function(D, P) {
 			unchecked : "DlRadioButton-0",
 			empty     : "DlRadioButton-empty",
 			disabled  : "DlRadioButton-disabled"
-		}
-		             ]
+		} ]
         };
 
-        D.FINISH_OBJECT_DEF = function() {
+        P.FINISH_OBJECT_DEF = function() {
+                D.BASE.FINISH_OBJECT_DEF.call(this);
                 this._className.remove("DlCheckbox");
         };
 

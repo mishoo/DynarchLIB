@@ -131,15 +131,13 @@ Object.merge(Function.prototype, {
         },
 
         inherits : function(base, thisName) {
-                var p = (this.prototype = new base);
+                var p = (this.prototype = new base($NO_INIT_CTOR));
                 p.constructor = this;
                 this.BASE = base.prototype;
                 Function.INHERITANCE[this.name =
                                      this._objectType =
                                      p._objectType =
                                      thisName || Dynarch.getFunctionName(this)] = Dynarch.getFunctionName(base);
-                if (p.__patchSubclassPrototype instanceof Function)
-                        p.__patchSubclassPrototype();
                 return this.BASE;
         },
 
@@ -242,6 +240,9 @@ function $YIELD(timeout) { throw new $_YIELD(timeout); };
 function $BREAK() { throw $_BREAK; };
 function $CONTINUE() { throw $_CONTINUE; };
 function $RETURN(args) { throw new $_RETURN(args); };
+
+function $NO_INIT_CTOR() {};
+$NO_INIT_CTOR = new $NO_INIT_CTOR();
 
 Array.inject({
 
@@ -1884,29 +1885,32 @@ function DEFINE_CLASS(name, base, definition, hidden) {
         if (base)
                 D.inherits(base, name);
         function D(args) {
-                if (this === window)
-                        return alert("FIXME: Constructor called without new in " + name);
-                if (arguments.length > 0 || D.CONSTRUCT_NOARGS) {
-                        if (D.FIXARGS)
-                                D.FIXARGS.apply(this, arguments);
-                        if (D.DEFAULT_ARGS)
-                                D.setDefaults(this, args);
-                        if (D.BEFORE_BASE)
-                                D.BEFORE_BASE.apply(this, arguments);
-                        if (base)
-                                base.apply(this, arguments);
-                        if (D.CONSTRUCT)
-                                D.CONSTRUCT.apply(this, arguments);
+                if (args !== $NO_INIT_CTOR) {
+                        if (this === window)
+                                return alert("FIXME: Constructor called without new in " + name);
+                        if (arguments.length > 0 || D.CONSTRUCT_NOARGS) {
+                                if (D.FIXARGS)
+                                        D.FIXARGS.apply(this, arguments);
+                                if (D.DEFAULT_ARGS)
+                                        D.setDefaults(this, args);
+                                if (D.BEFORE_BASE)
+                                        D.BEFORE_BASE.apply(this, arguments);
+                                if (base)
+                                        base.apply(this, arguments);
+                                if (D.CONSTRUCT)
+                                        D.CONSTRUCT.apply(this, arguments);
+                        }
+                        if (D.CONSTRUCT_NOARGS instanceof Function)
+                                D.CONSTRUCT_NOARGS.apply(this, arguments);
                 }
-                if (D.CONSTRUCT_NOARGS instanceof Function)
-                        D.CONSTRUCT_NOARGS.apply(this, arguments);
         };
         if (name && !hidden)
                 window[name] = D;
+        var P = D.prototype;
         if (definition)
-                definition(D, D.prototype, DynarchDomUtils);
-        if (D.prototype.FINISH_OBJECT_DEF instanceof Function)
-                D.prototype.FINISH_OBJECT_DEF();
+                definition(D, P, DynarchDomUtils);
+        if (P.FINISH_OBJECT_DEF instanceof Function)
+                P.FINISH_OBJECT_DEF();
         return D;
 };
 

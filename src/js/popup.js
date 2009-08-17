@@ -35,6 +35,14 @@ DEFINE_CLASS("DlPopup", DlContainer, function(D, P, DOM) {
                 _shadows   : [ "shadows"    , true ]
         };
 
+        P.FINISH_OBJECT_DEF = function() {
+                D.BASE.FINISH_OBJECT_DEF.call(this);
+                this.constructor.get = D.get;
+                this.constructor.clearAll = D.clearAll;
+                POPUPS[this._objectType] = [];
+                ALL_POPUPS[this._objectType] = {};
+        };
+
         // FIXME: this function is known to suck
         D.get = function(level, nocreate) {
                 var type = this.prototype._objectType;
@@ -72,14 +80,6 @@ DEFINE_CLASS("DlPopup", DlContainer, function(D, P, DOM) {
                         if (!except || !except[i])
                                 POPUPS_BY_ID[i].hide();
                 }
-        };
-
-        P.FINISH_OBJECT_DEF = function() {
-                D.BASE.FINISH_OBJECT_DEF.call(this);
-                this.constructor.get = D.get;
-                this.constructor.clearAll = D.clearAll;
-                POPUPS[this._objectType] = [];
-                ALL_POPUPS[this._objectType] = {};
         };
 
         P._createElement = function() {

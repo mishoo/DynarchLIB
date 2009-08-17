@@ -3,7 +3,7 @@
 // @require resizebar.js
 // @require dialog.js
 
-// data model
+/* -----[ data model ]----- */
 
 DEFINE_CLASS("DlRecord", DlEventProxy, function(D, P) {
 
