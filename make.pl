@@ -102,7 +102,7 @@ chdir "$destdir/src/js";
         local $/ = undef;
 
         # kinda sucky, but does the job
-        open YUI, '-|:encoding(UTF-8)', 'java -jar ~/Java/yuicompressor-2.4.2/build/yuicompressor-2.4.2.jar --type js < thelib.js';
+        open YUI, '-|', 'java -jar ~/Java/yuicompressor-2.4.2/build/yuicompressor-2.4.2.jar --type js < thelib.js';
         $content = <YUI>;
         close YUI;
 
@@ -110,7 +110,6 @@ chdir "$destdir/src/js";
         print FILE $core_comment;
         print FILE $content;
         close FILE;
-
     }
 
     unlink $loader->get_scripts;

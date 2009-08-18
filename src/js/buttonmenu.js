@@ -54,11 +54,11 @@ DEFINE_CLASS("DlButtonMenu", DlHbox, function(D, P) {
 //              }
                 this._mainBtn.connectEvents([ "onMouseEnter", "onMouseLeave" ], this._menuBtn);
 
-                this._menuBtn.addEventListener("onMouseDown", popupMenu.$(this));
+                this._menuBtn.addEventListener("onMouseDown", this._do_popupMenu.$(this));
                 this.addEventListener("onDestroy", this.setMenu.$(this, null));
         };
 
-        function popupMenu(ev) {
+        P._do_popupMenu = function(ev) {
                 if (!this._popupVisible) {
                         var p = this._getContextMenuPopup();
                         p.popup({ timeout   : 0,
@@ -70,7 +70,8 @@ DEFINE_CLASS("DlButtonMenu", DlHbox, function(D, P) {
                                   shift     : this._shiftMenu,
                                   onHide    : this.callHooks.$(this, "onHide")
                                 });
-                        ev._justFocusedWidget = p;
+                        if (ev instanceof DlEvent)
+                                ev._justFocusedWidget = p;
                         this.callHooks("onPopup");
                 }
         };
