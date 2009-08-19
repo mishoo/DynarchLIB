@@ -689,10 +689,10 @@ Object.merge(Date, {
 
         _MD     : [ 31,28,31,30,31,30,31,31,30,31,30,31 ],
         SECOND  : 1000,
-        MINUTE  : 60 * Date.SECOND,
-        HOUR    : 60 * Date.MINUTE,
-        DAY     : 24 * Date.HOUR,
-        WEEK    :  7 * Date.DAY,
+        MINUTE  : 60 * 1000,
+        HOUR    : 60 * 60 * 1000,
+        DAY     : 24 * 60 * 60 * 1000,
+        WEEK    :  7 * 24 * 60 * 60 * 1000,
 
         // see texts.js
         _MN : DlTEXTS._date_monthNames,
