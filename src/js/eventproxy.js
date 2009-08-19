@@ -3,14 +3,10 @@
 
 DEFINE_CLASS("DlEventProxy", null, function(D, P) {
 
-        D.FIXARGS = function() {
+        D.CONSTRUCT_NOARGS = function() {
                 this.__eventHooks = {};
                 this.__disHooks = {};
-        };
-
-        D.CONSTRUCT_NOARGS = function() {
                 this.registerEvents(this.DEFAULT_EVENTS);
-                // console.log("CONSTRUCT: %o, events: %s", this._objectType, this.DEFAULT_EVENTS.join(", "));
                 this.addEventListener("onDestroy", this.__onDestroy);
         };
 
@@ -20,7 +16,6 @@ DEFINE_CLASS("DlEventProxy", null, function(D, P) {
                 var moreEvents = this.constructor.DEFAULT_EVENTS;
                 if (moreEvents)
                         this.DEFAULT_EVENTS = this.DEFAULT_EVENTS.concat(moreEvents);
-                // console.log("FINISHED OBJECT: %s, events: %s", this._objectType, this.DEFAULT_EVENTS.join(", "));
         };
 
         // FIXME: not sure this is of any use to prevent leaks
