@@ -18,13 +18,13 @@ var DlKeyboard = {
 	parseKey : function(str) {
 		var o = {}, m;
                 str = str.toUpperCase();
-		if (m = /^([a-z]+)\s+\x27(.)\x27$/i.exec(str)) {
+		if ((m = /^([a-z]+)\s+\x27(.)\x27$/i.exec(str))) {
 			o[m[1]] = true;
 			o.key = m[2];
-		} else if (m = /^([a-z]+)-([a-z]+)\s+\x27(.)\x27$/i.exec(str)) {
+		} else if ((m = /^([a-z]+)-([a-z]+)\s+\x27(.)\x27$/i.exec(str))) {
 			o[m[1]] = o[m[2]] = true;
 			o.key = m[3];
-		} else if (m = /^([a-z]+)-([a-z]+)-([a-z]+)\s+\x27(.)\x27$/i.exec(str)) {
+		} else if ((m = /^([a-z]+)-([a-z]+)-([a-z]+)\s+\x27(.)\x27$/i.exec(str))) {
 			o[m[1]] = o[m[2]] = o[m[3]] = true;
 			o.key = m[4];
 		}
