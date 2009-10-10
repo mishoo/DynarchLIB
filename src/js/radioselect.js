@@ -54,8 +54,10 @@ DEFINE_CLASS("DlRadioSelect", DlButtonMenu, function(D, P){
 				continue;
 			if (this._value == o.value) {
 				this.getButton().label(o.label);
-				o.widget.checked(true);
-			}
+				o.widget.checked(true, true);
+			} else {
+                                o.widget.checked(false, true);
+                        }
 		}
 	};
 

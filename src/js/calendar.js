@@ -279,7 +279,7 @@ DEFINE_CLASS("DlCalendar", DlWidget, function(D, P, DOM) {
                                 }
                                 if (!di.start)
                                         di.start = tmp;
-				if (cell._otherMonth = month != tmp.m) {
+				if ((cell._otherMonth = (month != tmp.m))) {
 					cn.push("OtherMonth");
                                         cells[iday + (iday > 15 ? 100 : 200)] = cell;
 				} else {

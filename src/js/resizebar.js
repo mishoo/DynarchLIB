@@ -82,7 +82,7 @@ DEFINE_CLASS("DlResizeBar", DlWidget, function(D, P, DOM){
 	P._doResize = function(ev) {
 		var H = this.isHoriz();
 		var pos = DOM.getPos(DlElementCache.DRAGGING_LINE);
-		var pos = H ? pos.y : pos.x;
+		pos = H ? pos.y : pos.x;
 		var diff = this._invert * (pos - this._dragPos);
 		var w = this._widget;
 		if (w) {

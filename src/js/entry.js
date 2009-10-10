@@ -313,7 +313,7 @@ DEFINE_CLASS("DlEntry", DlContainer, function(D, P, DOM) {
 
         P._makeButton = function(label, iconClass, className, classes) {
                 if (!classes && !className) {
-                        className = "DlEntry-dropDownBtn",
+                        className = "DlEntry-dropDownBtn";
                         classes = {
                                 hover  : "DlEntry-dropDownBtn-hover",
                                 active : "DlEntry-dropDownBtn-active"

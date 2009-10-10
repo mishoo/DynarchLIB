@@ -115,6 +115,8 @@ Object.merge(Function, {
 
 });
 
+var $__JSOOP = new Function.noop;
+
 Object.merge(Function.prototype, {
 
         $ : Function.prototype.closure = function(obj) {
@@ -131,7 +133,7 @@ Object.merge(Function.prototype, {
         },
 
         inherits : function(base, thisName) {
-                var p = (this.prototype = new base($NO_INIT_CTOR));
+                var p = (this.prototype = new base($__JSOOP));
                 p.constructor = this;
                 this.BASE = base.prototype;
                 Function.INHERITANCE[this.name =
@@ -240,9 +242,6 @@ function $YIELD(timeout) { throw new $_YIELD(timeout); };
 function $BREAK() { throw $_BREAK; };
 function $CONTINUE() { throw $_CONTINUE; };
 function $RETURN(args) { throw new $_RETURN(args); };
-
-function $NO_INIT_CTOR() {};
-$NO_INIT_CTOR = new $NO_INIT_CTOR();
 
 Array.inject({
 
@@ -1885,7 +1884,7 @@ function DEFINE_CLASS(name, base, definition, hidden) {
         if (base)
                 D.inherits(base, name);
         function D(args) {
-                if (args !== $NO_INIT_CTOR) {
+                if (args !== $__JSOOP) {
                         if (this === window)
                                 return alert("FIXME: Constructor called without new in " + name);
                         if (arguments.length > 0 || D.CONSTRUCT_NOARGS) {

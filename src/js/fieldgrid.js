@@ -21,6 +21,7 @@ DEFINE_CLASS("DlFieldGrid", DlTable, function(D, P) {
                 }
 		var row = this.addRow();
 		var c1 = this.addCell(row, "right", args.valign);
+                c1.addClass("DlFieldGrid-labelCell");
 		if (args.valign == "top" && (label instanceof DlLabel))
 			c1.getElement().style.paddingTop = "4px";
                 if (label)
