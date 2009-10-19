@@ -479,7 +479,7 @@ Array.inject({
                         var min = f != null
                                 ? f.call(obj, this[0], 0)
                                 : this[0];
-                        for (i = 1; i < this.length; ++i) {
+                        for (var i = 1; i < this.length; ++i) {
                                 min = Math.min(min, (f != null
                                                      ? f.call(obj, this[i], i)
                                                      : this[i]));
@@ -510,7 +510,7 @@ Array.inject({
                         var max = f != null
                                 ? f.call(obj, this[0], 0)
                                 : this[0];
-                        for (i = 1; i < this.length; ++i) {
+                        for (var i = 1; i < this.length; ++i) {
                                 max = Math.max(max, (f != null
                                                      ? f.call(obj, this[i], i)
                                                      : this[i]));
