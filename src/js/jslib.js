@@ -1906,8 +1906,10 @@ function DEFINE_CLASS(name, base, definition, hidden) {
         if (name && !hidden)
                 window[name] = D;
         var P = D.prototype;
-        if (definition)
+        if (definition) {
+                D.DEFINITION = definition;
                 definition(D, P, DynarchDomUtils);
+        }
         if (P.FINISH_OBJECT_DEF instanceof Function)
                 P.FINISH_OBJECT_DEF();
         return D;

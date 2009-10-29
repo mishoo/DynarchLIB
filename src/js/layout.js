@@ -19,7 +19,7 @@ DEFINE_CLASS("DlLayout", DlContainer, function(D, P, DOM) {
 	};
 
 	P._appendWidgetElement = function(w, pos) {
-                if (!pos)
+                if (pos == null)
                         return D.BASE._appendWidgetElement.apply(this, arguments);
 		var div = DOM.createElement("div", null, {
                         className: "DlLayout-positioned"
@@ -34,10 +34,10 @@ DEFINE_CLASS("DlLayout", DlContainer, function(D, P, DOM) {
 
 	P._removeWidgetElement = function(w) {
 		if (this._widgets.contains(w)) {
-			var el = w.getElement();
-			if (el.parentNode) {
-				el.parentNode.parentNode.removeChild(el.parentNode);
-				el.parentNode.removeChild(el);
+			var el = w.getElement(), p = el.parentNode;
+			if (p) {
+				p.parentNode.removeChild(p);
+				p.removeChild(el);
 			}
 		}
 	};

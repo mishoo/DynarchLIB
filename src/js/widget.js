@@ -729,7 +729,7 @@ DEFINE_CLASS("DlWidget", DlEventProxy, function(D, P, DOM) {
                         for (var i in WIDGETS) {
                                 destroying = true;
                                 var w = WIDGETS[i];
-                                try { WIDGETS[i] = null; delete WIDGETS[i]; w.destroy() } catch(ex) {};
+                                try { WIDGETS[i] = null; delete WIDGETS[i]; w.destroy(); } catch(ex) {};
                                 break;
                         }
                 } while (destroying);
