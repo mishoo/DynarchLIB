@@ -24,7 +24,13 @@ DEFINE_CLASS("DlEvent", null, function(D, P, DOM){
                 this.type = ev.type;
                 this.dl_type = EVENT_MAP[this.type] || this.type;
                 this.ctrlKey = ev.ctrlKey;
-                this.altKey = ev.altKey;
+                if (is_macintosh) {
+                        this.altGrKey = ev.altKey;
+                        this.altKey = ev.metaKey;
+                } else {
+                        // this.metaKey = ev.metaKey;
+                        this.altKey = ev.altKey;
+                }
                 this.shiftKey = ev.shiftKey;
                 this.button = ev.button;
                 this.focusedWidget = D.focusedWidget();

@@ -2,14 +2,6 @@
 
 DEFINE_CLASS("DlCompletionEntry", DlEntry, function(D, P, DOM) {
 
-        // It doesn't make too much sense to export this class.
-        var DlCompletionPopup = DEFINE_HIDDEN_CLASS("DlCompletionPopup", DlPopup, function(D, P) {
-                D.FIXARGS = function(args) {
-                        args.zIndex = 1000;
-                        args.focusable = false;
-                };
-        });
-
         D.DEFAULT_EVENTS = [ "onCompletion", "onSelect" ];
 
 	D.DEFAULT_ARGS = {
@@ -275,4 +267,11 @@ DEFINE_CLASS("DlCompletionEntry", DlEntry, function(D, P, DOM) {
 		};
 	};
 
+});
+
+DEFINE_CLASS("DlCompletionPopup", DlPopup, function(D, P) {
+        D.FIXARGS = function(args) {
+                args.zIndex = 1000;
+                args.focusable = false;
+        };
 });

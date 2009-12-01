@@ -5,6 +5,7 @@ var DlKeyboard = {
 	ENTER       : 13,
 	ESCAPE      : 27,
         SPACE       : 32,
+        DASH        : 45,
 	PAGE_UP     : 33,
 	PAGE_DOWN   : 34,
 	END         : 35,

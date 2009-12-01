@@ -325,6 +325,21 @@ Array.inject({
                 return hash;
         },
 
+        toHash3: function(key, obj) {
+                var hash = {};
+                if (key instanceof Function) {
+                        this.foreach(function(el, i){
+                                var a = key.call(obj != null ? obj : el, el, i);
+                                hash[a[0]] = a[1];
+                        });
+                } else {
+                        this.foreach(function(el){
+                                hash[el[key]] = el;
+                        });
+                }
+                return hash;
+        },
+
         map: function(f, obj) {
                 var i = 0, l = this.length, a = [], args, func;
                 if (!(f instanceof Function)) {
@@ -569,6 +584,37 @@ Array.inject({
                         s(String.fromCharCode(c));
                 }
                 return s.get();
+        },
+
+        repeat: function(i) {
+                if (i == 0)
+                        return [];
+                if (i == 1)
+                        return this;
+                var d = this.repeat(i >> 1);
+                d = d.concat(d);
+                if (i & 1)
+                        d = d.concat(this);
+                return d;
+        },
+
+        common_prefix: function() {
+                switch (this.length) {
+                    case 0:
+                        return "";
+                    case 1:
+                        return this[0];
+                    case 2:
+                        var a = this[0],
+                            b = this[1],
+                            n = Math.min(a.length, b.length),
+                            i = 0;
+                        while (i < n && a.charAt(i) === b.charAt(i))
+                                ++i;
+                        return a.substring(0, i);
+                    default:
+                        return [ this[0], this.slice(1).common_prefix() ].common_prefix();
+                }
         }
 
 });
@@ -1023,6 +1069,7 @@ String.inject({
         is_chrome = /Chrome/i.test(UA);
         // is_w3 = !is_ie || is_ie7; // FIXME: the part about IE7 is to be verified
         is_w3 = !is_ie;
+        is_macintosh = /Macintosh/i.test(UA);
 
         if (is_gecko && /rv:\s*([0-9.]+)/.test(UA))
                 gecko_version = parseFloat(RegExp.$1);
@@ -1096,6 +1143,8 @@ String.inject({
                 _qs(0, this.length - 1);
                 return modified;
         };
+
+        A.x = A.repeat;
 
         // Numberr
 
@@ -1913,6 +1962,10 @@ function DEFINE_CLASS(name, base, definition, hidden) {
         if (P.FINISH_OBJECT_DEF instanceof Function)
                 P.FINISH_OBJECT_DEF();
         return D;
+};
+
+function EXTEND_CLASS(ctor, definitions) {
+        definitions(ctor, ctor.prototype, DynarchDomUtils);
 };
 
 function DEFINE_HIDDEN_CLASS(name, base, definition) {
