@@ -719,10 +719,12 @@ Object.merge(Math, {
         },
 
         rotateLimit : function(n, min, max) {
-                if (n < min)
-                        n = max;
-                if (n > max)
-                        n = min;
+                max++;
+                n = n % (max - min);
+                if (n < 0)
+                        n = max + n;
+                else if (n < min)
+                        n = min - n;
                 return n + 0;
         }
 
