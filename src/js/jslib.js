@@ -1853,7 +1853,7 @@ window.DynarchDomUtils = {
                 var p = el.parentNode;
 
                 // we must find the nearest parent that has a scrollbar
-                while (p && (p.scrollHeight == p.clientHeight || p.scrollWidth == p.clientWidth || /table|tbody/i.test(p.tagName)))
+                while (p && ((p.scrollHeight == p.clientHeight && p.scrollWidth == p.clientWidth) || /table|tbody/i.test(p.tagName)))
                         p = p.parentNode;
 
                 if (p && p !== document.body) { // NEVER scroll the body!
