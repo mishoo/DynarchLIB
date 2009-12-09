@@ -336,14 +336,6 @@
       needed for your application.
     </p>
 
-    <h2>That's all for now</h2>
-
-    <p>
-      Until a full API reference for the new grid is available, I
-      think I have covered most use cases so that's the end of this
-      article.  Enjoy!
-    </p>
-
   </text>
 
   <code id="grid1" type="js" canrun="true"><![CDATA[
@@ -580,15 +572,7 @@
   ]]></code>
 
   <code id="grid5" type="js" canrun="true"><![CDATA[
-(function(){
-
-        MyCache2.inherits(DlRecordCache);
-        function MyCache2(args) {
-                DlRecordCache.call(this, args);
-        };
-
-        eval(Dynarch.EXPORT("MyCache2"));
-
+DEFINE_CLASS("MyCache2", DlRecordCache, function(D, P){
         // rec is a DlRecord
         // col is the column (property) ID
         // buf is a String.buffer()
@@ -604,8 +588,7 @@
                         buf(rec.get(col).toString().htmlEscape());
                 }
         };
-
-})();
+});
 
 var dialog = new DlDialog({ title: "Grid sample", resizable: true, quitBtn: "destroy" });
 
@@ -649,33 +632,15 @@ dialog.show(true);
   ]]></code>
 
   <code id="grid6" type="js" canrun="true"><![CDATA[
-(function(){
-
-        MyRecord.inherits(DlRecord);
-        function MyRecord(args) {
-                DlRecord.call(this, args);
-        };
-
-        eval(Dynarch.EXPORT("MyRecord"));
-
+DEFINE_CLASS("MyRecord", DlRecord, function(D, P){
         P.get = function(col) {
-
                 if (this._loading && col != "id")  // "fake" record?
                         return "...";              // show that we're loading it
-
                 return D.BASE.get.call(this, col); // cached record, call superclass
         };
+});
 
-})();
-
-(function(){
-
-        MyCache.inherits(DlRecordCache);
-        function MyCache(args) {
-                DlRecordCache.call(this, args);
-        };
-
-        eval(Dynarch.EXPORT("MyCache"));
+DEFINE_CLASS("MyCache", DlRecordCache, function(D, P){
 
         P.getRecords = function(ids, callback, obj) {
                 var a = [];     // records to be displayed (can contain fake records)
@@ -717,8 +682,7 @@ dialog.show(true);
                         }.$(this), 500); // let's say it takes half a second
                 }
         };
-
-})();
+});
 
 var dialog = new DlDialog({ title: "Grid sample", resizable: true, quitBtn: "destroy" });
 

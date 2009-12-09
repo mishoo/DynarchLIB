@@ -30,6 +30,22 @@
       <h2>Constructor</h2>
    <div class="method">
      <div class="doc"><span>
+<p class='heading'> Update</p>
+<p/>
+        With the introduction
+        of <a href="sample://define-class.xml">DEFINE_CLASS</a> and
+        DEFINE_SINGLETON, the information here is a bit outdated.
+        Everything described here still works, but it's not the best way to
+        define singletons.  Here is how to do it simply:
+<p/>
+        <div sample="DlSingleton3"></div>
+<p/>
+        The first time you execute the sample above it will display "Created
+        object instance" followed by "myCustomFunc()".  However, the second
+        time you run it, no new instance will be created so the first
+        message will not show up.
+<p class='heading'> Original documentation</p>
+<p/>
         This is a small framework for creating singletons.  A
         singleton is an useful design pattern.  A singleton class is a
         class that can be instantiated only once through an
@@ -39,7 +55,7 @@
 <p/>
         Here's how to declare your own singleton:
 <p/>
-        <div sample="DlSingleton3"></div>
+        <div sample="DlSingleton4"></div>
 <p/>
         This way you can effectively hide the constructor of your
         objects and therefore make sure that they are created only
@@ -188,7 +204,18 @@
             MyWickedObject(true);
             // (to avoid instantiation)
           </code>
-<code id="DlSingleton3" type="js">
+<code canrun="true" id="DlSingleton3" type="js">
+          DEFINE_SINGLETON("Foo", null, function(D, P){
+            D.CONSTRUCT = function() {
+              print("Created object instance");
+            };
+            P.myCustomFunc = function() {
+              print("myCustomFunc()");
+            };
+          });
+          Foo().myCustomFunc();
+        </code>
+<code id="DlSingleton4" type="js">
           // @require singleton.js
           (function(){
 

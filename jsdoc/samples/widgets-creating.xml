@@ -120,36 +120,15 @@
   </text>
 
   <code sample="timewidget" id="timeentry" type="js"><![CDATA[
-    (function(){
-            // remember our good policy to declare each widget in its
-            // own closure, so we don't accidentally create global
-            // variables.
-
-            var BASE = DlTimeEntry.inherits(DlContainer);
-            function DlTimeEntry(args) {
-                    if (args) {
-                            D.setDefaults(this, args);
-                            // declare that this widget can be focused
-                            // and can receive keyboard events
-                            this._focusable = true;
-                            BASE.constructor.call(this, args);
-                    }
-            };
-
-            eval(Dynarch.EXPORT("DlTimeEntry"));
-
-            // remember that after calling EXPORT this way, we get 2
-            // local variables:
-            //
-            //   D - refers to the object contructor; it's now simply
-            //       an alias to DlTimeEntry
-            //
-            //   P - refers to the object prototype; it's thus
-            //       an alias to DlTimeEntry.prototype
+    DEFINE_CLASS("DlTimeEntry", DlContainer, function(D, P){
 
             D.DEFAULT_ARGS = {
                     _initTime    : [ "initTime"    , null ], // initial time
                     _showSeconds : [ "showSeconds" , true ]  // show seconds?
+            };
+
+            D.FIXARGS = function(args) {
+                    args.focusable = true;
             };
 
             // we chose the easy and fast way -- use a static HTML
@@ -174,7 +153,7 @@
             // executed we can do our own modifications to the DOM.
             P.initDOM = function() {
                     // first we need to call BASE class in order to create the widget's element
-                    BASE.initDOM.call(this);
+                    D.BASE.initDOM.call(this);
 
                     // insert our HTML now
                     this.setContent(HTML);
@@ -235,7 +214,7 @@
 
                         default:
                             // call base class for good behavior.
-                            return BASE._handle_focusKeys.call(this, ev);
+                            return D.BASE._handle_focusKeys.call(this, ev);
 
                     }
             };
@@ -311,26 +290,19 @@
                     return val;
             };
 
-    })();
+    });
   ]]></code>
 
   <code sample="timewidget" id="timeentrypart" type="js"><![CDATA[
-    (function(){
-            var BASE = DlTimeEntryPart.inherits(DlWidget);
-            function DlTimeEntryPart(args) {
-                    if (args) {
-                            D.setDefaults(this, args);
-                            // this one can receive keyboard input as well
-                            this._focusable = true;
-                            BASE.constructor.call(this, args);
-                    }
-            };
-
-            eval(Dynarch.EXPORT("DlTimeEntryPart"));
+    DEFINE_CLASS("DlTimeEntryPart", DlWidget, function(D, P){
 
             D.DEFAULT_ARGS = {
                     _min : [ "min", 0 ], // minimum value of this field
                     _max : [ "max", 59 ] // maximum value of this field
+            };
+
+            D.FIXARGS = function(args) {
+                    args.focusable = true;
             };
 
             // Sets the value of the current field.  The value will be
@@ -349,7 +321,7 @@
             // this function is called by the framework after all DOM
             // is created and should define and/or set event handlers
             P._setListeners = function() {
-                    BASE._setListeners.call(this);
+                    D.BASE._setListeners.call(this);
                     // focus this widget at mousedown
                     this.addEventListener("onMouseDown", function() {
                             this.focus();
@@ -382,13 +354,13 @@
                                             this.__keys = ""; // reset
                                     this.setValue(val);
                             } else {
-                                    return BASE._handle_focusKeys.call(this, ev);
+                                    return D.BASE._handle_focusKeys.call(this, ev);
                             }
 
                     }
             };
 
-    })();
+    });
   ]]></code>
 
   <code id="test-timewidget1" type="js" canrun="true"><![CDATA[

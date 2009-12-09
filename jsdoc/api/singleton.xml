@@ -2,6 +2,34 @@
   <object name="DlSingleton">
     <constructor>
       <doc>
+        
+        *** Update
+
+        With the introduction
+        of <a href="sample://define-class.xml">DEFINE_CLASS</a> and
+        DEFINE_SINGLETON, the information here is a bit outdated.
+        Everything described here still works, but it's not the best way to
+        define singletons.  Here is how to do it simply:
+
+        <js canrun="true">
+          DEFINE_SINGLETON("Foo", null, function(D, P){
+            D.CONSTRUCT = function() {
+              print("Created object instance");
+            };
+            P.myCustomFunc = function() {
+              print("myCustomFunc()");
+            };
+          });
+          Foo().myCustomFunc();
+        </js>
+
+        The first time you execute the sample above it will display "Created
+        object instance" followed by "myCustomFunc()".  However, the second
+        time you run it, no new instance will be created so the first
+        message will not show up.
+
+        *** Original documentation
+
         This is a small framework for creating singletons.  A
         singleton is an useful design pattern.  A singleton class is a
         class that can be instantiated only once through an

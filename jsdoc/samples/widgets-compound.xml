@@ -62,24 +62,20 @@
   </text>
 
   <code id="compound1" type="js"><![CDATA[
-    (function(){
+    DEFINE_CLASS("NiceColorPicker", DlContainer, function(D, P){
 
             // We must declare these events as they will be hooked from DlButtonColorPicker.
             // not all of them are actually implemented.
-            var DEFAULT_EVENTS = [ "onSelect", "onHover", "onHoverOut", "onHueChange" ];
+            D.DEFAULT_EVENTS = [ "onSelect", "onHover", "onHoverOut", "onHueChange" ];
 
-            NiceColorPicker.inherits(DlContainer);
-            function NiceColorPicker(args) {
-                    if (args) {
-                            args.className = "DlWidget-3D";
-                            DlContainer.call(this, args);
-                            this.registerEvents(DEFAULT_EVENTS);
-                            this._updateCP = updateCP.clearingTimeout(25, this);
-                            this._init();
-                    }
+            D.FIXARGS = function(args) {
+                    args.className = "DlWidget-3D";
             };
 
-            eval(Dynarch.EXPORT("NiceColorPicker"));
+            D.CONSTRUCT = function() {
+                    this._updateCP = updateCP.clearingTimeout(25, this);
+                    this._init();
+            };
 
             // validator function that accepts hexadecimal RGB values in the form:
             // 123456 or 123 (the later will be automatically converted to 112233
@@ -325,14 +321,9 @@
             // Only one instance will be ever created and it's inside
             // our private code.
 
-            ColorDrag.inherits(DlDrag);
-            function ColorDrag(args) {
-                    DlDrag.call(this, args);
-            };
+            var ColorDrag = DEFINE_HIDDEN_CLASS(null, DlDrag, function(D, P) {
 
-            ColorDrag.inject({
-
-                    dropOK : function(source, ev, target) {
+                    P.dropOK = function(source, ev, target) {
                             this.canDrop = false;
                             if (target) {
                                     this.canDrop = target._acceptsColorDrop;
@@ -341,23 +332,23 @@
                                     }
                             }
                             return this.canDrop;
-                    },
+                    };
 
-                    doDrop : function(source, ev) {
+                    P.doDrop = function(source, ev) {
                             this.target.setStyle("background", DlColor.RGB2color(source.userData));
                             this.target.userData = source.userData;
-                    },
+                    };
 
-                    makeElementCopy : function(widget, ev) {
+                    P.makeElementCopy = function(widget, ev) {
                             var el = DlDrag.prototype.makeElementCopy.call(this, widget, ev);
                             el.innerHTML = "";
                             el.style.width = "18px";
                             el.style.height = "18px";
-                    }
+                    };
 
             });
 
-    })();
+    });
   ]]></code>
 
   <code id="compound2" type="js" canrun="true"><![CDATA[

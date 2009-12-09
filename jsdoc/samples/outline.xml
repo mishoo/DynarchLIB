@@ -1,7 +1,9 @@
 <outline>
 
   <item label="DynarchLIB overview" src="sample://basics.xml">
-    <item label="Coding style" src="sample://basic-objects.xml" />
+    <item label="Coding style" src="sample://basic-objects.xml">
+      <item label="DEFINE_CLASS" src="sample://define-class.xml" />
+    </item>
     <item label="The event system" src="sample://basic-events.xml" />
     <item label="Widget basics" src="sample://basic-widgets.xml" />
   </item>

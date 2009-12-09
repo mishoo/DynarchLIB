@@ -54,6 +54,15 @@
       instance.
     </p>
 
+    <p>
+      You can also note in the above code that if you use the <a
+      href="sample://define-class.xml">DEFINE_CLASS</a> construct, you
+      can simply assign the array that defines new events to
+      D.DEFAULT_EVENTS and don't need to care about calling
+      registerEvents() manually—the framework magically does this for
+      you.
+    </p>
+
     <h2>Danger: connecting events</h2>
 
     <p>
@@ -96,21 +105,19 @@ events.callHooks("myEvent", "foo", "bar");
   ]]></code>
 
   <code id="sample2" type="js" canrun="true"><![CDATA[
-(function(){
+DEFINE_CLASS("MyObject", DlEventProxy, function(D, P){
 
-    var BASE = MyObject.inherits(DlEventProxy);
-    function MyObject(name) {
-        BASE.constructor.call(this);
-        this.registerEvents([ "MyEvent" ]);
+    D.DEFAULT_EVENTS = [ "MyEvent" ];
+
+    D.CONSTRUCT = function(name) {
         this.name = name;
     };
-    eval(Dynarch.EXPORT("MyObject"));
 
     P.getName = function() {
         return this.name;
     };
 
-})();
+});
 
 var a = new MyObject("This is A");
 var b = new MyObject("This is Bee");

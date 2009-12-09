@@ -1948,8 +1948,11 @@ function DEFINE_CLASS(name, base, definition, hidden) {
                 if (args !== $__JSOOP) {
                         if (this === window)
                                 return alert("FIXME: Constructor called without new in " + name);
-                        if (D.FIXARGS)
-                                D.FIXARGS.apply(this, arguments);
+                        if (D.FIXARGS) {
+                                if (arguments.length == 0)
+                                        args = {};
+                                D.FIXARGS.call(this, args);
+                        }
                         if (D.DEFAULT_ARGS)
                                 D.setDefaults(this, args);
                         if (D.BEFORE_BASE)

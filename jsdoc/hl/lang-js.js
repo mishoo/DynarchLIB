@@ -51,7 +51,10 @@
 		"parseFloat",
 		"parseInt",
 		"undefined",
-		"window"
+		"window",
+                "D", "P",
+                "DEFAULT_EVENTS",
+                "DEFAULT_ARGS"
 	];
 
 	var BUILTINS = {}, i;
@@ -117,7 +120,11 @@
 		"void",
 		"volatile",
 		"while",
-		"with"
+		"with",
+                "DEFINE_CLASS",
+                "DEFINE_HIDDEN_CLASS",
+                "DEFINE_SINGLETON",
+                "EXTEND_CLASS"
 	];
 
 	var KEYWORDS = {};

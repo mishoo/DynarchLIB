@@ -1,0 +1,277 @@
+<sample>
+  <title>The DEFINE_CLASS construct</title>
+  <text>
+    <p>
+      DEFINE_CLASS is a helper for creating objects.  Again, for a
+      very detailed introduction please <a
+      href="jsdoc/jsobjects.pdf">read this article</a>.  Following
+      there's a quick introduction.
+    </p>
+
+    <h2>Motivation</h2>
+
+    <p>
+      JavaScript doesn't provide a very friendly syntax for
+      object-oriented programming.  Perhaps it wasn't intended to,
+      since it is, at its heart, more appropriate for functional
+      programming.  However, as a widget toolkit, DynarchLIB heavily
+      relies on OOP techniques.  〈DlWidget〉 is an object that
+      defines some core functionality, which will benefit all widgets
+      that inherit from it.  In turn, 〈DlWidget〉 inherits from
+      〈DlEventProxy〉, which provides some basic event dispatching
+      facilities.
+    </p>
+
+    <p>
+      Using standard JavaScript syntax is cumbersome and leads to big
+      code; you can think of DEFINE_CLASS as a “macro”, although
+      JavaScript doesn't have macros <em>per se</em>, but it serves
+      the same purpose—it provides the ability to write less code to
+      achieve a certain goal.
+    </p>
+
+    <h2>Usage</h2>
+
+    <p>
+      DEFINE_CLASS receives four arguments (but of which you will
+      normally use only the first three): the name of the new class,
+      the base class constructor, a <b>definition</b> function, and a
+      boolean.
+    </p>
+
+    <p>
+      It creates the constructor of the new class (which is really a
+      function), sets up inheritance if a base class was specified,
+      and calls the <b>definition</b> function immediately, giving it
+      3 arguments:
+    </p>
+
+    <ol>
+      <li>A reference to the new class constructor (called <b>D</b> through DynarchLIB)</li>
+      <li>A reference to the new class prototype (called <b>P</b> through DynarchLIB)</li>
+      <li>〈DynarchDomUtils〉, which is frequently used through DynarchLIB</li>
+    </ol>
+
+    <p>
+      The <b>definition</b> function should declare standard arguments
+      for the new class and add methods by inserting them into
+      <b>P</b>, or “static” functions by inserting them into <b>D</b>.
+    </p>
+
+    <h3>D.DEFAULT_ARGS</h3>
+
+    <p>
+      DEFINE_CLASS provides a standard way to define arguments that
+      the constructor of the new class will accept.  Here is an
+      example:
+    </p>
+
+    <div sample="object1" />
+
+    <p>
+      As you can see, although we wrote no code that assigns arguments
+      into a new object instance, we magically have _foo and _bar set
+      to 1 and 2.  The usage for DEFAULT_ARGS should be pretty clear
+      from the above example: it is a hash which contains argument
+      definitions.  The key is the name of the property that will be
+      assigned to the final object (i.e. “_foo”), and the value is an
+      array containing two elements: the name of the property that the
+      constructor will support (i.e. “foo”) and the default value, in
+      case the property wasn't specified.
+    </p>
+
+    <h3>Inheritance of constructor arguments</h3>
+
+    <p>
+      As you can expect, inheritance is, well, seamless. :-) You
+      simply specify any new arguments in the subclass, or can specify
+      arguments of the base class as well in case you want to change
+      the default value.  (please run the following sample
+      <em>after</em> you ran the first, so that <tt>FooClass</tt> is
+      available).
+    </p>
+
+    <div sample="object2" />
+
+    <h3>“Fixing” arguments at runtime: D.FIXARGS</h3>
+
+    <p>
+      D.DEFAULT_ARGS is OK for most purposes, but you have to keep in
+      mind that the defaults are static values, only evaluated once.
+      Here's a typical mistake which is easy to do:
+    </p>
+
+    <div sample="fixargs1" />
+
+    <p>
+      See the problem?  The default value for “list” is an array, thus
+      both objects now refer to the same list; in most cases it's a
+      mistake.  D.FIXARGS is a hook created for this purpose.  It
+      should be a function, and if defined it's called right before
+      applying the default argument values, so it has a chance to fix
+      them.  Sample:
+    </p>
+
+    <div sample="fixargs2" />
+
+    <h3>Constructors: D.CONSTRUCT</h3>
+
+    <p>
+      Incidentally, you can note from the above samples that you don't
+      need to define a constructor for your class.  DEFINE_CLASS does
+      that.  However, you might need to do some initialization when a
+      new object is instantiated.  For this you would assign a
+      function to D.CONSTRUCT:
+    </p>
+
+    <div sample="construct1" />
+
+    <p>
+      D.CONSTRUCT should care about the class it's currently in.  You
+      never need to call the constructor of the base class—the
+      framework does this for you.  Sometimes, though, you might need
+      to do something <em>before</em> the base class constructor is
+      called.  For this you would assign a function to D.BEFORE_BASE.
+    </p>
+
+    <h3>Extending it: P.FINISH_OBJECT_DEF</h3>
+
+    <p>
+      This one is a little twisted to understand.  It's a hook that
+      allows us to “extend” DEFINE_CLASS “macro” with new syntax.  It
+      will be called immediately after the <b>definition</b> function,
+      if it was defined.  Note that it's a <em>prototype</em> function
+      (it gets into <b>P</b>, not into <b>D</b>), which means it's
+      inheritted; however, unlike most prototype functions, it's not a
+      <em>object method</em> in the sense that <b>this</b> in that
+      function won't be a real object instance, but the prototype of
+      the class instead.
+    </p>
+
+    <p>
+      This function can do magic, because it's called <em>as classes
+      are defined</em> (so it has no impact at object instantiation
+      time).  For example, if you define a class and want to do
+      something when other classes inherit from it, you can use this
+      method.  Here is a quick example:
+    </p>
+
+    <div sample="finish-object-def1" />
+
+    <p>
+      This “metafunction” is used in 〈DlWidget〉 to automatically
+      provide CSS class names to widgets which follow the inheritance
+      graph, and in 〈DlEventProxy〉 to support D.DEFAULT_EVENTS in
+      derived classes.
+    </p>
+
+    <h2>Other stuff based on DEFINE_CLASS</h2>
+
+    <ul>
+      <li>
+        DEFINE_HIDDEN_CLASS — just like DEFINE_CLASS, but the new
+        class is not exported globally.  A reference to the new class
+        constructor is returned, just like for DEFINE_CLASS, and you
+        can use that to create new instances of that class.
+      </li>
+      <li>
+        DEFINE_SINGLETON — similar to DEFINE_CLASS, but it defines a
+        “globalized singleton”.  You can't construct an instance of
+        the new class using <b>new</b>, instead you will call the
+        constructor as a function and it returns an object instance,
+        if it exists, or creates a new one if none was yet
+        instantiated.
+      </li>
+    </ul>
+
+  </text>
+
+  <code id="object1" type="js" canrun="true"><![CDATA[
+      DEFINE_CLASS("FooClass", null, function(D, P){
+          D.DEFAULT_ARGS = {
+              _foo: [ "foo", 1 ],
+              _bar: [ "bar", 2 ]
+          };
+      });
+
+      var obj = new FooClass();
+      print(obj._foo);
+      print(obj._bar);
+
+      var obj2 = new FooClass({ foo: 500 });
+      print(obj2._foo);
+      print(obj2._bar);
+  ]]></code>
+
+  <code id="object2" type="js" canrun="true"><![CDATA[
+      DEFINE_CLASS("BazClass", FooClass, function(D, P){
+          D.DEFAULT_ARGS = {
+              _foo: [ "foo", 50 ], // new default for foo
+              _baz: [ "baz", "Something" ]
+          };
+      });
+
+      var obj = new BazClass();
+      print(obj._foo);
+      print(obj._bar);
+      print(obj._baz);
+  ]]></code>
+
+  <code id="construct1" type="js" canrun="true"><![CDATA[
+      DEFINE_CLASS("BazClass", FooClass, function(D, P){
+          D.CONSTRUCT = function() {
+              print("Created object instance, foo = " + this._foo);
+          };
+      });
+      var obj = new BazClass({ foo: "TEST" });
+      print("After constructor");
+  ]]></code>
+
+  <code id="fixargs1" type="js" canrun="true"><![CDATA[
+      DEFINE_CLASS("Test", null, function(D, P){
+          D.DEFAULT_ARGS = {
+              list: [ "list", [] ]
+          };
+      });
+      var a = new Test();
+      var b = new Test();
+      a.list.push("Something");
+      print(b.list);
+  ]]></code>
+
+  <code id="fixargs2" type="js" canrun="true"><![CDATA[
+      DEFINE_CLASS("Test", null, function(D, P){
+          D.DEFAULT_ARGS = {
+              list: [ "list", null ]
+          };
+          D.FIXARGS = function(args) {
+              if (!args.list)
+                  args.list = [ "Default" ];
+          };
+      });
+      var a = new Test();
+      var b = new Test();
+      a.list.push("Something");
+      print(b.list);
+  ]]></code>
+
+  <code id="finish-object-def1" type="js" canrun="true"><![CDATA[
+      DEFINE_CLASS("MyBase", null, function(D, P){
+          var subclasses = [];
+          P.FINISH_OBJECT_DEF = function() {
+              if (this.constructor !== D) {
+                  // a subclass
+                  subclasses.push(this.constructor.name);
+              }
+          };
+          D.getSubclasses = function() {
+              return subclasses;
+          };
+      });
+      DEFINE_CLASS("Foo", MyBase);
+      DEFINE_CLASS("Bar", MyBase);
+      DEFINE_CLASS("Baz", MyBase);
+      print(MyBase.getSubclasses().join(", "));
+  ]]></code>
+
+</sample>

@@ -517,7 +517,7 @@ var App = {};
 		initToolbar(top, left);
 
                 var tree_cont = new DlContainer({ scroll: true, className: "DocTree" });
-                left.addTab(tree_cont, "Samples");
+                left.addTab(tree_cont, "Intro");
 
                 var api_cont = new DlContainer({ scroll: true, className: "DocTree" });
                 left.addTab(api_cont, "API");
