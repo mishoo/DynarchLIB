@@ -615,6 +615,14 @@ Array.inject({
                     default:
                         return [ this[0], this.slice(1).common_prefix() ].common_prefix();
                 }
+        },
+
+        append: function(a) {
+                this.push.apply(this, a);
+        },
+
+        prepend: function(a) {
+                this.unshift.apply(this, a);
         }
 
 });
