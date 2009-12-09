@@ -56,10 +56,10 @@
     </p>
 
     <p>
-      DEFINE_CLASS does a lot of magic to help you write less code.
-      For a detailed introduction into some advanced JavaScript
-      internals, and how I got to implement DEFINE_CLASS, please <a
-      href="jsdoc/jsobjects.pdf">read this article</a>.
+      〈define-class.xml|DEFINE_CLASS〉 does a lot of magic to help you
+      write less code.  For a detailed introduction into some advanced
+      JavaScript internals, and how I got to implement DEFINE_CLASS,
+      please <a href="jsdoc/jsobjects.pdf">read this article</a>.
     </p>
 
     <h2>Inheritance</h2>
