@@ -52,7 +52,7 @@
     <item label="Rich text editor" src="sample://widgets-rteframe.xml" />
   </item>
 
-  <item label="Advanced topics" src="sample://advanced.xml">
+  <item label="Other topics" src="sample://advanced.xml">
     <item label="Drag and drop" src="sample://widgets-dnd.xml" />
     <item label="Creating widgets" src="sample://widgets-creating.xml" />
     <item label="Compound widgets" src="sample://widgets-compound.xml" />
