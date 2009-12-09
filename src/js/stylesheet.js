@@ -4,7 +4,7 @@ DEFINE_CLASS("DlStyleSheet", DlEventProxy, function(D, P, DOM) {
 
         // var DEFAULT_EVENTS = [ "onChange", "onInsert", "onRemove" ];
 
-        D.CONSTRUCT_NOARGS = function() {
+        D.CONSTRUCT = function() {
                 this._init();
         };
 

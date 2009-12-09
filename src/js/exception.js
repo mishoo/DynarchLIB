@@ -2,7 +2,7 @@
 
 DEFINE_CLASS("DlException", null, function(D, P) {
 
-        D.CONSTRUCT_NOARGS = function(message, code) {
+        D.CONSTRUCT = function(message, code) {
 	        this.error = this.constructor.name;
 	        if (!message)
 		        message = "*** no error message given ***";

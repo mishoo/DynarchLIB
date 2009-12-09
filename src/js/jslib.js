@@ -1265,6 +1265,8 @@ window.Dynarch = {
         // defaults.  Can throw an exception if invalid data was
         // passed.
         setDefaults : function(defaults, args, overwrite) {
+                if (!args)
+                        args = {};
                 var i, val, def;
                 for (i in defaults) {
                         if (overwrite || !(i in this)) {
@@ -1946,20 +1948,16 @@ function DEFINE_CLASS(name, base, definition, hidden) {
                 if (args !== $__JSOOP) {
                         if (this === window)
                                 return alert("FIXME: Constructor called without new in " + name);
-                        if (arguments.length > 0 || D.CONSTRUCT_NOARGS) {
-                                if (D.FIXARGS)
-                                        D.FIXARGS.apply(this, arguments);
-                                if (D.DEFAULT_ARGS)
-                                        D.setDefaults(this, args);
-                                if (D.BEFORE_BASE)
-                                        D.BEFORE_BASE.apply(this, arguments);
-                                if (base)
-                                        base.apply(this, arguments);
-                                if (D.CONSTRUCT)
-                                        D.CONSTRUCT.apply(this, arguments);
-                        }
-                        if (D.CONSTRUCT_NOARGS instanceof Function)
-                                D.CONSTRUCT_NOARGS.apply(this, arguments);
+                        if (D.FIXARGS)
+                                D.FIXARGS.apply(this, arguments);
+                        if (D.DEFAULT_ARGS)
+                                D.setDefaults(this, args);
+                        if (D.BEFORE_BASE)
+                                D.BEFORE_BASE.apply(this, arguments);
+                        if (base)
+                                base.apply(this, arguments);
+                        if (D.CONSTRUCT)
+                                D.CONSTRUCT.apply(this, arguments);
                 }
         };
         if (name && !hidden)
@@ -1984,7 +1982,6 @@ function DEFINE_HIDDEN_CLASS(name, base, definition) {
 
 function DEFINE_SINGLETON(name, base, definition) {
         var D = DEFINE_HIDDEN_CLASS(name, base, definition);
-        D.CONSTRUCT_NOARGS = true;
         DlSingleton.register(name, D, true);
         return D;
 };

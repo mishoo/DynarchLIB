@@ -3,7 +3,7 @@
 
 DEFINE_CLASS("DlEventProxy", null, function(D, P) {
 
-        D.CONSTRUCT_NOARGS = function() {
+        D.CONSTRUCT = function() {
                 this.__eventHooks = {};
                 this.__disHooks = {};
                 this.registerEvents(this.DEFAULT_EVENTS);

@@ -4,7 +4,7 @@ DEFINE_CLASS("DlAnimation", DlEventProxy, function(D, P){
 
         D.DEFAULT_EVENTS = [ "onStart", "onStop", "onPause", "onUpdate" ];
 
-	D.CONSTRUCT_NOARGS = function(length, fps) {
+	D.CONSTRUCT = function(length, fps) {
                 this.addEventListener("onDestroy", this.stop.$(this));
                 if (length != null)
                         this.length = length;
