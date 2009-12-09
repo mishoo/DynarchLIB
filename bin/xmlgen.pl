@@ -372,6 +372,11 @@ sub hyperlinks {
         $text = $stuff;
     }
 
+    if ($stuff =~ /\.xml$/i) {
+        $oname = $stuff;
+        return "<a href='sample://$oname'>$text</a>";
+    }
+
     if ($stuff =~ /^[a-z0-9_\$]+$/i) {
         $oname = $stuff;
         return "<a href='api://$oname.xml'>$text</a>";

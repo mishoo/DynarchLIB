@@ -229,7 +229,7 @@ var App = {};
 		}
 
 		var next = SAMPLES_GROUP.getNextButton();
- 		var td = CE("td", null, { className: "Next" }, tr);
+ 		td = CE("td", null, { className: "Next" }, tr);
 		if (next) {
 			td.innerHTML = "<a href='" + next.userData + "'>" + next.label() + " »</a>";
 		}
@@ -327,6 +327,10 @@ var App = {};
                 var a = l.split(/\s*\|\s*/)
                 , text = a[1] || l;
                 l = a[0];
+
+                if (/\.xml$/.test(l)) {
+                        return "<a href='sample://" + l + "'>" + text + "</a>";
+                }
 
                 if (/^[a-z0-9_\$]+$/i.test(l)) {
                         return "<a href='api://" + l + ".xml'>" + text + "</a>";
@@ -695,7 +699,7 @@ var App = {};
                                                  start      : 0,
                                                  completion : comp,
                                                  object     : comp,
-                                                 type       : "object" }
+                                                 type       : "object" };
                                 })
                                );
 
@@ -714,7 +718,7 @@ var App = {};
                                                  completion  : comp,
                                                  object      : el.o,
                                                  method      : el.n,
-                                                 type        : "object_method" }
+                                                 type        : "object_method" };
                                 })
                                );
 
@@ -733,7 +737,7 @@ var App = {};
                                                  completion  : comp,
                                                  object      : el.o,
                                                  method      : el.n,
-                                                 type        : "static_method" }
+                                                 type        : "static_method" };
                                 })
                                );
 

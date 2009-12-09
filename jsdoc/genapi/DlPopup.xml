@@ -182,12 +182,12 @@
         position that contains the 3 <a href='api://DlCheckbox.xml'>checkboxes</a> aligned
         in a <a href='api://DlVbox.xml'>vertical box</a>.
 <p/>
-        Let's <b>note a small weirdness</b>.  We didn't actually
-        define a static get() function on OurOwnPopup, but yet it
-        exists and Does What We Want :-).  It is added automatically
-        to all widgets that inherit from DlPopup through the magic of
-        the “inherits()” method (see discussion about
-        __patchSubclassPrototype in <a href='api://Function.xml:type=object_method:func=inherits'>Function::inherits()</a>).
+        Let's <b>note a small weirdness</b>.  We didn't actually define a
+        static get() function on OurOwnPopup, but yet it exists and Does
+        What We Want :-).  It is added automatically to all objects that
+        inherit from DlPopup through the magic of “P.FINISH_OBJECT_DEF” (see
+        discussion about FINISH_OBJECT_DEF in
+        <a href='sample://define-class.xml'>DEFINE_CLASS</a>).
 <p class='heading'> Linked popups</p>
 <p/>
         Popups have a particular feature that helps creating submenus.

@@ -866,14 +866,6 @@
         <doc></doc>
       </method>
 
-      <method hash="2618de1bcb719ff939c410eb6fdd6fc7" internal="1" name="__patchSubclassPrototype" undoc="1">
-        <doc>
-          Modifies the prototype of a derived class by adding the
-          hierarchy of CSS class names.  See 〈Function::inherits()〉
-          for more information.
-        </doc>
-      </method>
-
       <method XXX="Code has changed!" hash="17f9fbfee930d42c32b774ae013decd9" internal="1" name="_createElement">
         <param name="html">Not used for now</param>
         <doc>

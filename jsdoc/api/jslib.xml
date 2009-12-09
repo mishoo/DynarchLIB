@@ -740,38 +740,6 @@
             DerivedClass.BASE == BaseClass.prototype;
             Function.getInheritanceGraph()["DerivedClass"] == "BaseClass";
           </js>
-
-          〈inherits()〉 will also call a method of your derived class,
-          if it's present in the prototype, and in that method you can
-          do some custom stuff on the derived class.  This method is
-          named “__patchSubclassPrototype”.  Here's how we use it to
-          automatically generate the class names for each widget:
-
-          <js>
-            DlWidget.prototype._className = [ "DlWidget" ];
-            DlWidget.prototype.__patchSubclassPrototype = function() {
-              // here, *this* refers to the prototype of the *derived* class
-
-              // note we need to make a copy of the _className array
-              this._className = Array.$(this._className);
-
-              // now add the name of the derived object
-              this._className.push(this._objectType);
-            }
-          </js>
-
-          Now, whenever we inherit a new widget, its prototype will
-          automagically have the new class name in the "_className"
-          property:
-
-          <js>
-            DlContainer.inherits(DlWidget);
-            // outputs "DlWidget DlContainer"
-            alert(DlContainer.prototype._className.join(" "));
-          </js>
-
-          The code writes itself at compilation time. :-)  That's both
-          simple and efficient.
         </doc>
       </method>
 

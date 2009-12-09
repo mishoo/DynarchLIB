@@ -130,12 +130,12 @@
         position that contains the 3 〈DlCheckbox|checkboxes〉 aligned
         in a 〈DlVbox|vertical box〉.
 
-        Let's <b>note a small weirdness</b>.  We didn't actually
-        define a static get() function on OurOwnPopup, but yet it
-        exists and Does What We Want :-).  It is added automatically
-        to all widgets that inherit from DlPopup through the magic of
-        the “inherits()” method (see discussion about
-        __patchSubclassPrototype in 〈Function::inherits()〉).
+        Let's <b>note a small weirdness</b>.  We didn't actually define a
+        static get() function on OurOwnPopup, but yet it exists and Does
+        What We Want :-).  It is added automatically to all objects that
+        inherit from DlPopup through the magic of “P.FINISH_OBJECT_DEF” (see
+        discussion about FINISH_OBJECT_DEF in
+        〈define-class.xml|DEFINE_CLASS〉).
 
         *** Linked popups
 
@@ -601,9 +601,6 @@
         <doc></doc>
       </method>
       <method hash="099f92d64561b6e82935b7a0acf6ff94" name="getContentElement">
-        <doc></doc>
-      </method>
-      <method hash="7e0a609db50070cb06b4f6b58b384fc2" internal="1" name="__patchSubclassPrototype" undoc="1">
         <doc></doc>
       </method>
       <method hash="a7e7610b587cd05649ecc33b4a2e53f4" internal="1" name="_bestPosition">

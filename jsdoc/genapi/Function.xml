@@ -469,23 +469,6 @@
           in the sample above, the following conditions stand true:
 <p/>
           <div sample="Function10"></div>
-<p/>
-          <a href='api://Function.xml:type=object_method:func=inherits'>inherits()</a> will also call a method of your derived class,
-          if it's present in the prototype, and in that method you can
-          do some custom stuff on the derived class.  This method is
-          named “__patchSubclassPrototype”.  Here's how we use it to
-          automatically generate the class names for each widget:
-<p/>
-          <div sample="Function11"></div>
-<p/>
-          Now, whenever we inherit a new widget, its prototype will
-          automagically have the new class name in the "_className"
-          property:
-<p/>
-          <div sample="Function12"></div>
-<p/>
-          The code writes itself at compilation time. :-)  That's both
-          simple and efficient.
         </span>
 
      </div>
@@ -576,14 +559,14 @@
           DEFAULT_ARGS property and the values in <b>args</b>.
           Example:
 <p/>
-          <div sample="Function13"></div>
+          <div sample="Function11"></div>
 <p/>
           So this is simply a way to uniformly declare object
           arguments.  A base object can have its defaults too.  For
           example, let's make Foo a base object and inherit Bar from
           it:
 <p/>
-          <div sample="Function14"></div>
+          <div sample="Function12"></div>
 <p/>
           All our objects use this way to declare arguments.
         </span>
@@ -705,23 +688,6 @@
             Function.getInheritanceGraph()["DerivedClass"] == "BaseClass";
           </code>
 <code id="Function11" type="js">
-            DlWidget.prototype._className = [ "DlWidget" ];
-            DlWidget.prototype.__patchSubclassPrototype = function() {
-              // here, *this* refers to the prototype of the *derived* class
-
-              // note we need to make a copy of the _className array
-              this._className = Array.$(this._className);
-
-              // now add the name of the derived object
-              this._className.push(this._objectType);
-            }
-          </code>
-<code id="Function12" type="js">
-            DlContainer.inherits(DlWidget);
-            // outputs "DlWidget DlContainer"
-            alert(DlContainer.prototype._className.join(" "));
-          </code>
-<code id="Function13" type="js">
             function Foo(args) {
                 if (args) {
                     Foo.setDefaults(this, args);
@@ -740,7 +706,7 @@
             // c._label is still "No label" (since it wasn't passed)
             // c._type == "checkbox"
           </code>
-<code id="Function14" type="js">
+<code id="Function12" type="js">
             Bar.inherits(Foo);
             function Bar(args) {
                 if (args) {
