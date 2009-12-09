@@ -16,13 +16,13 @@ use Dynarch::LoadJS;
 use Dynarch::JSCrunch;
 
 my $opt_no_crunch = 0;
-my $opt_full_source = 0;
+my $opt_full_source = 1;
 GetOptions(
     'no-crunch' => \$opt_no_crunch,
     'full|f'    => \$opt_full_source,
 );
 
-my $DL_VERSION = "1.0";
+my $DL_VERSION = "2.0";
 
 my $TT_VARS = { final      => 1,
                 build_time => strftime('%Y/%m/%d %H:%M GMT', gmtime),
@@ -67,18 +67,18 @@ if ($opt_full_source) {
     mkdir "full-source";
     system "cp -r src/js full-source";
     system "cp -r src/extras full-source";
-    chdir "$destdir/full-source";
-    my @files = `find . -name '*.js'`;
-    foreach my $fn (@files) {
-        chomp $fn;
-        open FILE, '<', $fn;
-        local $/ = undef;
-        my $content = <FILE>;
-        close FILE;
-        open FILE, '>', $fn;
-        print FILE "$core_comment\n\n$content";
-        close FILE;
-    }
+    # chdir "$destdir/full-source";
+    # my @files = `find . -name '*.js'`;
+    # foreach my $fn (@files) {
+    #     chomp $fn;
+    #     open FILE, '<', $fn;
+    #     local $/ = undef;
+    #     my $content = <FILE>;
+    #     close FILE;
+    #     open FILE, '>', $fn;
+    #     print FILE "$core_comment\n\n$content";
+    #     close FILE;
+    # }
 }
 
 chdir "$destdir/src/js";
@@ -198,6 +198,11 @@ chdir "$destdir/";
     my $foo;
     $tmpl->process('index.html', undef, \$foo);
     open FOO, '> index.html';
+    print FOO $foo;
+    close FOO;
+
+    $tmpl->process('jsdoc/doc.js', undef, \$foo);
+    open FOO, '> jsdoc/doc.js';
     print FOO $foo;
     close FOO;
 

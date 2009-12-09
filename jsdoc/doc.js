@@ -337,7 +337,7 @@ var App = {};
                 }
 
                 if (/^[a-z0-9_\$]+\.js$/i.test(l)) {
-                        return "<a href='" + Dynarch.getFileURL("js/" + l) + "' target='_blank'>" + text + "</a>";
+                        return "<a href='" + Dynarch.getFileURL("[% GET '../full-source/' IF final %]js/" + l) + "' target='_blank'>" + text + "</a>";
                 }
 
                 if (/^([a-z0-9_\$]+)(\.|::)([a-z0-9_\$]+)\(\)$/i.test(l)) {
