@@ -86,9 +86,7 @@
       As you can expect, inheritance is, well, seamless. :-) You
       simply specify any new arguments in the subclass, or can specify
       arguments of the base class as well in case you want to change
-      the default value.  (please run the following sample
-      <em>after</em> you ran the first, so that <tt>FooClass</tt> is
-      available).
+      the default value.
     </p>
 
     <div sample="object2" />
@@ -204,6 +202,7 @@
   ]]></code>
 
   <code id="object2" type="js" canrun="true"><![CDATA[
+  //@include object1
       DEFINE_CLASS("BazClass", FooClass, function(D, P){
           D.DEFAULT_ARGS = {
               _foo: [ "foo", 50 ], // new default for foo
@@ -218,6 +217,7 @@
   ]]></code>
 
   <code id="construct1" type="js" canrun="true"><![CDATA[
+  //@include object1
       DEFINE_CLASS("BazClass", FooClass, function(D, P){
           D.CONSTRUCT = function() {
               print("Created object instance, foo = " + this._foo);
