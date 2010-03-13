@@ -2,7 +2,8 @@
 
 use strict;
 
-use lib '/home/mishoo/perl';
+use FindBin;
+use lib "$FindBin::Bin/perl";
 
 use File::Temp qw( tempdir );
 use File::Find;
