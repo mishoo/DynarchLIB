@@ -34,17 +34,19 @@
 DlJSON = {
 
 	RE_strings : /(\x22(\\.|[^\x22\\])*\x22|\x27(\\.|[^\x27\\])*\x27)/g,
-	RE_forbid  : /([\n;()+=\x2f*.-])/g,
+	RE_forbid  : /([\n;()+=\x2f*-])/g,
 	//RE_forbid  : /([;()+=\x2f*.-])/g,
 
 	encode : function(obj) {
 		var tmp, i;
-		if (obj instanceof Array) {
+                if (obj == null) {
+			tmp = "null";
+		} else if (obj.dynarchlib_toJSON) {
+                        tmp = obj.dynarchlib_toJSON();
+                } else if (obj instanceof Array) {
 			tmp = [ "[", obj.map(DlJSON.encode).join(","), "]" ].join("");
 		} else if (obj instanceof Date) {
 			tmp = DlJSON.encode(obj.toUTCString());
-		} else if (obj == null) {
-			tmp = "null";
 		} else if (typeof obj == "object") {
 			tmp = [];
 			for (i in obj)

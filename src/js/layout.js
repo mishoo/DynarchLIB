@@ -79,6 +79,22 @@ DEFINE_CLASS("DlLayout", DlContainer, function(D, P, DOM) {
 		this.appendWidget(w, args);
 	};
 
+        P.replaceWidget = function(w, other) {
+                var pos = this._widgets.find(w);
+                if (pos >= 0) {
+                        if (other.parent)
+                                other.parent.removeWidget(other);
+                        this._widgets.splice(pos, 1, other);
+                        other._dllayout_args = w._dllayout_args;
+                        w._dllayout_args = null;
+                        var el = w.getElement(), p = el.parentNode;
+                        p.insertBefore(other.getElement(), el);
+                        p.removeChild(el);
+                        other.parent = this;
+                        w.parent = null;
+                }
+        };
+
 	P.doLayout = function() {
 		var full_size = this.getInnerSize();
 		var left, right, bottom, top;

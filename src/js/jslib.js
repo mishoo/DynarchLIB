@@ -40,7 +40,8 @@ try {
 
 var CE_CACHE = {
         HTML_ESCAPE_DIV  : document.createElement("div"),
-        HTML_ESCAPE_TEXT : document.createTextNode("")
+        HTML_ESCAPE_TEXT : document.createTextNode(""),
+        CONTAINER        : document.createElement("div")
 };
 CE_CACHE.HTML_ESCAPE_DIV.appendChild(CE_CACHE.HTML_ESCAPE_TEXT);
 
@@ -515,9 +516,9 @@ Array.inject({
                 return null;
         },
 
-        peek: function() {
+        peek: function(x) {
                 if (this.length > 0)
-                        return this[this.length - 1];
+                        return this[this.length - 1 - (x != null ? Math.abs(x) : 0)];
         },
 
         min: function(f, obj) {
@@ -1618,8 +1619,8 @@ window.DynarchDomUtils = {
         setPos : function(el, x, y) {
                 if (typeof x == "number")
                         x += "px";
-                    if (typeof y == "number")
-                            y += "px";
+                if (typeof y == "number")
+                        y += "px";
                 if (x != null)
                         el.style.left = x;
                 if (y != null)
@@ -1627,9 +1628,7 @@ window.DynarchDomUtils = {
         },
 
         createElement : function(tag, st, at, par, pos) {
-                var el = CE_CACHE[tag], i;
-                if (!el)
-                        el = CE_CACHE[tag] = document.createElement(tag);
+                var el = CE_CACHE[tag] || (CE_CACHE[tag] = document.createElement(tag)), i;
                 el = el.cloneNode(false);
                 if (st) for (i in st)
                         if (is_ie)
@@ -1863,25 +1862,49 @@ window.DynarchDomUtils = {
 
         // looks like this is the proper way to dispose elements, at least in IE.
         // to be efficient, MAKE SURE YOU DON'T KEEP ANY REFERENCES TO THESE ELEMENTS!
-        trash : function(el) {
-                var gc = CE_CACHE._trash;
-                if (!gc) {
-                        gc = CE_CACHE._trash = DynarchDomUtils.createElement(
-                                "div",
-                                { zIndex: -10000 },
-                                { className: "DYNARCH-GARBAGE-COLLECTOR" },
-                                document.body
-                        );
+        //
+        // UPDATE: I think we should get rid of this now.  It only
+        // slows down things in capable browsers, while I don't think
+        // it makes a big difference in IE.
+        //
+        // trash : function(el) {
+        //         var gc = CE_CACHE._trash;
+        //         if (!gc) {
+        //                 gc = CE_CACHE._trash = DynarchDomUtils.createElement(
+        //                         "div",
+        //                         { zIndex: -10000 },
+        //                         { className: "DYNARCH-GARBAGE-COLLECTOR" },
+        //                         document.body
+        //                 );
+        //         }
+        //         if (el) {
+        //                 gc.appendChild(el);
+        //                 gc.innerHTML = "";
+        //         }
+        //         return gc;
+        // },
+
+        trash : function(el, p) {
+                if (el && (p = el.parentNode))
+                        p.removeChild(el);
+        },
+
+        strip : function(el) {
+                try {
+                        var r = el.ownerDocument.createRange();
+                        r.selectNodeContents(el);
+                        p.insertBefore(el, r.extractContents());
+                        r.detach();
+                } catch(ex) {
+                        var p = el.parentNode;
+                        while (el.firstChild)
+                                p.insertBefore(el.firstChild, el);
                 }
-                if (el) {
-                        gc.appendChild(el);
-                        gc.innerHTML = "";
-                }
-                return gc;
+                this.trash(el);
         },
 
         createFromHtml : function(html) {
-                var div = this.trash();
+                var div = CE_CACHE.CONTAINER;
                 div.innerHTML = html;
                 return div.firstChild;
         },

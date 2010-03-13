@@ -19,7 +19,7 @@ my $opt_no_crunch = 0;
 my $opt_full_source = 1;
 GetOptions(
     'no-crunch' => \$opt_no_crunch,
-    'full|f'    => \$opt_full_source,
+    'full|f=i'  => \$opt_full_source,
 );
 
 my $DL_VERSION = "2.0";

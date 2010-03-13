@@ -72,10 +72,8 @@ DEFINE_CLASS("DlRadioSelect", DlButtonMenu, function(D, P){
 	P.setValue = P.value;
 
 	function radioGroup_onChange(cb) {
-		if (cb.checked()) {
-			this.value(cb.userData);
-			DlPopup.clearAllPopups();
-		}
+		this.value(cb.userData);
+		DlPopup.clearAllPopups();
 		cb._onMouseLeave();
 	};
 
@@ -109,10 +107,11 @@ DEFINE_CLASS("DlRadioSelect", DlButtonMenu, function(D, P){
 				menu.addSeparator();
 			else {
 				args.label = o.label;
-				args.data = o.value;
+				args.data = args.value = o.value;
                                 args.className = o.className;
 				var r = o.widget = new DlRadioButton(args);
-				r.connectEvents("onMouseUp", "onClick");
+				// XXX: this causes problems, we should find something else.
+                                // r.connectEvents("onMouseUp", "onClick");
 			}
 		}, this);
 
@@ -136,14 +135,17 @@ DEFINE_CLASS("DlRadioSelect", DlButtonMenu, function(D, P){
 	P.addOption = function(opt, index) {
                 if (index == null)
                         index = this._options.length;
-		var item = opt.widget = new DlRadioButton({ parent     : this._menu,
-					                    group      : this._radioGroup,
-					                    noCapture  : true,
-					                    label      : opt.label,
-					                    data       : opt.value,
-                                                            className  : opt.className
-					                  });
-		item.connectEvents("onMouseUp", "onClick");
+		var item = opt.widget = new DlRadioButton({
+                        parent     : this._menu,
+			group      : this._radioGroup,
+			noCapture  : true,
+			label      : opt.label,
+			data       : opt.value,
+                        value      : opt.value,
+                        className  : opt.className
+		});
+                // XXX: this causes problems, we should find something else.
+		// item.connectEvents("onMouseUp", "onClick");
                 this._options.splice(index, 0, opt);
 		return item;
 	};

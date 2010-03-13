@@ -119,8 +119,7 @@ DlRect.prototype = {
 		return this.w;
 	},
 	containsPoint : function(p) {
-		return
-			this.x          <= p.x &&
+		return this.x          <= p.x &&
 			this.x + this.w  > p.x &&
 			this.y          <= p.y &&
 			this.y + this.h  > p.y;

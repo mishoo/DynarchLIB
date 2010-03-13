@@ -50,13 +50,16 @@ DEFINE_CLASS("DlEvent", null, function(D, P, DOM){
                 "focus"           : "on_DOM_Focus",
                 "blur"            : "on_DOM_Blur",
                 "mousewheel"      : "onMouseWheel",
-                "DOMMouseScroll"  : "onMouseWheel"
+                "DOMMouseScroll"  : "onMouseWheel",
+                "textInput"       : "onTextInput"
         };
 
         D.CONSTRUCT = function(ev) {
                 this.type = ev.type;
                 this.dl_type = EVENT_MAP[this.type] || this.type;
                 this.ctrlKey = ev.ctrlKey;
+                this.which = ev.which;
+                this.keyIdentifier = ev.keyIdentifier;
                 if (is_macintosh) {
                         this.altGrKey = ev.altKey;
                         this.altKey = ev.metaKey;
