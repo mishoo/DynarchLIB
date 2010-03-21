@@ -812,7 +812,7 @@ DEFINE_CLASS("DlDataGrid", DlContainer, function(D, P, DOM) {
                 var new_headers = [];
                 this._cols = cols.map(function(el, i){
                         var col = this._colsById[el.id];
-                        new_headers.push(header_cells[col.index]);
+                        new_headers.push(col._cell);
                         col.index = i;
                         col._width = el.width;
                         col._isVisible = el.visible;
@@ -1041,7 +1041,7 @@ DEFINE_CLASS("DlDataGrid", DlContainer, function(D, P, DOM) {
                                 this._ss.modifyRule(col._cssRule, { display: "none" });
 
                         // create the header button
-                        var td = document.createElement("td");
+                        var td = col._cell = document.createElement("td");
                         td.innerHTML = "<div class='DlDataGrid-cellData'></div>";
                         td.className = cls;
                         this.getHeaderRow().appendChild(td);

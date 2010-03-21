@@ -1,6 +1,6 @@
 [% PERL %] # -*- cperl -*-
 
-use lib '/home/mishoo/perl';
+use lib '/home/mishoo/work/thelib/perl';
 
 use Dynarch::JSCrunch;
 use Dynarch::LoadJS;

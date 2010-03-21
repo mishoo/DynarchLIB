@@ -130,6 +130,13 @@ Object.merge(Object, {
                         if (ex instanceof $_RETURN) return ex.args;
                         throw ex;
                 }
+        },
+
+        // should be called in the context of an object instance
+        curry2: function(f) {
+                if (!(f instanceof Function))
+                        f = this[f];
+                return f.$A(this, Array.$(arguments, 1));
         }
 
 });
@@ -241,6 +248,15 @@ Object.merge(Function.prototype, {
                         props = this.OBJECT_EXTENSIONS;
                 Object.merge(this.prototype, props);
                 return this;
+        },
+
+        memoize : function() {
+                var f = this, val = $__JSOOP;
+                return function() {
+                        if (val === $__JSOOP)
+                                val = f.apply(this, arguments);
+                        return val;
+                };
         }
 
 });
@@ -1839,7 +1855,7 @@ window.DynarchDomUtils = {
                 var s = DynarchDomUtils.getOuterSize(el);
                 var pb = DynarchDomUtils.getPaddingAndBorder(el);
                 s.x -= pb.x;
-                    s.y -= pb.y;
+                s.y -= pb.y;
                 // amazing, eh?
                 return s;
         },
@@ -2028,6 +2044,8 @@ function DEFINE_CLASS(name, base, definition, hidden) {
         }
         if (P.FINISH_OBJECT_DEF instanceof Function)
                 P.FINISH_OBJECT_DEF();
+        if (!P.$)
+                P.$ = Object.curry2;
         return D;
 };
 
