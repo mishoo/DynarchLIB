@@ -2020,19 +2020,22 @@ function DEFINE_CLASS(name, base, definition, hidden) {
                 if (args !== $__JSOOP) {
                         if (this === window)
                                 return alert("FIXME: Constructor called without new in " + name);
+                        var alist;
                         if (D.FIXARGS) {
-                                if (arguments.length == 0)
+                                if (arguments.length == 0) {
                                         args = {};
-                                D.FIXARGS.call(this, args);
+                                        alist = [ args ];
+                                }
+                                D.FIXARGS.apply(this, alist || arguments);
                         }
                         if (D.DEFAULT_ARGS)
                                 D.setDefaults(this, args);
                         if (D.BEFORE_BASE)
-                                D.BEFORE_BASE.apply(this, arguments);
+                                D.BEFORE_BASE.apply(this, alist || arguments);
                         if (base)
-                                base.apply(this, arguments);
+                                base.apply(this, alist || arguments);
                         if (D.CONSTRUCT)
-                                D.CONSTRUCT.apply(this, arguments);
+                                D.CONSTRUCT.apply(this, alist || arguments);
                 }
         };
         if (name && !hidden)

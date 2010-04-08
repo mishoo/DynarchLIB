@@ -357,6 +357,13 @@ DEFINE_CLASS("DlCalendar", DlWidget, function(D, P, DOM) {
 		this._selectCell(this.getDateCell(date), !nohooks);
 	};
 
+        P.clearSelection = function() {
+                this._selectedDate = null;
+                if (this._initialized) {
+                        this._displayCalendar();
+                }
+        };
+
 	function onMouseOver(ev) {
 		this._clearTimer();
 		var cell = ev.getParentElement("td", this);
@@ -546,5 +553,10 @@ DEFINE_CLASS("DlCalendar", DlWidget, function(D, P, DOM) {
 		this._displayCalendar();
                 this._initialized = true;
 	};
+
+        P.setSize = P.setOuterSize = function(sz) {
+                D.BASE.setOuterSize.call(this, { x: sz.x != null ? sz.x + 2 : null,
+                                                 y: sz.y });
+        };
 
 });
