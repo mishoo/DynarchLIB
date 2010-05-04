@@ -151,10 +151,6 @@ DEFINE_CLASS("DlEntry", DlContainer, function(D, P, DOM) {
                 } else if (!this._focused) {
                         this.addClass("DlEntry-empty");
                         this.getInputElement().value = "";
-                        (function(){
-                                if (!this.destroyed && !this._focused && this.__checkEmpty())
-                                        this.getInputElement().value = this._emptyText;
-                        }).delayed(0, this);
                 } else {
                         this.getInputElement().value = value;
                 }
@@ -177,6 +173,7 @@ DEFINE_CLASS("DlEntry", DlContainer, function(D, P, DOM) {
                 var input = this._isTextArea
                         ? document.createElement("textarea")
                         : input = document.createElement("input");
+                input.id = this.id + "-input";
                 input.setAttribute("autocomplete", "off", 1);
                 if (this._noWrap)
                         input.setAttribute("wrap", "off");
@@ -194,6 +191,14 @@ DEFINE_CLASS("DlEntry", DlContainer, function(D, P, DOM) {
                 }
                 if (is_gecko && gecko_version < 1.9 && !this._no_gecko_bug)
                         el = CE("div", null, { className: "Gecko-Bug-226933" }, el);
+                if (this._emptyText) {
+                        el = CE("div", { position: "relative", overflow: "hidden" }, null, el);
+                        CE("label", null, {
+                                htmlFor   : this.id + "-input",
+                                className : "DlEntry-emptyText",
+                                innerHTML : this._emptyText.htmlEscape()
+                        }, el);
+                }
                 el.appendChild(input);
         };
 
