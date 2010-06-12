@@ -377,12 +377,12 @@
         };
 
         function cypher(a) {
-                var key = this._exk, n = this._rounds;
+                var key = this._exk, n = this._rounds, j;
                 a = packBytes(a);
                 addRoundKey(a, a, key, 0);
                 var t = [];
                 for (var r = 1; r < n; ++r) {
-                        for (var j = 0; j < 4; ++j) {
+                        for (j = 0; j < 4; ++j) {
                                 t[j] = DTBL[a[j] & 0xFF] ^
 	                                RL(DTBL[(a[IDX[1][j]] >>> 8) & 0xFF] ^
 		                           RL(DTBL[(a[IDX[2][j]] >>> 16) & 0xFF] ^
@@ -401,12 +401,12 @@
         };
 
         function r_cypher(a) {
-                var key = this._rexk, n = this._rounds;
+                var key = this._rexk, n = this._rounds, j;
                 a = packBytes(a);
                 addRoundKey(a, a, key, n);
                 var t = [];
                 for (var r = n; --r > 0;) {
-                        for (var j = 0; j < 4; ++j) {
+                        for (j = 0; j < 4; ++j) {
                                 t[j] = ITBL[a[j] & 0xFF] ^
 	                                RL(ITBL[(a[R_IDX[1][j]] >>> 8) & 0xFF] ^
 		                           RL(ITBL[(a[R_IDX[2][j]] >>> 16) & 0xFF] ^
@@ -478,7 +478,7 @@
                 for (k = 0; k < n; k += 16) {
                         tmp = cb.slice(0);
                         tmp = cypher.call(this, tmp);
-                        for (i = 16; --i >= 0 && !(cb[i] = ((cb[i] + 1) & 0xFF));){}
+                        for (i = 16; --i >= 0 && !(cb[i] = ((cb[i] + 1) & 0xFF)););
                         for (i = 16; --i >= 0;)
                                 output[i + k] = tmp[i] ^ input[i + k];
                 }
