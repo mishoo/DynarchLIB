@@ -21,22 +21,20 @@
 
 */
 
-(function(){
-
-        function DlCryptAES(args) {
-                D.setDefaults(this, args);
-                expandKey.call(this, this._key);
-                this._mode = MODES[this._mode.toUpperCase()];
-                this._rounds = ROUNDS[this._key.length];
-                if (!this._iv)
-                        this._iv = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
-        };
-        eval(Dynarch.EXPORT("DlCryptAES"));
+DEFINE_CLASS("DlCryptAES", null, function(D, P){
 
         D.DEFAULT_ARGS = {
                 _key  : [ "key"  , null ],
                 _mode : [ "mode" , "ECB" ],
                 _iv   : [ "iv"   , null ]
+        };
+
+        D.CONSTRUCT = function() {
+                expandKey.call(this, this._key);
+                this._mode = MODES[this._mode.toUpperCase()];
+                this._rounds = ROUNDS[this._key.length];
+                if (!this._iv)
+                        this._iv = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
         };
 
         /* constants */
@@ -559,4 +557,4 @@
                 "CTR" : [  _runBytesCTR  ,  _runBytesCTR  ]
         };
 
-})();
+});
