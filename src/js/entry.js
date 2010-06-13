@@ -55,6 +55,7 @@ DEFINE_CLASS("DlEntry", DlContainer, function(D, P, DOM) {
                 _rows       : [ "rows"       , null ],
                 _readonly   : [ "readonly"   , false ],
                 _emptyText  : [ "emptyText"  , "" ],
+                _emptyValue : [ "emptyValue" , "" ],
                 _width      : [ "width"      , null ],
                 _name       : [ "name"       , null ],
                 _validators : [ "validators" , [] ],
@@ -67,7 +68,7 @@ DEFINE_CLASS("DlEntry", DlContainer, function(D, P, DOM) {
 
         P.validate = function(val) {
                 if (val == null)
-                        val = this.getValue();
+                        val = this.getValue(true);
                 if (this._allowEmpty != null) {
                         if (!/\S/.test(val)) {
                                 this.condClass(!this._allowEmpty, "DlEntry-ValidationError");
@@ -91,9 +92,15 @@ DEFINE_CLASS("DlEntry", DlContainer, function(D, P, DOM) {
                 // alert(err + " \n " + this._validators.length);
                 this.condClass(err, "DlEntry-ValidationError");
                 this.applyHooks("onValidation", [ err ]);
-                if (err)
+                if (err) {
+                        this.setInvalidTooltip(err.message);
                         this.applyHooks("onValidationError", [ err ]);
+                }
                 return !err;
+        };
+
+        P.setInvalidTooltip = function(tt) {
+                this._invalidTooltip.setTooltip(tt);
         };
 
         P.timerFocus = function(timeout) {
@@ -103,7 +110,7 @@ DEFINE_CLASS("DlEntry", DlContainer, function(D, P, DOM) {
         P.select = function() {
                 try {
                         if (is_gecko)
-                                this.setSelectionRange(0, this.getValue().length);
+                                this.setSelectionRange(0, this.getValue(true).length);
                         else
                                 this.getInputElement().select();
                 } catch(ex) {}
@@ -191,8 +198,8 @@ DEFINE_CLASS("DlEntry", DlContainer, function(D, P, DOM) {
                 }
                 if (is_gecko && gecko_version < 1.9 && !this._no_gecko_bug)
                         el = CE("div", null, { className: "Gecko-Bug-226933" }, el);
+                el = CE("div", { position: "relative", overflow: "hidden" }, null, el); // XXX: this is becoming quite sucky!
                 if (this._emptyText) {
-                        el = CE("div", { position: "relative", overflow: "hidden" }, null, el);
                         CE("label", null, {
                                 htmlFor   : this.id + "-input",
                                 className : "DlEntry-emptyText",
@@ -200,6 +207,11 @@ DEFINE_CLASS("DlEntry", DlContainer, function(D, P, DOM) {
                         }, el);
                 }
                 el.appendChild(input);
+                this.refNode("_invalidTooltip", new DlWidget({
+                        className  : "DlEntry-invalidIcon",
+                        parent     : this,
+                        appendArgs : el
+                }));
         };
 
         P.getInputElement = function() {
@@ -232,8 +244,8 @@ DEFINE_CLASS("DlEntry", DlContainer, function(D, P, DOM) {
                 return this;
         };
 
-        P.getValue = function() {
-                return this._isEmpty ? "" : this.getInputElement().value;
+        P.getValue = function(real) {
+                return !real && this.isEmpty() ? this._emptyValue : this.getInputElement().value;
         };
 
         P.getSelectionRange = function() {
@@ -245,7 +257,7 @@ DEFINE_CLASS("DlEntry", DlContainer, function(D, P, DOM) {
         };
 
         P.moveEOF = function() {
-                var l = this.getValue().length;
+                var l = this.getValue(true).length;
                 this.setSelectionRange(l, l);
         };
 

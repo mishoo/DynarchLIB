@@ -129,6 +129,7 @@ DEFINE_CLASS("DlRPC", DlEventProxy, function(D, P) {
 			} else {
 				if (typeof data != "string") {
 					data = DlJSON.encode(data);
+                                        this.data = data;
 					req.setRequestHeader("Content-Type", "text/javascript; charset=UTF-8");
 				}
 				this._start(data);

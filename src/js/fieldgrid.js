@@ -102,7 +102,9 @@ DEFINE_CLASS("DlFieldGrid", DlTable, function(D, P) {
 			if (f instanceof Function) {
                                 if (w instanceof DlAbstractButton && w._checkTwoState(true)) {
                                         var v = f.call(w);
-                                        if (v == null) {
+                                        if (typeof v == "boolean") {
+                                                val[name] = v;
+                                        } else if (v == null) {
                                                 val[name] = w.checked();
                                         } else if (w.checked()) {
                                                 val[name] = v;

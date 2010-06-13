@@ -336,6 +336,16 @@ DEFINE_CLASS("DlPopup", DlContainer, function(D, P, DOM) {
 
         P.correctPos = Function.noop;
 
+        P.reposition = function() {
+                if (this.visible) {
+                        this.showAt(this.args.anchor,
+                                    this.args.align || this._align,
+                                    this.args.pos,
+                                    this.args.shift,
+                                    this.args.fluid);
+                }
+        };
+
         P.showAt = function(anchor, align, mousePos, shift, fluid) {
                 var origpos, p, sa, div = this.getScrollDiv();
                 if (!align)

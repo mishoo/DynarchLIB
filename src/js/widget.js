@@ -117,6 +117,12 @@ DEFINE_CLASS("DlWidget", DlEventProxy, function(D, P, DOM) {
         D.getById = function(id) { return WIDGETS[id]; };
         D.getFromElement = function(el) { return el._dynarch_object; };
 
+        D.getFromUpElement = function(el) {
+                while (el && !el._dynarch_object)
+                        el = el.parentNode;
+                return el && el._dynarch_object;
+        };
+
         var TOOLTIP = null;
         function getTooltip() {
                 if (!TOOLTIP)

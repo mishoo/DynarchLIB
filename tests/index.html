@@ -13,6 +13,10 @@
 [% ELSE %]
     <script src="../src/js/all-scripts.jsx?crunch=0;path=../src/js"></script>
 [% END %]
+    <script src="../src/extras/md5.js"></script>
+    <script src="../src/extras/sha1.js"></script>
+    <script src="../src/extras/cryptaes.js"></script>
+    <script src="../src/extras/base64.js"></script>
     <script>DlFlashUtils().init()</script>
     <script src="[% cgi.file | html %]"></script>
     <script src="tests.js"></script>

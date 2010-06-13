@@ -69,7 +69,15 @@ DEFINE_CLASS("DlTabs", DlContainer, function(D, P, DOM){
 				      });
 		w._tab.addEventListener("onClick", onTabClick, true);
                 w.addEventListener("onDestroy", w._tab.destroy.$(w._tab));
+                return w;
 	};
+
+        P.addTab2 = function(args) {
+                var w = this.addTab(args.widget, args.title, args.pos);
+                if (args.iconClass)
+                        w._tab.setIconClass(args.iconClass);
+                return w;
+        };
 
 	P.getTabBar = function() { return this._tabBar; };
 	P.getNotebook = function() { return this._tabContent; };

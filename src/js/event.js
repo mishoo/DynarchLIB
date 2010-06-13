@@ -80,7 +80,7 @@ DEFINE_CLASS("DlEvent", null, function(D, P, DOM){
                 }
                 if (this.type.indexOf("key") == 0) {
                         this.keyCode = ev.keyCode;
-                        this.charCode = (is_ie || is_opera) ? ev.keyCode : ev.charCode;
+                        this.charCode = "which" in ev ? ev.which : (is_ie || is_opera) ? ev.keyCode : ev.charCode;
                         this.keyStr = String.fromCharCode(this.charCode);
                 }
                 if (this.dl_type == "onMouseWheel") {
@@ -281,7 +281,7 @@ DEFINE_CLASS("DlEvent", null, function(D, P, DOM){
 
         D.focusedWidget = function(w) {
                 if (arguments.length > 0 && focusedWidget !== w) {
-                        if (focusedWidget) {
+                        if (focusedWidget && !focusedWidget.destroyed /* XXX: WTF? */) {
                                 if (focusedWidget._focusable == 2) {
                                         if (w._focusable < 2)
                                                 D.fakeBlur();

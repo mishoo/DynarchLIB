@@ -36,11 +36,6 @@
 
 DEFINE_CLASS("DlNotebook", DlContainer, function(D, P) {
 
-	D.CONSTRUCT = function() {
-		this._panes = [];
-		this._currentPane = null;
-	};
-
         // XXX: can we use D.DEFAULT_EVENTS?
         var DEFAULT_EVENTS = [ "onChange" ];
 
@@ -72,6 +67,8 @@ DEFINE_CLASS("DlNotebook", DlContainer, function(D, P) {
 	};
 
 	P.initDOM = function() {
+                this._panes = [];
+		this._currentPane = null;
 		this.registerEvents(DEFAULT_EVENTS);
 		D.BASE.initDOM.call(this);
 	};

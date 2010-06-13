@@ -39,8 +39,8 @@ form { padding: 0; margin: 0; }
   width: 1px;
   height: 1px;
   overflow: hidden;
-  left: -32000;
-  top: -32000;
+  left: -32000px;
+  top: -32000px;
   display: none;                /* XXX: why didn't we have this before? */
 }
 
@@ -178,7 +178,8 @@ div.DlButton-Label { display: inline; }
 .DlEntry-ValidationError input, .DlEntry-ValidationError textarea { background-color: #ffccd9; }
 .DlEntry-Readonly .DlEntry-cell { background-color: #dcf; border-bottom-color: #edf; border-right-color: #edf; }
 .DlEntry-Readonly input, .DlEntry-Readonly textarea { background-color: #dcf; }
-.DlEntry-empty input, .DlEntry-empty textarea { color: #98a; font-style: italic; }
+.DlEntry-emptyText { display: none; position: absolute; left: 3px; top: 1px; color: #98a; font-style: italic; cursor: text; }
+.DlEntry-empty .DlEntry-emptyText { display: block; }
 
 .DlEntry-dropDownBtn {
   line-height: 20px;
@@ -188,6 +189,26 @@ div.DlButton-Label { display: inline; }
 
 .DlEntry-dropDownBtn-hover { background-color: #fff; }
 .DlEntry-dropDownBtn-active { background-color: #76c; }
+
+.DlEntry-invalidIcon {
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  right: 1px;
+  top: 50%;
+  margin-top: -8px;
+  background-image: url("img/entry-warning.png");
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  opacity: 0.6;
+  display: none;
+}
+
+div.DlEntry-invalidIcon:hover { opacity: 1; }
+
+.DlEntry-ValidationError .DlEntry-invalidIcon {
+  display: block;
+}
 
 /* CompletionEntry */
 
@@ -358,8 +379,8 @@ table.DlCalendar {
 .DlPopup {
   position: absolute;
   z-index: 100;
-  left: -30000;
-  top: -30000;
+  left: -30000px;
+  top: -30000px;
 }
 
 .DlPopup-scrollArea {
@@ -492,7 +513,7 @@ div.DlVMenu-separator {
 
 /* Notebook */
 
-.DlNotebook { background-color: #d8c8f8; }
+/* .DlNotebook { background-color: #d8c8f8; } */
 
 /* Tabs */
 
@@ -870,8 +891,8 @@ table.DlButtonBox .DlButtonBox-spacer { width: 100%; }
 }
 
 .DlDialog .DlWM-modalStopper {
-  -moz-border-radius: 0 0 4px 4px;
-  -webkit-border-radius: 0 0 4px 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
 }
 
 .DlWM-hasModals { width: 100%; height: 100%; }
@@ -1025,7 +1046,7 @@ table.DlButtonBox .DlButtonBox-spacer { width: 100%; }
 .IconCalendar { background-image: url("img/icons/calendar.png"); background-position: 1px 50%; }
 .IconColors { background-image: url("img/icons/colors.png"); background-position: 1px 50%; }
 .IconChardev { background-image: url("img/icons/gnome-fs-chardev.png"); background-position: 1px 50%; }
-.IconDynarch { background-image: url("img/icons/dynarch-small.png"); background-image: 1px 50%; }
+.IconDynarch { background-image: url("img/icons/dynarch-small.png"); background-position: 1px 50%; }
 
 
 

@@ -62,6 +62,7 @@ Array.$ = function(obj, start) {
 Object.merge = function(dest, src) {
         for (var i in src)
                 dest[i] = src[i];
+        return dest;
 };
 
 Object.merge(Object, {
@@ -70,12 +71,14 @@ Object.merge(Object, {
                 for (var i in src)
                         if (typeof src[i] != "undefined")
                                 dest[i] = src[i];
+                return dest;
         },
 
         mergeUndefined: function(dest, src) {
                 for (var i in src)
                         if (!(i in dest))
                                 dest[i] = src[i];
+                return dest;
         },
 
         remove: function(from, keys) {
@@ -267,15 +270,17 @@ Object.merge(Array, {
 
         hashKeys: function(obj) {
                 var a = [], i = 0, key;
-                for (key in obj)
+                for (key in obj) if (obj.hasOwnProperty(key)) {
                         a[i++] = key;
+                }
                 return a;
         },
 
         hashValues: function(obj) {
                 var a = [], i = 0, key;
-                for (key in obj)
+                for (key in obj) if (obj.hasOwnProperty(key)) {
                         a[i++] = obj[key];
+                }
                 return a;
         }
 
@@ -612,7 +617,7 @@ Array.inject({
         },
 
         bytesToString: function() {
-                var s = String.buffer(), i = 0, c;
+                var s = "", i = 0, c;
                 while (i < this.length) {
                         c = this[i++];
                         if (!(c & 0xF0 ^ 0xF0)) {
@@ -631,9 +636,9 @@ Array.inject({
                                 c = ((c & 0x1F) << 6) |
                                         (this[i++] & 0x3F);
                         }
-                        s(String.fromCharCode(c));
+                        s += String.fromCharCode(c);
                 }
-                return s.get();
+                return s;
         },
 
         repeat: function(i) {
@@ -752,6 +757,19 @@ Number.inject({
 
         nullLimit : function(min, max) {
                 return Math.nullLimit(this, min, max);
+        },
+
+        i18n : function(format) {
+                var n = this;
+                if (arguments.length > 1) {
+                        format = Array.$(arguments);
+                } else {
+                        format = format.trim().split(/\s*\|\s*/);
+                }
+                format = n < format.length ? format[n] : format[format.length - 1];
+                return format.replace(/##?/g, function(s){
+			return s.length == 2 ? "#" : n;
+		});
         }
 
 });
@@ -1082,7 +1100,7 @@ String.inject({
         },
 
         toBytes : function() {
-                var a = [], i = this.length, j = 0, k = 0, c;
+                var i = this.length, j = 0, k = 0, c, a = [];
                 while (--i >= 0) {
                         c = this.charCodeAt(k++);
                         // unicode support
@@ -1997,6 +2015,10 @@ window.DynarchDomUtils = {
                         for (var i = el.firstChild; i; i = i.nextSibling)
                                 if (i.nodeType == 1)
                                         DynarchDomUtils.walk(i, f);
+        },
+
+        setDocumentTitle: function(title) {
+                document.title = title;
         },
 
         CE_CACHE : CE_CACHE

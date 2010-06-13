@@ -106,7 +106,7 @@ DEFINE_CLASS("DlRecordCache", DlEventProxy, function(D, P) {
         };
 
         P.formatHTML = function(rec, col, buf) {
-                buf(rec.get(col).toString().htmlEscape());
+                buf(String(rec.get(col)).htmlEscape());
         };
 
         // override
@@ -616,7 +616,12 @@ DEFINE_CLASS("DlDataGrid", DlContainer, function(D, P, DOM) {
             DC = DOM.delClass,
             CC = DOM.condClass;
 
-        D.DEFAULT_EVENTS = [ "onBodyDblClick", "onBodyScroll" ];
+        D.DEFAULT_EVENTS = [
+                "onBodyDblClick",
+                "onBodyScroll",
+                "onRowClick",
+                "onRowDblClick"
+        ];
 
         D.CONSTRUCT = function() {
                 this.__scrollConts = 0;
@@ -637,6 +642,7 @@ DEFINE_CLASS("DlDataGrid", DlContainer, function(D, P, DOM) {
                 _headType       : [ "headType"           , DlDataGridHeadLabel ],
                 _focusable      : [ "focusable"          , true ],
                 _rtClickKeepSel : [ "rightClickKeepsSel" , false ],
+                _noReselect     : [ "noReselect"         , false ],
                 _rarify         : [ "rarifyScroll"       , null ]
         };
 
@@ -931,8 +937,8 @@ DEFINE_CLASS("DlDataGrid", DlContainer, function(D, P, DOM) {
         };
 
         P._onDestroy = function() {
-                this.setCache(null);
                 this._ss.destroy();
+                this.setCache(null);
         };
 
         P.setCache = function(cache) {
@@ -1117,6 +1123,9 @@ DEFINE_CLASS("DlDataGrid", DlContainer, function(D, P, DOM) {
 
         P._body_onDblClick = function(ev) {
                 this.callHooks("onBodyDblClick");
+                var r = ev_find_row(ev);
+                if (r)
+                        this.callHooks("onRowDblClick", r);
         };
 
         P._body_onMouseOver = function(ev) {
@@ -1124,7 +1133,7 @@ DEFINE_CLASS("DlDataGrid", DlContainer, function(D, P, DOM) {
                 if (r && (this.__tooltip instanceof Function)) {
                         this._tooltipRow = r;
                         DlWidget.getTooltip().popup({ timeout : this.__tooltipTimeout,
-                                                      content : this.__tooltip(r),
+                                                      content : this.__tooltip.$(this, r),
                                                       anchor  : this.getElement(),
                                                       align   : "mouse",
                                                       onPopup : this.__onTooltipShow,
@@ -1150,13 +1159,29 @@ DEFINE_CLASS("DlDataGrid", DlContainer, function(D, P, DOM) {
                         if (ev.button == 2) { // right click
                                 if (!this._rtClickKeepSel) {
                                         if (ev.ctrlKey) {
+                                                this.callHooks("onRowClick", r, ev, {
+                                                        rtc: true,
+                                                        ctrl: true,
+                                                        type: "select",
+                                                        ids: [ r.id ]
+                                                });
                                                 sel.select([ r.id ]);
                                         } else if (!sel.isSelected(r.id)) {
+                                                this.callHooks("onRowClick", r, ev, {
+                                                        rtc: true,
+                                                        type: "reset",
+                                                        ids: [ r.id ]
+                                                });
                                                 sel.reset([ r.id ]);
                                         }
                                 }
                         } else {
                                 if (ev.ctrlKey) {
+                                        this.callHooks("onRowClick", r, ev, {
+                                                ctrl: true,
+                                                type: "toggle",
+                                                ids: [ r.id ]
+                                        });
                                         sel.toggle(r.id);
                                         sel._last = r.id;
                                 } else if (ev.shiftKey) {
@@ -1164,17 +1189,36 @@ DEFINE_CLASS("DlDataGrid", DlContainer, function(D, P, DOM) {
                                                 var from = rs.id_to_pos[sel._last];
                                                 var to = rs.id_to_pos[r.id];
                                                 var ids = rs.array.slice(Math.min(from, to), Math.max(from, to) + 1);
+                                                this.callHooks("onRowClick", r, ev, {
+                                                        shift: true,
+                                                        type: "reset",
+                                                        ids: ids
+                                                });
                                                 sel.reset(ids);
                                         } else {
+                                                this.callHooks("onRowClick", r, ev, {
+                                                        shift: true,
+                                                        type: "toggle",
+                                                        ids: [ r.id ]
+                                                });
                                                 sel.toggle(r.id);
                                                 sel._last = r.id;
                                         }
                                 } else {
+                                        this.callHooks("onRowClick", r, ev, {
+                                                type: "reset",
+                                                ids: [ r.id ]
+                                        });
                                         sel.reset([ r.id ]);
                                         sel._last = r.id;
                                 }
                         }
-                } else {
+                }
+                else if (!this._noReselect || !sel.isSelected(r.id)) {
+                        this.callHooks("onRowClick", r, ev, {
+                                type: "reset",
+                                ids: [ r.id ]
+                        });
                         sel.reset([ r.id ]);
                         sel._last = r.id;
                 }
@@ -1234,11 +1278,11 @@ DEFINE_CLASS("DlDataGrid", DlContainer, function(D, P, DOM) {
         };
 
         P._handle_focusKeys = function(ev) {
-                var sel = this._selection, k = ev.keyCode, c = ev.charCode, rs = this._records;
+                var sel = this._selection, k = ev.keyCode, c = ev.charCode, rs = this._records, index;
                 switch (k) {
 
                     case DlKeyboard.ARROW_DOWN:
-                        var index = -1;
+                        index = -1;
                         if (sel._last != null)
                                 index = rs.id_to_pos[sel._last];
                         if (ev.shiftKey && sel.multiple) {
@@ -1256,7 +1300,7 @@ DEFINE_CLASS("DlDataGrid", DlContainer, function(D, P, DOM) {
                         break;
 
                     case DlKeyboard.ARROW_UP:
-                        var index = rs.array.length;
+                        index = rs.array.length;
                         if (sel._last != null)
                                 index = rs.id_to_pos[sel._last];
                         if (ev.shiftKey && sel.multiple) {
@@ -1312,12 +1356,14 @@ DEFINE_CLASS("DlDataGrid", DlContainer, function(D, P, DOM) {
                                         rev = !rev;
                         }
                         this.__sortRev = rev;
-                        this._data.sort(this._records.array, col, prev, rev, function(ids){
-                                this.resetIDS(ids);
-                                this.refreshDisplay();
-                                this.setSortColumn(col, rev);
-                        }, this);
+                        this._data.sort(this._records.array, col, prev, rev, this._handleSort.$(this, col, rev));
                 }
+        };
+
+        P._handleSort = function(col, rev, ids) {
+                this.resetIDS(ids);
+                this.refreshDisplay();
+                this.setSortColumn(col, rev);
         };
 
         P.setSortColumn = function(col, rev) {

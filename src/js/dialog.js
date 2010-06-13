@@ -202,6 +202,7 @@ DEFINE_CLASS("DlDialog", DlContainer, function(D, P, DOM){
 
         D.DEFAULT_ARGS = {
                 _title         : [ "title"        , "DlDialog" ],
+                _noEmptyTitle  : [ "noEmptyTitle" , true ],
                 _fixed         : [ "fixed"        , false ],
                 _resizable     : [ "resizable"    , false ],
                 _focusable     : [ "focusable"    , true ],
@@ -659,7 +660,7 @@ DEFINE_CLASS("DlDialog", DlContainer, function(D, P, DOM){
                         this.setPos(pos.x, pos.y);
                 }
                 this.__maxBtn.checked(c, true);
-                if (this._focusedWidget)
+                if (this._focusedWidget && !this._focusedWidget.destroyed)
                         this._focusedWidget.focus();
         };
 
@@ -738,6 +739,9 @@ DEFINE_CLASS("DlDialog", DlContainer, function(D, P, DOM){
                                 title = title.join("");
                         this._title = title;
                         this.getTitleElement().firstChild.innerHTML = title;
+                        if (this._noEmptyTitle) {
+                                this.getTitleElement().style.display = /\S/.test(title) ? "" : "none";
+                        }
                 }
                 return this._title;
         };

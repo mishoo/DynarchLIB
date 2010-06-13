@@ -53,7 +53,7 @@ DlJSON = {
 				tmp.push([ DlJSON.encode(i), ":", DlJSON.encode(obj[i]) ].join(""));
 			tmp = [ "{", tmp.join(","), "}" ].join("");
 		} else if (typeof obj == "string") {
-			tmp = [ '"', obj.replace(/\x5c/g, "\\\\").replace(/\n/g, "\\n").replace(/\t/g, "\\t").replace(/\x22/g, "\\\""), '"' ].join("");
+			tmp = [ '"', obj.replace(/\x5c/g, "\\\\").replace(/\r?\n/g, "\\n").replace(/\t/g, "\\t").replace(/\x22/g, "\\\""), '"' ].join("");
 		} else
 			tmp = obj.toString();
 		return tmp;

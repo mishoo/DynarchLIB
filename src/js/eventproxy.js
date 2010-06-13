@@ -215,6 +215,24 @@ DEFINE_CLASS("DlEventProxy", null, function(D, P) {
                 return a && a.length > 0;
         };
 
+        P.withHooks = function(args, cont) {
+                this.addEventListener.apply(this, args);
+                try {
+                        cont();
+                } finally {
+                        this.removeEventListener.apply(this, args);
+                }
+        };
+
+        P.withDisabledHooks = function(args, cont) {
+                this.disableHooks.apply(this, args);
+                try {
+                        cont();
+                } finally {
+                        this.enableHooks.apply(this, args);
+                }
+        };
+
         P.applyHooks = function(ev, args) {
                 var ret = [], a, i = 0, f;
                 try {
