@@ -1400,6 +1400,18 @@ window.Dynarch = {
 
         getFileURL : function(file) {
                 return Dynarch.getBaseURL() + "/" + file;
+        },
+
+        firebugRunning : function() {
+                return window.console && window.console.firebug;
+        },
+
+        evalClean : function(code) {
+                if (Dynarch.firebugRunning()) {
+                        return new Function("return (" + code + ");")();
+                } else {
+                        return eval("(" + code + ")");
+                }
         }
 
 };
@@ -1528,7 +1540,7 @@ window.DynarchDomUtils = {
                 if (obj[method] instanceof Function)
                         return obj[method].call(obj);
                 else if (typeof obj[method] == "string")
-                        return eval(obj[method]);
+                        return Dynarch.evalClean(obj[method]);
         },
         setStyleProperty : function(el, prop, val) {
                 switch (prop) {

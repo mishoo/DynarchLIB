@@ -67,9 +67,7 @@ DlJSON = {
 				throw new DlSecurityException("Character " + RegExp.$1 + " not allowed in JSON input!");
 		}
 		try {
-			var val;
-			eval([ "val=", str ].join(""));
-			return val;
+			return Dynarch.evalClean(str);
 		} catch(ex) {
 			throw new DlDataException("Malformed data in JSON input: " + ex);
 		}
