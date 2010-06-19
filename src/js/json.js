@@ -60,8 +60,8 @@ DlJSON = {
 	},
 
 	decode : function(str, safe) {
-		str = str.trim();
 		if (!safe) {
+                        str = str.trim();
 			var tmp = str.replace(DlJSON.RE_strings, "");
 			if (DlJSON.RE_forbid.test(tmp))
 				throw new DlSecurityException("Character " + RegExp.$1 + " not allowed in JSON input!");
