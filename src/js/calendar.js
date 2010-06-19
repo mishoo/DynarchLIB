@@ -486,9 +486,7 @@ DEFINE_CLASS("DlCalendar", DlWidget, function(D, P, DOM) {
 				this._navCellClicked(cell, cell._navType != 0 ? 350 : 0, ev);
 		} else if (cell._year != null && ev.dl_type == "onMouseUp") {
 			var d = this.date;
-			d.setDate(cell._iday);
-			d.setMonth(cell._month);
-			d.setFullYear(cell._year);
+			d.setFullYear(cell._year, cell._month, cell._iday);
 			var old_date = this._selectedDate;
 			this._selectedDate = cell._iday;
 			if (cell._otherMonth) {
