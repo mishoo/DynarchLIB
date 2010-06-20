@@ -135,6 +135,19 @@ Object.merge(Object, {
                 }
         },
 
+        map: function(hash, f, obj) {
+                var ret = [];
+                for (var i in hash) if (hash.hasOwnProperty(i)) try {
+                        ret.push(f.call(obj, hash[i], i));
+                } catch(ex) {
+                        if (ex === $_BREAK) break;
+                        if (ex === $_CONTINUE) continue;
+                        if (ex instanceof $_RETURN) return ex.args;
+                        throw ex;
+                }
+                return ret;
+        },
+
         // should be called in the context of an object instance
         curry2: function(f) {
                 if (!(f instanceof Function))
@@ -678,6 +691,43 @@ Array.inject({
 
         prepend: function(a) {
                 this.unshift.apply(this, a);
+        },
+
+        toXML: function() {
+                var tag = this[0];
+                if (tag == "~literal") {
+                        return this.slice(1).flatJoin();
+                }
+                var ret = "<" + tag, i = 1, next = this[1];
+                if (typeof next == "object") {
+                        Object.foreach(next, function(val, key){
+                                if (key.charAt(0) == "$")
+                                        key = key.substr(1);
+                                ret += " " + key.htmlEscape() + '="';
+                                if (typeof val == "object") {
+                                        ret += Object.map(val, function(val, key){
+                                                key = key.replace(/([a-z]?)([A-Z])/g, function(s, p1, p2){
+                                                        return p1 + "-" + p2.toLowerCase();
+                                                });
+                                                return key.htmlEscape() + ": " + val.htmlEscape();
+                                        }).join("; ");
+                                } else {
+                                        ret += val.htmlEscape();
+                                }
+                                ret += '"';
+                        });
+                        ++i;
+                }
+                ret += ">";
+                while (i < this.length) {
+                        next = this[i++];
+                        if (next instanceof Array) {
+                                ret += next.toXML();
+                        } else {
+                                ret += String(next).htmlEscape();
+                        }
+                }
+                return ret + "</" + tag + ">";
         }
 
 });
@@ -1223,6 +1273,23 @@ String.inject({
         };
 
         A.x = A.repeat;
+
+        A.flatJoin = function() {
+                return $flatJoin(this);
+        };
+
+        function $flatJoin(obj) {
+                if (obj instanceof Array) {
+                        return obj.reduce(function(el, val) {
+                                return val + $flatJoin(el);
+                        }, "");
+                } else if (obj instanceof Function) {
+                        return $flatJoin(obj());
+                } else if (obj === false || obj == null) {
+                        return "";
+                }
+                return String(obj);
+        };
 
         // Numberr
 
