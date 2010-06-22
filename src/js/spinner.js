@@ -155,6 +155,11 @@ DEFINE_CLASS("DlSpinner", DlEntry, function(D, P, DOM) {
                 return D.BASE.readonly.apply(this, arguments);
         };
 
+        P.getFormValue = function() {
+                var val = this.getValue(), n = parseFloat(val);
+                return isNaN(n) ? val : n;
+        };
+
 	P._spinnerUpdateVal = function(dir) {
                 if (!this._readonly) {
                         var val = new Number(this.getValue());
