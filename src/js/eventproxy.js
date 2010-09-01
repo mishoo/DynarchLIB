@@ -156,12 +156,12 @@ DEFINE_CLASS("DlEventProxy", null, function(D, P) {
         };
 
         P.removeEventListener = function(ev, handler) {
+                var i = 0, e;
                 if (ev instanceof Array) {
-                        var i = 0, e;
                         while ((e = ev[i++]))
                                 this.removeEventListener(e, handler);
                 } else if (typeof ev == "object") {
-                        for (var i in ev)
+                        for (i in ev)
                                 this.removeEventListener(i, ev[i]);
                 } else {
                         this.__getEventHooks(ev).remove(handler);
@@ -218,7 +218,7 @@ DEFINE_CLASS("DlEventProxy", null, function(D, P) {
         P.withHooks = function(args, cont) {
                 this.addEventListener.apply(this, args);
                 try {
-                        cont();
+                        return cont();
                 } finally {
                         this.removeEventListener.apply(this, args);
                 }
@@ -227,7 +227,7 @@ DEFINE_CLASS("DlEventProxy", null, function(D, P) {
         P.withDisabledHooks = function(args, cont) {
                 this.disableHooks.apply(this, args);
                 try {
-                        cont();
+                        return cont();
                 } finally {
                         this.enableHooks.apply(this, args);
                 }

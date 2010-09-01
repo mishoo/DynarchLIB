@@ -465,6 +465,7 @@ DEFINE_CLASS("DlGridDragCol", DlDrag, function(D, P, DOM) {
 	P.moving = function(widget, ev) {
 		var target = this.target;
                 var di = getDropIndicator();
+                var s = di.style;
 		if (this.canDrop && target) {
 			var relPos = ev.computePos(target);
                         var te = target.getElement();
@@ -478,15 +479,13 @@ DEFINE_CLASS("DlGridDragCol", DlDrag, function(D, P, DOM) {
                         } else {
                                 pos = widget.parent._headCont._colPos[pos].pos - widget.parent.getBodyDiv().scrollLeft;
                         }
-                        with (di.style) {
-                                display = "block";
-                                left = pos + this.grid_pos.x + "px";
-                                top = relPos.elPos.y + "px";
-                        }
+                        s.display = "block";
+                        s.left = pos + this.grid_pos.x + "px";
+                        s.top = relPos.elPos.y + "px";
 			this.dropBefore = before;
 		} else if (target) {
 			this.dropBefore = null;
-                        di.style.display = "none";
+                        s.display = "none";
 		}
 	};
 
@@ -620,7 +619,8 @@ DEFINE_CLASS("DlDataGrid", DlContainer, function(D, P, DOM) {
                 "onBodyDblClick",
                 "onBodyScroll",
                 "onRowClick",
-                "onRowDblClick"
+                "onRowDblClick",
+                "onResetIds"
         ];
 
         D.CONSTRUCT = function() {
@@ -696,6 +696,7 @@ DEFINE_CLASS("DlDataGrid", DlContainer, function(D, P, DOM) {
                 sel.filter(h);
                 if (sel.getArray().length == 0)
                         sel._last = null;
+                this.callHooks("onResetIds");
         };
 
         P._fetch_data = function(ids, dir, callback) {
@@ -1035,7 +1036,8 @@ DEFINE_CLASS("DlDataGrid", DlContainer, function(D, P, DOM) {
                         var cls = "DlDataGrid-col-" + col.id();
                         var sel = this._cssPrefix + " ." + cls;
                         sel = sel + "," + sel + " .DlDataGrid-cellData";
-                        var css = [ "text-align:" + col.getStyle("textAlign", "left") ];
+                        // var css = [ "text-align:" + col.getStyle("textAlign", "left") ];
+                        var css = [];
                         var width = col.getWidth();
                         if (typeof width == "number") {
                                 css.push("width:" + width + "px");
@@ -1074,7 +1076,7 @@ DEFINE_CLASS("DlDataGrid", DlContainer, function(D, P, DOM) {
         function ev_find_row(ev) {
                 var p = ev.target, row, col, row_id, col_id, tn;
                 try {
-                        while (p) {
+                        while (p && p.tagName) {
                                 tn = p.tagName.toLowerCase();
                                 if (tn == "div" && (row_id = p.getAttribute("recid")) != null) {
                                         row = p;

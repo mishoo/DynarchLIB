@@ -184,8 +184,7 @@ DEFINE_CLASS("DlCalendar", DlWidget, function(D, P, DOM) {
 	};
 
 	P._makeNavPart = function() {
-		var td, type, i;
-		for (var i = 0; i < arguments.length; ++i) {
+		for (var td, type, i = 0; i < arguments.length; ++i) {
 			td = arguments[i++];
 			type = arguments[i];
 			td._navType = type;

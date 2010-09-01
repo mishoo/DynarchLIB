@@ -12,6 +12,9 @@ use File::Copy;
 use Template::Alloy;
 use Getopt::Long;
 use POSIX;
+use JSON;
+
+my $json = new JSON->utf8;
 
 use Dynarch::LoadJS;
 use Dynarch::JSCrunch;
@@ -99,11 +102,15 @@ chdir "$destdir/src/js";
     print FILE $content;
     close FILE;
 
+    if ($opt_full_source) {
+        system 'cp thelib.js thelib-full.js';
+    }
+
     {
         local $/ = undef;
 
         # kinda sucky, but does the job
-        open YUI, '-|', 'java -jar ~/Java/yuicompressor-2.4.2/build/yuicompressor-2.4.2.jar --type js < thelib.js';
+        open YUI, '-|', 'uglifyjs < thelib.js';
         $content = <YUI>;
         close YUI;
 
@@ -114,6 +121,23 @@ chdir "$destdir/src/js";
     }
 
     unlink $loader->get_scripts;
+
+    if ($opt_full_source) {
+        chdir "$destdir/full-source/js";
+        open FILE, '> _load_all.js';
+        my @scripts = $loader->get_rel_scripts;
+        my $json_scripts = $json->encode(\@scripts);
+        print FILE <<EOF
+(function(){
+    var scripts = $json_scripts;
+    for (var i = 0; i < scripts.length; ++i) {
+        document.write("<script src='" + DYNARCHLIB_DEVEL_URL + "/full-source/js/" + scripts[i] + "'></script>");
+    }
+})();
+EOF
+;
+        close FILE;
+    }
 }
 
 chdir "$destdir/src/extras";

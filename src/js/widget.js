@@ -348,7 +348,7 @@ DEFINE_CLASS("DlWidget", DlEventProxy, function(D, P, DOM) {
         function onContextMenu(ev) {
                 var content = this.__contextMenu;
                 if (typeof content == "function")
-                        content = content.call(this);
+                        content = content.call(this, ev);
                 if (content) {
                         var p = this._getContextMenuPopup();
                         p.popup({ timeout    : 0,

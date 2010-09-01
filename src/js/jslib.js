@@ -440,7 +440,7 @@ Array.inject({
         r_map: function(f, obj) {
                 var i = this.length, a = [], func;
                 if (!(f instanceof Function)) {
-                        args = Array.$(arguments, 1);
+                        var args = Array.$(arguments, 1);
                         while (--i >= 0) {
                                 obj = this[i];
                                 func = obj[f];
@@ -881,15 +881,15 @@ Object.merge(Date, {
         parseMySQL : function(str, gmt) {
                 var a = str.split(/\s+/), d = a[0].split(/-/), t = a[1].split(/:/), date;
                 date = new Date(d[0], d[1] - 1, d[2], t[0] || null, t[1] || null, t[2] || null);
-                if (gmt) with (date) {
-                        setUTCMilliseconds(0);
-                        setUTCSeconds(t[2] || 0);
-                        setUTCMinutes(t[1] || 0);
-                        setUTCHours(t[0] || 0);
-                        setUTCDate(1);
-                        setUTCMonth(d[1] - 1);
-                        setUTCDate(d[2]);
-                        setUTCFullYear(d[0]);
+                if (gmt) {
+                        date.setUTCMilliseconds(0);
+                        date.setUTCSeconds(t[2] || 0);
+                        date.setUTCMinutes(t[1] || 0);
+                        date.setUTCHours(t[0] || 0);
+                        date.setUTCDate(1);
+                        date.setUTCMonth(d[1] - 1);
+                        date.setUTCDate(d[2]);
+                        date.setUTCFullYear(d[0]);
                 }
                 return date;
         },
@@ -1278,9 +1278,27 @@ String.inject({
                 return $flatJoin(this);
         };
 
+        A.flatten = function() {
+                var ret = [];
+                $flatten.call(ret, this);
+                return ret;
+        };
+
+        function $flatten(obj) {
+                if (obj instanceof Array) {
+                        obj.foreach($flatten, this);
+                }
+                else if (obj instanceof Function) {
+                        obj = obj();
+                        if (obj != null && obj != false)
+                                $flatten.call(this, obj);
+                }
+                else this.push(obj);
+        };
+
         function $flatJoin(obj) {
                 if (obj instanceof Array) {
-                        return obj.reduce(function(el, val) {
+                        return obj.accumulate(function(el, val) {
                                 return val + $flatJoin(el);
                         }, "");
                 } else if (obj instanceof Function) {
@@ -1434,7 +1452,7 @@ window.Dynarch = {
         },
 
         getFunctionName : function(f) {
-                if (f.name)
+                if (f.name != null)
                         return f.name;
                 else if (/function\s+(\$?[a-z0-9_]+)\(/i.test(f.toString()))
                         return RegExp.$1;
@@ -2111,8 +2129,7 @@ var $ = is_gecko
         };
 
 function DEFINE_CLASS(name, base, definition, hidden) {
-        if (name)
-                D.name = name;
+        D.name = name || "";
         if (hidden)
                 D.hidden = true;
         if (base)

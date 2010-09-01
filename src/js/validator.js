@@ -161,7 +161,7 @@ DEFINE_CLASS("DlValidator", null, function(D, P){
                 a.foreach(function(v){
                         if (/^[0-9]{4}$/.test(v)) {
                                 yr = parseInt(v, 10);
-                                if (!mo && !da)
+                                if (!mo && !da && monthFirst == null)
                                         monthFirst = true;
                         } else if (/^[0-9]{1,2}$/.test(v)) {
                                 v = parseInt(v, 10);

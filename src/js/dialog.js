@@ -425,8 +425,8 @@ DEFINE_CLASS("DlDialog", DlContainer, function(D, P, DOM){
                                 sz.y--;
                         }
                         if (this.__noShadows) {
-                                sz.x -= 4;
-                                sz.y -= 4;
+                                sz.x -= 2;
+                                sz.y -= 2;
                         }
                         this.setOuterSize({ x: sz.x, y: sz.y });
                         if (is_gecko)

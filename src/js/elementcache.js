@@ -41,9 +41,9 @@ var DlElementCache = {
 
 (function(){
 
-	eval(DynarchDomUtils.importCommonVars());
-
-        var C = DlElementCache;
+        var CE  = DynarchDomUtils.createElement,
+            ID  = Dynarch.ID,
+            C   = DlElementCache;
 
         // generic <tbody><tr><td>
         (function(){
