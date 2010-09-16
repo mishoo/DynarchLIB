@@ -33,8 +33,8 @@
 ##> THE POSSIBILITY OF SUCH DAMAGE.
 
 
-use lib '/home/mishoo/cvs/libperl';
-use dynarch::JSCrunch;
+use FindBin;
+use lib "$FindBin::Bin/../../perl";
 use CGI;
 
 my @scripts = ();
@@ -76,19 +76,8 @@ my $cgi = new CGI;
 my $path = $cgi->param('path') || 'src/js';
 
 print "Content-type: text/javascript\n\n";
-if ($cgi->param('crunch')) {
-    my $buffer = '';
-    foreach my $i (@scripts) {
-        $buffer .= $contents{$i};
-    }
-
-    my $jsc = new dynarch::JSCrunch(data => $buffer, no_comment => 1);
-    $buffer = $jsc->execute();
-    print $buffer;
-} else {
-    foreach my $i (@scripts) {
-        print 'document.write("<scr" + "ipt src=\'' , $path, '/', $i, '\'></scr" + "ipt>");', "\n";
-    }
+foreach my $i (@scripts) {
+    print 'document.write("<scr" + "ipt src=\'' , $path, '/', $i, '\'></scr" + "ipt>");', "\n";
 }
 
 sub get_requires {
