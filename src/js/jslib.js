@@ -532,6 +532,29 @@ Array.inject({
                 return false;
         },
 
+        any: function(f, obj) {
+                if (f instanceof Function) {
+                        if (obj == null)
+                                obj = this;
+                        for (var i = this.length; --i >= 0;)
+                                if (f.call(obj, this[i], i))
+                                        return true;
+                } else {
+                        var args = Array.$(arguments, 1), func;
+                        for (var i = this.length; --i >= 0;) {
+                                obj = this[i];
+                                func = obj[f];
+                                if (func instanceof Function) {
+                                        if (func.apply(obj, args))
+                                                return true;
+                                } else if (func) {
+                                        return true;
+                                }
+                        }
+                }
+                return false;
+        },
+
         find: function(el) {
                 for (var i = this.length; --i >= 0;)
                         if (this[i] === el)
