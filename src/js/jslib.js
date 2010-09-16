@@ -153,6 +153,10 @@ Object.merge(Object, {
                 if (!(f instanceof Function))
                         f = this[f];
                 return f.$A(this, Array.$(arguments, 1));
+        },
+
+        HOP: function(obj, prop) {
+                return Object.prototype.hasOwnProperty.call(obj, prop);
         }
 
 });

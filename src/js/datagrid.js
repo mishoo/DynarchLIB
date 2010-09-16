@@ -74,7 +74,7 @@ DEFINE_CLASS("DlRecord", DlEventProxy, function(D, P) {
 
 DEFINE_CLASS("DlRecordCache", DlEventProxy, function(D, P) {
 
-        D.DEFAULT_EVENTS = [ "onChange", "onInsert", "onDelete", "onRefresh" ];
+        D.DEFAULT_EVENTS = [ "onChange", "onInsert", "onBeforeDelete", "onDelete", "onRefresh" ];
 
         D.DEFAULT_ARGS = {
                 _data  : [ "data"  , null ]
@@ -124,6 +124,7 @@ DEFINE_CLASS("DlRecordCache", DlEventProxy, function(D, P) {
         };
 
         P.remove = function(id) {
+                this.applyHooks("onBeforeDelete", [ this.get(id) ]);
                 if (id instanceof Array) {
                         id.foreach(function(id){
                                 delete this._data[id];
@@ -164,10 +165,6 @@ DEFINE_CLASS("DlRecordCache", DlEventProxy, function(D, P) {
 });
 
 DEFINE_CLASS("DlDataGridHeadLabel", DlButton, function(D, P, DOM) {
-
-        D.BEFORE_BASE = function() {
-                this.__withIconClass = "DlButton-withIcon";
-        };
 
         D.FIXARGS = function(args) {
                 if (!("contextMenu" in args))

@@ -54,6 +54,8 @@ DEFINE_CLASS("DlButton", DlAbstractButton, function(D, P, DOM){
 		_iconClass  : [ "iconClass" , null ]
 	};
 
+        P.__withIconClass = "DlButton-withIcon";
+
 	P._createElement = function() {
 		D.BASE._createElement.call(this);
 		this.addClass("DlWidget-3D");

@@ -420,14 +420,6 @@ DEFINE_CLASS("DlDialog", DlContainer, function(D, P, DOM){
                         div.style.display = "none";
                         // this.display(true);
                         this.delClass("DlDialog-Resizing");
-                        sz.x--;
-                        if (is_gecko) {
-                                sz.y--;
-                        }
-                        if (this.__noShadows) {
-                                sz.x -= 2;
-                                sz.y -= 2;
-                        }
                         this.setOuterSize({ x: sz.x, y: sz.y });
                         if (is_gecko)
                                 // FIXME: wicked!
@@ -445,10 +437,10 @@ DEFINE_CLASS("DlDialog", DlContainer, function(D, P, DOM){
                 if (this.resizing) {
                         var div = this.getResizeRect();
                         var pos = DOM.getPos(div);
-                        pos.x = ev.pos.x - this._dragPos.x - pos.x - 1;
+                        pos.x = ev.pos.x - this._dragPos.x - pos.x - 2;
                         if (pos.x < 100)
                                 pos.x = 100;
-                        pos.y = ev.pos.y - this._dragPos.y - pos.y - 1;
+                        pos.y = ev.pos.y - this._dragPos.y - pos.y - 2;
                         if (pos.y < 100)
                                 pos.y = 100;
                         if (this._resizable === 1)
@@ -667,10 +659,6 @@ DEFINE_CLASS("DlDialog", DlContainer, function(D, P, DOM){
         P.__doMaximize = function() {
                 this.setPos(0, 0);
                 var ws = this.parent.getInnerSize();
-                if (this.__noShadows) {
-                        ws.x -= 4;
-                        ws.y -= 4;
-                }
                 this.setOuterSize({ x: ws.x, y: ws.y });
         };
 

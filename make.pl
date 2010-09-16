@@ -142,7 +142,7 @@ EOF
 
 chdir "$destdir/src/extras";
 foreach my $file (<*.js>) {
-    system "jscrunch --inline $file";
+    system "uglifyjs --overwrite $file";
 }
 
 chdir "$destdir/jsdoc/hl";

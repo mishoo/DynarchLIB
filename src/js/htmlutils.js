@@ -76,6 +76,7 @@ DlHtmlUtils = {
 		var headingTags	     = D._headingTags;
 		var newlineMode      = 0;
 		function rec(root, outputRoot) {
+                        var i;
 			switch (root.nodeType) {
 			    case 11: // DOCUMENT_FRAGMENT
 				outputRoot = false;
@@ -104,7 +105,7 @@ DlHtmlUtils = {
 					html[hi++] = "<";
 					html[hi++] = tag;
 					var attrs = root.attributes;
-					for (var i = 0; i < attrs.length; ++i) {
+					for (i = 0; i < attrs.length; ++i) {
 						var a = attrs.item(i);
 						if (!a.specified)
 							continue;

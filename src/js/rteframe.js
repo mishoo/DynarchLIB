@@ -134,6 +134,8 @@ DEFINE_CLASS("DlRteFrame", DlWidget, function(D, P, DOM) {
 	};
 
 	P.execCommand = function(cmd, param) {
+                if (this.readonly())
+                        return;
 		this.focus();
 		var ret;
 		var doc = this.getIframeDoc();
@@ -220,39 +222,43 @@ DEFINE_CLASS("DlRteFrame", DlWidget, function(D, P, DOM) {
 	};
 
 	P.queryCommandState = function(cmd) {
-		if (this.COMMANDS[cmd])
-			cmd = this.COMMANDS[cmd].id;
-		return this.getIframeDoc().queryCommandState(cmd);
+                if (!this.readonly()) {
+		        if (this.COMMANDS[cmd])
+			        cmd = this.COMMANDS[cmd].id;
+		        return this.getIframeDoc().queryCommandState(cmd);
+                }
 	};
 
 	P.queryCommandValue = function(cmd) {
-		if (this.COMMANDS[cmd])
-			cmd = this.COMMANDS[cmd].id;
-		if (!is_gecko && /^formatblock$/i.test(cmd)) {
-			// only Gecko does this correctly; I wonder when it'll break.
-			var a = this.getAllAncestors();
-			for (var i = 0; i < a.length; ++i) {
-				var tag = a[i].tagName.toLowerCase();
-				if (tag in FORMATBLOCK_TAGS)
-					return tag;
-			};
-		}
-		return this.getIframeDoc().queryCommandValue(cmd);
+                if (!this.readonly()) {
+		        if (this.COMMANDS[cmd])
+			        cmd = this.COMMANDS[cmd].id;
+		        if (!is_gecko && /^formatblock$/i.test(cmd)) {
+			        // only Gecko does this correctly; I wonder when it'll break.
+			        var a = this.getAllAncestors();
+			        for (var i = 0; i < a.length; ++i) {
+				        var tag = a[i].tagName.toLowerCase();
+				        if (tag in FORMATBLOCK_TAGS)
+					        return tag;
+			        };
+		        }
+		        return this.getIframeDoc().queryCommandValue(cmd);
+                }
 	};
 
 	P.getInnerHTML = function() {
 		return this.getIframeBody().innerHTML;
 	};
 
-	P.getHTML = function(withMeta) {
-                if (!is_ie) {
+	P.getHTML = function(withMeta, nocaret) {
+                if (!is_ie && !nocaret) {
                         this.collapse(true);
                         var caret = this.getIframeDoc().createElement("span");
                         caret.id = "DYNARCHLIB_RTEFRAME_CARET";
                         this.insertNode(caret);
                 }
                 var html = DlHtmlUtils.getHTML(this.getIframeBody(), false, withMeta);
-                if (!is_ie)
+                if (!is_ie && !nocaret)
                         this.deleteNode(caret);
                 return html;
 	};
@@ -414,6 +420,15 @@ DEFINE_CLASS("DlRteFrame", DlWidget, function(D, P, DOM) {
 		if (!this.__hasFrameEvents)
 			addIframeEvents.delayed(5, this, callback);
 	};
+
+        P.readonly = function(readonly) {
+                var doc = this.getIframeDoc();
+                if (arguments.length > 0) {
+                        doc.designMode = readonly ? "off" : "on";
+                        CC(doc.documentElement, readonly, "DlRteFrame-ReadOnly");
+                }
+                return doc.designMode == "off";
+        };
 
 	P.setHTML = function(html) {
 		if (html instanceof Array)
