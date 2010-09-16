@@ -495,9 +495,9 @@ Array.inject({
                         while (l-- > 0) {
                                 obj = this[i++];
                                 func = obj[cond];
-                                if (obj[cond] instanceof Function) {
-                                        obj[cond].apply(obj, args) && a.push(obj);
-                                } else if (obj[cond]) {
+                                if (func instanceof Function) {
+                                        func.apply(obj, args) && a.push(obj);
+                                } else if (func) {
                                         a.push(obj);
                                 }
                         }
