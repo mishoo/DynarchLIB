@@ -95,7 +95,8 @@ DEFINE_CLASS("DlNotebook", DlContainer, function(D, P) {
 			pane.setSize(this.getInnerSize());
 			pane._dl_notebook_has_size = true;
 		}
-		pane.setPos(this.__widgetsPosition, this.__widgetsPosition);
+		//pane.setPos(this.__widgetsPosition, this.__widgetsPosition);
+                pane.setStyle({ left: "", top: "" });
 		pane.visibility(true);
 		if (index !== old)
 			this.applyHooks("onChange", [ index, old ]);
