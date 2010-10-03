@@ -1237,7 +1237,12 @@ DEFINE_CLASS("DlDataGrid", DlContainer, function(D, P, DOM) {
                         if (!this.__handleOnMouseUp) {
                                 this.__handleSelectClick(r, ev);
                         }
-                        EX();
+                        if (ev.button != 2) {
+                                // seems that stopping the event
+                                // prevents the context menu from
+                                // showing up on FF/Mac.
+                                EX();
+                        }
                 }
         };
 
