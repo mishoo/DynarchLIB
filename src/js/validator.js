@@ -107,9 +107,16 @@ DEFINE_CLASS("DlValidator", null, function(D, P){
 	D.URL = function(data, args) {
 		if (!args)
 			args = {};
-		if (!/^(https?|ftps?):\x2f\x2f/.test(data))
+                data = data.trim();
+		if (!/^(https?|ftps?):\x2f\x2f/.test(data)) {
+                        if (/^([a-z0-9_-]+\.)+[a-z]+$/i.test(data)) {
+                                if (!/^www\./.test(data))
+                                        data = "www." + data;
+                                return "http://" + data + "/";
+                        }
 			throw new DlValidatorException("Value must be an absolute URL",
 						       DlValidatorException.MISMATCH);
+                }
 		return data;
 	};
 
