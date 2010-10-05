@@ -60,7 +60,8 @@ Array.$ = function(obj, start) {
 };
 
 Object.merge = function(dest, src) {
-        for (var i in src)
+        if (dest == null) dest = {};
+        if (src) for (var i in src)
                 dest[i] = src[i];
         return dest;
 };
