@@ -670,6 +670,10 @@ DEFINE_CLASS("DlDialog", DlContainer, function(D, P, DOM){
                 }
         };
 
+        P.modal = function() {
+                return this.__modal;
+        };
+
         P.makeResizable = function() {
                 if (!this._resizeHandlers) {
                         this.getContentElement().style.overflow = "hidden";
