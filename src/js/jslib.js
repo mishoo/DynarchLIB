@@ -958,6 +958,12 @@ Object.merge(Date, {
 
 });
 
+if (!Date.now) {
+        Date.now = function() {
+                return new Date().getTime();
+        };
+}
+
 Date.inject({
 
         toInt : function() {
@@ -1441,6 +1447,9 @@ String.prototype.htmlEscape = is_gecko ? function() {
 };
 
 window.Dynarch = {
+
+        dblClickTimeout: 400,
+
         // Call this in the context of some object.  Sets the default
         // properties of "this" according to their description in
         // defaults.  Can throw an exception if invalid data was
