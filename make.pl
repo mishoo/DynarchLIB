@@ -17,12 +17,9 @@ use JSON;
 my $json = new JSON->utf8;
 
 use Dynarch::LoadJS;
-use Dynarch::JSCrunch;
 
-my $opt_no_crunch = 0;
 my $opt_full_source = 1;
 GetOptions(
-    'no-crunch' => \$opt_no_crunch,
     'full|f=i'  => \$opt_full_source,
 );
 
@@ -94,10 +91,7 @@ chdir "$destdir/src/js";
     print DEBUG_JS_LOAD join("\n", $loader->get_scripts);
     close DEBUG_JS_LOAD;
     my $content = join("\n", $loader->get_contents);
-    if (!$opt_no_crunch) {
-        my $crunch = Dynarch::JSCrunch->new(data => $content, no_comment => 1);
-        $content = $crunch->execute;
-    }
+
     open FILE, '> thelib.js';
     print FILE $content;
     close FILE;
@@ -110,10 +104,10 @@ chdir "$destdir/src/js";
         local $/ = undef;
 
         # kinda sucky, but does the job
-        my $args = '';
-        if ($opt_no_crunch) {
-            $args = '-nm -ns';
-        }
+        my $args = '-nc';
+        # if ($opt_no_crunch) {
+        #     $args = '-nm -ns';
+        # }
         open YUI, '-|', "uglifyjs $args < thelib.js";
         $content = <YUI>;
         close YUI;
