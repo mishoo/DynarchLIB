@@ -76,7 +76,7 @@ function DlMenuBase() {
 		});
 	};
 
-	if (this instanceof DlHMenu) {
+	if (this instanceof DlHbox) {
 		this._popupAlign = {
 			prefer: "Br",
 			fallX1: "_r",
