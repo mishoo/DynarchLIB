@@ -125,13 +125,13 @@ DEFINE_CLASS("DlLiteTree", DlContainer, function(D, P, DOM){
                         this.applyHooks("onItemDblClick", hooks_args);
                         return;
                 }
-                if (!sel || clicked.expander) {
+                if (!sel || clicked.expander || !clicked.item.isSelectable()) {
                         var subtree = clicked.el.nextSibling;
-                            if (subtree) {
-                                    var was_hidden = DOM.hasClass(subtree, "hidden");
-                                    DOM.condClass(subtree, !was_hidden, "hidden");
-                                    DOM.condClass(clicked.el, was_hidden, "expanded", "collapsed");
-                            }
+                        if (subtree) {
+                                var was_hidden = DOM.hasClass(subtree, "hidden");
+                                DOM.condClass(subtree, !was_hidden, "hidden");
+                                DOM.condClass(clicked.el, was_hidden, "expanded", "collapsed");
+                        }
                         this.applyHooks("onItemMouseDown", hooks_args);
                 }
                 else if (sel && clicked.item.isSelectable()) {
@@ -150,6 +150,7 @@ DEFINE_CLASS("DlLiteTree", DlContainer, function(D, P, DOM){
                                         sel.reset([ clicked.id ]);
                                 }
                         }
+                        this.applyHooks("onItemMouseDown", hooks_args);
                 }
         };
 
