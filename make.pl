@@ -151,7 +151,7 @@ foreach my $file (<*.js>) {
 
 chdir "$destdir/jsdoc/hl";
 system 'cat highlight.js lang-js.js lang-dljs.js lang-css.js lang-xml.js lang-html.js helpers.js > hl-all.js';
-system 'jscrunch --inline hl-all.js';
+system 'uglifyjs --overwrite hl-all.js';
 
 ### Create "css/preload-default.js" - for preloading images
 
@@ -277,7 +277,7 @@ chdir "$destdir";
 
 system "find . -name '*.cgi' -exec chmod 755 {} \\;";
 system "find . -name '*.tt' -exec rm -f {} \\;";
-system "find src/deprecated -name '*.js' -exec jscrunch --inline {} \\;";
+system "find src/deprecated -name '*.js' -exec uglifyjs --overwrite {} \\;";
 
 chdir "$tmpdir";
 system "zip -r -q DynarchLIB.zip DynarchLIB";
