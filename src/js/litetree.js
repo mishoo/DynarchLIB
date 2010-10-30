@@ -118,9 +118,10 @@ DEFINE_CLASS("DlLiteTree", DlContainer, function(D, P, DOM){
 
         P.__handleSelectClick = function(clicked, ev, dblClick) {
                 var sel = this._selection;
-                var hooks_args = [ this._itemsById[clicked.id], clicked, ev ];
+                var item = this._itemsById[clicked.id];
+                var hooks_args = [ item, clicked, ev ];
                 if (dblClick) {
-                        if (sel && !sel.isSelected(clicked.id))
+                        if (sel && !sel.isSelected(clicked.id) && item.isSelectable())
                                 sel.reset([ clicked.id ]);
                         this.applyHooks("onItemDblClick", hooks_args);
                         return;
