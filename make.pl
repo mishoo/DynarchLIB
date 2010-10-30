@@ -304,18 +304,19 @@ sub wanted {
 
 sub include {
     my ($fn) = @_;
-    return ($fn =~ /\.(?:js|css|html|swf|tt)$/
+    return ($fn =~ /\.(?:js|s?css|html|swf|tt)$/
               or (
                   $fn =~ m{^src/css/img} or
-                    $fn =~ m{^jsdoc/}
-                )
+                    $fn =~ m{^src/new-theme/img} or
+                      $fn =~ m{^jsdoc/}
+                  )
           );
 }
 
 sub exclude {
     my ($fn) = @_;
     return 1
-      if ($fn =~ m{(?:/|^)(?:\.svn|\.hg.*|old|tmp)(?:/|$)});
+      if ($fn =~ m{(?:/|^)(?:\.svn|\.hg.*|\.git.*|old|tmp)(?:/|$)});
     return 1
       if ($fn =~ m{^(?:license|bugs|tests)/});
     return 0;
