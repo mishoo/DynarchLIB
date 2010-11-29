@@ -142,6 +142,8 @@ DEFINE_CLASS("DlNotebook", DlContainer, function(D, P) {
 		DynarchDomUtils.setOuterSize(this.getContentElement(), size.x, size.y);
 		el.style.width = el.style.height = "";
 		size = DynarchDomUtils.getInnerSize(this.getContentElement());
+                if (this._currentPane == null)
+                        this.showPane(0);
 		var cp = this.getCurrentPane();
  		this._panes.foreach(function(p) {
 			p._dl_notebook_has_size = false;
