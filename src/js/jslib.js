@@ -158,6 +158,10 @@ Object.merge(Object, {
 
         HOP: function(obj, prop) {
                 return Object.prototype.hasOwnProperty.call(obj, prop);
+        },
+
+        clear: function(obj) {
+                for (var i in obj) if (Object.HOP(obj, i)) delete obj[i];
         }
 
 });

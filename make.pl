@@ -103,12 +103,14 @@ chdir "$destdir/src/js";
     {
         local $/ = undef;
 
-        # kinda sucky, but does the job
         my $args = '-nc';
         # if ($opt_no_crunch) {
         #     $args = '-nm -ns';
         # }
         open YUI, '-|', "uglifyjs $args < thelib.js";
+
+        # open YUI, '-|', "cl-uglify-js < thelib.js";
+
         $content = <YUI>;
         close YUI;
 
