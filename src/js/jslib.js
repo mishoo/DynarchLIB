@@ -475,6 +475,14 @@ Array.inject({
                 return a.reverse();
         },
 
+        count: function(pred, obj) {
+                var count = 0;
+                this.r_foreach(function(el, index){
+                        if (pred.call(this, el, index)) ++count;
+                }, obj);
+                return count;
+        },
+
         keys_map: function(obj) {
                 return this.map(function(key) {
                         return obj[key];
