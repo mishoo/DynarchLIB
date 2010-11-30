@@ -112,6 +112,10 @@ DEFINE_CLASS("DlLiteTree", DlContainer, function(D, P, DOM){
                 }
         };
 
+        P.scrollToRecord = function(item_id) {
+                DOM.scrollIntoView(this._getItemElement(item_id));
+        };
+
         P._getItemElement = function(item_id) {
                 return document.getElementById(this._makeId(item_id));
         };
@@ -121,12 +125,12 @@ DEFINE_CLASS("DlLiteTree", DlContainer, function(D, P, DOM){
                 var item = this._itemsById[clicked.id];
                 var hooks_args = [ item, clicked, ev ];
                 if (dblClick) {
-                        if (sel && !sel.isSelected(clicked.id) && item.isSelectable())
+                        if (sel && !sel.isSelected(clicked.id) && this.canSelectItem(item))
                                 sel.reset([ clicked.id ]);
                         this.applyHooks("onItemDblClick", hooks_args);
                         return;
                 }
-                if (!sel || clicked.expander || !clicked.item.isSelectable()) {
+                if (!sel || clicked.expander || !this.canSelectItem(clicked.item)) {
                         var subtree = clicked.el.nextSibling;
                         if (subtree) {
                                 var was_hidden = DOM.hasClass(subtree, "hidden");
@@ -135,7 +139,7 @@ DEFINE_CLASS("DlLiteTree", DlContainer, function(D, P, DOM){
                         }
                         this.applyHooks("onItemMouseDown", hooks_args);
                 }
-                else if (sel && clicked.item.isSelectable()) {
+                else if (sel && this.canSelectItem(clicked.item)) {
                         if (sel.multiple) {
                                 if (ev.ctrlKey) {
                                         sel.toggle(clicked.id);
@@ -153,6 +157,10 @@ DEFINE_CLASS("DlLiteTree", DlContainer, function(D, P, DOM){
                         }
                         this.applyHooks("onItemMouseDown", hooks_args);
                 }
+        };
+
+        P.canSelectItem = function(item) {
+                return item.isSelectable();
         };
 
         var __prevTime = new Date().getTime();
