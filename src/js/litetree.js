@@ -27,8 +27,8 @@ DEFINE_CLASS("DlLiteTree", DlContainer, function(D, P, DOM){
         };
 
         P.reset = function(items) {
-                this.top_items = items;
-                this.setContent(this._buildHTML(items, 0));
+                this.top_items = this.sort(items);
+                this.setContent(this._buildHTML(this.top_items, 0));
                 if (this._selection) this._selection.filter(this._itemsById);
         };
 
@@ -69,7 +69,6 @@ DEFINE_CLASS("DlLiteTree", DlContainer, function(D, P, DOM){
         };
 
         P._buildHTML = function(items, level) {
-                items = this.sort(items);
                 if (items.length == 0) return "";
                 if (level == null) level = 0;
                 if (level == 0) this._itemsById = {};
