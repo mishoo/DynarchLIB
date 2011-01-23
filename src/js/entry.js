@@ -271,6 +271,13 @@ DEFINE_CLASS("DlEntry", DlContainer, function(D, P, DOM) {
                 this.setSelectionRange(p, p);
         };
 
+        P.insertReplacingSelection = function(text, select) {
+                var r = this.getSelectionRange();
+                var v = this.getValue();
+                this.setValue(v.substr(0, r.start) + text + v.substr(r.end));
+                this.setSelectionRange(r.start, select ? r.start + text.length : r.start);
+        };
+
         function onChange() {
                 this.validate();
         };
