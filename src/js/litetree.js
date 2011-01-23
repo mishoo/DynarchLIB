@@ -198,7 +198,7 @@ DEFINE_CLASS("DlLiteTree", DlContainer, function(D, P, DOM){
                 D.CONSTRUCT = function() {
                         if (this._children == null) this._children = [];
                 };
-                P.formatHTML = function(buf){ buf(this._name) };
+                P.formatHTML = function(buf){ buf(String(this._name).htmlEscape()) };
                 P.addClassNames = Function.noop;
                 P.id = function() { return this._id };
                 P.children = function() { return this._children };
