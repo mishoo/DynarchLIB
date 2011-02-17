@@ -225,7 +225,9 @@ DEFINE_CLASS("DlRteFrame", DlWidget, function(D, P, DOM) {
                 if (!this.readonly()) {
 		        if (this.COMMANDS[cmd])
 			        cmd = this.COMMANDS[cmd].id;
-		        return this.getIframeDoc().queryCommandState(cmd);
+                        try {
+		                return this.getIframeDoc().queryCommandState(cmd);
+                        } catch(ex) {}
                 }
 	};
 
@@ -242,7 +244,9 @@ DEFINE_CLASS("DlRteFrame", DlWidget, function(D, P, DOM) {
 					        return tag;
 			        };
 		        }
-		        return this.getIframeDoc().queryCommandValue(cmd);
+                        try {
+		                return this.getIframeDoc().queryCommandValue(cmd);
+                        } catch(ex) {}
                 }
 	};
 
@@ -1181,12 +1185,6 @@ DEFINE_CLASS("DlRteFrame", DlWidget, function(D, P, DOM) {
 		var doc = this.getIframeDoc();
 		this.__hasFrameEvents = true;
 		DOM.addEvents(doc, FORWARD_EVENTS, this.__eventProxy);
-		if (this.__pendingHTML) {
-			this.getIframeBody().innerHTML = this.__pendingHTML;
-			this._onSetHTML();
-			this.moveBOF();
-			this.__pendingHTML = null;
-		}
 		this.__rte_onFocus = onFocus.$(this);
 		this.__rte_onBlur = onBlur.$(this);
 		if (is_ie) {
@@ -1198,6 +1196,12 @@ DEFINE_CLASS("DlRteFrame", DlWidget, function(D, P, DOM) {
 		doc.onblur = this.__rte_onBlur;
 		if (callback)
 			callback.call(this);
+		if (this.__pendingHTML) {
+			this.getIframeBody().innerHTML = this.__pendingHTML;
+			this._onSetHTML();
+			this.moveBOF();
+			this.__pendingHTML = null;
+		}
 	};
 
 	// not sure if this helps, but I am willing to sacrifice a few
