@@ -768,6 +768,13 @@ Array.inject({
                         }
                 }
                 return ret + "</" + tag + ">";
+        },
+
+        swap: function(i, j) {
+                var tmp = this[i];
+                this[i] = this[j];
+                this[j] = tmp;
+                return this;
         }
 
 });
