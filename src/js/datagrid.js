@@ -105,8 +105,10 @@ DEFINE_CLASS("DlRecordCache", DlEventProxy, function(D, P) {
                 return this._data;
         };
 
-        P.formatHTML = function(rec, col, buf) {
-                buf(String(rec.get(col)).htmlEscape());
+        P.formatHTML = function(rec, col_id, buf, col) {
+                var html = col.format(rec, this);
+                if (html == null) html = String(rec.get(col_id)).htmlEscape();
+                buf(html);
         };
 
         // override
@@ -366,7 +368,8 @@ DEFINE_CLASS("DlGridCol", DlEventProxy, function(D, P) {
                 _isSortable  : [ "sortable"   , true ],
                 _isResizable : [ "resizable"  , true ],
                 _cssRule     : [ "cssRule"    , null ],
-                _isVisible   : [ "visible"    , true ]
+                _isVisible   : [ "visible"    , true ],
+                _format      : [ "format"     , null ]
         };
 
         var DEFAULT_STYLE = {};
@@ -421,6 +424,11 @@ DEFINE_CLASS("DlGridCol", DlEventProxy, function(D, P) {
         };
 
         P.sort = function() {}; // override
+
+        P.format = function(rec, set) {
+                if (this._format)
+                        return this._format(rec, set, this.id());
+        };
 
 });
 
@@ -1439,7 +1447,7 @@ DEFINE_CLASS("DlDataGrid", DlContainer, function(D, P, DOM) {
                         buf("'>");
                         if (is_ie)
                                 buf("<div class='DlDataGrid-cellData'>");
-                        d.formatHTML(rec, col.id(), buf);
+                        d.formatHTML(rec, col.id(), buf, col);
                         if (is_ie)
                                 buf("</div>");
                         buf("</td>");
