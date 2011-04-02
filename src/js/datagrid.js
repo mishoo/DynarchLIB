@@ -106,7 +106,7 @@ DEFINE_CLASS("DlRecordCache", DlEventProxy, function(D, P) {
         };
 
         P.formatHTML = function(rec, col_id, buf, col) {
-                var html = col.format(rec, this);
+                var html = col ? col.format(rec, this) : null;
                 if (html == null) html = String(rec.get(col_id)).htmlEscape();
                 buf(html);
         };
