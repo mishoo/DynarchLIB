@@ -14,6 +14,7 @@ DEFINE_CLASS("DlCanvas", DlContainer, function(D, P, DOM){
         D.CONSTRUCT = function() {
                 this._elements = [];
                 this._activeEl = null;
+                this._noUpdates = 0;
         };
         P.setMouseListeners = function() {
                 THE_EVENTS.qw().foreach(function(ev){
@@ -57,8 +58,10 @@ DEFINE_CLASS("DlCanvas", DlContainer, function(D, P, DOM){
                 this.getContext().clearRect(0, 0, c.width, c.height);
         };
         P.refresh = function() {
-                this.clear();
-                this.redraw();
+                if (this._noUpdates == 0) {
+                        this.clear();
+                        this.getSortedElements().reverse().foreach(this.renderElement, this);
+                }
         };
         P.getSortedElements = function() {
                 var a = this._elements.mergeSort($cmp_zindex);
@@ -66,14 +69,16 @@ DEFINE_CLASS("DlCanvas", DlContainer, function(D, P, DOM){
                         a.unshift.apply(a, this._activeEl.handles());
                 return a;
         };
-        P.redraw = function() {
-                this.getSortedElements().reverse().foreach(this.renderElement, this);
-        };
         P.renderElement = function(el) {
                 var ctx = this.getContext();
                 ctx.save();
                 el.render(ctx, this);
                 ctx.restore();
+        };
+        P.withNoUpdates = function(cont) {
+                ++this._noUpdates;
+                try { return cont(); }
+                finally { --this._noUpdates; }
         };
 
         // event handlers
@@ -155,6 +160,9 @@ DEFINE_CLASS("DlCanvas", DlContainer, function(D, P, DOM){
         /* -----[ supporting classes ]----- */
 
         D.Element = DEFINE_CLASS(null, DlEventProxy, function(D, P){
+                D.CONSTRUCT = function() {
+                        this._zIndex = 0;
+                };
                 D.DEFAULT_EVENTS = (THE_EVENTS + " onActivate").qw();
                 P.pointInside = function(p, ctx) {
                         try {
@@ -171,57 +179,81 @@ DEFINE_CLASS("DlCanvas", DlContainer, function(D, P, DOM){
                 P.activable = function() {
                         return false;
                 };
-        });
-
-        D.Rect = DEFINE_CLASS(null, D.Element, function(D, P){
-                D.CONSTRUCT = function(x, y, w, h) {
-                        this._rect = new DlRect(x || 0, y || 0, w || 0, h || 0);
-                        this._zIndex = 0;
-                };
-                P.rectangle = function() {
-                        return this._rect;
-                };
-                P.copyRectangle = function() {
-                        return new DlRect(this._rect);
-                };
-                P.left = function(x) {
-                        if (x != null) this._rect.x = x;
-                        return this._rect.x;
-                };
-                P.top = function(y) {
-                        if (y != null) this._rect.y = y;
-                        return this._rect.y;
-                };
-                P.right = function(r) {
-                        if (r != null) this._rect.w = r - this._rect.x;
-                        return this._rect.x + this._rect.w;
-                };
-                P.bottom = function(b) {
-                        if (b != null) this._rect.h = b - this._rect.y;
-                        return this._rect.y + this._rect.h;
-                };
-                P.hcenter = function() {
-                        return this.left() + this.width() / 2;
-                };
-                P.vcenter = function() {
-                        return this.top() + this.height() / 2;
-                };
-                P.width = function(w) {
-                        return this._rect.width(w);
-                };
-                P.height = function(h) {
-                        return this._rect.height(h);
+                P.setClipPath = function(ctx) {
+                        this.setMyPath(ctx);
                 };
                 P.zIndex = function(z) {
                         if (z != null) this._zIndex = z;
                         return this._zIndex;
                 };
+        });
+
+        D.Rect = DEFINE_CLASS(null, D.Element, function(D, P){
+                D.CONSTRUCT = function(x, y, w, h) {
+                        this._p1 = new DlPoint(x, y);
+                        this._p2 = new DlPoint(x + w, y + h);
+                        this.normalize();
+                };
+                P.normalize = function() {
+                        this._p1.normalize(this._p2);
+                };
+                P.rectangle = function() {
+                        return new DlRect(this._p1, this._p2);
+                };
+                P.left = function(x) {
+                        if (x != null) {
+                                this._p1.x = x;
+                                this.normalize();
+                        }
+                        return this._p1.x;
+                };
+                P.top = function(y) {
+                        if (y != null) {
+                                this._p1.y = y;
+                                this.normalize();
+                        }
+                        return this._p1.y;
+                };
+                P.right = function(x) {
+                        if (x != null) {
+                                this._p2.x = x;
+                                this.normalize();
+                        }
+                        return this._p2.x;
+                };
+                P.bottom = function(y) {
+                        if (y != null) {
+                                this._p2.y = y;
+                                this.normalize();
+                        }
+                        return this._p2.y;
+                };
+                P.hcenter = function() {
+                        return (this.left() + this.right()) / 2;
+                };
+                P.vcenter = function() {
+                        return (this.top() + this.bottom()) / 2;
+                };
+                P.width = function(w) {
+                        return Math.abs(this._p2.x - this._p1.x);
+                };
+                P.height = function(h) {
+                        return Math.abs(this._p2.y - this._p1.y);
+                };
                 P.getPos = function() {
-                        return this._rect.getTL();
+                        return this._p1;
                 };
                 P.setPos = function(x, y) {
-                        this.left(x);
-                        this.top(y);
+                        if (x != null) {
+                                var dx = x - this._p1.x;
+                                this._p1.x = x;
+                                this._p2.x += dx;
+                        }
+                        if (y != null) {
+                                var dy = y - this._p1.y;
+                                this._p1.y = y;
+                                this._p2.y += dy;
+                        }
                 };
                 P.setMyPath = function(ctx) {
                         ctx.beginPath();
@@ -290,6 +322,8 @@ DEFINE_CLASS("DlCanvas", DlContainer, function(D, P, DOM){
 
         };
 
+        D.make_movable = make_movable;
+
         // ActiveRect -- movable
 
         D.ActiveRect = DEFINE_CLASS(null, D.Rect, function(D, P){
@@ -306,20 +340,25 @@ DEFINE_CLASS("DlCanvas", DlContainer, function(D, P, DOM){
                                         }
                                 },
                                 onMove: function() {
-                                        this.createHandles();
+                                        this.updateHandles();
                                 }
                         });
                 };
                 P.createHandles = function() {
                         var self = this;
-                        makeHandle(self, "TL", self.left(), self.top());
-                        makeHandle(self, "T", self.hcenter(), self.top());
-                        makeHandle(self, "TR", self.right(), self.top());
-                        makeHandle(self, "L", self.left(), self.vcenter());
-                        makeHandle(self, "R", self.right(), self.vcenter());
-                        makeHandle(self, "BL", self.left(), self.bottom());
-                        makeHandle(self, "B", self.hcenter(), self.bottom());
-                        makeHandle(self, "BR", self.right(), self.bottom());
+                        makeHandle(self, "TL", function(){ return [ self.left()    , self.top()     ] });
+                        makeHandle(self, "T" , function(){ return [ self.hcenter() , self.top()     ] });
+                        makeHandle(self, "TR", function(){ return [ self.right()   , self.top()     ] });
+                        makeHandle(self, "L" , function(){ return [ self.left()    , self.vcenter() ] });
+                        makeHandle(self, "R" , function(){ return [ self.right()   , self.vcenter() ] });
+                        makeHandle(self, "BL", function(){ return [ self.left()    , self.bottom()  ] });
+                        makeHandle(self, "B" , function(){ return [ self.hcenter() , self.bottom()  ] });
+                        makeHandle(self, "BR", function(){ return [ self.right()   , self.bottom()  ] });
+                };
+                P.updateHandles = function() {
+                        Object.foreach(this._handles, function(h){
+                                h.update();
+                        });
                 };
                 P.handles = function() {
                         return Array.hashValues(this._handles);
@@ -328,10 +367,55 @@ DEFINE_CLASS("DlCanvas", DlContainer, function(D, P, DOM){
                         return true;
                 };
 
-                function makeHandle(self, type, x, y) {
-                        var handle = new Handle(x, y);
+                function makeHandle(self, type, getpos) {
+                        var pos = getpos();
+                        var handle = new Handle(pos[0], pos[1]);
+                        handle.update = function() {
+                                var pos = getpos();
+                                this.setPos(pos[0], pos[1]);
+                        };
                         self._handles[type] = handle;
+                        handle.addEventListener("onMove", MOVE_HANDLE[type].$C(self, self._handles));
                         return handle;
+                };
+
+                MOVE_HANDLE = {
+                        TL: function(self, han, pos) {
+                                self.left(pos.x);
+                                self.top(pos.y);
+                                self.updateHandles();
+                        },
+                        T: function(self, han, pos) {
+                                self.top(pos.y);
+                                self.updateHandles();
+                        },
+                        TR: function(self, han, pos) {
+                                self.right(pos.x);
+                                self.top(pos.y);
+                                self.updateHandles();
+                        },
+                        L: function(self, han, pos) {
+                                self.left(pos.x);
+                                self.updateHandles();
+                        },
+                        R: function(self, han, pos) {
+                                self.right(pos.x);
+                                self.updateHandles();
+                        },
+                        BL: function(self, han, pos) {
+                                self.left(pos.x);
+                                self.bottom(pos.y);
+                                self.updateHandles();
+                        },
+                        B: function(self, han, pos) {
+                                self.bottom(pos.y);
+                                self.updateHandles();
+                        },
+                        BR: function(self, han, pos) {
+                                self.right(pos.x);
+                                self.bottom(pos.y);
+                                self.updateHandles();
+                        }
                 };
         });
 
@@ -340,8 +424,9 @@ DEFINE_CLASS("DlCanvas", DlContainer, function(D, P, DOM){
         // for various other stuff.
 
         var Handle = D.Handle = DEFINE_CLASS(null, D.Element, function(D, P){
-                var DIM_COLOR = "rgba(0, 0, 255, 0.5)";
+                var DIM_COLOR = "rgba(0, 0, 0, 0.5)";
                 var STRONG_COLOR = "#5500ff";
+                var HOVER_COLOR = "rgba(255, 0, 0, 0.5)";
                 D.CONSTRUCT = function(x, y, sz) {
                         var self = this;
                         make_movable(self);
@@ -350,14 +435,16 @@ DEFINE_CLASS("DlCanvas", DlContainer, function(D, P, DOM){
                         self.addEventListener({
                                 onMouseEnter: function(x, y, ctx, cw) {
                                         cw.withSavedContext(function(ctx){
-                                                ctx.fillStyle = STRONG_COLOR;
+                                                ctx.strokeStyle = STRONG_COLOR;
+                                                ctx.fillStyle = HOVER_COLOR;
                                                 self.setMyPath(ctx);
                                                 ctx.fill();
+                                                ctx.stroke();
                                         });
                                 },
                                 onMouseLeave: function(x, y, ctx, cw) {
                                         cw.withSavedContext(function(ctx){
-                                                self.setMyPath(ctx);
+                                                self.setClipPath(ctx);
                                                 ctx.clip();
                                                 cw.refresh();
                                         });
@@ -369,6 +456,14 @@ DEFINE_CLASS("DlCanvas", DlContainer, function(D, P, DOM){
                         ctx.arc(this._point.x, this._point.y, this._size, 0, 2 * Math.PI, true);
                         ctx.closePath();
                 };
+                P.setClipPath = function(ctx) {
+                        ctx.beginPath();
+                        ctx.rect(this._point.x - this._size - 1,
+                                 this._point.y - this._size - 1,
+                                 this._size * 2 + 2,
+                                 this._size * 2 + 2);
+                        ctx.closePath();
+                };
                 P.render = function(ctx) {
                         ctx.fillStyle = this.dragging ? STRONG_COLOR : DIM_COLOR;
                         this.setMyPath(ctx);
@@ -378,8 +473,8 @@ DEFINE_CLASS("DlCanvas", DlContainer, function(D, P, DOM){
                         return MAX_Z;
                 };
                 P.setPos = function(x, y) {
-                        this._point.x = x;
-                        this._point.y = y;
+                        if (x != null) this._point.x = x;
+                        if (y != null) this._point.y = y;
                 };
                 P.getPos = function() {
                         return this._point;
