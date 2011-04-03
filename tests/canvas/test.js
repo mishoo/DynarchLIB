@@ -25,9 +25,14 @@ function RUN() {
         cw.withNoUpdates(function(){
                 for (var i = 0; i < 3; ++i) {
                         for (var j = 0; j < 3; ++j) {
-                                cw.add(new DlCanvas.ActiveRect(i * 55 + 50, j * 55 + 50, 40, 40));
+                                var shape = new DlCanvas.Rect(i * 55 + 50, j * 55 + 50, 40, 40);
+                                DlCanvas.make_resizable(shape);
+                                cw.add(shape);
                         }
                 }
+                var circle = new DlCanvas.Circle(200, 200, 200, 200);
+                DlCanvas.make_resizable(circle);
+                cw.add(circle);
         });
 
         dlg.setSize({ x: 800, y: 600 });

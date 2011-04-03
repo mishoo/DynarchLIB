@@ -157,6 +157,9 @@ DEFINE_CLASS("DlCanvas", DlContainer, function(D, P, DOM){
                 }, this);
         });
 
+        D.make_movable = make_movable;
+        D.make_resizable = make_resizable;
+
         /* -----[ supporting classes ]----- */
 
         D.Element = DEFINE_CLASS(null, DlEventProxy, function(D, P){
@@ -269,10 +272,27 @@ DEFINE_CLASS("DlCanvas", DlContainer, function(D, P, DOM){
                 };
         });
 
+        D.Circle = DEFINE_CLASS(null, D.Rect, function(D, P){
+                P.setMyPath = function(ctx) {
+                        ctx.beginPath();
+                        var aWidth = this.width(), aHeight = this.height(), aX = this.left(), aY = this.top();
+                        var hB = (aWidth / 2) * .5522848,
+                        vB = (aHeight / 2) * .5522848,
+                        eX = aX + aWidth,
+                        eY = aY + aHeight,
+                        mX = aX + aWidth / 2,
+                        mY = aY + aHeight / 2;
+                        ctx.moveTo(aX, mY);
+                        ctx.bezierCurveTo(aX, mY - vB, mX - hB, aY, mX, aY);
+                        ctx.bezierCurveTo(mX + hB, aY, eX, mY - vB, eX, mY);
+                        ctx.bezierCurveTo(eX, mY + vB, mX + hB, eY, mX, eY);
+                        ctx.bezierCurveTo(mX - hB, eY, aX, mY + vB, aX, mY);
+                        ctx.closePath();
+                };
+        });
+
         function make_movable(self) {
-
                 self.registerEvents([ "onMove" ]);
-
                 self._dragHandlers = {
                         onMouseMove: doDrag,
                         onMouseUp: stopDrag,
@@ -281,7 +301,6 @@ DEFINE_CLASS("DlCanvas", DlContainer, function(D, P, DOM){
                         onMouseEnter: EX,
                         onMouseLeave: EX
                 };
-
                 self.addEventListener({
                         onMouseDown: startDrag,
                 });
@@ -319,33 +338,26 @@ DEFINE_CLASS("DlCanvas", DlContainer, function(D, P, DOM){
                         self.cw.refresh();
                         EX();
                 };
-
         };
 
-        D.make_movable = make_movable;
-
-        // ActiveRect -- movable
-
-        D.ActiveRect = DEFINE_CLASS(null, D.Rect, function(D, P){
-                D.CONSTRUCT = function() {
-                        this._handles = {};
-                        make_movable(this);
-                        this.addEventListener({
-                                onActivate: function(active){
-                                        if (!active) {
-                                                Array.hashKeys(this._handles).map("destroy");
-                                                this._handles = {};
-                                        } else {
-                                                this.createHandles();
-                                        }
-                                },
-                                onMove: function() {
-                                        this.updateHandles();
+        function make_resizable(self) {
+                self._handles = {};
+                make_movable(self);
+                self.addEventListener({
+                        onActivate: function(active){
+                                if (!active) {
+                                        Array.hashKeys(this._handles).map("destroy");
+                                        this._handles = {};
+                                } else {
+                                        createHandles();
                                 }
-                        });
-                };
-                P.createHandles = function() {
-                        var self = this;
+                        },
+                        onMove: function() {
+                                updateHandles();
+                        }
+                });
+
+                function createHandles() {
                         makeHandle(self, "TL", function(){ return [ self.left()    , self.top()     ] });
                         makeHandle(self, "T" , function(){ return [ self.hcenter() , self.top()     ] });
                         makeHandle(self, "TR", function(){ return [ self.right()   , self.top()     ] });
@@ -355,15 +367,18 @@ DEFINE_CLASS("DlCanvas", DlContainer, function(D, P, DOM){
                         makeHandle(self, "B" , function(){ return [ self.hcenter() , self.bottom()  ] });
                         makeHandle(self, "BR", function(){ return [ self.right()   , self.bottom()  ] });
                 };
-                P.updateHandles = function() {
-                        Object.foreach(this._handles, function(h){
+
+                function updateHandles() {
+                        Object.foreach(self._handles, function(h){
                                 h.update();
                         });
                 };
-                P.handles = function() {
+
+                self.handles = function() {
                         return Array.hashValues(this._handles);
                 };
-                P.activable = function() {
+
+                self.activable = function() {
                         return true;
                 };
 
@@ -375,49 +390,49 @@ DEFINE_CLASS("DlCanvas", DlContainer, function(D, P, DOM){
                                 this.setPos(pos[0], pos[1]);
                         };
                         self._handles[type] = handle;
-                        handle.addEventListener("onMove", MOVE_HANDLE[type].$C(self));
+                        handle.addEventListener("onMove", MOVE_HANDLE[type]);
                         return handle;
                 };
 
-                MOVE_HANDLE = {
-                        TL: function(self, pos) {
+                var MOVE_HANDLE = {
+                        TL: function(pos) {
                                 self.left(pos.x);
                                 self.top(pos.y);
-                                self.updateHandles();
+                                updateHandles();
                         },
-                        T: function(self, pos) {
+                        T: function(pos) {
                                 self.top(pos.y);
-                                self.updateHandles();
+                                updateHandles();
                         },
-                        TR: function(self, pos) {
+                        TR: function(pos) {
                                 self.right(pos.x);
                                 self.top(pos.y);
-                                self.updateHandles();
+                                updateHandles();
                         },
-                        L: function(self, pos) {
+                        L: function(pos) {
                                 self.left(pos.x);
-                                self.updateHandles();
+                                updateHandles();
                         },
-                        R: function(self, pos) {
+                        R: function(pos) {
                                 self.right(pos.x);
-                                self.updateHandles();
+                                updateHandles();
                         },
-                        BL: function(self, pos) {
+                        BL: function(pos) {
                                 self.left(pos.x);
                                 self.bottom(pos.y);
-                                self.updateHandles();
+                                updateHandles();
                         },
-                        B: function(self, pos) {
+                        B: function(pos) {
                                 self.bottom(pos.y);
-                                self.updateHandles();
+                                updateHandles();
                         },
-                        BR: function(self, pos) {
+                        BR: function(pos) {
                                 self.right(pos.x);
                                 self.bottom(pos.y);
-                                self.updateHandles();
+                                updateHandles();
                         }
                 };
-        });
+        };
 
         // a Handle is that little black thingy that you drag in order
         // to resize a rectangle, for example.  They could be useful
