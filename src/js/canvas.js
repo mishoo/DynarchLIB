@@ -279,7 +279,7 @@ DEFINE_CLASS("DlCanvas", DlContainer, function(D, P, DOM){
 
         D.Ellipse = DEFINE_CLASS(null, D.Rect, function(D, P){
                 function ellipse(ctx, x, y, w, h) {
-                        var kappa = .5522848;
+                        var kappa = .5522848,
                         ox = (w / 2) * kappa, // control point offset horizontal
                         oy = (h / 2) * kappa, // control point offset vertical
                         xe = x + w,           // x-end
