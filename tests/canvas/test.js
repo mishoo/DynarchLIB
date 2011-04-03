@@ -23,9 +23,9 @@ function RUN() {
         // });
 
         cw.withNoUpdates(function(){
-                for (var i = 0; i < 5; ++i) {
-                        for (var j = 0; j < 5; ++j) {
-                                cw.add(new DlCanvas.ActiveRect(i * 35, j * 35, 30, 30));
+                for (var i = 0; i < 3; ++i) {
+                        for (var j = 0; j < 3; ++j) {
+                                cw.add(new DlCanvas.ActiveRect(i * 55 + 50, j * 55 + 50, 40, 40));
                         }
                 }
         });

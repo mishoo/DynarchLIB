@@ -375,43 +375,43 @@ DEFINE_CLASS("DlCanvas", DlContainer, function(D, P, DOM){
                                 this.setPos(pos[0], pos[1]);
                         };
                         self._handles[type] = handle;
-                        handle.addEventListener("onMove", MOVE_HANDLE[type].$C(self, self._handles));
+                        handle.addEventListener("onMove", MOVE_HANDLE[type].$C(self));
                         return handle;
                 };
 
                 MOVE_HANDLE = {
-                        TL: function(self, han, pos) {
+                        TL: function(self, pos) {
                                 self.left(pos.x);
                                 self.top(pos.y);
                                 self.updateHandles();
                         },
-                        T: function(self, han, pos) {
+                        T: function(self, pos) {
                                 self.top(pos.y);
                                 self.updateHandles();
                         },
-                        TR: function(self, han, pos) {
+                        TR: function(self, pos) {
                                 self.right(pos.x);
                                 self.top(pos.y);
                                 self.updateHandles();
                         },
-                        L: function(self, han, pos) {
+                        L: function(self, pos) {
                                 self.left(pos.x);
                                 self.updateHandles();
                         },
-                        R: function(self, han, pos) {
+                        R: function(self, pos) {
                                 self.right(pos.x);
                                 self.updateHandles();
                         },
-                        BL: function(self, han, pos) {
+                        BL: function(self, pos) {
                                 self.left(pos.x);
                                 self.bottom(pos.y);
                                 self.updateHandles();
                         },
-                        B: function(self, han, pos) {
+                        B: function(self, pos) {
                                 self.bottom(pos.y);
                                 self.updateHandles();
                         },
-                        BR: function(self, han, pos) {
+                        BR: function(self, pos) {
                                 self.right(pos.x);
                                 self.bottom(pos.y);
                                 self.updateHandles();
