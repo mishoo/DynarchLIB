@@ -30,7 +30,7 @@ function RUN() {
                                 cw.add(shape);
                         }
                 }
-                var circle = new DlCanvas.Circle(200, 200, 200, 200);
+                var circle = new DlCanvas.Ellipse(200, 200, 200, 200);
                 DlCanvas.make_resizable(circle);
                 cw.add(circle);
         });

@@ -120,7 +120,10 @@ DEFINE_CLASS("DlCanvas", DlContainer, function(D, P, DOM){
                 var active_set = false;
                 this.getSortedElements().foreach(function(el){
                         if (el.pointInside(pos, ctx)) {
-                                if (!active_set && el.activable()) {
+                                if (el instanceof D.Handle) {
+                                        active_set = true;
+                                }
+                                else if (!active_set && el.activable()) {
                                         if (el !== this._activeEl) {
                                                 if (this._activeEl)
                                                         this._activeEl.applyHooks("onActivate", [ false ]);
@@ -130,6 +133,7 @@ DEFINE_CLASS("DlCanvas", DlContainer, function(D, P, DOM){
                                         active_set = true;
                                 }
                                 el.applyHooks("onMouseDown", args);
+                                $BREAK();
                         }
                 }, this);
                 if (!active_set) {
@@ -168,13 +172,10 @@ DEFINE_CLASS("DlCanvas", DlContainer, function(D, P, DOM){
                 };
                 D.DEFAULT_EVENTS = (THE_EVENTS + " onActivate").qw();
                 P.pointInside = function(p, ctx) {
-                        try {
-                                ctx.save();
-                                this.setMyPath(ctx);
-                                return ctx.isPointInPath(p.x, p.y);
-                        } finally {
-                                ctx.restore();
-                        }
+                        ctx.save();
+                        this.setMyPath(ctx);
+                        ctx.restore();
+                        return ctx.isPointInPath(p.x, p.y);
                 };
                 P.handles = function() {
                         return [];
@@ -260,7 +261,11 @@ DEFINE_CLASS("DlCanvas", DlContainer, function(D, P, DOM){
                 };
                 P.setMyPath = function(ctx) {
                         ctx.beginPath();
-                        ctx.rect(this.left(), this.top(), this.width(), this.height());
+                        ctx.translate(this.hcenter(), this.vcenter());
+                        //ctx.rotate(Math.PI / 10);
+                        var w = this.width(), h = this.height();
+                        var w2 = w / 2, h2 = h / 2;
+                        ctx.rect(-w2, -h2, w, h);
                         ctx.closePath();
                 };
                 P.render = function(ctx) {
@@ -272,21 +277,28 @@ DEFINE_CLASS("DlCanvas", DlContainer, function(D, P, DOM){
                 };
         });
 
-        D.Circle = DEFINE_CLASS(null, D.Rect, function(D, P){
+        D.Ellipse = DEFINE_CLASS(null, D.Rect, function(D, P){
+                function ellipse(ctx, x, y, w, h) {
+                        var kappa = .5522848;
+                        ox = (w / 2) * kappa, // control point offset horizontal
+                        oy = (h / 2) * kappa, // control point offset vertical
+                        xe = x + w,           // x-end
+                        ye = y + h,           // y-end
+                        xm = x + w / 2,       // x-middle
+                        ym = y + h / 2;       // y-middle
+
+                        ctx.moveTo(x, ym);
+                        ctx.bezierCurveTo(x, ym - oy, xm - ox, y, xm, y);
+                        ctx.bezierCurveTo(xm + ox, y, xe, ym - oy, xe, ym);
+                        ctx.bezierCurveTo(xe, ym + oy, xm + ox, ye, xm, ye);
+                        ctx.bezierCurveTo(xm - ox, ye, x, ym + oy, x, ym);
+                };
                 P.setMyPath = function(ctx) {
                         ctx.beginPath();
-                        var aWidth = this.width(), aHeight = this.height(), aX = this.left(), aY = this.top();
-                        var hB = (aWidth / 2) * .5522848,
-                        vB = (aHeight / 2) * .5522848,
-                        eX = aX + aWidth,
-                        eY = aY + aHeight,
-                        mX = aX + aWidth / 2,
-                        mY = aY + aHeight / 2;
-                        ctx.moveTo(aX, mY);
-                        ctx.bezierCurveTo(aX, mY - vB, mX - hB, aY, mX, aY);
-                        ctx.bezierCurveTo(mX + hB, aY, eX, mY - vB, eX, mY);
-                        ctx.bezierCurveTo(eX, mY + vB, mX + hB, eY, mX, eY);
-                        ctx.bezierCurveTo(mX - hB, eY, aX, mY + vB, aX, mY);
+                        ctx.translate(this.hcenter(), this.vcenter());
+                        var w = this.width(), h = this.height();
+                        var w2 = w / 2, h2 = h / 2;
+                        ellipse(ctx, -w2, -h2, w, h);
                         ctx.closePath();
                 };
         });
@@ -315,7 +327,7 @@ DEFINE_CLASS("DlCanvas", DlContainer, function(D, P, DOM){
                                 y: pos.y - y
                         };
                         DlEvent.captureGlobals(self._dragHandlers);
-                        EX();
+                        ev.domStop = true;
                 };
 
                 function stopDrag() {
