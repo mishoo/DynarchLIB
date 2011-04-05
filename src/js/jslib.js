@@ -117,6 +117,10 @@ Object.merge(Object, {
                                 dest[i] = Object.makeDeepCopy(src[i]);
                         return dest;
                 }
+                if (src instanceof Function) {
+                        // can't deep-copy those
+                        dest[i] = src[i];
+                }
                 return src;
         },
 
