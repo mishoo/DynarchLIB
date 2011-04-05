@@ -109,6 +109,9 @@ Object.merge(Object, {
                 }
                 if (src === null)
                         return null;
+                if (src instanceof Function) {
+                        return src; // can't deep-copy those
+                }
                 if (src instanceof Date)
                         return new Date(src);
                 if (src instanceof Object) {
@@ -116,10 +119,6 @@ Object.merge(Object, {
                         for (i in src)
                                 dest[i] = Object.makeDeepCopy(src[i]);
                         return dest;
-                }
-                if (src instanceof Function) {
-                        // can't deep-copy those
-                        dest[i] = src[i];
                 }
                 return src;
         },
