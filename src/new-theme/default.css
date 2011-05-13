@@ -118,7 +118,8 @@ form {
     border-color: white #9b9bb8 #9b9bb8 white;
     padding: 2px 4px; }
     .DlButton .DlButton-inner div {
-      min-height: 16px; }
+      min-height: 16px;
+      /* XXX: for 16x16 icons; I'm not happy with this solution. */ }
 
 .DlButton-hover {
   border-color: #6e6e99 #58587c #58587c #6e6e99;
@@ -281,7 +282,8 @@ div.DlButton-Label {
     color: #000;
     padding: 1px 2px 2px 2px !important;
     /*  font-family: "Bitstream Vera Sans Mono",monospace; height: 1.3em; */
-    resize: none; }
+    resize: none;
+    outline: none; }
   .DlEntry input::-moz-selection, .DlEntry textarea::-moz-selection {
     background-color: #80b9ff !important;
     color: black !important; }
