@@ -23,8 +23,8 @@ function RUN() {
         // });
 
         cw.withNoUpdates(function(){
-                for (var i = 0; i < 3; ++i) {
-                        for (var j = 0; j < 3; ++j) {
+                for (var i = 0; i < 5; ++i) {
+                        for (var j = 0; j < 5; ++j) {
                                 var shape = new DlCanvas.Rect(i * 55 + 50, j * 55 + 50, 40, 40);
                                 DlCanvas.make_resizable(shape);
                                 cw.add(shape);

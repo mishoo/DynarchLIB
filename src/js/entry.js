@@ -293,24 +293,14 @@ DEFINE_CLASS("DlEntry", DlContainer, function(D, P, DOM) {
                 }
         };
 
-        function onDestroy() {
-                // remove event handlers to prevent leaks
-                DOM.removeEvent(this.getInputElement(),
-                                { focus   : this._on_element_focus,
-                                  blur    : this._on_element_blur,
-                                  change  : this._on_element_change });
-        };
-
         P.initDOM = function() {
                 D.BASE.initDOM.call(this);
                 var input = this.getInputElement();
                 DOM.addEvent(input, { focus   : this._on_element_focus = element_focus.$(this),
                                       blur    : this._on_element_blur = element_blur.$(this),
-                                      change  : this._on_element_change = element_change.$(this) });
+                                      change  : this._on_element_change = element_change.clearingTimeout(10, this) });
                 this.addEventListener({ onChange   : onChange,
-                                        onKeyPress : onKeyPress,
-                                        onDestroy  : onDestroy
-                                      });
+                                        onKeyPress : onKeyPress });
                 if (this._value != null)
                         this.setValue(this._value, true);
                 else
