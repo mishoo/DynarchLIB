@@ -44,20 +44,58 @@ DlJSON = {
 		} else if (obj.dynarchlib_toJSON) {
                         tmp = obj.dynarchlib_toJSON();
                 } else if (obj instanceof Array) {
-			tmp = [ "[", obj.map(DlJSON.encode).join(","), "]" ].join("");
+			tmp = "[" + obj.map(DlJSON.encode).join(",") + "]";
 		} else if (obj instanceof Date) {
 			tmp = DlJSON.encode(obj.toUTCString());
 		} else if (typeof obj == "object") {
 			tmp = [];
 			for (i in obj)
-				tmp.push([ DlJSON.encode(i), ":", DlJSON.encode(obj[i]) ].join(""));
-			tmp = [ "{", tmp.join(","), "}" ].join("");
+				tmp.push(DlJSON.encode(i) + ":" + DlJSON.encode(obj[i]));
+			tmp = "{" + tmp.join(",") + "}";
 		} else if (typeof obj == "string") {
-			tmp = [ '"', obj.replace(/\x5c/g, "\\\\").replace(/\r?\n/g, "\\n").replace(/\t/g, "\\t").replace(/\x22/g, "\\\""), '"' ].join("");
+			tmp = '"' + obj.replace(/\x5c/g, "\\\\").replace(/\r?\n/g, "\\n").replace(/\t/g, "\\t").replace(/\x22/g, "\\\"") + '"';
 		} else
 			tmp = obj.toString();
 		return tmp;
 	},
+
+        encodeIndented: function(obj, level) {
+                if (level == null) level = 2;
+                var current = 0;
+                function with_indent(cont) {
+                        // return ++indent,cont(indent--); // interesting way to minify this?
+                        ++current;
+                        cont = cont();
+                        --current;
+                        return cont;
+                };
+                function indent(line) {
+                        return " ".repeat(current * level) + line;
+                };
+                return function rec(obj) {
+		        var tmp;
+                        if (obj == null) {
+			        tmp = "null";
+		        } else if (obj.dynarchlib_toJSON) {
+                                tmp = obj.dynarchlib_toJSON();
+                        } else if (obj instanceof Array) {
+			        tmp = "[ " + obj.map(rec).join(", ") + " ]";
+		        } else if (obj instanceof Date) {
+			        tmp = rec(obj.toUTCString());
+		        } else if (typeof obj == "object") {
+			        tmp = with_indent(function(){
+                                        var tmp = [];
+                                        for (var i in obj) tmp.push(rec(i) + " : " + rec(obj[i]));
+                                        return tmp.map(indent).join(",\n") + "\n";
+                                });
+			        tmp = "{\n" + tmp + indent("}");
+		        } else if (typeof obj == "string") {
+			        tmp = '"' + obj.replace(/\x5c/g, "\\\\").replace(/\r?\n/g, "\\n").replace(/\t/g, "\\t").replace(/\x22/g, "\\\"") + '"';
+		        } else
+			        tmp = obj.toString();
+		        return tmp;
+                }(obj);
+        },
 
 	decode : function(str, safe) {
 		if (!safe) {
