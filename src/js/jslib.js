@@ -180,6 +180,7 @@ Object.merge(Function, {
         identity            : function(x) { return x; },
         returnTrue          : function() { return true; },
         returnFalse         : function() { return false; },
+        returnThis          : function() { return this; },
         invoke              : function(x) { return x(); }
 
 });
