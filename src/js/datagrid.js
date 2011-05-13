@@ -1368,8 +1368,12 @@ DEFINE_CLASS("DlDataGrid", DlContainer, function(D, P, DOM) {
                                         rev = !rev;
                         }
                         this.__sortRev = rev;
-                        this._data.sort(this._records.array, col, prev, rev, this._handleSort.$(this, col, rev));
+                        this.sort(this._records.array, col, prev, rev, this._handleSort.$(this, col, rev));
                 }
+        };
+
+        P.sort = function() {
+                this._data.sort.apply(this._data, arguments);
         };
 
         P._handleSort = function(col, rev, ids) {
