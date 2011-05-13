@@ -393,7 +393,7 @@ DEFINE_CLASS("DlWidget", DlEventProxy, function(D, P, DOM) {
 
         P._setListeners = function() {
                 this.addEventListener(LISTENERS);
-                this.addEventListener(is_ie ? "onKeyDown" : "onKeyPress", this._handle_focusKeys);
+                this.addEventListener((is_ie || is_khtml) ? "onKeyDown" : "onKeyPress", this._handle_focusKeys);
         };
 
         P._handle_focusKeys = function(ev) {};
