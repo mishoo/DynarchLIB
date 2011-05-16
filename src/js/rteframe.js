@@ -450,7 +450,7 @@ DEFINE_CLASS("DlRteFrame", DlWidget, function(D, P, DOM) {
                         }
 			this.getIframeBody().innerHTML = html;
 			this._onSetHTML();
-			this.moveBOF();
+                        try { this.moveBOF() } catch(ex) {}
 			this.callUpdateHooks();
 		} else
 			this.__pendingHTML = html;
