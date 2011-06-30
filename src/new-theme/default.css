@@ -303,9 +303,9 @@ div.DlButton-Label {
   .DlEntry-ValidationError .DlEntry-cell, .DlEntry-ValidationError input, .DlEntry-ValidationError textarea {
     background-color: #ffd4cc; }
 
-.DlEntry-Readonly .DlEntry-cell {
+.DlEntry-Readonly .DlEntry-cell, .DlEntry.DlWidget-disabled .DlEntry-cell {
   border-color: #e6e6ed; }
-.DlEntry-Readonly .DlEntry-cell, .DlEntry-Readonly input, .DlEntry-Readonly textarea {
+.DlEntry-Readonly .DlEntry-cell, .DlEntry-Readonly input, .DlEntry-Readonly textarea, .DlEntry.DlWidget-disabled .DlEntry-cell, .DlEntry.DlWidget-disabled input, .DlEntry.DlWidget-disabled textarea {
   background-color: #d7d7e3; }
 
 .DlEntry-emptyText {

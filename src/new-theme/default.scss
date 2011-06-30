@@ -225,7 +225,7 @@ div.DlButton-Label { display: inline; }
   .DlEntry-cell, input, textarea { background-color: $errorBgL3; }
 }
 
-.DlEntry-Readonly {
+.DlEntry-Readonly, .DlEntry.DlWidget-disabled {
   .DlEntry-cell {
     border-color: $mainBgL2;
   }

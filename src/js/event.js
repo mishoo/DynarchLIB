@@ -111,9 +111,9 @@ DEFINE_CLASS("DlEvent", null, function(D, P, DOM){
                                         this.relatedTarget = this.relatedTarget.parentNode;
                         }
                 } catch(ex) {
-                                // ignore, mozilla bug: 208427 (4 years old, still "NEW")
-                                this.relatedTarget = ev.explicitOriginalTarget;
-                                // this._failed = true;
+                        // ignore, mozilla bug: 208427 (4 years old, still "NEW")
+                        this.relatedTarget = ev.explicitOriginalTarget;
+                        // this._failed = true;
                 }
         };
 
