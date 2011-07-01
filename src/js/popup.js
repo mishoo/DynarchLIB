@@ -64,8 +64,7 @@ DEFINE_CLASS("DlPopup", DlContainer, function(D, P, DOM) {
                 _oscroll   : [ "scroll"     , { step1: 5, step2: 10, speed: 40 } ],
                 _align     : [ "align"      , null ],
                 _zIndex    : [ "zIndex"     , 1000 ],
-                _focusable : [ "focusable"  , true ],
-                _shadows   : [ "shadows"    , true ]
+                _focusable : [ "focusable"  , true ]
         };
 
         P.FINISH_OBJECT_DEF = function() {
@@ -123,13 +122,6 @@ DEFINE_CLASS("DlPopup", DlContainer, function(D, P, DOM) {
                 this.parent = parent;
                 this.display(false);
                 document.body.appendChild(div);
-                if (this._shadows && !is_ie6) {
-                        div.appendChild(DlElementCache.get("SHADOWS"));
-                        AC(div, typeof this._shadows == "string" ? this._shadows : "ThinShadows");
-                } else {
-                        this._shadows = false;
-                        AC(div, this._objectType + "-noShadow");
-                }
                 if (is_gecko)
                         div = CE("div", null, { className: "Gecko-Bug-302380" }, div);
                 this.refNode("_contentEl", CE("div", null, { className: "DlPopup-scrollArea" }, div));

@@ -668,7 +668,8 @@ table.DlCalendar {
   position: fixed;
   z-index: 100;
   left: -30000px;
-  top: -30000px; }
+  top: -30000px;
+  box-shadow: 1px 1px 4px #000; }
 
 .DlPopup-scrollArea {
   overflow: hidden;
@@ -709,7 +710,6 @@ table.DlCalendar {
   background-image: url("img/arrows/scroll-down-disabled.gif"); }
 
 .DlCompletionPopup {
-  border: 1px solid #b9b9cd;
   background-color: white; }
 
 .DlCompletionPopup .DlMenuItem .div2 {
@@ -733,15 +733,13 @@ table.DlCalendar {
   border: 1px solid #b9b9cd; }
 
 .DlPopupMenu {
-  background-color: white;
-  border: 1px solid #b9b9cd; }
+  background-color: white; }
 
 .DlPopupMenu-noShadow {
   border: 1px solid #b9b9cd; }
 
 .DlPopupMenu .DlCalendar {
-  border: 1px solid;
-  border-color: #9b9bb8 #6e6e99 #6e6e99 #9b9bb8; }
+  border: 1px solid; }
 
 .DlCalendar-borderless {
   border-width: 0 !important; }
