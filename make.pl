@@ -156,7 +156,7 @@ chdir "$destdir/";
 {
     my $tmp = `$orig_dir/bin/make-images-lists.pl src/css/default.css`;
     my @imgs = split(/\n/, $tmp);
-    my $tmpl = new Template::Alloy({ INCLUDE_PATH => '.',
+    my $tmpl = new Template::Alloy({ INCLUDE_PATH => $destdir,
                                      ADD_LOCAL_PATH => 1,
                                      EVAL_PERL => 1,
                                      VARIABLES => $TT_VARS });
@@ -171,57 +171,58 @@ chdir "$destdir/";
 
 ### Postprocess CSS
 
-{
-    my $tmpl = new Template::Alloy({ INCLUDE_PATH => '.',
-                                     ADD_LOCAL_PATH => 1,
-                                     EVAL_PERL => 1,
-                                     VARIABLES => $TT_VARS });
+# {
+#     my $tmpl = new Template::Alloy({ INCLUDE_PATH => '.',
+#                                      ADD_LOCAL_PATH => 1,
+#                                      EVAL_PERL => 1,
+#                                      VARIABLES => $TT_VARS });
 
-    my @css = qw( src/css/default.css
-                  jsdoc/doc.css );
+#     my @css = qw( src/css/default.css
+#                   jsdoc/doc.css );
 
-    # Good values: 200 (cyan-blue), 0-20 (red), 75-90 (green), 300 (pink), 30 (yellow)
-    my %themes = (
-        'ds'         => '-h 239:299 -m 239 -a -s 0.5',
-        'grey'       => '-h 239:299 -m 239 -a -s 0',
-        'blue'       => '-h 239:299 -m 210 -a',
-        'blue-ds'    => '-h 239:299 -m 210 -a -s 0.5',
-        'red'        => '-h 239:299 -m 10 -a',
-        'red-ds'     => '-h 239:299 -m 10 -a -s 0.5',
-        'green'      => '-h 239:299 -m 85 -a',
-        'green-ds'   => '-h 239:299 -m 85 -a -s 0.5',
-        'yellow'     => '-h 239:299 -m 30 -a',
-        'yellow-ds'  => '-h 239:299 -m 30 -a -s 0.5',
-        'magenta'    => '-h 239:299 -m -90 -a',
-        'magenta-ds' => '-h 239:299 -m -90 -a -s 0.5',
-        'cyan'       => '-h 239:299 -m 189 -a',
-        'cyan-ds'    => '-h 239:299 -m 189 -a -s 0.5',
-    );
+#     # Good values: 200 (cyan-blue), 0-20 (red), 75-90 (green), 300 (pink), 30 (yellow)
+#     my %themes = (
+#         'ds'         => '-h 239:299 -m 239 -a -s 0.5',
+#         'grey'       => '-h 239:299 -m 239 -a -s 0',
+#         'blue'       => '-h 239:299 -m 210 -a',
+#         'blue-ds'    => '-h 239:299 -m 210 -a -s 0.5',
+#         'red'        => '-h 239:299 -m 10 -a',
+#         'red-ds'     => '-h 239:299 -m 10 -a -s 0.5',
+#         'green'      => '-h 239:299 -m 85 -a',
+#         'green-ds'   => '-h 239:299 -m 85 -a -s 0.5',
+#         'yellow'     => '-h 239:299 -m 30 -a',
+#         'yellow-ds'  => '-h 239:299 -m 30 -a -s 0.5',
+#         'magenta'    => '-h 239:299 -m -90 -a',
+#         'magenta-ds' => '-h 239:299 -m -90 -a -s 0.5',
+#         'cyan'       => '-h 239:299 -m 189 -a',
+#         'cyan-ds'    => '-h 239:299 -m 189 -a -s 0.5',
+#     );
 
-    foreach my $file (@css) {
-        my $css;
-        $tmpl->process($file, undef, \$css);
-        open CSS, "> $file";
-        print CSS $css;
-        close CSS;
+#     foreach my $file (@css) {
+#         my $css;
+#         $tmpl->process($file, undef, \$css);
+#         open CSS, "> $file";
+#         print CSS $css;
+#         close CSS;
 
-        while (my ($name, $args) = each %themes) {
-            (my $tfile = $file) =~ s/\.css$/"-${name}.css"/g;
-            system "modify-colors.pl $args < $file > $tfile";
-        }
-    }
-}
+#         while (my ($name, $args) = each %themes) {
+#             (my $tfile = $file) =~ s/\.css$/"-${name}.css"/g;
+#             system "modify-colors.pl $args < $file > $tfile";
+#         }
+#     }
+# }
 
 ### Postprocess documentation (index.html)
 
 chdir "$destdir/";
 {
-    my $tmpl = new Template::Alloy({ INCLUDE_PATH => '.',
+    my $tmpl = new Template::Alloy({ INCLUDE_PATH => $destdir,
                                      ADD_LOCAL_PATH => 1,
                                      EVAL_PERL => 1,
                                      VARIABLES => $TT_VARS });
     my $foo;
-    $tmpl->process('index.html', undef, \$foo);
+    $tmpl->process('index.html', undef, \$foo)
+      || die $tmpl->error;
     open FOO, '> index.html';
     print FOO $foo;
     close FOO;
@@ -242,7 +243,7 @@ chdir "$destdir/";
 
 chdir "$orig_dir";
 {
-    my $tmpl = new Template::Alloy({ INCLUDE_PATH => '.',
+    my $tmpl = new Template::Alloy({ INCLUDE_PATH => $orig_dir,
                                      OUTPUT_PATH => "$destdir/tests",
                                      ADD_LOCAL_PATH => 1,
                                      EVAL_PERL => 1,
