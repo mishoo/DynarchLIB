@@ -1,0 +1,130 @@
+                 DynarchLIB -- JavaScript UI Toolkit
+
+                      (c) Mihai Bazon 2004-2011
+                          www.dynarchlib.com
+
+                    Released under the BSD License
+
+             --------------------------------------------
+
+This is a JavaScript UI toolkit that I wrote long ago.  It's still
+maintained (I'm using it in important projects), but not in active
+development for the time being.  Please note that bit rot has settled
+here and there; the documentation is incomplete (but most of what's
+written still stands), it probably won't work in IE < 9 (but I really
+don't care about it), etc.
+
+If you find this useful, please drop me a line.  If you would like to
+report a bug please use the GitHub issue tracker.
+
+Following there are some notes on how to build or hack the thing.
+
+----------------------------------------------------------------------
+
+
+
+BUILDING
+--------
+
+There is a build script written in Perl that has the following
+requirements:
+
+- Template::Alloy (perl module)
+- JSON (perl module)
+- UglifyJS [1] which in turn needs NodeJS
+
+If you run Ubuntu or Debian Linux, you should be able to install
+everything like this:
+
+    $ apt-get install libtemplate-alloy-perl libjson-perl
+    $ apt-get install libnode-uglify
+
+Then simply running ./make.pl from the toplevel directory should
+product a ZIP.  Unpack this ZIP somewhere and open index.html in the
+browser (NOTE: put it behind a real Web server, not over
+"file:///"--otherwise XMLHttpRequest-s won't work).
+
+
+DEVELOPING
+----------
+
+The build script produces a version suitable for development--all
+scripts are concatenated and compressed into a single "thelib.js".  If
+you want to develop DynarchLIB things get a little more complicated.
+
+You need Apache2 and mod_perl2, you'll need to create a virtual host
+to target the DynarchLIB source tree, and install a mod_perl handler
+for it.  Here are the steps:
+
+    $ apt-get install libapache2-mod-perl2 libapache2-request-perl
+
+Then create a file in /etc/apache2/sites-available/dynarchlib.conf
+with content like this:
+
+    <VirtualHost *>
+        ServerName              dynarchlib.local
+        DocumentRoot            /home/mishoo/work/thelib/
+        DirectoryIndex          index.html
+        PerlRequire /home/mishoo/work/thelib/modperl.pm
+        <FilesMatch "\.cgi">
+                SetHandler cgi-script
+        </FilesMatch>
+        <Location />
+                Options +ExecCGI +Indexes +FollowSymLinks
+        </Location>
+        <FilesMatch "\.(css|jss?|jsx|html?)">
+                SetHandler perl-script
+                PerlResponseHandler JSToolkit::ModPerl
+        </FilesMatch>
+        AddHandler cgi-script .cgi
+    </VirtualHost>
+
+I'm not even sure all the above is needed, I wrote that file years
+ago.  Any case, above I'm assuming that the DynarchLIB source dir is
+"/home/mishoo/work/thelib/" -- change this to match your path.
+
+Then you need to symlink that file into /etc/apache2/sites-enabled:
+
+    $ cd /etc/apache2/sites-enabled
+    $ ln -s ../sites-available/dynarchlib.conf
+    $ sudo service apache2 restart
+
+One more tiny detail, you need to define dynarchlib.local to resolve
+to the IP of your machine (127.0.0.1) in /etc/hosts.  Then, if you're
+lucky and I didn't miss anything, http://dynarchlib.local/ in your
+browser should get you the main page of the documentation.
+
+In this setup, scripts are loaded in their original unminified form so
+you can modify, test and debug them.  For example if you try
+http://dynarchlib.local/tests/?file=buttons/look.js — it should open a
+dialog with some buttons in various states, which I used to debug the
+CSS for buttons.  The script that runs is in tests/buttons/look.js and
+you can edit that and reload to test changes.
+
+
+
+----------------------------------------------------------------------
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+
+    * Redistributions in binary form must reproduce the above
+      copyright notice, this list of conditions and the following
+      disclaimer in the documentation and/or other materials provided
+      with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER “AS IS” AND ANY
+EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
