@@ -32,7 +32,7 @@ sub handler {
     # create a template processing object
     my $template = Template::Alloy->new({
         ABSOLUTE       => 1,
-        INCLUDE_PATH   => "/home/mishoo/work/thelib",
+        RELATIVE       => 1,
         ADD_LOCAL_PATH => 1,
         OUTPUT         => $r,    # direct output to Apache request
         EVAL_PERL      => 1,
@@ -41,12 +41,13 @@ sub handler {
     # use the path_info to determine which template file to process
     my $file = $r->filename;
 
-    if ($suffix =~ /.jss?x$/) {
-        $r->content_type('text/javascript; charset: utf-8');
+    if ($suffix =~ /\.jss?x$/) {
+        $r->content_type('text/javascript; charset=UTF-8');
+    } elsif ($suffix =~ /\.css$/) {
+        $r->content_type('text/css; charset=UTF-8');
+    } elsif ($suffix =~ /\.html?$/) {
+        $r->content_type('text/html; charset=UTF-8');
     }
-
-    # $r->content_type('text/html; charset: utf-8');
-    # $r->send_http_header;
 
     $template->process($file, $vars)
       || return fail($r, SERVER_ERROR, $template->error);
