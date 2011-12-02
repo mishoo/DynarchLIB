@@ -45,9 +45,9 @@ a:hover { color: #c22; }
 */
 
 .CodeEditor textarea { font-family: monospace; }
-.CodeSample { border: 1px solid #778; background-color: #dcf; clear: both; }
-.CodeSample-padding { padding: 10px; background-color: #eeeaff; }
-.DlHighlight { margin: 0; padding: 0; background-color: #eeeaff; border-left: none; overflow: visible; width: 100%; }
+.CodeSample { border: 1px solid #778; background-color: #ddd; clear: both; box-shadow: 0 0 3px #888; }
+.CodeSample-padding { padding: 10px; background-color: #eee; }
+.DlHighlight { margin: 0; padding: 0; background-color: #eee; border-left: none; overflow: visible; width: 100%; }
 .CodeSample .Controls { border-bottom: 1px solid #778; padding: 1px; padding-left: 10px; }
 .CodeOutput { border: 1px solid #aab; background-color: #fff; }
 .CodeInlineCanvas { border: 1px solid red; background-color: #dcf; }
