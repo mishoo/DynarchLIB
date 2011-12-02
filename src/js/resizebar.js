@@ -36,6 +36,8 @@
 
 DEFINE_CLASS("DlResizeBar", DlWidget, function(D, P, DOM){
 
+        D.DEFAULT_EVENTS = [ "onResizing", "onStop" ];
+
         var CC = DOM.condClass;
 
 	D.FIXARGS = function(args) {
@@ -145,6 +147,7 @@ DEFINE_CLASS("DlResizeBar", DlWidget, function(D, P, DOM){
                                 else
                                         DOM.setOuterSize(w, s + diff, null);
                         }
+                        this.callHooks("onResizing", w);
                 }
 	};
 
@@ -152,6 +155,7 @@ DEFINE_CLASS("DlResizeBar", DlWidget, function(D, P, DOM){
 		this._setResizeCaptures(false);
 		this._doResize(ev);
 		document.body.removeChild(DlElementCache.DRAGGING_LINE);
+                this.callHooks("onStop");
 	};
 
 	function mouseMove(ev) {

@@ -43,7 +43,7 @@ DEFINE_CLASS("DlRPC", DlEventProxy, function(D, P) {
 		this._timeoutID = 0;
 	};
 
-        D.DEFAULT_EVENTS = [ "onStart", "onStop", "onTimeout" ];
+        D.DEFAULT_EVENTS = "onStart onStop onTimeout onUploadProgress onUploadDone onUploadError onUploadAbort".qw();
 
 	D.DEFAULT_ARGS = {
 		url      : [ "url"      , null ],
@@ -105,6 +105,10 @@ DEFINE_CLASS("DlRPC", DlEventProxy, function(D, P) {
 			throw "Browser does not support XMLHttpRequest";
 		this._request = req;
 		req.onreadystatechange = onState.$(this, req);
+                req.upload.addEventListener("progress", this.$("callHooks", "onUploadProgress"), false);
+                req.upload.addEventListener("load", this.$("callHooks", "onUploadDone"), false);
+                req.upload.addEventListener("error", this.$("callHooks", "onUploadError"), false);
+                req.upload.addEventListener("abort", this.$("callHooks", "onUploadAbort"), false);
 		var args = this.args;
 		if (args) {
 			urlargs = [];

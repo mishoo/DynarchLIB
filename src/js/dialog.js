@@ -235,7 +235,7 @@ DEFINE_CLASS("DlDialog", DlContainer, function(D, P, DOM){
         var TOP_WM;
         D.getTopWM = function() {
                 if (!TOP_WM) {
-                        TOP_WM = new DlWM({});
+                        TOP_WM = new DlWM({ className: "DlTopWindowManager" });
                         document.body.appendChild(TOP_WM.getElement());
                 }
                 return TOP_WM;
@@ -460,6 +460,7 @@ DEFINE_CLASS("DlDialog", DlContainer, function(D, P, DOM){
         };
 
         P.setOuterSize = P.setSize = function(sz) {
+                sz = Object.makeCopy(sz);
                 if (sz.y != null)
                         sz.y -= this.getTitleElement().offsetHeight;
                 this.setInnerSize(sz);
@@ -707,10 +708,13 @@ DEFINE_CLASS("DlDialog", DlContainer, function(D, P, DOM){
                 }
         };
 
-        P.makeDraggable = function() {
-                if (!this._dragHandlers) {
-                        var el = this.getTitleElement();
+        P.makeDraggable = function(el) {
+                if (!el) {
+                        el = this.getTitleElement();
                         el.style.cursor = "default";
+                        this.addEventListener([ "onMouseDown", "onContextMenu" ], startCtrlDrag);
+                }
+                if (!this._dragHandlers) {
                         this._dragHandlers = {
                                 onMouseMove  : doDrag.$(this),
                                 onMouseUp    : stopDrag.$(this),
@@ -719,10 +723,9 @@ DEFINE_CLASS("DlDialog", DlContainer, function(D, P, DOM){
                                 onMouseEnter : EX,
                                 onMouseLeave : EX
                         };
-                        DOM.addEvent(el, "mousedown", startDrag.$(this));
-                        this.addEventListener([ "onMouseDown", "onContextMenu" ], startCtrlDrag);
                         this.dragging = false;
                 }
+                DOM.addEvent(el, "mousedown", startDrag.$(this));
         };
 
         P.title = function(title) {

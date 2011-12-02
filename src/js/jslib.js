@@ -2178,6 +2178,20 @@ window.DynarchDomUtils = {
                 document.title = title;
         },
 
+        setZoom: function(el, zoom) {
+                zoom = "scale(" + zoom + ")";
+                el = el.style;
+                DynarchDomUtils.forAllStandards("transform", function(name){
+                        el.setProperty(name, zoom, "");
+                });
+        },
+
+        forAllStandards: function(name, func) {
+                [ "-moz-", "-webkit-", "-o-", "-ms-", "" ].foreach(function(prefix){
+                        func(prefix + name);
+                });
+        },
+
         CE_CACHE : CE_CACHE
 
 };

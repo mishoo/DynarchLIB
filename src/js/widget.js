@@ -139,7 +139,7 @@ DEFINE_CLASS("DlWidget", DlEventProxy, function(D, P, DOM) {
 
         P.FINISH_OBJECT_DEF = function() {
                 D.BASE.FINISH_OBJECT_DEF.call(this);
-                (this._className = Array.$(this._className)).push(this._objectType);
+                this._className = this._className.concat([ this._objectType ]);
         };
 
         var RESIZE_RECT = null;

@@ -229,4 +229,18 @@ DEFINE_CLASS("DlSpinner", DlEntry, function(D, P, DOM) {
 		// this.addEventListener("onMouseUp", mouseUp);
 	};
 
+        P.setMinVal = function(min, nohooks) {
+                this._minVal = min;
+                var v = this.getFormValue();
+                if (v != null && !isNaN(v) && v < min)
+                        this.setValue(min, nohooks);
+        };
+
+        P.setMaxVal = function(max, nohooks) {
+                this._maxVal = max;
+                var v = this.getFormValue();
+                if (v != null && !isNaN(v) && v > max)
+                        this.setValue(max, nohooks);
+        };
+
 });

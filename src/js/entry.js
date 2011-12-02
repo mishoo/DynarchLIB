@@ -233,10 +233,17 @@ DEFINE_CLASS("DlEntry", DlContainer, function(D, P, DOM) {
                 if (!this.__setEmpty(value)) {
                         if (this._maxlen != null)
                                 value = String(value).substr(0, this._maxlen);
-                        this.getInputElement().value = value;
+                        var el = this.getInputElement();
+                        el.value = value;
+                        el.defaultValue = value;
                 }
                 if (!nocall)
                         this.callHooks("onChange");
+        };
+
+        P.isDirty = function() {
+                var el = this.getInputElement();
+                return el.value != el.defaultValue;
         };
 
         P.clear = function(nocall) {

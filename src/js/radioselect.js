@@ -125,7 +125,7 @@ DEFINE_CLASS("DlRadioSelect", DlButtonMenu, function(D, P){
 		el.style.position = "";
 
 		(function() {
-			this.getButton().setOuterSize({ x: width - this.getArrow().getOuterSize().x + 2 });
+			this.getButton().setOuterSize({ x: width - this.getArrow().getOuterSize().x });
 		}).$(this).delayed(10);
 
 		this.setMenu(menu);
