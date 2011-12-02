@@ -105,10 +105,12 @@ DEFINE_CLASS("DlRPC", DlEventProxy, function(D, P) {
 			throw "Browser does not support XMLHttpRequest";
 		this._request = req;
 		req.onreadystatechange = onState.$(this, req);
-                req.upload.addEventListener("progress", this.$("callHooks", "onUploadProgress"), false);
-                req.upload.addEventListener("load", this.$("callHooks", "onUploadDone"), false);
-                req.upload.addEventListener("error", this.$("callHooks", "onUploadError"), false);
-                req.upload.addEventListener("abort", this.$("callHooks", "onUploadAbort"), false);
+                if (req.upload) {
+                        req.upload.addEventListener("progress", this.$("callHooks", "onUploadProgress"), false);
+                        req.upload.addEventListener("load", this.$("callHooks", "onUploadDone"), false);
+                        req.upload.addEventListener("error", this.$("callHooks", "onUploadError"), false);
+                        req.upload.addEventListener("abort", this.$("callHooks", "onUploadAbort"), false);
+                }
 		var args = this.args;
 		if (args) {
 			urlargs = [];
