@@ -46,7 +46,10 @@ DEFINE_CLASS("DlEntry", DlContainer, function(D, P, DOM) {
                              "onKey-ENTER",
                              "onKey-ESCAPE",
                              "onValidationError",
-                             "onValidation" ];
+                             "onValidation",
+                             "onPaste",
+                             "onCopy",
+                             "onCut" ];
 
         D.DEFAULT_ARGS = {
                 _domType    : [ "type"       , "text" ],
@@ -63,6 +66,7 @@ DEFINE_CLASS("DlEntry", DlContainer, function(D, P, DOM) {
                 _focusable  : [ "focusable"  , 2 ],
                 _maxlen     : [ "maxlength"  , null ],
                 _noSelect   : [ "noSelect"   , false ],
+                _trim       : [ "trim"       , false ],
                 _noWrap     : [ "noWrap"     , false ] // only for textareas
         };
 
@@ -252,7 +256,10 @@ DEFINE_CLASS("DlEntry", DlContainer, function(D, P, DOM) {
         };
 
         P.getValue = function(real) {
-                return !real && this.isEmpty() ? this._emptyValue : this.getInputElement().value;
+                var val = !real && this.isEmpty() ? this._emptyValue : this.getInputElement().value;
+                if (this._trim && typeof val == "string")
+                        val = val.trim();
+                return val;
         };
 
         P.getSelectionRange = function() {

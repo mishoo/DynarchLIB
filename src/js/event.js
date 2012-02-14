@@ -51,7 +51,10 @@ DEFINE_CLASS("DlEvent", null, function(D, P, DOM){
                 "blur"            : "on_DOM_Blur",
                 "mousewheel"      : "onMouseWheel",
                 "DOMMouseScroll"  : "onMouseWheel",
-                "textInput"       : "onTextInput"
+                "textInput"       : "onTextInput",
+                "paste"           : "onPaste",
+                "copy"            : "onCopy",
+                "cut"             : "onCut"
         };
 
         D.CONSTRUCT = function(ev) {
@@ -425,7 +428,8 @@ DEFINE_CLASS("DlEvent", null, function(D, P, DOM){
                      "mouseout",
                      "mousemove",
                      is_gecko ? "DOMMouseScroll" : "mousewheel",
-                     "keydown", "keyup", "keypress" ],
+                     "keydown", "keyup", "keypress",
+                     "paste", "copy", "cut" ],
          D._genericEventHandler);
 
         DOM.addEvent(window, "unload", _unloadHandler);
