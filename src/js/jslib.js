@@ -2081,17 +2081,10 @@ window.DynarchDomUtils = {
         },
 
         strip : function(el) {
-                try {
-                        var r = el.ownerDocument.createRange();
-                        r.selectNodeContents(el);
-                        p.insertBefore(el, r.extractContents());
-                        r.detach();
-                } catch(ex) {
-                        var p = el.parentNode;
-                        while (el.firstChild)
-                                p.insertBefore(el.firstChild, el);
-                }
-                this.trash(el);
+                var p = el.parentNode;
+                while (el.firstChild)
+                        p.insertBefore(el.firstChild, el);
+                DynarchDomUtils.trash(el);
         },
 
         createFromHtml : function(html) {

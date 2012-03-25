@@ -79,6 +79,7 @@ DEFINE_CLASS("DlEventProxy", null, function(D, P) {
                 if (!this.__eventHooks)
                         throw new DlExStopEventBubbling;
                 var a = this.__eventHooks[ev.toLowerCase()];
+                if (!a) return [];
                 // if (!a)
                 //         throw new DlException("Event [" + ev + "] not registered.");
                 if (copy)

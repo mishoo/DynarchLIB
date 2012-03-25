@@ -149,8 +149,10 @@ DEFINE_CLASS("DlEntry", DlContainer, function(D, P, DOM) {
         };
 
         function element_change() {
-                this.__setEmpty();
-                this.callHooks("onChange");
+                if (!this.destroyed) {
+                        this.__setEmpty();
+                        this.callHooks("onChange");
+                }
         };
 
         P.__setEmpty = function(value) {
