@@ -212,7 +212,7 @@ DEFINE_CLASS("DlDialog", DlContainer, function(D, P, DOM){
                 __quitBtn      : [ "quitBtn"      , false ],
                 __maxBtn       : [ "maxBtn"       , true ],
                 __modal        : [ "modal"        , false ],
-                __moveDelay    : [ "moveDelay"    , 5000 ]
+                __moveDelay    : [ "moveDelay"    , null ]
         };
 
         D.FIXARGS = function(args) {
@@ -420,7 +420,7 @@ DEFINE_CLASS("DlDialog", DlContainer, function(D, P, DOM){
                         div.style.display = "none";
                         // this.display(true);
                         this.delClass("DlDialog-Resizing");
-                        this.setOuterSize({ x: sz.x, y: sz.y });
+                        this.setOuterSize({ x: sz.x - 2, y: sz.y - 2 });
                         if (is_gecko)
                                 // FIXME: wicked!
                                 D.BASE.setOuterSize.call(this, { x: "auto", y: "auto" });
@@ -561,10 +561,7 @@ DEFINE_CLASS("DlDialog", DlContainer, function(D, P, DOM){
                 this.getElement().innerHTML = HTML;
                 var rel = this.getRelElement();
 
-                if (!this.__noShadows && !is_ie6)
-                        // IE6 is too stupid to support such advancements
-                        rel.insertBefore(DlElementCache.get("SHADOWS"), rel.firstChild);
-                else {
+                if (this.__noShadows) {
                         this.__noShadows = true;
                         AC(rel, "DlDialog-noShadows");
                 }

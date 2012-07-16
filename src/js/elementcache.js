@@ -54,20 +54,6 @@ var DlElementCache = {
 	        C.TBODY_RC = TBODY_RC;
         })();
 
-        // dialog shadows (might be useful for other widgets as well)
-        (function(){
-	        var SHADOWS = document.createDocumentFragment();
-	        CE("div", null, { className: "Shadow Shadow-TL" }, SHADOWS);
-	        CE("div", null, { className: "Shadow Shadow-T" }, SHADOWS);
-	        CE("div", null, { className: "Shadow Shadow-TR" }, SHADOWS);
-	        CE("div", null, { className: "Shadow Shadow-L" }, SHADOWS);
-	        CE("div", null, { className: "Shadow Shadow-R" }, SHADOWS);
-	        CE("div", null, { className: "Shadow Shadow-BL" }, SHADOWS);
-	        CE("div", null, { className: "Shadow Shadow-B" }, SHADOWS);
-	        CE("div", null, { className: "Shadow Shadow-BR" }, SHADOWS);
-	        C.SHADOWS = SHADOWS;
-        })();
-
         // calendar
         (function(){
 	        var STATIC_ROW = CE("tr");

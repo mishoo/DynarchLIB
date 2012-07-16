@@ -1,6 +1,11 @@
 function RUN() {
+        var outer = new DlDialog({
+                title: "Foo bar",
+                resizable: true
+        });
         var dlg = new DlDialog({
                 title: "Test buttons",
+                parent: outer
         });
 
         var vbox = new DlVbox({ parent: dlg, borderSpacing: 20 });
@@ -11,6 +16,9 @@ function RUN() {
 
         var tb = new DlContainer({ parent: vbox });
         mkSamples(tb);
+
+        outer.setSize({ x: 800, y: 600 });
+        outer.show(true);
 
         dlg.show(true);
 
