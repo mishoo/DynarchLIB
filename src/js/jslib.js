@@ -2189,12 +2189,6 @@ window.DynarchDomUtils = {
 
 };
 
-var $ = is_gecko
-        ? document.getElementById.$(document)
-        : function(id) {
-                return document.getElementById(id);
-        };
-
 function DEFINE_CLASS(name, base, definition, hidden) {
         D.name = name || "";
         if (hidden)

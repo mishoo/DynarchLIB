@@ -1030,7 +1030,7 @@ table.DlButtonBox .DlButtonBox-spacer { width: 100%; }
 */
 
 .DlDialog-Rel {
-  @include box-shadow(2px 3px 10px #000);
+  @include box-shadow(2px 3px 10px #888);
 }
 
 .DlDialog-Active .DlDialog-Rel {

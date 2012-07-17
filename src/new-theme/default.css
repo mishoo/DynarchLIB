@@ -1642,12 +1642,12 @@ table.DlButtonBox .DlButtonBox-spacer {
 .DlDialog-Active { opacity: 1; }
 */
 .DlDialog-Rel {
-  -moz-box-shadow: 2px 3px 10px black;
-  -webkit-box-shadow: 2px 3px 10px black;
-  -o-box-shadow: 2px 3px 10px black;
-  -khtml-box-shadow: 2px 3px 10px black;
-  -ms-box-shadow: 2px 3px 10px black;
-  box-shadow: 2px 3px 10px black; }
+  -moz-box-shadow: 2px 3px 10px #888888;
+  -webkit-box-shadow: 2px 3px 10px #888888;
+  -o-box-shadow: 2px 3px 10px #888888;
+  -khtml-box-shadow: 2px 3px 10px #888888;
+  -ms-box-shadow: 2px 3px 10px #888888;
+  box-shadow: 2px 3px 10px #888888; }
 
 .DlDialog-Active .DlDialog-Rel {
   -moz-box-shadow: 2px 3px 20px black;
