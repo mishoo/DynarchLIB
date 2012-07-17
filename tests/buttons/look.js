@@ -1,10 +1,10 @@
-function RUN() {
+function doit() {
         var outer = new DlDialog({
                 title: "Foo bar",
                 resizable: true
         });
         var dlg = new DlDialog({
-                title: "Test buttons",
+                title: "Test buttons and this dialog has a really long title blah blah blah foo bar baz blah blah blah foo bar baz",
                 parent: outer
         });
 
@@ -43,4 +43,9 @@ function RUN() {
                 new DlRadioButton({ parent: box, group: g, label: "Bar", checked: true });
                 new DlRadioButton({ parent: box, group: g, label: "Baz" });
         }
+}
+
+function RUN() {
+        doit();
+        doit();
 }

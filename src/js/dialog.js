@@ -241,14 +241,11 @@ DEFINE_CLASS("DlDialog", DlContainer, function(D, P, DOM){
                 return TOP_WM;
         };
 
-        var HTML = ( "<table cellspacing='0' cellpadding='0'><tr><td>" +
-                     "<div class='DlDialog-Rel'>" +
+        var HTML = ( "<div class='DlDialog-Rel'>" +
                      "<div class='DlDialog-WindowButtons'></div>" +
                      "<div class='DlDialog-Title'><div></div></div>" +
                      "<div class='DlDialog-Content'></div>" +
-                     "</div>" +
-                     "</td></tr></table>"
-                   );
+                     "</div>" );
 
         var HIDE_POS = { x: -30000, y: -30000 };
 
@@ -766,7 +763,7 @@ DEFINE_CLASS("DlDialog", DlContainer, function(D, P, DOM){
         };
 
         P.getRelElement = function() {
-                return this.getElement().firstChild.rows[0].cells[0].firstChild;
+                return this.getElement().firstChild;
         };
 
         P.getContentElement = function() {

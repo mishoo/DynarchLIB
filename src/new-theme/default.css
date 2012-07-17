@@ -132,7 +132,7 @@ form {
   /* @include outline-radius(2px); */
   -moz-box-shadow: 0px 0px 4px #e8a850;
   -webkit-box-shadow: 0px 0px 4px #e8a850;
-  -opera-box-shadow: 0px 0px 4px #e8a850;
+  -o-box-shadow: 0px 0px 4px #e8a850;
   -khtml-box-shadow: 0px 0px 4px #e8a850;
   -ms-box-shadow: 0px 0px 4px #e8a850;
   box-shadow: 0px 0px 4px #e8a850; }
@@ -194,7 +194,7 @@ div.DlButton-Label {
   padding: 2px 5px 2px 20px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
-  -opera-border-radius: 3px;
+  -o-border-radius: 3px;
   -khtml-border-radius: 3px;
   -ms-border-radius: 3px;
   border-radius: 3px;
@@ -244,7 +244,7 @@ div.DlButton-Label {
   padding: 2px 5px 2px 20px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
-  -opera-border-radius: 3px;
+  -o-border-radius: 3px;
   -khtml-border-radius: 3px;
   -ms-border-radius: 3px;
   border-radius: 3px;
@@ -284,7 +284,7 @@ div.DlButton-Label {
 .DlPopupMenu .DlRadioButton, .DlPopupMenu .DlCheckbox {
   -moz-border-radius: 0;
   -webkit-border-radius: 0;
-  -opera-border-radius: 0;
+  -o-border-radius: 0;
   -khtml-border-radius: 0;
   -ms-border-radius: 0;
   border-radius: 0; }
@@ -314,7 +314,7 @@ div.DlButton-Label {
   /* @include outline-radius(2px); */
   -moz-box-shadow: 0px 0px 4px #e8a850;
   -webkit-box-shadow: 0px 0px 4px #e8a850;
-  -opera-box-shadow: 0px 0px 4px #e8a850;
+  -o-box-shadow: 0px 0px 4px #e8a850;
   -khtml-box-shadow: 0px 0px 4px #e8a850;
   -ms-box-shadow: 0px 0px 4px #e8a850;
   box-shadow: 0px 0px 4px #e8a850; }
@@ -322,7 +322,7 @@ div.DlButton-Label {
     background-color: #fff8dd;
     -moz-box-shadow: inset 0 0 2px #22cc22;
     -webkit-box-shadow: inset 0 0 2px #22cc22;
-    -opera-box-shadow: inset 0 0 2px #22cc22;
+    -o-box-shadow: inset 0 0 2px #22cc22;
     -khtml-box-shadow: inset 0 0 2px #22cc22;
     -ms-box-shadow: inset 0 0 2px #22cc22;
     box-shadow: inset 0 0 2px #22cc22; }
@@ -702,7 +702,7 @@ table.DlCalendar {
   top: -30000px;
   -moz-box-shadow: 1px 1px 4px black;
   -webkit-box-shadow: 1px 1px 4px black;
-  -opera-box-shadow: 1px 1px 4px black;
+  -o-box-shadow: 1px 1px 4px black;
   -khtml-box-shadow: 1px 1px 4px black;
   -ms-box-shadow: 1px 1px 4px black;
   box-shadow: 1px 1px 4px black; }
@@ -943,7 +943,7 @@ div.DlVMenu-separator {
   border: 1px solid #769;
   -moz-border-radius: 15px;
   -webkit-border-radius: 15px;
-  -opera-border-radius: 15px;
+  -o-border-radius: 15px;
   -khtml-border-radius: 15px;
   -ms-border-radius: 15px;
   border-radius: 15px;
@@ -1284,7 +1284,7 @@ table.DlButtonBox .DlButtonBox-spacer {
   /* @include outline-radius(2px); */
   -moz-box-shadow: 0px 0px 4px #e8a850;
   -webkit-box-shadow: 0px 0px 4px #e8a850;
-  -opera-box-shadow: 0px 0px 4px #e8a850;
+  -o-box-shadow: 0px 0px 4px #e8a850;
   -khtml-box-shadow: 0px 0px 4px #e8a850;
   -ms-box-shadow: 0px 0px 4px #e8a850;
   box-shadow: 0px 0px 4px #e8a850; }
@@ -1428,7 +1428,7 @@ table.DlButtonBox .DlButtonBox-spacer {
   /* @include outline-radius(2px); */
   -moz-box-shadow: 0px 0px 4px #e8a850;
   -webkit-box-shadow: 0px 0px 4px #e8a850;
-  -opera-box-shadow: 0px 0px 4px #e8a850;
+  -o-box-shadow: 0px 0px 4px #e8a850;
   -khtml-box-shadow: 0px 0px 4px #e8a850;
   -ms-box-shadow: 0px 0px 4px #e8a850;
   box-shadow: 0px 0px 4px #e8a850; }
@@ -1581,7 +1581,7 @@ table.DlButtonBox .DlButtonBox-spacer {
 .DlDialog .DlWM-modalStopper {
   -moz-border-radius: 0 0 4px 4px;
   -webkit-border-radius: 0 0 4px 4px;
-  -opera-border-radius: 0 0 4px 4px;
+  -o-border-radius: 0 0 4px 4px;
   -khtml-border-radius: 0 0 4px 4px;
   -ms-border-radius: 0 0 4px 4px;
   border-radius: 0 0 4px 4px; }
@@ -1590,7 +1590,7 @@ table.DlButtonBox .DlButtonBox-spacer {
 .DlDialog-Maximized .DlWM-modalStopper {
   -moz-border-radius: 0;
   -webkit-border-radius: 0;
-  -opera-border-radius: 0;
+  -o-border-radius: 0;
   -khtml-border-radius: 0;
   -ms-border-radius: 0;
   border-radius: 0; }
@@ -1644,7 +1644,7 @@ table.DlButtonBox .DlButtonBox-spacer {
 .DlDialog-Rel {
   -moz-box-shadow: 2px 3px 10px black;
   -webkit-box-shadow: 2px 3px 10px black;
-  -opera-box-shadow: 2px 3px 10px black;
+  -o-box-shadow: 2px 3px 10px black;
   -khtml-box-shadow: 2px 3px 10px black;
   -ms-box-shadow: 2px 3px 10px black;
   box-shadow: 2px 3px 10px black; }
@@ -1652,7 +1652,7 @@ table.DlButtonBox .DlButtonBox-spacer {
 .DlDialog-Active .DlDialog-Rel {
   -moz-box-shadow: 2px 3px 20px black;
   -webkit-box-shadow: 2px 3px 20px black;
-  -opera-box-shadow: 2px 3px 20px black;
+  -o-box-shadow: 2px 3px 20px black;
   -khtml-box-shadow: 2px 3px 20px black;
   -ms-box-shadow: 2px 3px 20px black;
   box-shadow: 2px 3px 20px black; }
@@ -1788,19 +1788,19 @@ table.DlButtonBox .DlButtonBox-spacer {
   color: #3d4; }
 
 /* maximized dialogs are not resizable */
-.DlDialog-Maximized > table > tbody > tr > td > .DlDialog-Rel {
+.DlDialog-Maximized > .DlDialog-Rel {
   border: none;
   -moz-box-shadow: none;
   -webkit-box-shadow: none;
-  -opera-box-shadow: none;
+  -o-box-shadow: none;
   -khtml-box-shadow: none;
   -ms-box-shadow: none;
   box-shadow: none; }
 
-.DlDialog-Maximized > table > tbody > tr > td > .DlDialog-Rel > .ResizeHandle {
+.DlDialog-Maximized > .DlDialog-Rel > .ResizeHandle {
   display: none; }
 
-.DlDialog-Maximized > table > tbody > tr > td > .DlDialog-Rel > .DlDialog-Title {
+.DlDialog-Maximized > .DlDialog-Rel > .DlDialog-Title {
   border-width: 0; }
 
 .DlLiteTree {
@@ -1871,7 +1871,7 @@ table.DlButtonBox .DlButtonBox-spacer {
   /* @include outline-radius(2px); */
   -moz-box-shadow: 0px 0px 4px #e8a850;
   -webkit-box-shadow: 0px 0px 4px #e8a850;
-  -opera-box-shadow: 0px 0px 4px #e8a850;
+  -o-box-shadow: 0px 0px 4px #e8a850;
   -khtml-box-shadow: 0px 0px 4px #e8a850;
   -ms-box-shadow: 0px 0px 4px #e8a850;
   box-shadow: 0px 0px 4px #e8a850; }

@@ -1120,9 +1120,9 @@ table.DlButtonBox .DlButtonBox-spacer { width: 100%; }
 .DlDialog .DlDialog-Dragging .DlDialog-Title { background-color: #000; color: #3d4; }
 
 /* maximized dialogs are not resizable */
-.DlDialog-Maximized>table>tbody>tr>td>.DlDialog-Rel { border: none; @include box-shadow(none) }
-.DlDialog-Maximized>table>tbody>tr>td>.DlDialog-Rel>.ResizeHandle { display: none; }
-.DlDialog-Maximized>table>tbody>tr>td>.DlDialog-Rel>.DlDialog-Title { border-width: 0; }
+.DlDialog-Maximized>.DlDialog-Rel { border: none; @include box-shadow(none) }
+.DlDialog-Maximized>.DlDialog-Rel>.ResizeHandle { display: none; }
+.DlDialog-Maximized>.DlDialog-Rel>.DlDialog-Title { border-width: 0; }
 
 .DlLiteTree {
   -moz-user-select: none;
