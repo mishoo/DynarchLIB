@@ -50,9 +50,10 @@ form {
 
 .DYNARCH-FAKE-FOCUS {
   z-index: -10000;
-  position: absolute;
-  left: -2000px;
-  top: 0; }
+  position: fixed;
+  left: -100px;
+  top: 0;
+  opacity: 0; }
 
 .CURSOR-DRAGGING {
   cursor: move !important; }

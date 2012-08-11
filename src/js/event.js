@@ -267,7 +267,7 @@ DEFINE_CLASS("DlEvent", null, function(D, P, DOM){
                         a = DOM.CE_CACHE.FAKE_FOCUS =
                                 CE("a", null, {
                                         href      : "#",
-                                        innerHTML : "test",
+                                        innerHTML : ".",
                                         className : "DYNARCH-FAKE-FOCUS"
                                 }, document.body);
                 }

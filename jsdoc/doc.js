@@ -2,6 +2,10 @@ var App = {};
 
 (function() {
 
+        var $ = function(el) {
+                return typeof el == "string" ? document.getElementById(el) : el;
+        };
+
 	var desktop;
 
 	function $url(url) {

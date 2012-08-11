@@ -754,7 +754,11 @@ DEFINE_CLASS("DlWidget", DlEventProxy, function(D, P, DOM) {
         };
 
         P.scrollIntoView = function() {
-                DOM.scrollIntoView(this.getElement());
+                // XXX: this is messy.
+                if (is_gecko)
+                        this.getElement().scrollIntoView();
+                else
+                        DOM.scrollIntoView(this.getElement());
         };
 
         P.flash = function(timeout, steps) {
