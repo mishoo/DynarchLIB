@@ -65,7 +65,7 @@ DEFINE_CLASS("DlWM", DlContainer, function(D, P, DOM){
                 if (a.length > 1) {
                         a.peek().deactivate();
                         a.unshift(a.pop());
-                        top = a.pop();
+                        var top = a.pop();
                         top.activate();
                 }
         };

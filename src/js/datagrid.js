@@ -780,9 +780,9 @@ DEFINE_CLASS("DlDataGrid", DlContainer, function(D, P, DOM) {
 
         P._resetVSHeight = function() {
                 if (this._vScroll && this._info_display) {
-                        h = Math.floor(this.getRowsContainer().offsetHeight *
-                                       this.getNRecords() /
-                                       this._info_display.length);
+                        var h = Math.floor(this.getRowsContainer().offsetHeight *
+                                           this.getNRecords() /
+                                           this._info_display.length);
                         this._getVSHeightDiv().style.height = isNaN(h) ? "" : h + "px";
                 }
         };
