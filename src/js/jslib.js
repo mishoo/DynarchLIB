@@ -1347,7 +1347,7 @@ String.inject({
                 }
                 else if (obj instanceof Function) {
                         obj = obj();
-                        if (obj != null && obj != false)
+                        if (obj != null && obj !== false)
                                 $flatten.call(this, obj);
                 }
                 else this.push(obj);
