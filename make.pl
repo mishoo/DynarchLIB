@@ -87,39 +87,19 @@ chdir "$destdir/src/js";
 {
     my $loader = Dynarch::LoadJS->new;
     $loader->load("$destdir/src/js");
+
     open DEBUG_JS_LOAD, "> /tmp/dynarch-loadjs.log";
     print DEBUG_JS_LOAD join("\n", $loader->get_scripts);
     close DEBUG_JS_LOAD;
-    my $content = join("\n", $loader->get_contents);
-
-    open FILE, '> thelib.js';
-    print FILE $content;
-    close FILE;
 
     if ($opt_full_source) {
-        system 'cp thelib.js thelib-full.js';
-    }
-
-    {
-        local $/ = undef;
-
-        my $args = '-nc';
-        # if ($opt_no_crunch) {
-        #     $args = '-nm -ns';
-        # }
-        open YUI, '-|', "uglifyjs $args < thelib.js";
-
-        # open YUI, '-|', "cl-uglify-js < thelib.js";
-
-        $content = <YUI>;
-        close YUI;
-
-        open FILE, '> thelib.js';
-        print FILE $core_comment;
+        my $content = join("\n", $loader->get_contents);
+        open FILE, '> thelib-full.js';
         print FILE $content;
         close FILE;
     }
 
+    system "uglifyjs2 @{[ join ' ', $loader->get_scripts ]} -o thelib.js --source-map thelib.js.map --source-map-root http://dynarchlib.local/full-source/js/ -p 5 -m -c";
     unlink $loader->get_scripts;
 
     if ($opt_full_source) {
@@ -280,6 +260,7 @@ chdir "$tmpdir";
 system "zip -r -q DynarchLIB.zip DynarchLIB";
 system "mv DynarchLIB.zip '$orig_dir'";
 
+chdir "$orig_dir";
 
 
 
