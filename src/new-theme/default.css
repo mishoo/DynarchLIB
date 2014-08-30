@@ -608,7 +608,7 @@ table.DlCalendar {
   background: url("img/resizebar-vert2.png") no-repeat 50% 50%; }
 
 .DlResizeBar-DraggingLine {
-  position: absolute;
+  position: fixed;
   /*  background-image: url("img/resizebg.gif"); */
   background-color: #e8a850;
   opacity: 0.6;

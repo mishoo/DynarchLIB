@@ -399,7 +399,7 @@ table.DlCalendar {
   height: 5px; cursor: s-resize; background: url("img/resizebar-horiz2.png") no-repeat 50% 50%; }
 .DlResizeBar-Vertical { width: 5px; cursor: e-resize; background: url("img/resizebar-vert2.png") no-repeat 50% 50%; }
 .DlResizeBar-DraggingLine {
-  position: absolute;
+  position: fixed;
 /*  background-image: url("img/resizebg.gif"); */
   background-color: $focusBorder; opacity: 0.6; filter: alpha(opacity=60);
   z-index: 10000;

@@ -99,7 +99,7 @@ chdir "$destdir/src/js";
         close FILE;
     }
 
-    system "uglifyjs2 @{[ join ' ', $loader->get_scripts ]} -o thelib.js --source-map thelib.js.map --source-map-root http://dynarchlib.local/full-source/js/ -p 5 -m -c";
+    system "uglifyjs2 @{[ join ' ', $loader->get_scripts ]} -o thelib.js --source-map thelib.js.map --source-map-root http://dynarchlib.local/full-source/js/ -p 5 -m -c unsafe_comps=1,hoist_vars=1";
     unlink $loader->get_scripts;
 
     if ($opt_full_source) {
@@ -122,12 +122,12 @@ EOF
 
 chdir "$destdir/src/extras";
 foreach my $file (<*.js>) {
-    system "uglifyjs --overwrite $file";
+    system "uglifyjs $file -cm -o $file";
 }
 
 chdir "$destdir/jsdoc/hl";
 system 'cat highlight.js lang-js.js lang-dljs.js lang-css.js lang-xml.js lang-html.js helpers.js > hl-all.js';
-system 'uglifyjs --overwrite hl-all.js';
+system 'uglifyjs hl-all.js -cm -o hl-all.js';
 
 ### Create "css/preload-default.js" - for preloading images
 
@@ -254,7 +254,7 @@ chdir "$destdir";
 
 system "find . -name '*.cgi' -exec chmod 755 {} \\;";
 system "find . -name '*.tt' -exec rm -f {} \\;";
-system "find src/deprecated -name '*.js' -exec uglifyjs --overwrite {} \\;";
+system "find src/deprecated -name '*.js' -exec uglifyjs {} -cm -o {} \\;";
 
 chdir "$tmpdir";
 system "zip -r -q DynarchLIB.zip DynarchLIB";

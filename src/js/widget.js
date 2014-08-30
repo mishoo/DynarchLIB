@@ -765,18 +765,18 @@ DEFINE_CLASS("DlWidget", DlEventProxy, function(D, P, DOM) {
                 DOM.flash(this.getElement(), timeout, steps);
         };
 
-        DlEvent.atUnload(function(){
-                do {
-                        window.DL_CLOSING = true;
-                        var destroying = false;
-                        for (var i in WIDGETS) {
-                                destroying = true;
-                                var w = WIDGETS[i];
-                                try { WIDGETS[i] = null; delete WIDGETS[i]; w.destroy(); } catch(ex) {};
-                                break;
-                        }
-                } while (destroying);
-                WIDGETS = null;
-        });
+        // DlEvent.atUnload(function(){
+        //         do {
+        //                 window.DL_CLOSING = true;
+        //                 var destroying = false;
+        //                 for (var i in WIDGETS) {
+        //                         destroying = true;
+        //                         var w = WIDGETS[i];
+        //                         try { WIDGETS[i] = null; delete WIDGETS[i]; w.destroy(); } catch(ex) {};
+        //                         break;
+        //                 }
+        //         } while (destroying);
+        //         WIDGETS = null;
+        // });
 
 });
