@@ -90,13 +90,13 @@ form {
 
 .DlWidget {
   cursor: default;
-  color: black;
+  color: #000;
   zoom: 1;
   /* force hasLayout in IE */ }
 
 .DlWidget-3D {
   background-color: #c8c8d8;
-  color: black; }
+  color: #000; }
 
 /* .DlWidget-disabled, .DlWidget-disabled * { color: #768 !important; } */
 /* .DlWidget-dragging, .DlWidget-dragging * { color: #768 !important; } */
@@ -307,7 +307,7 @@ div.DlButton-Label {
     outline: none; }
   .DlEntry input::-moz-selection, .DlEntry textarea::-moz-selection {
     background-color: #80b9ff !important;
-    color: black !important; }
+    color: #000 !important; }
 
 .DlEntry-Focus {
   border-color: #6e6e99 #58587c #58587c #6e6e99;
@@ -321,12 +321,12 @@ div.DlButton-Label {
   box-shadow: 0px 0px 4px #e8a850; }
   .DlEntry-Focus .DlEntry-cell, .DlEntry-Focus input, .DlEntry-Focus textarea {
     background-color: #fff8dd;
-    -moz-box-shadow: inset 0 0 2px #22cc22;
-    -webkit-box-shadow: inset 0 0 2px #22cc22;
-    -o-box-shadow: inset 0 0 2px #22cc22;
-    -khtml-box-shadow: inset 0 0 2px #22cc22;
-    -ms-box-shadow: inset 0 0 2px #22cc22;
-    box-shadow: inset 0 0 2px #22cc22; }
+    -moz-box-shadow: inset 0 0 2px #2c2;
+    -webkit-box-shadow: inset 0 0 2px #2c2;
+    -o-box-shadow: inset 0 0 2px #2c2;
+    -khtml-box-shadow: inset 0 0 2px #2c2;
+    -ms-box-shadow: inset 0 0 2px #2c2;
+    box-shadow: inset 0 0 2px #2c2; }
 
 .DlEntry-ValidationError {
   border-color: #ff2600; }
@@ -542,7 +542,7 @@ table.DlCalendar {
     background-position: 50% 50%; }
   .DlCalendar tr.DlCalendar-Navigation td.hover {
     background-color: #e6e6ed;
-    color: black; }
+    color: #000; }
   .DlCalendar tr.DlCalendar-Navigation td.rolling {
     background-color: #80b9ff; }
   .DlCalendar tr.DlCalendar-DayNames {
@@ -557,9 +557,9 @@ table.DlCalendar {
       border-right-color: #9b9bb8; }
     .DlCalendar tr.DlCalendar-DayNames td.hover {
       background-color: #e6e6ed;
-      color: black; }
+      color: #000; }
     .DlCalendar tr.DlCalendar-DayNames td.WeekEnd {
-      color: #cc6622; }
+      color: #c62; }
   .DlCalendar tr.Dates td {
     text-align: right;
     padding: 2px 3px 2px 2px; }
@@ -588,7 +588,7 @@ table.DlCalendar {
     padding-top: 1px;
     padding-bottom: 1px; }
   .DlCalendar td.WeekEnd {
-    color: #cc6622; }
+    color: #c62; }
   .DlCalendar td.OtherMonth.WeekEnd {
     color: #e79e6d; }
 
@@ -640,6 +640,10 @@ table.DlCalendar {
   top: -30000px;
   visibility: hidden; }
 
+/* XXX: WHAT's this?
+// .DlContainer-pad-sep-left { padding: 5px; border-left: 1px solid #a9d; }
+// .DlContainer-pad-sep-right { padding: 5px; border-right: 1px solid #a9d; }
+*/
 .DlLayout {
   position: relative; }
 
@@ -701,12 +705,12 @@ table.DlCalendar {
   z-index: 100;
   left: -30000px;
   top: -30000px;
-  -moz-box-shadow: 1px 1px 4px black;
-  -webkit-box-shadow: 1px 1px 4px black;
-  -o-box-shadow: 1px 1px 4px black;
-  -khtml-box-shadow: 1px 1px 4px black;
-  -ms-box-shadow: 1px 1px 4px black;
-  box-shadow: 1px 1px 4px black; }
+  -moz-box-shadow: 1px 1px 4px #000;
+  -webkit-box-shadow: 1px 1px 4px #000;
+  -o-box-shadow: 1px 1px 4px #000;
+  -khtml-box-shadow: 1px 1px 4px #000;
+  -ms-box-shadow: 1px 1px 4px #000;
+  box-shadow: 1px 1px 4px #000; }
 
 .DlPopup-scrollArea {
   overflow: hidden;
@@ -821,15 +825,15 @@ div.DlVMenu-separator {
 
 .DlMenuItem-popped {
   background-color: #80b9ff;
-  color: black; }
+  color: #000; }
 
 .DlMenuItem-hover {
   background-color: #80b9ff;
-  color: black; }
+  color: #000; }
 
 .DlMenuItem-active {
-  background-color: #222222;
-  color: white; }
+  background-color: #222;
+  color: #fff; }
 
 .DlMenuItem .DlMenuItem-withIcon {
   padding-left: 26px;
@@ -855,14 +859,14 @@ div.DlVMenu-separator {
 .DlVMenu .DlRadioButton-hover,
 .DlHMenu .DlRadioButton-hover {
   background-color: #80b9ff;
-  color: black; }
+  color: #000; }
 
 .DlVMenu .DlCheckbox-active,
 .DlHMenu .DlCheckbox-active,
 .DlVMenu .DlRadioButton-active,
 .DlHMenu .DlRadioButton-active {
-  background-color: #222222;
-  color: white; }
+  background-color: #222;
+  color: #fff; }
 
 /*
 .DlPopupMenu .DlCheckbox-hover,
@@ -1192,7 +1196,7 @@ table.DlButtonBox .DlButtonBox-spacer {
   text-decoration: underline; }
 .DlTreeItem-withRadio .DlTreeItem-Table .DlRadioButton-1 {
   background-color: #80b9ff;
-  color: black; }
+  color: #000; }
 
 .DlTreeItem-withCheck .DlTreeItem-Label {
   padding-left: 0; }
@@ -1208,7 +1212,7 @@ table.DlButtonBox .DlButtonBox-spacer {
   text-decoration: underline; }
 .DlTreeItem-withCheck .DlTreeItem-Table .DlCheckbox-1 {
   background-color: #80b9ff;
-  color: black; }
+  color: #000; }
 
 /* .DlTreeItem-Table { table-layout: fixed; border-collapse: collapse; } */
 .DlTreeItem-Table td {
@@ -1438,7 +1442,7 @@ table.DlButtonBox .DlButtonBox-spacer {
   background-color: #80b9ff; }
 
 .DlDataGrid-focus .DlDataGridRow-selected table td {
-  color: black; }
+  color: #000; }
 
 .DlDataGrid-align-right .DlButton-inner {
   background-position: 0 50%; }
@@ -1643,20 +1647,20 @@ table.DlButtonBox .DlButtonBox-spacer {
 .DlDialog-Active { opacity: 1; }
 */
 .DlDialog-Rel {
-  -moz-box-shadow: 2px 3px 10px #888888;
-  -webkit-box-shadow: 2px 3px 10px #888888;
-  -o-box-shadow: 2px 3px 10px #888888;
-  -khtml-box-shadow: 2px 3px 10px #888888;
-  -ms-box-shadow: 2px 3px 10px #888888;
-  box-shadow: 2px 3px 10px #888888; }
+  -moz-box-shadow: 2px 3px 10px #888;
+  -webkit-box-shadow: 2px 3px 10px #888;
+  -o-box-shadow: 2px 3px 10px #888;
+  -khtml-box-shadow: 2px 3px 10px #888;
+  -ms-box-shadow: 2px 3px 10px #888;
+  box-shadow: 2px 3px 10px #888; }
 
 .DlDialog-Active .DlDialog-Rel {
-  -moz-box-shadow: 2px 3px 20px black;
-  -webkit-box-shadow: 2px 3px 20px black;
-  -o-box-shadow: 2px 3px 20px black;
-  -khtml-box-shadow: 2px 3px 20px black;
-  -ms-box-shadow: 2px 3px 20px black;
-  box-shadow: 2px 3px 20px black; }
+  -moz-box-shadow: 2px 3px 20px #000;
+  -webkit-box-shadow: 2px 3px 20px #000;
+  -o-box-shadow: 2px 3px 20px #000;
+  -khtml-box-shadow: 2px 3px 20px #000;
+  -ms-box-shadow: 2px 3px 20px #000;
+  box-shadow: 2px 3px 20px #000; }
 
 /* that's for the crappin' IE6: */
 .DlDialog-noShadows {
@@ -1826,7 +1830,7 @@ table.DlButtonBox .DlButtonBox-spacer {
         padding-left: 15px;
         margin-right: 1px; }
       .DlLiteTree ul li .item-label:hover {
-        color: black;
+        color: #000;
         background-color: #e6e6ed; }
       .DlLiteTree ul li .item-label.selected {
         background-color: #ccc;
@@ -1878,7 +1882,7 @@ table.DlButtonBox .DlButtonBox-spacer {
   box-shadow: 0px 0px 4px #e8a850; }
   .DlLiteTree-focus ul li .item-label.selected {
     background-color: #80b9ff;
-    color: black; }
+    color: #000; }
 
 /* ICONS */
 .IconCalendar {
@@ -1955,7 +1959,7 @@ span.BreakPoint {
 
 .Dl-3D-Border-Outside {
   border: 1px solid;
-@incude outset-border1; }
+  @incude outset-border1; }
 
 .Dl-3D-Border-Inside {
   border: 1px solid;
@@ -1975,3 +1979,5 @@ span.BreakPoint {
 
 /* this sucks */
 /* thin shadows */
+
+/*# sourceMappingURL=default.css.map */

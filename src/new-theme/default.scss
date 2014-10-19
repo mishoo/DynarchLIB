@@ -495,10 +495,10 @@ table.DlCalendar {
 .DlCompletionPopup .DlVMenu { border: none; }
 
 .DlTooltip {
-  background-color: #fffee0;
+  background-color: $tooltipBg;
   font-family: arial,helvetica,sans-serif;
   padding: 4px 7px;
-  color: #333210;
+  color: $tooltipFg;
 }
 
 .DlTooltip-noShadow { border: 1px solid #000; }
