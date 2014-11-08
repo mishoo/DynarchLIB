@@ -286,7 +286,8 @@ sub include {
               or (
                   $fn =~ m{^src/css/img} or
                     $fn =~ m{^src/new-theme/img} or
-                      $fn =~ m{^jsdoc/}
+                      $fn =~ m{^src/new-theme/DLimg} or
+                        $fn =~ m{^jsdoc/}
                   )
           );
 }
