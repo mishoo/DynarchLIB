@@ -141,13 +141,29 @@ Object.merge(Object, {
 
         map: function(hash, f, obj) {
                 var ret = [];
-                for (var i in hash) if (hash.hasOwnProperty(i)) try {
+                for (var i in hash) if (Object.HOP(hash, i)) try {
                         ret.push(f.call(obj, hash[i], i));
                 } catch(ex) {
                         if (ex === $_BREAK) break;
                         if (ex === $_CONTINUE) continue;
                         if (ex instanceof $_RETURN) return ex.args;
                         throw ex;
+                }
+                return ret;
+        },
+
+        grep: function(hash, cond, obj) {
+                var ret = {};
+                if (cond instanceof RegExp) {
+                        for (var i in hash) {
+                                if (Object.HOP(hash, i) && cond.test(i))
+                                        ret[i] = hash[i];
+                        }
+                } else if (cond instanceof Function) {
+                        for (var i in hash) {
+                                if (Object.HOP(hash, i) && cond.call(obj, hash[i], i))
+                                        ret[i] = hash[i];
+                        }
                 }
                 return ret;
         },
