@@ -99,7 +99,7 @@ chdir "$destdir/src/js";
         close FILE;
     }
 
-    system "uglifyjs2 @{[ join ' ', $loader->get_scripts ]} -o thelib.js --source-map thelib.js.map --source-map-root http://dynarchlib.local/full-source/js/ -p 5 -m -c unsafe_comps=1,hoist_vars=1";
+    system "uglifyjs2 @{[ join ' ', $loader->get_scripts ]} -o thelib.js --source-map thelib.js.map --source-map-root http://dynarchlib.local/full-source/js/ -p 5 -m -c unsafe-comps,hoist-vars,collapse-vars";
     unlink $loader->get_scripts;
 
     if ($opt_full_source) {
