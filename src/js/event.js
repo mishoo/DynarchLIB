@@ -63,6 +63,7 @@ DEFINE_CLASS("DlEvent", null, function(D, P, DOM){
                 this.ctrlKey = ev.ctrlKey;
                 this.which = ev.which;
                 this.keyIdentifier = ev.keyIdentifier;
+                this.key = ev.key;
                 if (is_macintosh) {
                         this.altGrKey = ev.altKey;
                         this.altKey = ev.metaKey;

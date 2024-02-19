@@ -31,9 +31,9 @@ my $TT_VARS = { final      => 1,
 
 my $orig_dir = getcwd;
 
-chdir "src/as";
-system "./compile";
-chdir $orig_dir;
+# chdir "src/as";
+# system "./compile";
+# chdir $orig_dir;
 
 my @DIRS = qw(.);
 
@@ -99,7 +99,7 @@ chdir "$destdir/src/js";
         close FILE;
     }
 
-    system "uglifyjs2 @{[ join ' ', $loader->get_scripts ]} -o thelib.js --source-map thelib.js.map --source-map-root http://dynarchlib.local/full-source/js/ -p 5 -m -c unsafe-comps,hoist-vars,collapse-vars";
+    system "uglifyjs @{[ join ' ', $loader->get_scripts ]} -cm -o thelib.js";
     unlink $loader->get_scripts;
 
     if ($opt_full_source) {
