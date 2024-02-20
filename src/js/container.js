@@ -39,115 +39,131 @@ DEFINE_CLASS("DlContainer", DlWidget, function(D, P) {
                 this._widgets = [];
         };
 
-	D.DEFAULT_ARGS = {
-		_scrollBars           : [ "scroll"     , false ],
+        D.DEFAULT_ARGS = {
+                _scrollBars           : [ "scroll"     , false ],
                 __noParentKeyBindings : [ "noParentKB" , false ]
-	};
+        };
 
-	P._createElement = function() {
-		D.BASE._createElement.apply(this, arguments);
-		if (this._scrollBars)
-			this.setStyle("overflow", "auto");
-	};
+        P._createElement = function() {
+                D.BASE._createElement.apply(this, arguments);
+                if (this._scrollBars)
+                        this.setStyle("overflow", "auto");
+        };
 
-	//	FIXME: do we need this?  causes problems with DlPopup
-	//	(since it's frequent to cache the popups' content)
+        //	FIXME: do we need this?  causes problems with DlPopup
+        //	(since it's frequent to cache the popups' content)
 
-// 	P.setContent = function() {
-// 		this.destroyChildWidgets();
-// 		D.BASE.setContent.apply(this, Array.$(arguments));
-// 	};
+//      P.setContent = function() {
+//              this.destroyChildWidgets();
+//              D.BASE.setContent.apply(this, Array.$(arguments));
+//      };
 
-	P.appendWidget = function(w) {
-		// alert("Appending " + w._objectType + " to " + this._objectType);
-		if (w.parent)
-			w.parent.removeWidget(w);
-		this._widgets.push(w);
-		w.parent = this;
+        P.appendWidget = function(w) {
+                // alert("Appending " + w._objectType + " to " + this._objectType);
+                if (w.parent)
+                        w.parent.removeWidget(w);
+                this._widgets.push(w);
+                w.parent = this;
                 if (!w.__alreadyInDom)
                         this._appendWidgetElement.apply(this, arguments);
                 delete w.__alreadyInDom;
-	};
+        };
 
-	P._appendWidgetElement = function(w, p) {
-		var el = w.getElement();
-		if (typeof p == "number") {
-			var parent = this.getContentElement();
-			try {
-				p = parent.childNodes[p];
-				parent.insertBefore(el, p);
-			} catch(ex) {
-				parent.appendChild(el);
-			}
-		} else {
-			if (p == null)
-				p = this.getContentElement();
-			else if (typeof p == "string")
-				p = document.getElementById(p);
-			if (el.parentNode !== p)
-				p.appendChild(el);
-		}
-	};
+        P._appendWidgetElement = function(w, p) {
+                var el = w.getElement();
+                if (typeof p == "number") {
+                        var parent = this.getContentElement();
+                        try {
+                                p = parent.childNodes[p];
+                                parent.insertBefore(el, p);
+                        } catch(ex) {
+                                parent.appendChild(el);
+                        }
+                } else {
+                        if (p == null)
+                                p = this.getContentElement();
+                        else if (typeof p == "string")
+                                p = document.getElementById(p);
+                        if (el.parentNode !== p)
+                                p.appendChild(el);
+                }
+        };
 
-	P.removeWidget = function(w) {
-		if (w.parent === this) {
-			this._removeWidgetElement(w);
-			this._widgets.remove(w);
-			w.parent = null;
-		}
-	};
+        P.removeWidget = function(w) {
+                if (w.parent === this) {
+                        this._removeWidgetElement(w);
+                        this._widgets.remove(w);
+                        w.parent = null;
+                }
+        };
 
-	P._removeWidgetElement = function(w) {
-		if (this._widgets.contains(w)) {
-			var el = w.getElement();
-			if (el.parentNode)
-				el.parentNode.removeChild(el);
-		}
-	};
+        P._removeWidgetElement = function(w) {
+                if (this._widgets.contains(w)) {
+                        var el = w.getElement();
+                        if (el.parentNode)
+                                el.parentNode.removeChild(el);
+                }
+        };
 
-	P.destroyChildWidgets = function() {
-		var a = Array.$(this._widgets);
+        P.destroyChildWidgets = function() {
+                var a = Array.$(this._widgets);
                 for (var i = 0; i < a.length; ++i)
                         if (a[i] instanceof D)
                                 a.push.apply(a, a[i]._widgets);
-		a.r_foreach(function(w) {
-			try {
-				w.destroy();
-			} catch(ex) {};
-		});
-		var el = this.getContentElement();
-		if (el)
-			el.innerHTML = "";
-		return el;
-	};
+                a.r_foreach(function(w) {
+                        try {
+                                w.destroy();
+                        } catch(ex) {};
+                });
+                var el = this.getContentElement();
+                if (el)
+                        el.innerHTML = "";
+                return el;
+        };
 
-	P._setListeners = function() {
-		D.BASE._setListeners.call(this);
-		this.addEventListener("onDestroy", this.destroyChildWidgets);
-		this.addEventListener("onResize", this.__doLayout);
-	};
+        P._setListeners = function() {
+                D.BASE._setListeners.call(this);
+                this.addEventListener("onDestroy", this.destroyChildWidgets);
+                this.addEventListener("onResize", this.__doLayout);
+        };
 
-	P.disabled = function(v, force) {
-		var isDisabled = D.BASE.disabled.call(this, v, force);
-		if (v != null)
-			this._widgets.r_foreach(function(w) {
-				w.disabled(v, force);
-			});
-		return isDisabled;
-	};
+        P.disabled = function(v, force) {
+                var isDisabled = D.BASE.disabled.call(this, v, force);
+                if (v != null)
+                        this._widgets.r_foreach(function(w) {
+                                w.disabled(v, force);
+                        });
+                return isDisabled;
+        };
 
-	P.children = function(idx) {
-		return idx != null ? this._widgets[idx] : this._widgets;
-	};
+        P.children = function(idx) {
+                return idx != null ? this._widgets[idx] : this._widgets;
+        };
 
-	P.__doLayout = function() {
-		// XXX: this definitely sucks.
-		var w = this.children().grep_first(function(w) {
-			return w._fillParent;
-		});
-		if (w)
-			w.setSize(this.getInnerSize());
-	};
+        P.replaceWidget = function(w, other) {
+                var pos = this._widgets.find(w);
+                if (pos >= 0) {
+                        if (other.parent)
+                                other.parent.removeWidget(other);
+                        this._widgets.splice(pos, 1, other);
+                        other._dllayout_args = w._dllayout_args;
+                        w._dllayout_args = null;
+                        var el = w.getElement(), p = el.parentNode;
+                        p.insertBefore(other.getElement(), el);
+                        p.removeChild(el);
+                        other.parent = this;
+                        w.parent = null;
+                }
+        };
+
+        P.__doLayout = function() {
+                // XXX: this definitely sucks.
+                var w = this.children().grep_first(function(w) {
+                        return w._fillParent;
+                });
+                if (w)
+                        w.setSize(this.getInnerSize());
+        };
 
         function getAllFocusableWidgets(sub, all) {
                 sub = sub ? Array.$(sub.getElement().getElementsByTagName("*")) : [];
@@ -205,13 +221,13 @@ DEFINE_CLASS("DlContainer", DlWidget, function(D, P) {
                 }
         };
 
-	var HIDDEN;
-	D.getHiddenContainer = function() {
-		if (!HIDDEN) {
-			HIDDEN = new this({ className: "DlContainer-Hidden" });
-			document.body.appendChild(HIDDEN.getElement());
-		}
-		return HIDDEN;
-	};
+        var HIDDEN;
+        D.getHiddenContainer = function() {
+                if (!HIDDEN) {
+                        HIDDEN = new this({ className: "DlContainer-Hidden" });
+                        document.body.appendChild(HIDDEN.getElement());
+                }
+                return HIDDEN;
+        };
 
 });
