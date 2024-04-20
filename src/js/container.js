@@ -141,7 +141,7 @@ DEFINE_CLASS("DlContainer", DlWidget, function(D, P) {
         };
 
         P.replaceWidget = function(w, other) {
-                var pos = this._widgets.find(w);
+                var pos = this._widgets.indexOf(w);
                 if (pos >= 0) {
                         if (other.parent)
                                 other.parent.removeWidget(other);
@@ -182,7 +182,7 @@ DEFINE_CLASS("DlContainer", DlWidget, function(D, P) {
                 var a = getAllFocusableWidgets.call(this, w);
 
                 // now see where we are and return the next/prev widget.
-                var i = a.find(w);
+                var i = a.indexOf(w);
                 i = a.rotateIndex(i + d);
                 if (i != null)
                         return a[i];

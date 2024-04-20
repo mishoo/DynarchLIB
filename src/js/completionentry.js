@@ -100,7 +100,7 @@ DEFINE_CLASS("DlCompletionEntry", DlEntry, function(D, P, DOM) {
 	};
 
 	function on_itemHover(obj, ev) {
-		var newitem = MENU.children().find(this);
+		var newitem = MENU.children().indexOf(this);
 		if (newitem != ITEM && ITEM != null)
 			MENU.children(ITEM).callHooks("onMouseLeave");
 		ITEM = newitem;

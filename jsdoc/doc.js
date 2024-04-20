@@ -588,7 +588,7 @@ var App = {};
                         histMenu.addEventListener("onSelect", function(page, item){
                                 HISTORY.isMoving = true;
                                 HISTORY.prev_pointer = HISTORY.pointer;
-                                HISTORY.pointer = HISTORY.find(item.userData);
+                                HISTORY.pointer = HISTORY.indexOf(item.userData);
                                 goToHistoryLocation(item.userData);
                         });
                         return histMenu;

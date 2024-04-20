@@ -588,13 +588,6 @@ Array.inject({
                 return false;
         },
 
-        find: function(el) {
-                for (var i = this.length; --i >= 0;)
-                        if (this[i] === el)
-                                return i;
-                return -1;
-        },
-
         remove: function(el) {
                 for (var i = this.length; --i >= 0;)
                         if (this[i] === el)
@@ -603,7 +596,7 @@ Array.inject({
         },
 
         pushUnique: function(el) {
-                if (this.find(el) < 0) {
+                if (this.indexOf(el) < 0) {
                         this.push(el);
                         return this.length;
                 }
@@ -885,8 +878,8 @@ Number.inject({
                 }
                 format = n < format.length ? format[n] : format[format.length - 1];
                 return format.replace(/##?/g, function(s){
-			return s.length == 2 ? "#" : n;
-		});
+                        return s.length == 2 ? "#" : n;
+                });
         }
 
 });
